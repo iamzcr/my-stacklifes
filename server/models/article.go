@@ -5,6 +5,11 @@ type Article struct {
 	Title string `json:"title" form:"title"`
 }
 
+type ArticleInfo struct {
+	Id    int    `json:"id" form:"id"`
+	Title string `json:"title" form:"title"`
+}
+
 func (article *Article) TableName() string {
 	return "sl_article"
 }
