@@ -1,0 +1,21 @@
+app:
+  name: "stackLifes"
+  frontend_listen_port: ":8081"
+  admin_listen_port: ":8080"
+  Version: 1.0
+redis:
+  host: 127.0.0.1:23001
+  db: 0
+  pwd: ""
+mysql:
+  host: 127.0.0.1
+  port: 3306
+  username: "root"
+  pwd: "root"
+  dbname: "stacklifes"
+  max_open_conn: 60               # 最大打开的连接数, 需要小于数据库配置中的max_connections数
+  max_idle_conn: 10                 # 最大闲置的连接数，0意味着使用默认的大小2， 小于0表示不使用连接池
+  max_conn_life_time: 2h          # 单个连接最大存活时间，建议设置比数据库超时时长(wait_timeout)稍小一些
+orm:
+  show_log: true                  # 是否打印所有SQL日志
+  slow_sql_log: 0s                 # 慢查询阈值，设置后只打印慢查询日志，默认为500ms

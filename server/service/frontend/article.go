@@ -2,14 +2,14 @@ package frontend
 
 import (
 	"github.com/gin-gonic/gin"
-	"my-stacklifes/database"
+	"my-stacklifes/database/mysql"
 	"my-stacklifes/models"
 	"net/http"
 )
 
 func ArticleList(ctx *gin.Context) {
 	var articleList []models.Article
-	database.MysqlDB.Find(&articleList)
+	mysql.MysqlClient.Find(&articleList)
 	ctx.JSON(http.StatusOK, gin.H{
 		"code": 1,
 		"msg":  "success",
