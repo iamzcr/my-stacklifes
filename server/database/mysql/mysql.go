@@ -66,3 +66,15 @@ func InitMysql() (err error) {
 	MysqlClient.Set("gorm:table_options", "CHARSET=utf8mb4")
 	return
 }
+
+type DbClient struct {
+	MysqlClient *gorm.DB
+}
+
+func GetMysqlClient() *gorm.DB {
+	return MysqlClient
+}
+
+func NewDbClient() *DbClient {
+	return &DbClient{MysqlClient: GetMysqlClient()}
+}
