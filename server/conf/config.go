@@ -51,7 +51,7 @@ func InitConfig() (err error) {
 		log.Fatal(err)
 	}
 	// 打开文件
-	file, err := os.Open(filepath.Join(dir, "..", "..", "config", "conf.yaml"))
+	file, err := os.Open(filepath.Join(dir, "..", "..", "conf", "conf.yaml"))
 	if err != nil {
 		log.Fatalf("无法打开文件：%v", err)
 	}

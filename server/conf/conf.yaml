@@ -1,7 +1,7 @@
 app:
   name: "stackLifes"
-  frontend_listen_port: ":8081"
-  admin_listen_port: ":8080"
+  frontend_listen_port: ":8081" #前台端口
+  admin_listen_port: ":8080" # 后台端口
   Version: 1.0
 redis:
   host: 127.0.0.1:23001
