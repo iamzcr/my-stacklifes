@@ -27,7 +27,9 @@ func (s *LoginService) LoginCheck(ctx *gin.Context, req models.LoginReq) (interf
 	if password != admin.Password {
 		return nil, errors.New("admin error")
 	}
-	Authentication := "1111"
+
+	Authentication := ""
+
 	return models.TokenInfo{
 		Authentication: Authentication,
 		Username:       admin.Username,

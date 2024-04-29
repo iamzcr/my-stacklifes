@@ -12,7 +12,7 @@ func createToken(adminID string) (string, error) {
 	token := jwt.New(jwt.SigningMethodHS256)
 	// 设置令牌的声明（payload）
 	claims := token.Claims.(jwt.MapClaims)
-	claims["user_id"] = adminID
+	claims["admin_id"] = adminID
 	// 使用密钥对令牌进行签名
 	authentication, err := token.SignedString([]byte(conf.AppConfig.Common.LoginJwtSecret))
 	if err != nil {
