@@ -41,9 +41,9 @@ func (s *ArticleService) GetDetail(ctx *gin.Context, id string) (interface{}, er
 	var (
 		article models.Article
 	)
-	err := s.dbClient.MysqlClient.Where("id=?", id).Find(&article).Error
-	if err != nil {
-		return nil, err
+	res := s.dbClient.MysqlClient.Where("id=?", id).Find(&article)
+	if res.Error != nil {
+		return nil, res.Error
 	}
 	if article.Id == 0 {
 		return nil, errors.New("article error")

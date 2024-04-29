@@ -5,7 +5,6 @@ import (
 	"github.com/gin-gonic/gin"
 	"my-stacklifes/conf"
 	"my-stacklifes/database/mysql"
-	"my-stacklifes/database/redis"
 	"my-stacklifes/routers"
 )
 
@@ -20,11 +19,11 @@ func main() {
 	if err != nil {
 		fmt.Println("mysql init:", err)
 	}
-	//初始化redis
-	err = redis.InitRedis()
-	if err != nil {
-		fmt.Println("redis init:", err)
-	}
+	////初始化redis
+	//err = redis.InitRedis()
+	//if err != nil {
+	//	fmt.Println("redis init:", err)
+	//}
 	r := gin.Default()
 
 	//路由分组

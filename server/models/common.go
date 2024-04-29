@@ -1,11 +1,28 @@
 package models
 
-import (
-	"time"
-)
-
 type CommonField struct {
-	CreateTime  time.Time `json:"create_time"`
-	UpdatedTime time.Time `json:"update_time"`
-	Status      int8      `json:"status"`
+	CreateTime  int64 `gorm:"column:create_time;type:timestamp" json:"create_time"`
+	UpdatedTime int64 `gorm:"column:update_time;type:timestamp" json:"updated_time"`
+}
+
+type OrderSort struct {
+	OrderBy string `form:"orderBy" json:"orderBy,omitempty"`
+	Sort    string `form:"sort" json:"sort,omitempty"`
+}
+type PageInfo struct {
+	Page     int   `form:"page" json:"page"`
+	PageSize int   `form:"page_size" json:"page_size"`
+	Total    int64 `form:"total" json:"total"`
+}
+
+func (p *PageInfo) GetPageInfo() (limit, offset int) {
+	if p.Page < 1 {
+		p.Page = 1
+	}
+	limit = p.PageSize
+	if p.PageSize < 1 {
+		limit = 10
+	}
+	offset = (p.Page - 1) * limit
+	return
 }

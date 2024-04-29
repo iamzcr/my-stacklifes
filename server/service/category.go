@@ -1,7 +1,6 @@
 package service
 
 import (
-	"errors"
 	"github.com/gin-gonic/gin"
 	"my-stacklifes/database/mysql"
 	"my-stacklifes/models"
@@ -17,22 +16,23 @@ func NewCategoryService() *CategoryService {
 	}
 }
 
-func (s *CategoryService) GetList(ctx *gin.Context) (interface{}, error) {
+func (s *CategoryService) GetList(ctx *gin.Context, req models.CategoryReq) (interface{}, error) {
 	var (
-		category models.Category
+		categories []models.Category
+		total      int64
 	)
-	err := mysql.MysqlClient.Find(&category).Error
+	err := s.dbClient.MysqlClient.Model(&categories).Count(&total).Error
 	if err != nil {
 		return nil, err
 	}
-	if category.Id == 0 {
-		return nil, errors.New("article error")
-	}
-	return models.ArticleInfo{
-		Id:    category.Id,
-		Title: category.Name,
-		// 将 HTML 转换为 Markdown
-		Content: category.Type,
-		Author:  category.Author,
+	limit, offset := req.GetPageInfo()
+	_ = s.dbClient.MysqlClient.
+		Limit(limit).
+		Offset(offset).
+		Order("id DESC").
+		Find(&categories)
+	return models.CategoryListRes{
+		Total: total,
+		List:  categories,
 	}, nil
 }
