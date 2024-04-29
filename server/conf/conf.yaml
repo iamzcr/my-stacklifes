@@ -2,16 +2,17 @@ app:
   name: "stackLifes"
   frontend_listen_port: ":8081" #前台端口
   admin_listen_port: ":8080" # 后台端口
+  login_jwt_secret : "stacklifes.com"
   Version: 1.0
 redis:
-  host: 127.0.0.1:23001
+  host: "127.0.0.1:23001"
   db: 0
-  pwd: ""
+  pwd: "Linux1314."
 mysql:
-  host: 127.0.0.1
+  host: "localhost"
   port: 3306
   username: "root"
-  pwd: "root"
+  pwd: "Linux1314."
   dbname: "stacklifes"
   max_open_conn: 60               # 最大打开的连接数, 需要小于数据库配置中的max_connections数
   max_idle_conn: 10                 # 最大闲置的连接数，0意味着使用默认的大小2， 小于0表示不使用连接池

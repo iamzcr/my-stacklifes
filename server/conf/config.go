@@ -13,6 +13,7 @@ type CommonConfig struct {
 	Name               string `yaml:"name"`
 	FrontendListenPort string `yaml:"frontend_listen_port"`
 	AdminListenPort    string `yaml:"admin_listen_port"`
+	LoginJwtSecret     string `yaml:"login_jwt_secret"`
 }
 type RedisConfig struct {
 	Host     string `yaml:"host"`
@@ -36,10 +37,10 @@ type OrmConfig struct {
 	ShowSqlLog time.Duration `yaml:"slow_sql_log"`
 }
 type Config struct {
-	Redis        RedisConfig  `yaml:"redis"`
-	MySQL        MySQLConfig  `yaml:"mysql"`
-	Orm          OrmConfig    `yaml:"orm"`
-	CommonConfig CommonConfig `yaml:"app"`
+	Redis  RedisConfig  `yaml:"redis"`
+	MySQL  MySQLConfig  `yaml:"mysql"`
+	Orm    OrmConfig    `yaml:"orm"`
+	Common CommonConfig `yaml:"app"`
 }
 
 var AppConfig = &Config{}
