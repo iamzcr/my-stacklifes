@@ -8,19 +8,19 @@ import (
 	"my-stacklifes/service"
 )
 
-type CategoryHandler struct {
-	srv *service.CategoryService
+type LogHandler struct {
+	srv *service.LogService
 }
 
-func NewCategoryHandler() *CategoryHandler {
-	return &CategoryHandler{
-		srv: service.NewCategoryService(),
+func NewLogHandler() *LogHandler {
+	return &LogHandler{
+		srv: service.NewLogService(),
 	}
 }
 
-func (h *CategoryHandler) CategoryList(ctx *gin.Context) {
+func (h *LogHandler) LogList(ctx *gin.Context) {
 	var appGin = app.Gin{C: ctx}
-	query := models.CategoryReq{}
+	query := models.LogReq{}
 	err := ctx.ShouldBindQuery(&query)
 	if err != nil {
 		appGin.Error(exception.ERROR, err.Error(), nil)

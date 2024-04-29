@@ -6,37 +6,37 @@ import (
 	"my-stacklifes/models"
 )
 
-type CategoryService struct {
+type LogService struct {
 	dbClient *mysql.DbClient
 }
 
-func NewCategoryService() *CategoryService {
-	return &CategoryService{
+func NewLogService() *LogService {
+	return &LogService{
 		dbClient: mysql.NewDbClient(),
 	}
 }
 
-func (s *CategoryService) GetList(ctx *gin.Context, req models.CategoryReq) (interface{}, error) {
+func (s *LogService) GetList(ctx *gin.Context, req models.LogReq) (interface{}, error) {
 	var (
-		categories []models.Category
-		total      int64
+		logs  []models.Log
+		total int64
 	)
 	db := s.dbClient.MysqlClient
-	if len(req.Name) > 0 {
-		db = db.Where("name LIKE ?", "%"+req.Name+"%")
+	if len(req.Content) > 0 {
+		db = db.Where("content LIKE ?", "%"+req.Content+"%")
 	}
 	limit, offset := req.GetPageInfo()
 	err := db.Limit(limit).
 		Offset(offset).
 		Order("id DESC").
-		Find(&categories).
+		Find(&logs).
 		Count(&total).Error
 	if err != nil {
 		return nil, err
 	}
 
-	return models.CategoryListRes{
+	return models.LogListRes{
 		Total: total,
-		List:  categories,
+		List:  logs,
 	}, nil
 }

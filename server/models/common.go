@@ -5,10 +5,6 @@ type CommonField struct {
 	UpdatedTime int64 `gorm:"column:update_time;type:timestamp" json:"updated_time"`
 }
 
-type OrderSort struct {
-	OrderBy string `form:"orderBy" json:"orderBy,omitempty"`
-	Sort    string `form:"sort" json:"sort,omitempty"`
-}
 type PageInfo struct {
 	Page     int   `form:"page" json:"page"`
 	PageSize int   `form:"page_size" json:"page_size"`
