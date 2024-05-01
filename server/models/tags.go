@@ -25,6 +25,6 @@ type TagsReq struct {
 }
 
 type TagsListRes struct {
-	Total int64      `json:"total"`
-	List  []Category `json:"list"`
+	Total int64  `json:"total"`
+	List  []Tags `json:"list"`
 }

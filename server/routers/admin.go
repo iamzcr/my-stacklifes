@@ -7,33 +7,44 @@ import (
 
 func AdminRoutersInit(r *gin.Engine) {
 	loginHandler := admin.NewLoginHandler()
+	//分类
 	categoryHandler := admin.NewCategoryHandler()
+	//标签
+	tagsHandler := admin.NewTagsHandler()
+
+	//文章
+	articleHandler := admin.NewArticleHandler()
+	//日志
 	logHandler := admin.NewLogHandler()
+	//用户组
 	adminGroupHandler := admin.NewAdminGroupHandler()
+
+	//权限
+	permitHandler := admin.NewPermitHandler()
 	adminRouter := r.Group("/admin") //可以加载这个后面
 	adminRouter.POST("/login", loginHandler.Login)
 	{
-		adminRouter.GET("/category/list", categoryHandler.CategoryList)
-		adminRouter.GET("/category/info", categoryHandler.CategoryList)
-		adminRouter.GET("/category/edit", categoryHandler.CategoryList)
+		adminRouter.GET("/category/list", categoryHandler.List)
+		adminRouter.GET("/category/info", categoryHandler.List)
+		adminRouter.GET("/category/edit", categoryHandler.List)
 
-		adminRouter.GET("/tags/list", categoryHandler.CategoryList)
-		adminRouter.GET("/tags/info", categoryHandler.CategoryList)
-		adminRouter.GET("/tags/edit", categoryHandler.CategoryList)
+		adminRouter.GET("/tags/list", tagsHandler.List)
+		adminRouter.GET("/tags/info", categoryHandler.List)
+		adminRouter.GET("/tags/edit", categoryHandler.List)
 
-		adminRouter.GET("/article/list", categoryHandler.CategoryList)
-		adminRouter.GET("/article/info", categoryHandler.CategoryList)
-		adminRouter.GET("/article/edit", categoryHandler.CategoryList)
+		adminRouter.GET("/article/list", articleHandler.List)
+		adminRouter.GET("/article/info", categoryHandler.List)
+		adminRouter.GET("/article/edit", categoryHandler.List)
 
-		adminRouter.GET("/menu/list", categoryHandler.CategoryList)
-		adminRouter.GET("/menu/info", categoryHandler.CategoryList)
-		adminRouter.GET("/menu/edit", categoryHandler.CategoryList)
+		adminRouter.GET("/menu/list", categoryHandler.List)
+		adminRouter.GET("/menu/info", categoryHandler.List)
+		adminRouter.GET("/menu/edit", categoryHandler.List)
 
-		adminRouter.GET("/permit/list", categoryHandler.CategoryList)
-		adminRouter.GET("/permit/info", categoryHandler.CategoryList)
-		adminRouter.GET("/permit/edit", categoryHandler.CategoryList)
+		adminRouter.GET("/permit/list", permitHandler.List)
+		adminRouter.GET("/permit/info", categoryHandler.List)
+		adminRouter.GET("/permit/edit", categoryHandler.List)
 
-		adminRouter.GET("/log/list", logHandler.LogList)
-		adminRouter.GET("/admin_group/list", adminGroupHandler.AdminGroupList)
+		adminRouter.GET("/log/list", logHandler.List)
+		adminRouter.GET("/admin_group/list", adminGroupHandler.List)
 	}
 }

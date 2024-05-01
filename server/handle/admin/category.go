@@ -18,7 +18,7 @@ func NewCategoryHandler() *CategoryHandler {
 	}
 }
 
-func (h *CategoryHandler) CategoryList(ctx *gin.Context) {
+func (h *CategoryHandler) List(ctx *gin.Context) {
 	var appGin = app.Gin{C: ctx}
 	query := models.CategoryReq{}
 	err := ctx.ShouldBindQuery(&query)

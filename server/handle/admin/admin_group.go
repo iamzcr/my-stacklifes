@@ -18,7 +18,7 @@ func NewAdminGroupHandler() *AdminGroupHandler {
 	}
 }
 
-func (h *AdminGroupHandler) AdminGroupList(ctx *gin.Context) {
+func (h *AdminGroupHandler) List(ctx *gin.Context) {
 	var appGin = app.Gin{C: ctx}
 	query := models.AdminGroupReq{}
 	err := ctx.ShouldBindQuery(&query)

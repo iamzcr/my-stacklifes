@@ -6,20 +6,20 @@ import (
 	"my-stacklifes/models"
 )
 
-type PermitService struct {
+type TagsService struct {
 	dbClient *mysql.DbClient
 }
 
-func NewPermitService() *PermitService {
-	return &PermitService{
+func NewTagsService() *TagsService {
+	return &TagsService{
 		dbClient: mysql.NewDbClient(),
 	}
 }
 
-func (s *PermitService) GetList(ctx *gin.Context, req models.PermitReq) (interface{}, error) {
+func (s *TagsService) GetList(ctx *gin.Context, req models.TagsReq) (interface{}, error) {
 	var (
-		permit []models.Permit
-		total  int64
+		tags  []models.Tags
+		total int64
 	)
 	db := s.dbClient.MysqlClient
 	if len(req.Name) > 0 {
@@ -29,14 +29,14 @@ func (s *PermitService) GetList(ctx *gin.Context, req models.PermitReq) (interfa
 	err := db.Limit(limit).
 		Offset(offset).
 		Order("id DESC").
-		Find(&permit).
+		Find(&tags).
 		Count(&total).Error
 	if err != nil {
 		return nil, err
 	}
 
-	return models.PermitListRes{
+	return models.TagsListRes{
 		Total: total,
-		List:  permit,
+		List:  tags,
 	}, nil
 }

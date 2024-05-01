@@ -18,7 +18,7 @@ func NewLogHandler() *LogHandler {
 	}
 }
 
-func (h *LogHandler) LogList(ctx *gin.Context) {
+func (h *LogHandler) List(ctx *gin.Context) {
 	var appGin = app.Gin{C: ctx}
 	query := models.LogReq{}
 	err := ctx.ShouldBindQuery(&query)

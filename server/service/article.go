@@ -17,23 +17,28 @@ func NewArticleService() *ArticleService {
 	}
 }
 
-func (s *ArticleService) GetList(ctx *gin.Context) (interface{}, error) {
+func (s *ArticleService) GetList(ctx *gin.Context, req models.ArticleReq) (interface{}, error) {
 	var (
-		article models.Article
+		articles []models.Article
+		total    int64
 	)
-	err := mysql.MysqlClient.Find(&article).Error
+	db := s.dbClient.MysqlClient
+	if len(req.Title) > 0 {
+		db = db.Where("title LIKE ?", "%"+req.Title+"%")
+	}
+	limit, offset := req.GetPageInfo()
+	err := db.Limit(limit).
+		Offset(offset).
+		Order("id DESC").
+		Find(&articles).
+		Count(&total).Error
 	if err != nil {
 		return nil, err
 	}
-	if article.Id == 0 {
-		return nil, errors.New("article error")
-	}
-	return models.ArticleInfo{
-		Id:    article.Id,
-		Title: article.Title,
-		// 将 HTML 转换为 Markdown
-		Content: article.Content,
-		Author:  article.Author,
+
+	return models.ArticleListRes{
+		Total: total,
+		List:  articles,
 	}, nil
 }
 
@@ -48,11 +53,5 @@ func (s *ArticleService) GetDetail(ctx *gin.Context, id string) (interface{}, er
 	if article.Id == 0 {
 		return nil, errors.New("article error")
 	}
-	return models.ArticleInfo{
-		Id:    article.Id,
-		Title: article.Title,
-		// 将 HTML 转换为 Markdown
-		Content: article.Content,
-		Author:  article.Author,
-	}, nil
+	return models.Article{Id: article.Id, Title: article.Title, Content: article.Content}, nil
 }

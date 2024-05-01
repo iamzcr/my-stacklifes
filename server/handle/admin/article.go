@@ -2,6 +2,7 @@ package admin
 
 import (
 	"github.com/gin-gonic/gin"
+	"my-stacklifes/models"
 	"my-stacklifes/pkg/app"
 	"my-stacklifes/pkg/exception"
 	"my-stacklifes/service"
@@ -16,13 +17,18 @@ func NewArticleHandler() *ArticleHandler {
 		srv: service.NewArticleService(),
 	}
 }
-func (h *ArticleHandler) ArticleList(ctx *gin.Context) {
+func (h *ArticleHandler) List(ctx *gin.Context) {
 	var appGin = app.Gin{C: ctx}
-	id := ctx.Param("id")
-	detailData, err := h.srv.GetDetail(ctx, id)
+	query := models.ArticleReq{}
+	err := ctx.ShouldBindQuery(&query)
 	if err != nil {
 		appGin.Error(exception.ERROR, err.Error(), nil)
 		return
 	}
-	appGin.Success(detailData)
+	list, err := h.srv.GetList(ctx, query)
+	if err != nil {
+		appGin.Error(exception.ERROR, err.Error(), nil)
+		return
+	}
+	appGin.Success(list)
 }
