@@ -9,19 +9,19 @@ import (
 	"my-stacklifes/service"
 )
 
-type CategoryHandler struct {
-	srv *service.CategoryService
+type LangHandler struct {
+	srv *service.LangService
 }
 
-func NewCategoryHandler() *CategoryHandler {
-	return &CategoryHandler{
-		srv: service.NewCategoryService(),
+func NewLangHandler() *LangHandler {
+	return &LangHandler{
+		srv: service.NewLangService(),
 	}
 }
 
-func (h *CategoryHandler) List(ctx *gin.Context) {
+func (h *LangHandler) List(ctx *gin.Context) {
 	var appGin = app.Gin{C: ctx}
-	query := models.CategoryReq{}
+	query := models.LangReq{}
 	err := ctx.ShouldBindQuery(&query)
 	if err != nil {
 		appGin.Error(exception.ERROR, err.Error(), nil)
@@ -35,7 +35,7 @@ func (h *CategoryHandler) List(ctx *gin.Context) {
 	appGin.Success(list)
 }
 
-func (h *CategoryHandler) Info(ctx *gin.Context) {
+func (h *LangHandler) Info(ctx *gin.Context) {
 	var appGin = app.Gin{C: ctx}
 	id := ctx.Param("id")
 	infoData, err := h.srv.GetInfo(ctx, id)
@@ -46,11 +46,11 @@ func (h *CategoryHandler) Info(ctx *gin.Context) {
 	appGin.Success(infoData)
 }
 
-func (h *CategoryHandler) Edit(ctx *gin.Context) {
+func (h *LangHandler) Edit(ctx *gin.Context) {
 
 	var (
 		appGin = app.Gin{C: ctx}
-		req    models.Category
+		req    models.Lang
 	)
 	err := ctx.ShouldBind(&req)
 	if err != nil {

@@ -25,5 +25,5 @@ type LangReq struct {
 
 type LangListRes struct {
 	Total int64  `json:"total"`
-	List  []Tags `json:"list"`
+	List  []Lang `json:"list"`
 }

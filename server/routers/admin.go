@@ -12,6 +12,8 @@ func AdminRoutersInit(r *gin.Engine) {
 	//标签
 	tagsHandler := admin.NewTagsHandler()
 
+	langHandler := admin.NewLangHandler()
+
 	//文章
 	articleHandler := admin.NewArticleHandler()
 	//日志
@@ -25,8 +27,8 @@ func AdminRoutersInit(r *gin.Engine) {
 	adminRouter.POST("/login", loginHandler.Login)
 	{
 		adminRouter.GET("/category/list", categoryHandler.List)
-		adminRouter.GET("/category/info", categoryHandler.List)
-		adminRouter.GET("/category/edit", categoryHandler.List)
+		adminRouter.GET("/category/info/:id", categoryHandler.Info)
+		adminRouter.POST("/category/edit", categoryHandler.Edit)
 
 		adminRouter.GET("/tags/list", tagsHandler.List)
 		adminRouter.GET("/tags/info", categoryHandler.List)
@@ -39,6 +41,10 @@ func AdminRoutersInit(r *gin.Engine) {
 		adminRouter.GET("/menu/list", categoryHandler.List)
 		adminRouter.GET("/menu/info", categoryHandler.List)
 		adminRouter.GET("/menu/edit", categoryHandler.List)
+
+		adminRouter.GET("/lang/list", langHandler.List)
+		adminRouter.POST("/lang/info", langHandler.Info)
+		adminRouter.POST("/lang/edit", langHandler.Edit)
 
 		adminRouter.GET("/permit/list", permitHandler.List)
 		adminRouter.GET("/permit/info", categoryHandler.List)
