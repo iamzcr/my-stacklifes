@@ -49,7 +49,7 @@ func (s *LangService) GetInfo(ctx *gin.Context, id string) (interface{}, error) 
 	if res.Error != nil {
 		return nil, res.Error
 	}
-	if LangInfo.Id == 0 {
+	if LangInfo.Id < 0 {
 		return nil, errors.New("Lang error")
 	}
 	return LangInfo, nil
