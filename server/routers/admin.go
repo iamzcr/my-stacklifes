@@ -52,7 +52,7 @@ func AdminRoutersInit(r *gin.Engine) {
 		adminRouter.GET("/attach/list", attachHandler.List)
 		adminRouter.GET("/attach/info", attachHandler.List)
 		adminRouter.GET("/attach/edit", attachHandler.List)
-		
+
 		adminRouter.GET("/log/list", logHandler.List)
 		adminRouter.GET("/admin_group/list", adminGroupHandler.List)
 	}
