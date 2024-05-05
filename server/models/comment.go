@@ -4,7 +4,7 @@ type Comment struct {
 	Id      int    `json:"id" form:"id"`
 	Name    string `json:"name" form:"name"`
 	Ip      string `json:"ip" form:"ip"`
-	Aid     string `json:"aid" form:"aid"`
+	Aid     int    `json:"aid" form:"aid"`
 	Refer   string `json:"refer" form:"refer"`
 	Email   string `json:"email" form:"email"`
 	Url     string `json:"url" form:"url"`

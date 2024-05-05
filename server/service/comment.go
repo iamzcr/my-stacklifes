@@ -44,7 +44,7 @@ func (s *CommentService) GetList(ctx *gin.Context, req models.CommentReq) (inter
 
 func (s *CommentService) Update(ctx *gin.Context, req models.Comment) (interface{}, error) {
 	var comment models.Comment
-	if req.Name == "" || req.Content == "" {
+	if req.Name == "" || req.Content == "" || req.Aid == 0 {
 		return nil, errors.New("params is null")
 	}
 	if !tools.ValidEmail(req.Email) {
@@ -54,7 +54,7 @@ func (s *CommentService) Update(ctx *gin.Context, req models.Comment) (interface
 	comment.Content = req.Content
 	comment.Url = req.Url
 	comment.Aid = req.Aid
-	comment.Refer = req.Refer
+	comment.Refer = ctx.Request.Referer()
 	comment.Email = req.Email
 	comment.Ip = ctx.ClientIP()
 	err := s.dbClient.MysqlClient.Create(&comment).Error

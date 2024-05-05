@@ -18,6 +18,7 @@ func AdminRoutersInit(r *gin.Engine) {
 	articleHandler := admin.NewArticleHandler()
 	//日志
 	logHandler := admin.NewLogHandler()
+	logFailHandler := admin.NewLogFailHandler()
 	//用户组
 	adminGroupHandler := admin.NewAdminGroupHandler()
 	//权限
@@ -54,6 +55,7 @@ func AdminRoutersInit(r *gin.Engine) {
 		adminRouter.GET("/attach/edit", attachHandler.List)
 
 		adminRouter.GET("/log/list", logHandler.List)
+		adminRouter.GET("/log_fail/list", logFailHandler.List)
 		adminRouter.GET("/admin_group/list", adminGroupHandler.List)
 	}
 }
