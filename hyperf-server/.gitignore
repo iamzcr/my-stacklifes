@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 .buildpath
 .settings/
 .project
@@ -14,3 +15,11 @@ vendor/
 .vscode/
 /phpstan.neon
 /phpunit.xml
+=======
+.git/
+.github
+runtime/
+vendor/
+.env
+*.lock
+>>>>>>> 9c85592969dd2908e3fcb07d63a01c36242f095f
