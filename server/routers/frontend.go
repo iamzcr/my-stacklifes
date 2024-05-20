@@ -11,6 +11,7 @@ func FrontendRoutersInit(r *gin.Engine) {
 	commentHandler := frontend.NewCommentHandler()
 	frontendRouter := r.Group("/api") //可以加载这个后面
 	{
+		frontendRouter.GET("/router", articleHandler.ArticleList)
 		frontendRouter.GET("/tags", articleHandler.ArticleList)
 		frontendRouter.GET("/article", articleHandler.ArticleList)
 		frontendRouter.POST("/message", messageHandler.Update)
