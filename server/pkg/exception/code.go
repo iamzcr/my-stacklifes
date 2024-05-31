@@ -1,7 +1,7 @@
 package exception
 
 const (
-	SUCCESS        = 0
+	SUCCESS        = 200
 	ERROR          = 500
 	INVALID_PARAMS = 400
 

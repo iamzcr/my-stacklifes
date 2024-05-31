@@ -24,7 +24,6 @@ class IndexController extends AbstractController
             'message' => "Hello {$user}.",
         ];
     }
-<<<<<<< HEAD
 
     public function hello()
     {
@@ -36,6 +35,15 @@ class IndexController extends AbstractController
             'message' => "Hello {$user}.",
         ];
     }
-=======
->>>>>>> 9c85592969dd2908e3fcb07d63a01c36242f095f
+
+    public function helloPost()
+    {
+        $user = $this->request->input('user', 'Hyperf');
+        $method = $this->request->getMethod();
+
+        return [
+            'method' => $method,
+            'message' => "Hello {$user}.",
+        ];
+    }
 }

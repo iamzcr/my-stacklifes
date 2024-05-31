@@ -2,6 +2,7 @@ package service
 
 import (
 	"errors"
+	"fmt"
 	"github.com/gin-gonic/gin"
 	"my-stacklifes/database/mysql"
 	"my-stacklifes/models"
@@ -17,7 +18,7 @@ func NewLangService() *LangService {
 	}
 }
 
-func (s *LangService) GetList(ctx *gin.Context, req models.LangReq) (interface{}, error) {
+func (s *LangService) GetList(ctx *gin.Context, req models.LangListReq) (interface{}, error) {
 	var (
 		langs []models.Lang
 		total int64
@@ -54,7 +55,29 @@ func (s *LangService) GetInfo(ctx *gin.Context, id string) (interface{}, error) 
 	}
 	return LangInfo, nil
 }
-func (s *LangService) Update(ctx *gin.Context, req models.Lang) (interface{}, error) {
+func (s *LangService) Create(ctx *gin.Context, req models.LangCreateReq) (interface{}, error) {
+	var (
+		Lang  models.Lang
+		count int64
+	)
+
+	s.dbClient.MysqlClient.Model(Lang).
+		Where("lang = ?", req.Lang).
+		Count(&count)
+	fmt.Println(req)
+	if count > 0 {
+		return nil, errors.New("记录已存在")
+	}
+	Lang.Name = req.Name
+	Lang.Lang = req.Lang
+	err := s.dbClient.MysqlClient.Save(&Lang).Error
+	if err != nil {
+		return nil, err
+	}
+	return Lang.Id, nil
+}
+
+func (s *LangService) Update(ctx *gin.Context, req models.LangUpdateReq) (interface{}, error) {
 	var (
 		Lang  models.Lang
 		count int64
@@ -63,23 +86,29 @@ func (s *LangService) Update(ctx *gin.Context, req models.Lang) (interface{}, er
 	if res.Error != nil {
 		return nil, res.Error
 	}
-	if Lang.Id > 0 {
-		s.dbClient.MysqlClient.Model(Lang).
-			Where("id != ? and name=?", req.Id, req.Name).
-			Count(&count)
-		if count > 0 {
-			return nil, errors.New("记录已存在")
-		}
-		return nil, errors.New("不存在该记录")
-	} else {
-
+	s.dbClient.MysqlClient.Model(Lang).
+		Where("id != ? and lang=?", req.Id, req.Name).
+		Count(&count)
+	if count > 0 {
+		return nil, errors.New("记录已存在")
 	}
-
-	//
-	//Lang.Name = req.Name
-	//err := s.dbClient.MysqlClient.Save(&Lang).Error
-	//if err != nil {
-	//	return nil, err
-	//}
-	return Lang, nil
+	Lang.Name = req.Name
+	Lang.Lang = req.Lang
+	err := s.dbClient.MysqlClient.Save(&Lang).Error
+	if err != nil {
+		return nil, err
+	}
+	return Lang.Id, nil
+}
+func (s *LangService) Delete(ctx *gin.Context, req models.LangDelReq) (interface{}, error) {
+	var lang models.Lang
+	s.dbClient.MysqlClient.Where("id=?", req.Id).Find(&lang)
+	if lang.Id <= 0 {
+		return nil, errors.New("不存在该记录")
+	}
+	err := s.dbClient.MysqlClient.Delete(&lang).Error
+	if err != nil {
+		return nil, err
+	}
+	return lang.Id, nil
 }

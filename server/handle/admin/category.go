@@ -1,7 +1,6 @@
 package admin
 
 import (
-	"fmt"
 	"github.com/gin-gonic/gin"
 	"my-stacklifes/models"
 	"my-stacklifes/pkg/app"
@@ -21,7 +20,7 @@ func NewCategoryHandler() *CategoryHandler {
 
 func (h *CategoryHandler) List(ctx *gin.Context) {
 	var appGin = app.Gin{C: ctx}
-	query := models.CategoryReq{}
+	query := models.CategoryListReq{}
 	err := ctx.ShouldBindQuery(&query)
 	if err != nil {
 		appGin.Error(exception.ERROR, err.Error(), nil)
@@ -46,19 +45,55 @@ func (h *CategoryHandler) Info(ctx *gin.Context) {
 	appGin.Success(infoData)
 }
 
-func (h *CategoryHandler) Edit(ctx *gin.Context) {
+func (h *CategoryHandler) Create(ctx *gin.Context) {
 
 	var (
-		appGin = app.Gin{C: ctx}
-		req    models.Category
+		appGin    = app.Gin{C: ctx}
+		reqCreate models.CategoryCreateReq
 	)
-	err := ctx.ShouldBind(&req)
+	err := ctx.ShouldBind(&reqCreate)
 	if err != nil {
 		appGin.Error(exception.ERROR, err.Error(), nil)
 		return
 	}
-	fmt.Println(req)
-	res, err := h.srv.Update(ctx, req)
+	res, err := h.srv.Create(ctx, reqCreate)
+	if err != nil {
+		appGin.Error(exception.ERROR, err.Error(), nil)
+		return
+	}
+	appGin.Success(res)
+}
+
+func (h *CategoryHandler) Update(ctx *gin.Context) {
+
+	var (
+		appGin    = app.Gin{C: ctx}
+		reqUpdate models.CategoryUpdateReq
+	)
+	err := ctx.ShouldBind(&reqUpdate)
+	if err != nil {
+		appGin.Error(exception.ERROR, err.Error(), nil)
+		return
+	}
+	res, err := h.srv.Update(ctx, reqUpdate)
+	if err != nil {
+		appGin.Error(exception.ERROR, err.Error(), nil)
+		return
+	}
+	appGin.Success(res)
+}
+func (h *CategoryHandler) Delete(ctx *gin.Context) {
+
+	var (
+		appGin = app.Gin{C: ctx}
+		reqDel models.CategoryDelReq
+	)
+	err := ctx.ShouldBind(&reqDel)
+	if err != nil {
+		appGin.Error(exception.ERROR, err.Error(), nil)
+		return
+	}
+	res, err := h.srv.Delete(ctx, reqDel)
 	if err != nil {
 		appGin.Error(exception.ERROR, err.Error(), nil)
 		return

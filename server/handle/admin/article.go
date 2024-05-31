@@ -17,6 +17,7 @@ func NewArticleHandler() *ArticleHandler {
 		srv: service.NewArticleService(),
 	}
 }
+
 func (h *ArticleHandler) List(ctx *gin.Context) {
 	var appGin = app.Gin{C: ctx}
 	query := models.ArticleReq{}

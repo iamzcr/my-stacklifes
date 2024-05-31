@@ -44,7 +44,7 @@ func (s *MessageService) GetList(ctx *gin.Context, req models.MessageReq) (inter
 
 func (s *MessageService) Update(ctx *gin.Context, req models.Message) (interface{}, error) {
 	var message models.Message
-	if req.Name == "" || req.Content == "" {
+	if len(req.Name) <= 0 || len(req.Content) <= 0 {
 		return nil, errors.New("params is null")
 	}
 	if !tools.ValidEmail(req.Email) {

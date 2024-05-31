@@ -9,7 +9,7 @@ redis:
   db: 0
   pwd: "Linux1314."
 mysql:
-  host: "localhost"
+  host: "172.16.50.52"
   port: 3306
   username: "root"
   pwd: "root"

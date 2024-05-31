@@ -17,7 +17,14 @@ func NewCategoryService() *CategoryService {
 	}
 }
 
-func (s *CategoryService) GetList(ctx *gin.Context, req models.CategoryReq) (interface{}, error) {
+//func (s *CategoryService) GetNoPageList(ctx *gin.Context, req models.CategoryNoPageReq) (interface{}, error) {
+//	db := s.dbClient.MysqlClient
+//	if req.Parent != 0 {
+//		db = db.Where("parent=?", req.Parent)
+//	}
+//}
+
+func (s *CategoryService) GetList(ctx *gin.Context, req models.CategoryListReq) (interface{}, error) {
 	var (
 		categories []models.Category
 		total      int64
@@ -54,7 +61,32 @@ func (s *CategoryService) GetInfo(ctx *gin.Context, id string) (interface{}, err
 	}
 	return categoryInfo, nil
 }
-func (s *CategoryService) Update(ctx *gin.Context, req models.Category) (interface{}, error) {
+
+func (s *CategoryService) Create(ctx *gin.Context, req models.CategoryCreateReq) (interface{}, error) {
+	var (
+		category models.Category
+		count    int64
+	)
+	s.dbClient.MysqlClient.Model(category).
+		Where("name=?", req.Name).
+		Count(&count)
+	if count > 0 {
+		return nil, errors.New("记录已存在")
+	}
+	category.Name = req.Name
+	category.Mark = req.Mark
+	category.Parent = req.Parent
+	category.Type = req.Type
+	category.Author = req.Author
+	category.Weight = req.Weight
+	err := s.dbClient.MysqlClient.Save(&category).Error
+	if err != nil {
+		return nil, err
+	}
+	return category.Id, nil
+}
+
+func (s *CategoryService) Update(ctx *gin.Context, req models.CategoryUpdateReq) (interface{}, error) {
 	var (
 		category models.Category
 		count    int64
@@ -63,23 +95,40 @@ func (s *CategoryService) Update(ctx *gin.Context, req models.Category) (interfa
 	if res.Error != nil {
 		return nil, res.Error
 	}
-	if category.Id > 0 {
-		s.dbClient.MysqlClient.Model(category).
-			Where("id != ? and name=?", req.Id, req.Name).
-			Count(&count)
-		if count > 0 {
-			return nil, errors.New("记录已存在")
-		}
-		return nil, errors.New("不存在该记录")
-	} else {
-
+	s.dbClient.MysqlClient.Model(category).
+		Where("id != ? and name=?", req.Id, req.Name).
+		Count(&count)
+	if count > 0 {
+		return nil, errors.New("记录已存在")
 	}
-
-	//
-	//category.Name = req.Name
-	//err := s.dbClient.MysqlClient.Save(&category).Error
-	//if err != nil {
-	//	return nil, err
-	//}
-	return category, nil
+	category.Name = req.Name
+	category.Mark = req.Mark
+	category.Parent = req.Parent
+	category.Type = req.Type
+	category.Author = req.Author
+	category.Weight = req.Weight
+	err := s.dbClient.MysqlClient.Save(&category).Error
+	if err != nil {
+		return nil, err
+	}
+	return category.Id, nil
+}
+func (s *CategoryService) Delete(ctx *gin.Context, req models.CategoryDelReq) (interface{}, error) {
+	var (
+		category models.Category
+		articles []models.Article
+	)
+	s.dbClient.MysqlClient.Where("id=?", req.Id).Find(&category)
+	if category.Id <= 0 {
+		return nil, errors.New("不存在该记录")
+	}
+	s.dbClient.MysqlClient.Where("cid=?", req.Id).Find(&articles)
+	if len(articles) > 0 {
+		return nil, errors.New("该分类已被使用")
+	}
+	err := s.dbClient.MysqlClient.Delete(&category).Error
+	if err != nil {
+		return nil, err
+	}
+	return category.Id, nil
 }

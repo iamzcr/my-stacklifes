@@ -1,7 +1,6 @@
 package admin
 
 import (
-	"fmt"
 	"github.com/gin-gonic/gin"
 	"my-stacklifes/models"
 	"my-stacklifes/pkg/app"
@@ -21,7 +20,7 @@ func NewLangHandler() *LangHandler {
 
 func (h *LangHandler) List(ctx *gin.Context) {
 	var appGin = app.Gin{C: ctx}
-	query := models.LangReq{}
+	query := models.LangListReq{}
 	err := ctx.ShouldBindQuery(&query)
 	if err != nil {
 		appGin.Error(exception.ERROR, err.Error(), nil)
@@ -46,19 +45,55 @@ func (h *LangHandler) Info(ctx *gin.Context) {
 	appGin.Success(infoData)
 }
 
-func (h *LangHandler) Edit(ctx *gin.Context) {
+func (h *LangHandler) Create(ctx *gin.Context) {
 
 	var (
-		appGin = app.Gin{C: ctx}
-		req    models.Lang
+		appGin    = app.Gin{C: ctx}
+		reqCreate models.LangCreateReq
 	)
-	err := ctx.ShouldBind(&req)
+	err := ctx.ShouldBind(&reqCreate)
 	if err != nil {
 		appGin.Error(exception.ERROR, err.Error(), nil)
 		return
 	}
-	fmt.Println(req)
-	res, err := h.srv.Update(ctx, req)
+	res, err := h.srv.Create(ctx, reqCreate)
+	if err != nil {
+		appGin.Error(exception.ERROR, err.Error(), nil)
+		return
+	}
+	appGin.Success(res)
+}
+
+func (h *LangHandler) Update(ctx *gin.Context) {
+
+	var (
+		appGin    = app.Gin{C: ctx}
+		reqUpdate models.LangUpdateReq
+	)
+	err := ctx.ShouldBind(&reqUpdate)
+	if err != nil {
+		appGin.Error(exception.ERROR, err.Error(), nil)
+		return
+	}
+	res, err := h.srv.Update(ctx, reqUpdate)
+	if err != nil {
+		appGin.Error(exception.ERROR, err.Error(), nil)
+		return
+	}
+	appGin.Success(res)
+}
+func (h *LangHandler) Delete(ctx *gin.Context) {
+
+	var (
+		appGin = app.Gin{C: ctx}
+		reqDel models.LangDelReq
+	)
+	err := ctx.ShouldBind(&reqDel)
+	if err != nil {
+		appGin.Error(exception.ERROR, err.Error(), nil)
+		return
+	}
+	res, err := h.srv.Delete(ctx, reqDel)
 	if err != nil {
 		appGin.Error(exception.ERROR, err.Error(), nil)
 		return
