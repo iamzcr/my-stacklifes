@@ -20,7 +20,7 @@ func NewPermitHandler() *PermitHandler {
 
 func (h *PermitHandler) List(ctx *gin.Context) {
 	var appGin = app.Gin{C: ctx}
-	query := models.PermitReq{}
+	query := models.PermitListReq{}
 	err := ctx.ShouldBindQuery(&query)
 	if err != nil {
 		appGin.Error(exception.ERROR, err.Error(), nil)

@@ -20,12 +20,16 @@ func AdminRoutersInit(r *gin.Engine) {
 	logHandler := admin.NewLogHandler()
 	//用户组
 	adminGroupHandler := admin.NewAdminGroupHandler()
+	//用户组
+	optionHandler := admin.NewOptionHandler()
 	//权限
 	permitHandler := admin.NewPermitHandler()
 	menuHandler := admin.NewMenuHandler()
 	adminRouter := r.Group("/admin") //可以加载这个后面
 	adminRouter.POST("/login", loginHandler.Login)
 	{
+		adminRouter.GET("/option/getFilter", optionHandler.GetFilter)
+
 		adminRouter.GET("/lang/list", langHandler.List)
 		adminRouter.POST("/lang/info/:id", langHandler.Info)
 		adminRouter.POST("/lang/update", langHandler.Update)

@@ -82,6 +82,7 @@ func (h *CategoryHandler) Update(ctx *gin.Context) {
 	}
 	appGin.Success(res)
 }
+
 func (h *CategoryHandler) Delete(ctx *gin.Context) {
 
 	var (

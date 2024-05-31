@@ -16,7 +16,7 @@ func NewPermitService() *PermitService {
 	}
 }
 
-func (s *PermitService) GetList(ctx *gin.Context, req models.PermitReq) (interface{}, error) {
+func (s *PermitService) GetList(ctx *gin.Context, req models.PermitListReq) (interface{}, error) {
 	var (
 		permit []models.Permit
 		total  int64
