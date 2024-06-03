@@ -42,7 +42,7 @@ func (s *MessageService) GetList(ctx *gin.Context, req models.MessageReq) (inter
 	}, nil
 }
 
-func (s *MessageService) Update(ctx *gin.Context, req models.Message) (interface{}, error) {
+func (s *MessageService) Update(ctx *gin.Context, req models.MsgCreateReq) (interface{}, error) {
 	var message models.Message
 	if len(req.Name) <= 0 || len(req.Content) <= 0 {
 		return nil, errors.New("params is null")
@@ -51,9 +51,9 @@ func (s *MessageService) Update(ctx *gin.Context, req models.Message) (interface
 		return nil, errors.New("email error")
 	}
 	message.Name = req.Name
-	message.Content = req.Content
 	message.Url = req.Url
 	message.Email = req.Email
+	message.Content = req.Content
 	message.Ip = ctx.ClientIP()
 	err := s.dbClient.MysqlClient.Create(&message).Error
 	if err != nil {

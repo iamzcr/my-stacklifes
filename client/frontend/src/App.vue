@@ -46,7 +46,7 @@ function renderIcon(icon) {
 
 const menuOptions = [
   {
-    label: "且听风吟",
+    label: "Heap&Stack",
     key: "hear-the-wind-sing",
     icon: renderIcon(BookIcon)
   },

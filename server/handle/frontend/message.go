@@ -20,9 +20,9 @@ func NewMessageHandler() *MessageHandler {
 
 func (h *MessageHandler) Update(ctx *gin.Context) {
 	var appGin = app.Gin{C: ctx}
-	msgForm := models.Message{}
-	err := ctx.ShouldBind(&msgForm)
-	res, err := h.srv.Update(ctx, msgForm)
+	msgCreateReq := models.MsgCreateReq{}
+	err := ctx.ShouldBind(&msgCreateReq)
+	res, err := h.srv.Update(ctx, msgCreateReq)
 	if err != nil {
 		appGin.Error(exception.ERROR, err.Error(), nil)
 		return

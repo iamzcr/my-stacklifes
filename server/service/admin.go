@@ -2,9 +2,11 @@ package service
 
 import (
 	"errors"
+	"fmt"
 	"github.com/gin-gonic/gin"
 	"my-stacklifes/database/mysql"
 	"my-stacklifes/models"
+	"my-stacklifes/pkg/tools"
 )
 
 type AdminService struct {
@@ -23,8 +25,8 @@ func (s *AdminService) GetList(ctx *gin.Context, req models.AdminListReq) (inter
 		total  int64
 	)
 	db := s.dbClient.MysqlClient
-	if len(req.Name) > 0 {
-		db = db.Where("name LIKE ?", "%"+req.Name+"%")
+	if len(req.Username) > 0 {
+		db = db.Where("username LIKE ?", "%"+req.Username+"%")
 	}
 	limit, offset := req.GetPageInfo()
 	err := db.Limit(limit).
@@ -35,7 +37,6 @@ func (s *AdminService) GetList(ctx *gin.Context, req models.AdminListReq) (inter
 	if err != nil {
 		return nil, err
 	}
-
 	return models.AdminListRes{
 		Total: total,
 		List:  admins,
@@ -67,13 +68,20 @@ func (s *AdminService) Create(ctx *gin.Context, req models.AdminCreateReq) (inte
 		return nil, errors.New("记录已存在")
 	}
 	Admin.Username = req.Username
+	if len(req.Password) <= 0 {
+		req.Password = fmt.Sprintf("%s%s", req.Username, "123456")
+	}
 	Admin.Password = req.Password
+	Admin.GroupId = req.GroupId
 
+	Admin.Expiration = tools.SetExpiration()
+	Admin.Salt = tools.CreateSalt()
+	Admin.Password = tools.GenPassword(Admin.Salt, req.Password)
 	err := s.dbClient.MysqlClient.Save(&Admin).Error
 	if err != nil {
 		return nil, err
 	}
-	return Admin.Id, nil
+	return req.Password, nil
 }
 
 func (s *AdminService) Delete(ctx *gin.Context, req models.AdminDelReq) (interface{}, error) {
@@ -85,6 +93,23 @@ func (s *AdminService) Delete(ctx *gin.Context, req models.AdminDelReq) (interfa
 		return nil, errors.New("不存在该记录")
 	}
 	err := s.dbClient.MysqlClient.Delete(&Admin).Error
+	if err != nil {
+		return nil, err
+	}
+	return Admin.Id, nil
+}
+
+func (s *AdminService) ChangeField(ctx *gin.Context, req models.AdminFieldReq) (interface{}, error) {
+	var (
+		Admin models.Admin
+	)
+	s.dbClient.MysqlClient.Where("id=?", req.Id).Find(&Admin)
+	if Admin.Id <= 0 {
+		return nil, errors.New("不存在该记录")
+	}
+
+	Admin.Status = req.Status
+	err := s.dbClient.MysqlClient.Save(&Admin).Error
 	if err != nil {
 		return nil, err
 	}

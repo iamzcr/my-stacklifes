@@ -42,7 +42,7 @@ func (s *CommentService) GetList(ctx *gin.Context, req models.CommentReq) (inter
 	}, nil
 }
 
-func (s *CommentService) Update(ctx *gin.Context, req models.Comment) (interface{}, error) {
+func (s *CommentService) Update(ctx *gin.Context, req models.CommentCreateReq) (interface{}, error) {
 	var comment models.Comment
 	if req.Name == "" || req.Content == "" || req.Aid == 0 {
 		return nil, errors.New("params is null")

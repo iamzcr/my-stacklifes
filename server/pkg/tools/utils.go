@@ -2,17 +2,51 @@ package tools
 
 import (
 	"crypto/md5"
+	"encoding/hex"
 	"fmt"
-	"io"
+	"math/rand"
+	"time"
 )
 
-// Md5 字符串转md5
-func Md5(str string) (string, error) {
-	h := md5.New()
-	_, err := io.WriteString(h, str)
-	if err != nil {
-		return "", err
+func Md5(str string) string {
+	hash := md5.New()
+	hash.Write([]byte(str))
+	hashedBytes := hash.Sum(nil)
+	md5Str := hex.EncodeToString(hashedBytes)
+	return md5Str
+}
+
+func GenPassword(salt, password string) (pwd string) {
+	pwd = Md5(fmt.Sprintf("%s%s", salt, password))
+	return
+}
+
+func CreateSalt() (slat string) {
+	randStr := createRandStr()
+	slat = Md5(randStr)
+	return
+}
+
+func createRandInt() (randInt int) {
+	rand.Seed(time.Now().UnixNano())
+	randInt = rand.Intn(1000)
+	return
+}
+
+func createRandStr() (randString string) {
+	rand.Seed(time.Now().UnixNano())
+	strLength := 8
+	randStr := make([]byte, strLength)
+	for i := 0; i < strLength; i++ {
+		randStr[i] = Charset[rand.Intn(len(Charset))]
 	}
-	// 注意：这里不能使用string将[]byte转为字符串，否则会显示乱码
-	return fmt.Sprintf("%x", h.Sum(nil)), nil
+	randString = string(randStr)
+	return
+}
+
+func SetExpiration() (timestamp int64) {
+	now := time.Now()
+	oneYearLater := now.AddDate(1, 0, 0)
+	timestamp = oneYearLater.Unix()
+	return
 }

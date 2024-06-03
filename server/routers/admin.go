@@ -20,6 +20,7 @@ func AdminRoutersInit(r *gin.Engine) {
 	logHandler := admin.NewLogHandler()
 	//用户组
 	adminGroupHandler := admin.NewAdminGroupHandler()
+	adminsHandler := admin.NewAdminHandler()
 	//用户组
 	optionHandler := admin.NewOptionHandler()
 	//权限
@@ -31,7 +32,7 @@ func AdminRoutersInit(r *gin.Engine) {
 		adminRouter.GET("/option/getFilter", optionHandler.GetFilter)
 
 		adminRouter.GET("/lang/list", langHandler.List)
-		adminRouter.POST("/lang/info/:id", langHandler.Info)
+		adminRouter.GET("/lang/info/:id", langHandler.Info)
 		adminRouter.POST("/lang/update", langHandler.Update)
 		adminRouter.POST("/lang/create", langHandler.Create)
 		adminRouter.POST("/lang/delete", langHandler.Delete)
@@ -44,9 +45,15 @@ func AdminRoutersInit(r *gin.Engine) {
 
 		adminRouter.GET("/admin_group/list", adminGroupHandler.List)
 		adminRouter.GET("/admin_group/info/:id", adminGroupHandler.Info)
-		adminRouter.GET("/admin_group/update", adminGroupHandler.Update)
-		adminRouter.GET("/admin_group/create", adminGroupHandler.Create)
-		adminRouter.GET("/admin_group/delete", adminGroupHandler.Delete)
+		adminRouter.POST("/admin_group/update", adminGroupHandler.Update)
+		adminRouter.POST("/admin_group/create", adminGroupHandler.Create)
+		adminRouter.POST("/admin_group/delete", adminGroupHandler.Delete)
+
+		adminRouter.GET("/admin/list", adminsHandler.List)
+		adminRouter.GET("/admin/info/:id", adminsHandler.Info)
+		adminRouter.POST("/admin/create", adminsHandler.Create)
+		adminRouter.POST("/admin/changeField", adminsHandler.ChangeField)
+		adminRouter.POST("/admin/delete", adminsHandler.Delete)
 
 		adminRouter.GET("/tags/list", tagsHandler.List)
 		adminRouter.GET("/tags/info", categoryHandler.List)

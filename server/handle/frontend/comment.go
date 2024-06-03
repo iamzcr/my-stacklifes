@@ -20,9 +20,9 @@ func NewCommentHandler() *CommentHandler {
 
 func (h *CommentHandler) Update(ctx *gin.Context) {
 	var appGin = app.Gin{C: ctx}
-	msgForm := models.Comment{}
-	err := ctx.ShouldBind(&msgForm)
-	res, err := h.srv.Update(ctx, msgForm)
+	commentCreateReq := models.CommentCreateReq{}
+	err := ctx.ShouldBind(&commentCreateReq)
+	res, err := h.srv.Update(ctx, commentCreateReq)
 	if err != nil {
 		appGin.Error(exception.ERROR, err.Error(), nil)
 		return

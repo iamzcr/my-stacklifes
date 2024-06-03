@@ -24,6 +24,12 @@ type MessageReq struct {
 	Name string `json:"name" form:"name"`
 }
 
+type MsgCreateReq struct {
+	Name    string `json:"name" form:"name" binding:"required"`
+	Email   string `json:"email" form:"email" binding:"required"`
+	Content string `json:"content" form:"content" binding:"required"`
+	Url     string `json:"url" form:"url"`
+}
 type MessageListRes struct {
 	Total int64     `json:"total"`
 	List  []Message `json:"list"`
