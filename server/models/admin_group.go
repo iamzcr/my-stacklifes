@@ -24,13 +24,8 @@ type AdminGroupListReq struct {
 	Name string `json:"name" form:"name"`
 }
 
-type AdminGroupListRes struct {
-	Total int64        `json:"total"`
-	List  []AdminGroup `json:"list"`
-}
-
-type AdminGroupPageReq struct {
-	Name string `json:"name" form:"name"`
+type AdminGroupNoPageReq struct {
+	Status int `json:"status" form:"status"`
 }
 
 type AdminGroupUpdateReq struct {
@@ -48,4 +43,9 @@ type AdminGroupCreateReq struct {
 
 type AdminGroupDelReq struct {
 	Id int `json:"id" form:"id" binding:"required"`
+}
+
+type AdminGroupListRes struct {
+	Total int64        `json:"total"`
+	List  []AdminGroup `json:"list"`
 }

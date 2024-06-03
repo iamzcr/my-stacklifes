@@ -20,7 +20,7 @@ func NewTagsHandler() *TagsHandler {
 
 func (h *TagsHandler) List(ctx *gin.Context) {
 	var appGin = app.Gin{C: ctx}
-	query := models.TagsReq{}
+	query := models.TagsListReq{}
 	err := ctx.ShouldBindQuery(&query)
 	if err != nil {
 		appGin.Error(exception.ERROR, err.Error(), nil)
@@ -32,4 +32,72 @@ func (h *TagsHandler) List(ctx *gin.Context) {
 		return
 	}
 	appGin.Success(list)
+}
+
+func (h *TagsHandler) Info(ctx *gin.Context) {
+	var appGin = app.Gin{C: ctx}
+	id := ctx.Param("id")
+	infoData, err := h.srv.GetInfo(ctx, id)
+	if err != nil {
+		appGin.Error(exception.ERROR, err.Error(), nil)
+		return
+	}
+	appGin.Success(infoData)
+}
+
+func (h *TagsHandler) Create(ctx *gin.Context) {
+
+	var (
+		appGin    = app.Gin{C: ctx}
+		reqCreate models.TagsCreateReq
+	)
+	err := ctx.ShouldBind(&reqCreate)
+	if err != nil {
+		appGin.Error(exception.ERROR, err.Error(), nil)
+		return
+	}
+	res, err := h.srv.Create(ctx, reqCreate)
+	if err != nil {
+		appGin.Error(exception.ERROR, err.Error(), nil)
+		return
+	}
+	appGin.Success(res)
+}
+
+func (h *TagsHandler) Update(ctx *gin.Context) {
+
+	var (
+		appGin    = app.Gin{C: ctx}
+		reqUpdate models.TagsUpdateReq
+	)
+	err := ctx.ShouldBind(&reqUpdate)
+	if err != nil {
+		appGin.Error(exception.ERROR, err.Error(), nil)
+		return
+	}
+	res, err := h.srv.Update(ctx, reqUpdate)
+	if err != nil {
+		appGin.Error(exception.ERROR, err.Error(), nil)
+		return
+	}
+	appGin.Success(res)
+}
+
+func (h *TagsHandler) Delete(ctx *gin.Context) {
+
+	var (
+		appGin = app.Gin{C: ctx}
+		reqDel models.TagsDelReq
+	)
+	err := ctx.ShouldBind(&reqDel)
+	if err != nil {
+		appGin.Error(exception.ERROR, err.Error(), nil)
+		return
+	}
+	res, err := h.srv.Delete(ctx, reqDel)
+	if err != nil {
+		appGin.Error(exception.ERROR, err.Error(), nil)
+		return
+	}
+	appGin.Success(res)
 }

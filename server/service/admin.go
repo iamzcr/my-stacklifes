@@ -1,1 +1,92 @@
 package service
+
+import (
+	"errors"
+	"github.com/gin-gonic/gin"
+	"my-stacklifes/database/mysql"
+	"my-stacklifes/models"
+)
+
+type AdminService struct {
+	dbClient *mysql.DbClient
+}
+
+func NewAdminService() *AdminService {
+	return &AdminService{
+		dbClient: mysql.NewDbClient(),
+	}
+}
+
+func (s *AdminService) GetList(ctx *gin.Context, req models.AdminListReq) (interface{}, error) {
+	var (
+		admins []models.Admin
+		total  int64
+	)
+	db := s.dbClient.MysqlClient
+	if len(req.Name) > 0 {
+		db = db.Where("name LIKE ?", "%"+req.Name+"%")
+	}
+	limit, offset := req.GetPageInfo()
+	err := db.Limit(limit).
+		Offset(offset).
+		Order("id DESC").
+		Find(&admins).
+		Count(&total).Error
+	if err != nil {
+		return nil, err
+	}
+
+	return models.AdminListRes{
+		Total: total,
+		List:  admins,
+	}, nil
+}
+
+func (s *AdminService) GetInfo(ctx *gin.Context, id string) (interface{}, error) {
+	var AdminInfo models.Admin
+
+	res := s.dbClient.MysqlClient.Where("id=?", id).Find(&AdminInfo)
+	if res.Error != nil {
+		return nil, res.Error
+	}
+	if AdminInfo.Id == 0 {
+		return nil, errors.New("Admin error")
+	}
+	return AdminInfo, nil
+}
+
+func (s *AdminService) Create(ctx *gin.Context, req models.AdminCreateReq) (interface{}, error) {
+	var (
+		Admin models.Admin
+		count int64
+	)
+	s.dbClient.MysqlClient.Model(Admin).
+		Where("username=?", req.Username).
+		Count(&count)
+	if count > 0 {
+		return nil, errors.New("记录已存在")
+	}
+	Admin.Username = req.Username
+	Admin.Password = req.Password
+
+	err := s.dbClient.MysqlClient.Save(&Admin).Error
+	if err != nil {
+		return nil, err
+	}
+	return Admin.Id, nil
+}
+
+func (s *AdminService) Delete(ctx *gin.Context, req models.AdminDelReq) (interface{}, error) {
+	var (
+		Admin models.Admin
+	)
+	s.dbClient.MysqlClient.Where("id=?", req.Id).Find(&Admin)
+	if Admin.Id <= 0 {
+		return nil, errors.New("不存在该记录")
+	}
+	err := s.dbClient.MysqlClient.Delete(&Admin).Error
+	if err != nil {
+		return nil, err
+	}
+	return Admin.Id, nil
+}

@@ -17,6 +17,19 @@ func NewAdminGroupService() *AdminGroupService {
 	}
 }
 
+func (s *AdminGroupService) GetNoPageList(req models.AdminGroupNoPageReq) (interface{}, error) {
+	var adminGroups []models.AdminGroup
+	db := s.dbClient.MysqlClient
+	err := db.Where("status = ?", req.Status).
+		Order("id DESC").
+		Find(&adminGroups).Error
+	if err != nil {
+		return nil, err
+	}
+	return models.AdminGroupListRes{
+		List: adminGroups,
+	}, nil
+}
 func (s *AdminGroupService) GetList(ctx *gin.Context, req models.AdminGroupListReq) (interface{}, error) {
 	var (
 		admin_groups []models.AdminGroup
