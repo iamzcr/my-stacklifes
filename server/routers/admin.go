@@ -42,6 +42,12 @@ func AdminRoutersInit(r *gin.Engine) {
 		adminRouter.POST("/category/create", categoryHandler.Create)
 		adminRouter.POST("/category/delete", categoryHandler.Delete)
 
+		adminRouter.GET("/admin_group/list", adminGroupHandler.List)
+		adminRouter.GET("/admin_group/info/:id", adminGroupHandler.Info)
+		adminRouter.GET("/admin_group/update", adminGroupHandler.Update)
+		adminRouter.GET("/admin_group/create", adminGroupHandler.Create)
+		adminRouter.GET("/admin_group/delete", adminGroupHandler.Delete)
+
 		adminRouter.GET("/tags/list", tagsHandler.List)
 		adminRouter.GET("/tags/info", categoryHandler.List)
 		adminRouter.GET("/tags/edit", categoryHandler.List)
@@ -64,6 +70,6 @@ func AdminRoutersInit(r *gin.Engine) {
 		adminRouter.GET("/attach/edit", attachHandler.List)
 
 		adminRouter.GET("/log/list", logHandler.List)
-		adminRouter.GET("/admin_group/list", adminGroupHandler.List)
+
 	}
 }

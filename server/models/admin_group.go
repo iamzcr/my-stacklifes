@@ -19,7 +19,7 @@ func (ug *AdminGroup) TableName() string {
 	return "sl_admin_group"
 }
 
-type AdminGroupReq struct {
+type AdminGroupListReq struct {
 	PageInfo
 	Name string `json:"name" form:"name"`
 }
@@ -27,4 +27,25 @@ type AdminGroupReq struct {
 type AdminGroupListRes struct {
 	Total int64        `json:"total"`
 	List  []AdminGroup `json:"list"`
+}
+
+type AdminGroupPageReq struct {
+	Name string `json:"name" form:"name"`
+}
+
+type AdminGroupUpdateReq struct {
+	Id          int    `json:"id" form:"id"`
+	Name        string `json:"name" form:"name" binding:"required"`
+	Mark        string `json:"mark" form:"mark"`
+	Description string `json:"description" form:"description"`
+}
+
+type AdminGroupCreateReq struct {
+	Name        string `json:"name" form:"name" binding:"required"`
+	Mark        string `json:"mark" form:"mark"`
+	Description string `json:"description" form:"description"`
+}
+
+type AdminGroupDelReq struct {
+	Id int `json:"id" form:"id" binding:"required"`
 }

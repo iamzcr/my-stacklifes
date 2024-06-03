@@ -10,4 +10,5 @@ type OptionFilter struct {
 type Filter struct {
 	Key   string
 	Value string
+	Name  string
 }
