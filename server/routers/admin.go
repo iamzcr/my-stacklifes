@@ -26,6 +26,7 @@ func AdminRoutersInit(r *gin.Engine) {
 	//权限
 	permitHandler := admin.NewPermitHandler()
 	menuHandler := admin.NewMenuHandler()
+	websiteHandler := admin.NewWebsiteHandler()
 	adminRouter := r.Group("/admin") //可以加载这个后面
 	adminRouter.POST("/login", loginHandler.Login)
 	{
@@ -54,6 +55,12 @@ func AdminRoutersInit(r *gin.Engine) {
 		adminRouter.POST("/admin/create", adminsHandler.Create)
 		adminRouter.POST("/admin/changeField", adminsHandler.ChangeField)
 		adminRouter.POST("/admin/delete", adminsHandler.Delete)
+
+		adminRouter.GET("/website/list", websiteHandler.List)
+		adminRouter.GET("/website/info/:id", websiteHandler.Info)
+		adminRouter.POST("/website/create", websiteHandler.Create)
+		adminRouter.POST("/admin/changeField", adminsHandler.ChangeField)
+		adminRouter.POST("/website/delete", websiteHandler.Delete)
 
 		adminRouter.GET("/tags/list", tagsHandler.List)
 		adminRouter.GET("/tags/info", categoryHandler.List)
