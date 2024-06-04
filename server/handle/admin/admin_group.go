@@ -20,13 +20,29 @@ func NewAdminGroupHandler() *AdminGroupHandler {
 
 func (h *AdminGroupHandler) List(ctx *gin.Context) {
 	var appGin = app.Gin{C: ctx}
-	query := models.AdminGroupListReq{}
-	err := ctx.ShouldBindQuery(&query)
+	listReq := models.AdminGroupListReq{}
+	err := ctx.ShouldBindQuery(&listReq)
 	if err != nil {
 		appGin.Error(exception.ERROR, err.Error(), nil)
 		return
 	}
-	list, err := h.srv.GetList(ctx, query)
+	list, err := h.srv.GetList(ctx, listReq)
+	if err != nil {
+		appGin.Error(exception.ERROR, err.Error(), nil)
+		return
+	}
+	appGin.Success(list)
+}
+
+func (h *AdminGroupHandler) NoPageList(ctx *gin.Context) {
+	var appGin = app.Gin{C: ctx}
+	listReq := models.AdminGroupNoPageReq{}
+	err := ctx.ShouldBindQuery(&listReq)
+	if err != nil {
+		appGin.Error(exception.ERROR, err.Error(), nil)
+		return
+	}
+	list, err := h.srv.GetNoPageList(ctx, listReq)
 	if err != nil {
 		appGin.Error(exception.ERROR, err.Error(), nil)
 		return

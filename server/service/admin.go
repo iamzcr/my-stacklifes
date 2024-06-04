@@ -58,26 +58,26 @@ func (s *AdminService) GetInfo(ctx *gin.Context, id string) (interface{}, error)
 
 func (s *AdminService) Create(ctx *gin.Context, req models.AdminCreateReq) (interface{}, error) {
 	var (
-		Admin models.Admin
+		admin models.Admin
 		count int64
 	)
-	s.dbClient.MysqlClient.Model(Admin).
+	s.dbClient.MysqlClient.Model(admin).
 		Where("username=?", req.Username).
 		Count(&count)
 	if count > 0 {
 		return nil, errors.New("记录已存在")
 	}
-	Admin.Username = req.Username
+	admin.Username = req.Username
 	if len(req.Password) <= 0 {
 		req.Password = fmt.Sprintf("%s%s", req.Username, "123456")
 	}
-	Admin.Password = req.Password
-	Admin.GroupId = req.GroupId
+	admin.Password = req.Password
+	admin.GroupId = req.GroupId
 
-	Admin.Expiration = tools.SetExpiration()
-	Admin.Salt = tools.CreateSalt()
-	Admin.Password = tools.GenPassword(Admin.Salt, req.Password)
-	err := s.dbClient.MysqlClient.Save(&Admin).Error
+	admin.Expiration = tools.SetExpiration()
+	admin.Salt = tools.CreateSalt()
+	admin.Password = tools.GenPassword(admin.Salt, req.Password)
+	err := s.dbClient.MysqlClient.Save(&admin).Error
 	if err != nil {
 		return nil, err
 	}

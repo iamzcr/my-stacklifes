@@ -9,15 +9,17 @@ type Category struct {
 	Parent int    `json:"parent"`
 	Weight int    `json:"weight"`
 	Status int    `json:"status"`
-}
-
-type CategoryInfo struct {
-	Category
 	CommonField
 }
 
 func (c *Category) TableName() string {
 	return "sl_category"
+}
+
+type CategoryMine struct {
+	Id   int    `json:"id"`
+	Mark string `json:"mark"`
+	Name string `json:"name"`
 }
 
 type CategoryListReq struct {
@@ -26,8 +28,18 @@ type CategoryListReq struct {
 	Parent int    `json:"parent" form:"parent"`
 }
 
+type CategoryListRes struct {
+	Total int64      `json:"total"`
+	List  []Category `json:"list"`
+}
+
 type CategoryNoPageReq struct {
-	Parent int `json:"parent" form:"parent"`
+	Parent int `json:"parent" form:"parent,default=0"`
+	Status int `json:"status" form:"status,default=1" `
+}
+
+type CategoryNoPageListRes struct {
+	List []CategoryMine `json:"list"`
 }
 
 type CategoryUpdateReq struct {
@@ -49,11 +61,6 @@ type CategoryCreateReq struct {
 	Parent int    `json:"parent" form:"parent" binding:"omitempty"`
 	Weight int    `json:"weight" form:"weight" binding:"required"`
 	Status int    `json:"status" form:"status"`
-}
-
-type CategoryListRes struct {
-	Total int64      `json:"total"`
-	List  []Category `json:"list"`
 }
 
 type CategoryDelReq struct {

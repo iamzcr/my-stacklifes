@@ -17,17 +17,10 @@ func NewTagsService() *TagsService {
 	}
 }
 
-//func (s *TagsService) GetNoPageList(ctx *gin.Context, req models.TagsNoPageReq) (interface{}, error) {
-//	db := s.dbClient.MysqlClient
-//	if req.Parent != 0 {
-//		db = db.Where("parent=?", req.Parent)
-//	}
-//}
-
 func (s *TagsService) GetList(ctx *gin.Context, req models.TagsListReq) (interface{}, error) {
 	var (
-		categories []models.Tags
-		total      int64
+		tags  []models.Tags
+		total int64
 	)
 	db := s.dbClient.MysqlClient
 	if len(req.Name) > 0 {
@@ -37,7 +30,7 @@ func (s *TagsService) GetList(ctx *gin.Context, req models.TagsListReq) (interfa
 	err := db.Limit(limit).
 		Offset(offset).
 		Order("id DESC").
-		Find(&categories).
+		Find(&tags).
 		Count(&total).Error
 	if err != nil {
 		return nil, err
@@ -45,88 +38,84 @@ func (s *TagsService) GetList(ctx *gin.Context, req models.TagsListReq) (interfa
 
 	return models.TagsListRes{
 		Total: total,
-		List:  categories,
+		List:  tags,
 	}, nil
 }
 
 func (s *TagsService) GetInfo(ctx *gin.Context, id string) (interface{}, error) {
-	var TagsInfo models.Tags
-
-	res := s.dbClient.MysqlClient.Where("id=?", id).Find(&TagsInfo)
+	var tagsInfo models.Tags
+	res := s.dbClient.MysqlClient.Where("id=?", id).Find(&tagsInfo)
 	if res.Error != nil {
 		return nil, res.Error
 	}
-	if TagsInfo.Id == 0 {
+	if tagsInfo.Id == 0 {
 		return nil, errors.New("Tags error")
 	}
-	return TagsInfo, nil
+	return tagsInfo, nil
 }
 
 func (s *TagsService) Create(ctx *gin.Context, req models.TagsCreateReq) (interface{}, error) {
 	var (
-		Tags  models.Tags
+		tags  models.Tags
 		count int64
 	)
-	s.dbClient.MysqlClient.Model(Tags).
-		Where("name=?", req.Name).
-		Count(&count)
+	s.dbClient.MysqlClient.Model(tags).Where("name=?", req.Name).Count(&count)
 	if count > 0 {
 		return nil, errors.New("记录已存在")
 	}
-	Tags.Name = req.Name
-	Tags.Mark = req.Mark
-	Tags.Type = req.Type
-	Tags.Author = req.Author
-	Tags.Weight = req.Weight
-	err := s.dbClient.MysqlClient.Save(&Tags).Error
+	tags.Name = req.Name
+	tags.Mark = req.Mark
+	tags.Type = req.Type
+	tags.Author = req.Author
+	tags.Weight = req.Weight
+	err := s.dbClient.MysqlClient.Save(&tags).Error
 	if err != nil {
 		return nil, err
 	}
-	return Tags.Id, nil
+	return tags.Id, nil
 }
 
 func (s *TagsService) Update(ctx *gin.Context, req models.TagsUpdateReq) (interface{}, error) {
 	var (
-		Tags  models.Tags
+		tags  models.Tags
 		count int64
 	)
-	res := s.dbClient.MysqlClient.Where("id=?", req.Id).Find(&Tags)
+	res := s.dbClient.MysqlClient.Where("id=?", req.Id).Find(&tags)
 	if res.Error != nil {
 		return nil, res.Error
 	}
-	s.dbClient.MysqlClient.Model(Tags).
-		Where("id != ? and name=?", req.Id, req.Name).
-		Count(&count)
+	s.dbClient.MysqlClient.Model(tags).Where("id != ? and name=?", req.Id, req.Name).Count(&count)
 	if count > 0 {
 		return nil, errors.New("记录已存在")
 	}
-	Tags.Name = req.Name
-	Tags.Mark = req.Mark
-	Tags.Type = req.Type
-	Tags.Author = req.Author
-	Tags.Weight = req.Weight
-	err := s.dbClient.MysqlClient.Save(&Tags).Error
+	tags.Name = req.Name
+	tags.Mark = req.Mark
+	tags.Type = req.Type
+	tags.Author = req.Author
+	tags.Weight = req.Weight
+	err := s.dbClient.MysqlClient.Save(&tags).Error
 	if err != nil {
 		return nil, err
 	}
-	return Tags.Id, nil
+	return tags.Id, nil
 }
+
 func (s *TagsService) Delete(ctx *gin.Context, req models.TagsDelReq) (interface{}, error) {
 	var (
-		Tags     models.Tags
-		articles []models.Article
+		tags        models.Tags
+		articleTags []models.ArticleTags
 	)
-	s.dbClient.MysqlClient.Where("id=?", req.Id).Find(&Tags)
-	if Tags.Id <= 0 {
+	s.dbClient.MysqlClient.Where("id=?", req.Id).Find(&tags)
+	if tags.Id <= 0 {
 		return nil, errors.New("不存在该记录")
 	}
-	s.dbClient.MysqlClient.Where("cid=?", req.Id).Find(&articles)
-	if len(articles) > 0 {
+	s.dbClient.MysqlClient.Where("tid=?", req.Id).Find(&articleTags)
+	if len(articleTags) > 0 {
 		return nil, errors.New("该标签已被使用")
 	}
-	err := s.dbClient.MysqlClient.Delete(&Tags).Error
+	err := s.dbClient.MysqlClient.Delete(&tags).Error
 	if err != nil {
 		return nil, err
 	}
-	return Tags.Id, nil
+	return tags.Id, nil
 }

@@ -8,11 +8,12 @@ type AdminGroup struct {
 	MenuPermit  string `json:"menu_permit" form:"menu_permit"`
 	MenuModules string `json:"menu_modules" form:"menu_modules"`
 	AllowIp     string `json:"allow_ip" form:"allow_ip"`
-}
-
-type AdminGroupInfo struct {
-	AdminGroup
 	CommonField
+}
+type AdminGroupMine struct {
+	Id   int    `json:"id"`
+	Mark string `json:"mark"`
+	Name string `json:"name"`
 }
 
 func (ug *AdminGroup) TableName() string {
@@ -24,8 +25,17 @@ type AdminGroupListReq struct {
 	Name string `json:"name" form:"name"`
 }
 
+type AdminGroupListRes struct {
+	Total int64        `json:"total"`
+	List  []AdminGroup `json:"list"`
+}
+
 type AdminGroupNoPageReq struct {
-	Status int `json:"status" form:"status"`
+	Status int `json:"status" form:"status,default=1" `
+}
+
+type AdminGroupNoPageListRes struct {
+	List []AdminGroupMine `json:"list"`
 }
 
 type AdminGroupUpdateReq struct {
@@ -43,9 +53,4 @@ type AdminGroupCreateReq struct {
 
 type AdminGroupDelReq struct {
 	Id int `json:"id" form:"id" binding:"required"`
-}
-
-type AdminGroupListRes struct {
-	Total int64        `json:"total"`
-	List  []AdminGroup `json:"list"`
 }

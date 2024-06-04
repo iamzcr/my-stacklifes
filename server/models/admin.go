@@ -12,6 +12,7 @@ type Admin struct {
 	LastLoginTime int    `json:"last_login_time" form:"last_login_time"`
 	LastLoginIp   string `json:"last_login_ip" form:"last_login_ip"`
 	Lang          string `json:"lang" form:"lang" gorm:"default:'zh'"`
+	CommonField
 }
 
 func (m *Admin) TableName() string {
@@ -21,6 +22,11 @@ func (m *Admin) TableName() string {
 type AdminListReq struct {
 	PageInfo
 	Username string `json:"username" form:"username"`
+}
+
+type AdminListRes struct {
+	Total int64   `json:"total"`
+	List  []Admin `json:"list"`
 }
 
 type AdminCreateReq struct {
@@ -36,11 +42,6 @@ type AdminDelReq struct {
 type AdminFieldReq struct {
 	Id     int `json:"id" form:"id" binding:"required"`
 	Status int `json:"status" form:"status"`
-}
-
-type AdminListRes struct {
-	Total int64   `json:"total"`
-	List  []Admin `json:"list"`
 }
 
 type TokenInfo struct {

@@ -27,6 +27,9 @@ func AdminRoutersInit(r *gin.Engine) {
 	permitHandler := admin.NewPermitHandler()
 	menuHandler := admin.NewMenuHandler()
 	websiteHandler := admin.NewWebsiteHandler()
+	msgHandler := admin.NewMessageHandler()
+	commentHandler := admin.NewCommentHandler()
+	readHandler := admin.NewReadHandler()
 	adminRouter := r.Group("/admin") //可以加载这个后面
 	adminRouter.POST("/login", loginHandler.Login)
 	{
@@ -40,11 +43,13 @@ func AdminRoutersInit(r *gin.Engine) {
 
 		adminRouter.GET("/category/list", categoryHandler.List)
 		adminRouter.GET("/category/info/:id", categoryHandler.Info)
+		adminRouter.GET("/category/noPageList", categoryHandler.NoPageList)
 		adminRouter.POST("/category/update", categoryHandler.Update)
 		adminRouter.POST("/category/create", categoryHandler.Create)
 		adminRouter.POST("/category/delete", categoryHandler.Delete)
 
 		adminRouter.GET("/admin_group/list", adminGroupHandler.List)
+		adminRouter.GET("/admin_group/noPageList", adminGroupHandler.NoPageList)
 		adminRouter.GET("/admin_group/info/:id", adminGroupHandler.Info)
 		adminRouter.POST("/admin_group/update", adminGroupHandler.Update)
 		adminRouter.POST("/admin_group/create", adminGroupHandler.Create)
@@ -59,7 +64,6 @@ func AdminRoutersInit(r *gin.Engine) {
 		adminRouter.GET("/website/list", websiteHandler.List)
 		adminRouter.GET("/website/info/:id", websiteHandler.Info)
 		adminRouter.POST("/website/create", websiteHandler.Create)
-		adminRouter.POST("/admin/changeField", adminsHandler.ChangeField)
 		adminRouter.POST("/website/delete", websiteHandler.Delete)
 
 		adminRouter.GET("/tags/list", tagsHandler.List)
@@ -83,7 +87,15 @@ func AdminRoutersInit(r *gin.Engine) {
 		adminRouter.GET("/attach/info", attachHandler.List)
 		adminRouter.GET("/attach/edit", attachHandler.List)
 
+		adminRouter.GET("/website/list", websiteHandler.List)
+		adminRouter.GET("/website/info/:id", websiteHandler.Info)
+		adminRouter.GET("/website/delete", websiteHandler.Delete)
+		adminRouter.GET("/website/create", websiteHandler.Create)
+
 		adminRouter.GET("/log/list", logHandler.List)
+		adminRouter.GET("/msg/list", msgHandler.List)
+		adminRouter.GET("/read/list", readHandler.List)
+		adminRouter.GET("/comment/list", commentHandler.List)
 
 	}
 }

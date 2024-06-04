@@ -20,14 +20,6 @@ type WebsiteListReq struct {
 	Name string `json:"name" form:"name"`
 }
 
-type WebsiteListRes struct {
-	Total int64     `json:"total"`
-	List  []Website `json:"list"`
-}
-type WebsiteNoPageListRes struct {
-	List []Website `json:"list"`
-}
-
 type WebsiteCreateReq struct {
 	Key   string `json:"key"`
 	Name  string `json:"name"`
@@ -36,4 +28,13 @@ type WebsiteCreateReq struct {
 
 type WebsiteDelReq struct {
 	Id int `json:"id" form:"id" binding:"required"`
+}
+
+type WebsiteListRes struct {
+	Total int64     `json:"total"`
+	List  []Website `json:"list"`
+}
+
+type WebsiteNoPageListRes struct {
+	List []Website `json:"list"`
 }

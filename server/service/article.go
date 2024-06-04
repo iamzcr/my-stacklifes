@@ -93,6 +93,7 @@ func (s *ArticleService) GetFrontDetail(ctx *gin.Context, id string) (interface{
 		tagNames    []string
 		tagMap      = make(map[int]string)
 	)
+
 	db := s.dbClient.MysqlClient
 	err := db.Where("id=?", id).Find(&article).Error
 	if err != nil {
@@ -123,6 +124,13 @@ func (s *ArticleService) GetFrontDetail(ctx *gin.Context, id string) (interface{
 			tagNames = append(tagNames, tagMap[articleTag.TId])
 		}
 	}
+	//记录阅读人数
+	readService := NewReadService()
+	_, _ = readService.Create(ctx, models.ReadCreateReq{
+		Aid:     article.Id,
+		Ip:      ctx.ClientIP(),
+		Referer: ctx.Request.Referer(),
+	})
 
 	return models.FrontArticle{
 		Article: models.Article{

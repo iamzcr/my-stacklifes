@@ -20,13 +20,13 @@ func NewAdminHandler() *AdminHandler {
 
 func (h *AdminHandler) List(ctx *gin.Context) {
 	var appGin = app.Gin{C: ctx}
-	query := models.AdminListReq{}
-	err := ctx.ShouldBindQuery(&query)
+	listReq := models.AdminListReq{}
+	err := ctx.ShouldBindQuery(&listReq)
 	if err != nil {
 		appGin.Error(exception.ERROR, err.Error(), nil)
 		return
 	}
-	list, err := h.srv.GetList(ctx, query)
+	list, err := h.srv.GetList(ctx, listReq)
 	if err != nil {
 		appGin.Error(exception.ERROR, err.Error(), nil)
 		return

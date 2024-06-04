@@ -8,19 +8,19 @@ import (
 	"my-stacklifes/service"
 )
 
-type MessageHandler struct {
-	srv *service.MessageService
+type CommentHandler struct {
+	srv *service.CommentService
 }
 
-func NewMessageHandler() *MessageHandler {
-	return &MessageHandler{
-		srv: service.NewMessageService(),
+func NewCommentHandler() *CommentHandler {
+	return &CommentHandler{
+		srv: service.NewCommentService(),
 	}
 }
 
-func (h *MessageHandler) List(ctx *gin.Context) {
+func (h *CommentHandler) List(ctx *gin.Context) {
 	var appGin = app.Gin{C: ctx}
-	listReq := models.MessageReq{}
+	listReq := models.CommentReq{}
 	err := ctx.ShouldBindQuery(&listReq)
 	if err != nil {
 		appGin.Error(exception.ERROR, err.Error(), nil)

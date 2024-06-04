@@ -17,13 +17,6 @@ func NewCategoryService() *CategoryService {
 	}
 }
 
-//func (s *CategoryService) GetNoPageList(ctx *gin.Context, req models.CategoryNoPageReq) (interface{}, error) {
-//	db := s.dbClient.MysqlClient
-//	if req.Parent != 0 {
-//		db = db.Where("parent=?", req.Parent)
-//	}
-//}
-
 func (s *CategoryService) GetList(ctx *gin.Context, req models.CategoryListReq) (interface{}, error) {
 	var (
 		categories []models.Category
@@ -46,6 +39,20 @@ func (s *CategoryService) GetList(ctx *gin.Context, req models.CategoryListReq) 
 	return models.CategoryListRes{
 		Total: total,
 		List:  categories,
+	}, nil
+}
+
+func (s *CategoryService) GetNoPageList(ctx *gin.Context, req models.CategoryNoPageReq) (interface{}, error) {
+	var categorys []models.CategoryMine
+	db := s.dbClient.MysqlClient
+	err := db.Model(&models.Category{}).Where("status = ?", req.Status).Select("id,mark,name").
+		Order("id DESC").Find(&categorys).Error
+
+	if err != nil {
+		return nil, err
+	}
+	return models.CategoryNoPageListRes{
+		List: categorys,
 	}, nil
 }
 
@@ -113,6 +120,7 @@ func (s *CategoryService) Update(ctx *gin.Context, req models.CategoryUpdateReq)
 	}
 	return category.Id, nil
 }
+
 func (s *CategoryService) Delete(ctx *gin.Context, req models.CategoryDelReq) (interface{}, error) {
 	var (
 		category models.Category

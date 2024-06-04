@@ -47,11 +47,10 @@ type TagsCreateReq struct {
 	Status int    `json:"status" form:"status"`
 }
 
+type TagsDelReq struct {
+	Id int `json:"id" form:"id" binding:"required"`
+}
 type TagsListRes struct {
 	Total int64  `json:"total"`
 	List  []Tags `json:"list"`
-}
-
-type TagsDelReq struct {
-	Id int `json:"id" form:"id" binding:"required"`
 }

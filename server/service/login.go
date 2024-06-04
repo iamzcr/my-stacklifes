@@ -5,7 +5,7 @@ import (
 	"github.com/gin-gonic/gin"
 	"my-stacklifes/database/mysql"
 	"my-stacklifes/models"
-	utils "my-stacklifes/pkg/tools"
+	"my-stacklifes/pkg/tools"
 )
 
 type LoginService struct {
@@ -23,7 +23,7 @@ func (s *LoginService) LoginCheck(ctx *gin.Context, req models.LoginReq) (interf
 	if admin.Id == 0 {
 		return nil, errors.New("admin error")
 	}
-	password := utils.GenPassword(admin.Salt, req.Password)
+	password := tools.GenPassword(admin.Salt, req.Password)
 	if password != admin.Password {
 		return nil, errors.New("admin error")
 	}

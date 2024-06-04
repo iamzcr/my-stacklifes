@@ -8,19 +8,19 @@ import (
 	"my-stacklifes/service"
 )
 
-type MessageHandler struct {
-	srv *service.MessageService
+type ReadHandler struct {
+	srv *service.ReadService
 }
 
-func NewMessageHandler() *MessageHandler {
-	return &MessageHandler{
-		srv: service.NewMessageService(),
+func NewReadHandler() *ReadHandler {
+	return &ReadHandler{
+		srv: service.NewReadService(),
 	}
 }
 
-func (h *MessageHandler) List(ctx *gin.Context) {
+func (h *ReadHandler) List(ctx *gin.Context) {
 	var appGin = app.Gin{C: ctx}
-	listReq := models.MessageReq{}
+	listReq := models.ReadReq{}
 	err := ctx.ShouldBindQuery(&listReq)
 	if err != nil {
 		appGin.Error(exception.ERROR, err.Error(), nil)
