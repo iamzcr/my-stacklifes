@@ -88,8 +88,11 @@ func AdminRoutersInit(r *gin.Engine) {
 		adminRouter.GET("/menu/edit", categoryHandler.List)
 
 		adminRouter.GET("/permit/list", permitHandler.List)
-		adminRouter.GET("/permit/info", categoryHandler.List)
-		adminRouter.GET("/permit/edit", categoryHandler.List)
+		adminRouter.GET("/permit/info/:id", permitHandler.Info)
+		adminRouter.GET("/permit/noPageList", permitHandler.NoPageList)
+		adminRouter.POST("/permit/update", permitHandler.Update)
+		adminRouter.POST("/permit/create", permitHandler.Create)
+		adminRouter.POST("/permit/delete", permitHandler.Delete)
 
 		adminRouter.GET("/attach/list", attachHandler.List)
 		adminRouter.GET("/attach/info", attachHandler.List)
