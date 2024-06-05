@@ -45,7 +45,9 @@ func (s *AdminGroupService) GetList(ctx *gin.Context, req models.AdminGroupListR
 func (s *AdminGroupService) GetNoPageList(ctx *gin.Context, req models.AdminGroupNoPageReq) (interface{}, error) {
 	var adminGroups []models.AdminGroupMine
 	db := s.dbClient.MysqlClient
-	err := db.Model(&models.AdminGroup{}).Where("status = ?", req.Status).Select("id,mark,name").
+	err := db.Model(&models.AdminGroup{}).
+		Where("status = ?", req.Status).
+		Select("id,mark,name").
 		Order("id DESC").Find(&adminGroups).Error
 
 	if err != nil {

@@ -26,11 +26,7 @@ func (s *LogService) GetList(ctx *gin.Context, req models.LogReq) (interface{}, 
 		db = db.Where("content LIKE ?", "%"+req.Content+"%")
 	}
 	limit, offset := req.GetPageInfo()
-	err := db.Limit(limit).
-		Offset(offset).
-		Order("id DESC").
-		Find(&logs).
-		Count(&total).Error
+	err := db.Limit(limit).Offset(offset).Order("id DESC").Find(&logs).Count(&total).Error
 	if err != nil {
 		return nil, err
 	}

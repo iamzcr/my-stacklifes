@@ -9,6 +9,7 @@ func AdminRoutersInit(r *gin.Engine) {
 	loginHandler := admin.NewLoginHandler()
 	//分类
 	categoryHandler := admin.NewCategoryHandler()
+	directoryHandler := admin.NewDirectoryHandler()
 	attachHandler := admin.NewAttachHandler()
 	//标签
 	tagsHandler := admin.NewTagsHandler()
@@ -48,6 +49,13 @@ func AdminRoutersInit(r *gin.Engine) {
 		adminRouter.POST("/category/create", categoryHandler.Create)
 		adminRouter.POST("/category/delete", categoryHandler.Delete)
 
+		adminRouter.GET("/directory/list", directoryHandler.List)
+		adminRouter.GET("/directory/info/:id", directoryHandler.Info)
+		adminRouter.GET("/directory/noPageList", directoryHandler.NoPageList)
+		adminRouter.POST("/directory/update", directoryHandler.Update)
+		adminRouter.POST("/directory/create", directoryHandler.Create)
+		adminRouter.POST("/directory/delete", directoryHandler.Delete)
+
 		adminRouter.GET("/admin_group/list", adminGroupHandler.List)
 		adminRouter.GET("/admin_group/noPageList", adminGroupHandler.NoPageList)
 		adminRouter.GET("/admin_group/info/:id", adminGroupHandler.Info)
@@ -86,11 +94,6 @@ func AdminRoutersInit(r *gin.Engine) {
 		adminRouter.GET("/attach/list", attachHandler.List)
 		adminRouter.GET("/attach/info", attachHandler.List)
 		adminRouter.GET("/attach/edit", attachHandler.List)
-
-		adminRouter.GET("/website/list", websiteHandler.List)
-		adminRouter.GET("/website/info/:id", websiteHandler.Info)
-		adminRouter.GET("/website/delete", websiteHandler.Delete)
-		adminRouter.GET("/website/create", websiteHandler.Create)
 
 		adminRouter.GET("/log/list", logHandler.List)
 		adminRouter.GET("/msg/list", msgHandler.List)

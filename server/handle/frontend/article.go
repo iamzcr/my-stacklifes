@@ -44,3 +44,15 @@ func (h *ArticleHandler) ArticleDetail(ctx *gin.Context) {
 	}
 	appGin.Success(detailData)
 }
+
+func (h *ArticleHandler) CategoryArticleList(ctx *gin.Context) {
+	var appGin = app.Gin{C: ctx}
+	id := ctx.Param("id")
+
+	list, err := h.srv.GetFrontCategoryArticleList(ctx, id)
+	if err != nil {
+		appGin.Error(exception.ERROR, err.Error(), nil)
+		return
+	}
+	appGin.Success(list)
+}

@@ -4,10 +4,6 @@ type Log struct {
 	Id       int    `json:"id" form:"id"`
 	Username string `json:"username" form:"username"`
 	Content  string `json:"content" form:"content"`
-}
-
-type LogInfo struct {
-	Log
 	CommonField
 }
 
@@ -17,7 +13,7 @@ func (c *Log) TableName() string {
 
 type LogReq struct {
 	PageInfo
-	Content string `json:"username" form:"username"`
+	Content string `json:"content" form:"content"`
 }
 
 type LogListRes struct {

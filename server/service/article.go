@@ -69,7 +69,7 @@ func (s *ArticleService) GetFrontList(ctx *gin.Context, req models.FrontArticleL
 		db = db.Where("cid = ?", req.Cid)
 	}
 	limit, offset := req.GetPageInfo()
-	err := db.Limit(limit).
+	err := db.Model(&models.Article{}).Limit(limit).
 		Offset(offset).
 		Order("id DESC").
 		Find(&articles).
@@ -80,6 +80,45 @@ func (s *ArticleService) GetFrontList(ctx *gin.Context, req models.FrontArticleL
 	return models.FrontArticleListRes{
 		Total: total,
 		List:  articles,
+	}, nil
+}
+func (s *ArticleService) GetFrontCategoryArticleList(ctx *gin.Context, cid string) (interface{}, error) {
+	var (
+		articles          []models.FrontArticleInfo
+		directoryArticle  models.DirectoryArticle
+		returnArticleList []models.DirectoryArticle
+	)
+	db := s.dbClient.MysqlClient
+	//分类目录
+	directoryService := NewDirectoryService()
+	directorys, directoryIds, err := directoryService.GetListByCid(cid)
+	if err != nil {
+		return nil, err
+	}
+	err = db.Model(&models.Article{}).Where("did IN (?)", directoryIds).Find(&articles).Error
+	if err != nil {
+		return nil, err
+	}
+
+	for _, directory := range directorys {
+		directoryArticle = models.DirectoryArticle{
+			DirectoryID:   directory.Id,
+			DirectoryName: directory.Name,
+			Articles:      []models.FrontArticleInfo{},
+		}
+
+		for _, article := range articles {
+			if article.Did == directory.Id {
+				directoryArticle.Articles = append(directoryArticle.Articles, article)
+			}
+		}
+		returnArticleList = append(returnArticleList, directoryArticle)
+	}
+	if err != nil {
+		return nil, err
+	}
+	return models.FrontDirectoryArticleListRes{
+		List: returnArticleList,
 	}, nil
 }
 

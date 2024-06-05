@@ -9,6 +9,7 @@ import (
 )
 
 func main() {
+
 	//初始化配置
 	err := conf.InitConfig()
 	if err != nil {

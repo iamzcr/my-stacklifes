@@ -54,6 +54,7 @@ func (s *AttachService) GetInfo(ctx *gin.Context, id string) (interface{}, error
 	}
 	return AttachInfo, nil
 }
+
 func (s *AttachService) Update(ctx *gin.Context, req models.Attach) (interface{}, error) {
 	var (
 		Attach models.Attach

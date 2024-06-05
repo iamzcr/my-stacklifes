@@ -1,6 +1,8 @@
 package conf
 
 import (
+	"fmt"
+	"github.com/joho/godotenv"
 	"gopkg.in/yaml.v3"
 	"io/ioutil"
 	"log"
@@ -46,11 +48,21 @@ type Config struct {
 var AppConfig = &Config{}
 
 func InitConfig() (err error) {
+
 	// 获取当前 main.go 文件的目录路径
 	dir, err := filepath.Abs(filepath.Dir("."))
 	if err != nil {
 		log.Fatal(err)
 	}
+
+	//env方式加载
+	err = godotenv.Load(filepath.Join(dir, "..", "..", ".env"))
+	if err != nil {
+		fmt.Println("无法加载.env文件:", err)
+		// 处理错误逻辑
+	}
+	envmysql := os.Getenv("MYSQL_HOST")
+	fmt.Println(envmysql)
 	// 打开文件
 	file, err := os.Open(filepath.Join(dir, "..", "..", "conf", "conf.yaml"))
 	if err != nil {

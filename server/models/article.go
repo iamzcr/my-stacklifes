@@ -21,13 +21,11 @@ type FrontArticleInfo struct {
 	Id         int    `json:"id" `
 	Title      string `json:"title"`
 	Cid        int    `json:"cid"`
+	Did        int    `json:"did"`
 	Author     string `json:"author"`
 	PublicTime int64  `json:"public_time" `
 }
 
-func (article *FrontArticleInfo) TableName() string {
-	return "sl_article"
-}
 func (article *Article) TableName() string {
 	return "sl_article"
 }
@@ -37,11 +35,6 @@ type FrontArticle struct {
 	TagIds       []int
 	TagNames     []string
 	CategoryName string
-}
-
-type ArticleInfo struct {
-	Article
-	CommonField
 }
 
 type ArticleReq struct {
@@ -62,4 +55,16 @@ type FrontArticleListReq struct {
 	Title string `json:"title" form:"title"`
 	Cid   int    `json:"cid" form:"cid"`
 	Tid   int    `json:"tid" form:"tid"`
+}
+type FrontCategoryArticleListReq struct {
+	Cid int `json:"cid" form:"cid"  binding:"required"`
+}
+
+type FrontDirectoryArticleListRes struct {
+	List []DirectoryArticle `json:"list"`
+}
+type DirectoryArticle struct {
+	DirectoryID   int                `json:"d_id"`
+	DirectoryName string             `json:"d_name"`
+	Articles      []FrontArticleInfo `json:"d_articles"`
 }
