@@ -1,23 +1,40 @@
 package models
 
 type Article struct {
-	Id         int    `json:"id" `
-	Title      string `json:"title"`
-	Cid        int    `json:"cid" `
-	Did        int    `json:"did" `
-	Author     string `json:"author"`
-	Desc       string `json:"desc"`
-	Keyword    string `json:"keyword" `
-	Thumb      string `json:"thumb" `
-	Summary    string `json:"summary" `
-	Content    string `json:"content"`
-	IsHot      int    `json:"is_hot"`
-	IsNew      int    `json:"is_new"`
-	IsRecom    int    `json:"is_recom" `
-	Weight     int    `json:"weight"`
-	PublicTime int64  `json:"public_time"`
-	Month      string `json:"month"`
+	Id          int                    `json:"id" `
+	Title       string                 `json:"title"`
+	Cid         int                    `json:"cid" `
+	Did         int                    `json:"did" `
+	Author      string                 `json:"author"`
+	Desc        string                 `json:"desc"`
+	Keyword     string                 `json:"keyword" `
+	Thumb       string                 `json:"thumb" `
+	Summary     string                 `json:"summary" `
+	Content     string                 `json:"content"`
+	IsHot       int                    `json:"is_hot"`
+	IsNew       int                    `json:"is_new"`
+	IsRecom     int                    `json:"is_recom" `
+	Weight      int                    `json:"weight"`
+	PublicTime  int64                  `json:"public_time"`
+	Month       string                 `json:"month"`
+	Status      int                    `json:"status"`
+	ExtraFields map[string]interface{} `json:"extra_fields" gorm:"-"` //存放回显中文
 	CommonField
+}
+
+type ArticleMine struct {
+	Id          int                    `json:"id" `
+	Title       string                 `json:"title"`
+	Cid         int                    `json:"cid" `
+	Did         int                    `json:"did" `
+	Author      string                 `json:"author"`
+	IsHot       int                    `json:"is_hot"`
+	IsNew       int                    `json:"is_new"`
+	IsRecom     int                    `json:"is_recom" `
+	Weight      int                    `json:"weight"`
+	PublicTime  int64                  `json:"public_time"`
+	Status      int                    `json:"status"`
+	ExtraFields map[string]interface{} `json:"extra_fields" gorm:"-"` //存放回显中文
 }
 
 type ArticleUpdateReq struct {
@@ -74,8 +91,8 @@ type ArticleReq struct {
 	Title string `json:"title" form:"title"`
 }
 type ArticleListRes struct {
-	Total int64     `json:"total"`
-	List  []Article `json:"list"`
+	Total int64         `json:"total"`
+	List  []ArticleMine `json:"list"`
 }
 
 type FrontArticleInfo struct {
@@ -116,4 +133,11 @@ type DirectoryArticle struct {
 	DirectoryID   int                `json:"d_id"`
 	DirectoryName string             `json:"d_name"`
 	Articles      []FrontArticleInfo `json:"d_articles"`
+}
+
+func (am *ArticleMine) AddExtraField(key string, value interface{}) {
+	if am.ExtraFields == nil {
+		am.ExtraFields = make(map[string]interface{})
+	}
+	am.ExtraFields[key] = value
 }

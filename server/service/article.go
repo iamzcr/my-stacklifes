@@ -5,6 +5,7 @@ import (
 	"github.com/gin-gonic/gin"
 	"my-stacklifes/database/mysql"
 	"my-stacklifes/models"
+	"my-stacklifes/pkg/tools"
 )
 
 type ArticleService struct {
@@ -19,12 +20,12 @@ func NewArticleService() *ArticleService {
 
 func (s *ArticleService) GetList(ctx *gin.Context, req models.ArticleReq) (interface{}, error) {
 	var (
-		articles []models.Article
+		articles []models.ArticleMine
 		total    int64
 	)
-	db := s.dbClient.MysqlClient
+	db := s.dbClient.MysqlClient.Model(&models.Article{})
 	if len(req.Title) > 0 {
-		db = db.Where("title LIKE ?", "%"+req.Title+"%")
+		db.Where("title LIKE ?", "%"+req.Title+"%")
 	}
 	limit, offset := req.GetPageInfo()
 	err := db.Limit(limit).
@@ -35,7 +36,12 @@ func (s *ArticleService) GetList(ctx *gin.Context, req models.ArticleReq) (inter
 	if err != nil {
 		return nil, err
 	}
-
+	for i := range articles {
+		articles[i].AddExtraField("status_name", tools.GetStatusDisplay(articles[i].Status))
+		articles[i].AddExtraField("new_name", tools.GetStatusDisplay(articles[i].IsNew))
+		articles[i].AddExtraField("hot_name", tools.GetStatusDisplay(articles[i].IsHot))
+		articles[i].AddExtraField("recom_name", tools.GetStatusDisplay(articles[i].IsRecom))
+	}
 	return models.ArticleListRes{
 		Total: total,
 		List:  articles,
