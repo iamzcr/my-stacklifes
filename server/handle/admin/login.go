@@ -20,13 +20,18 @@ func NewLoginHandler() *LoginHandler {
 
 func (h *LoginHandler) Login(ctx *gin.Context) {
 	var (
-		ag  = app.Gin{C: ctx}
-		req models.LoginReq
+		appGin   = app.Gin{C: ctx}
+		reqLogin models.LoginReq
 	)
-	res, err := h.srv.LoginCheck(ctx, req)
+	err := ctx.ShouldBind(&reqLogin)
 	if err != nil {
-		ag.Error(exception.ERROR, err.Error(), nil)
+		appGin.Error(exception.ERROR, err.Error(), nil)
 		return
 	}
-	ag.Success(res)
+	res, err := h.srv.LoginCheck(ctx, reqLogin)
+	if err != nil {
+		appGin.Error(exception.ERROR, err.Error(), nil)
+		return
+	}
+	appGin.Success(res)
 }

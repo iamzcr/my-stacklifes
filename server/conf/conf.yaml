@@ -5,11 +5,11 @@ app:
   login_jwt_secret : "stacklifes.com"
   Version: 1.0
 redis:
-  host: "127.0.0.1:23001"
+  host: "127.0.0.1:6379"
   db: 0
-  pwd: "Linux1314."
+  pwd: ""
 mysql:
-  host: "172.16.50.52"
+  host: "127.0.0.1"
   port: 3306
   username: "root"
   pwd: "root"

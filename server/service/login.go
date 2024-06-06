@@ -5,6 +5,8 @@ import (
 	"github.com/gin-gonic/gin"
 	"my-stacklifes/database/mysql"
 	"my-stacklifes/models"
+
+	"my-stacklifes/pkg/jwt"
 	"my-stacklifes/pkg/tools"
 )
 
@@ -28,8 +30,10 @@ func (s *LoginService) LoginCheck(ctx *gin.Context, req models.LoginReq) (interf
 		return nil, errors.New("admin error")
 	}
 
-	Authentication := ""
-
+	Authentication, err := jwt.CreateToken(admin.Username)
+	if err != nil {
+		return nil, errors.New("admin error")
+	}
 	return models.TokenInfo{
 		Authentication: Authentication,
 		Username:       admin.Username,

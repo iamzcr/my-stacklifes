@@ -1,7 +1,7 @@
 package models
 
 type Admin struct {
-	Id            uint   `json:"id" form:"id"`
+	Id            int    `json:"id" form:"id"`
 	Username      string `json:"username" form:"username"`
 	Password      string `json:"password" form:"password"`
 	Salt          string `json:"salt" form:"salt"`
@@ -45,11 +45,11 @@ type AdminFieldReq struct {
 }
 
 type TokenInfo struct {
-	Id             uint   `json:"id"`
+	Id             int    `json:"id"`
 	Authentication string `json:"authentication"`
 	Username       string `json:"username"`
 }
 type LoginReq struct {
-	Username string `json:"username"`
-	Password string `json:"password"`
+	Username string `json:"username"  form:"username" `
+	Password string `json:"password" form:"password"`
 }
