@@ -68,7 +68,6 @@ func (s *WebsiteService) Create(ctx *gin.Context, req models.WebsiteCreateReq) (
 	website.Name = req.Name
 	website.Key = req.Key
 	website.Value = req.Value
-
 	err := s.dbClient.MysqlClient.Save(&website).Error
 	if err != nil {
 		return nil, err
@@ -90,13 +89,13 @@ func (s *WebsiteService) Delete(ctx *gin.Context, req models.WebsiteDelReq) (int
 }
 
 func (s *WebsiteService) FrontendList(ctx *gin.Context) (interface{}, error) {
-	var websites []models.Website
+	var websites []models.WebsiteMine
 	db := s.dbClient.MysqlClient
-	err := db.Order("id DESC").Find(&websites).Error
+	err := db.Model(&models.Website{}).Order("id DESC").Find(&websites).Error
 	if err != nil {
 		return nil, err
 	}
-	return models.WebsiteNoPageListRes{
+	return models.WebsiteFrontendList{
 		List: websites,
 	}, nil
 }

@@ -82,6 +82,7 @@ func (h *LangHandler) Update(ctx *gin.Context) {
 	}
 	appGin.Success(res)
 }
+
 func (h *LangHandler) Delete(ctx *gin.Context) {
 
 	var (
@@ -94,6 +95,24 @@ func (h *LangHandler) Delete(ctx *gin.Context) {
 		return
 	}
 	res, err := h.srv.Delete(ctx, reqDel)
+	if err != nil {
+		appGin.Error(exception.ERROR, err.Error(), nil)
+		return
+	}
+	appGin.Success(res)
+}
+
+func (h *LangHandler) ChangeField(ctx *gin.Context) {
+	var (
+		appGin   = app.Gin{C: ctx}
+		reqField models.LangChangeFieldReq
+	)
+	err := ctx.ShouldBind(&reqField)
+	if err != nil {
+		appGin.Error(exception.ERROR, err.Error(), nil)
+		return
+	}
+	res, err := h.srv.ChangeField(ctx, reqField)
 	if err != nil {
 		appGin.Error(exception.ERROR, err.Error(), nil)
 		return

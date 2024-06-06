@@ -45,11 +45,25 @@ func (h *ArticleHandler) ArticleDetail(ctx *gin.Context) {
 	appGin.Success(detailData)
 }
 
+// 分类获取文章目录列表
 func (h *ArticleHandler) CategoryArticleList(ctx *gin.Context) {
 	var appGin = app.Gin{C: ctx}
 	id := ctx.Param("id")
 
 	list, err := h.srv.GetFrontCategoryArticleList(ctx, id)
+	if err != nil {
+		appGin.Error(exception.ERROR, err.Error(), nil)
+		return
+	}
+	appGin.Success(list)
+}
+
+// 标签获取文章列表
+func (h *ArticleHandler) TagsArticleList(ctx *gin.Context) {
+	var appGin = app.Gin{C: ctx}
+	id := ctx.Param("id")
+
+	list, err := h.srv.GetFrontTagsArticleList(id)
 	if err != nil {
 		appGin.Error(exception.ERROR, err.Error(), nil)
 		return

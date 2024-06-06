@@ -86,7 +86,7 @@ func (s *CategoryService) Create(ctx *gin.Context, req models.CategoryCreateReq)
 	category.Type = req.Type
 	category.Author = req.Author
 	category.Weight = req.Weight
-	err := s.dbClient.MysqlClient.Save(&category).Error
+	err := s.dbClient.MysqlClient.Create(&category).Error
 	if err != nil {
 		return nil, err
 	}

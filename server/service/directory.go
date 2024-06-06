@@ -2,6 +2,7 @@ package service
 
 import (
 	"errors"
+	"fmt"
 	"github.com/gin-gonic/gin"
 	"my-stacklifes/database/mysql"
 	"my-stacklifes/models"
@@ -44,10 +45,14 @@ func (s *DirectoryService) GetList(ctx *gin.Context, req models.DirectoryListReq
 
 func (s *DirectoryService) GetNoPageList(req models.DirectoryNoPageReq) (interface{}, error) {
 	var directorys []models.DirectoryMine
-	db := s.dbClient.MysqlClient
-	err := db.Model(&models.Directory{}).Where("status = ?", req.Status).Select("id,mark,name").
+	db := s.dbClient.MysqlClient.Model(&models.Directory{})
+	fmt.Println(req.Cid)
+	fmt.Println(req.Status)
+	if req.Cid != 0 {
+		db.Where("cid = ?", req.Cid)
+	}
+	err := db.Where("status = ?", req.Status).Select("id,mark,cid,name").
 		Order("id DESC").Find(&directorys).Error
-
 	if err != nil {
 		return nil, err
 	}
@@ -102,7 +107,7 @@ func (s *DirectoryService) Create(ctx *gin.Context, req models.DirectoryCreateRe
 	directory.Type = req.Type
 	directory.Author = req.Author
 	directory.Weight = req.Weight
-	err := s.dbClient.MysqlClient.Save(&directory).Error
+	err := s.dbClient.MysqlClient.Create(&directory).Error
 	if err != nil {
 		return nil, err
 	}

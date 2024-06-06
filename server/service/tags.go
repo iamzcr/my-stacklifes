@@ -119,3 +119,20 @@ func (s *TagsService) Delete(ctx *gin.Context, req models.TagsDelReq) (interface
 	}
 	return tags.Id, nil
 }
+
+func (s *TagsService) ChangeField(ctx *gin.Context, req models.TagsFieldReq) (interface{}, error) {
+	var (
+		tags models.Tags
+	)
+	s.dbClient.MysqlClient.Where("id=?", req.Id).Find(&tags)
+	if tags.Id <= 0 {
+		return nil, errors.New("不存在该记录")
+	}
+
+	tags.Status = req.Status
+	err := s.dbClient.MysqlClient.Save(&tags).Error
+	if err != nil {
+		return nil, err
+	}
+	return tags.Id, nil
+}

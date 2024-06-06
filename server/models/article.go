@@ -4,37 +4,69 @@ type Article struct {
 	Id         int    `json:"id" `
 	Title      string `json:"title"`
 	Cid        int    `json:"cid" `
+	Did        int    `json:"did" `
 	Author     string `json:"author"`
 	Desc       string `json:"desc"`
 	Keyword    string `json:"keyword" `
 	Thumb      string `json:"thumb" `
 	Summary    string `json:"summary" `
 	Content    string `json:"content"`
-	IsHot      uint8  `json:"is_hot"`
-	IsNew      uint8  `json:"is_new"`
-	IsRecom    uint8  `json:"is_recom" `
-	Weight     uint8  `json:"weight"`
+	IsHot      int    `json:"is_hot"`
+	IsNew      int    `json:"is_new"`
+	IsRecom    int    `json:"is_recom" `
+	Weight     int    `json:"weight"`
 	PublicTime int64  `json:"public_time"`
 	Month      string `json:"month"`
+	CommonField
 }
-type FrontArticleInfo struct {
-	Id         int    `json:"id" `
-	Title      string `json:"title"`
-	Cid        int    `json:"cid"`
-	Did        int    `json:"did"`
-	Author     string `json:"author"`
-	PublicTime int64  `json:"public_time" `
+
+type ArticleUpdateReq struct {
+	Id         int    `json:"id" form:"id"`
+	Title      string `json:"title" form:"title"`
+	Cid        int    `json:"cid" form:"cid"`
+	Did        int    `json:"did" form:"did"`
+	Author     string `json:"author" form:"author"`
+	Desc       string `json:"desc" form:"desc"`
+	Keyword    string `json:"keyword" form:"keyword"`
+	Thumb      string `json:"thumb" form:"thumb"`
+	Summary    string `json:"summary" form:"summary"`
+	Content    string `json:"content" form:"content"`
+	IsHot      int    `json:"is_hot"   form:"is_hot,default=0"`
+	IsNew      int    `json:"is_new"   form:"is_new,default=0"`
+	IsRecom    int    `json:"is_recom" form:"is_recom,default=0"`
+	Weight     int    `json:"weight" form:"weight"`
+	PublicTime int64  `json:"public_time" form:"public_time"`
+	Month      string `json:"month" form:"month"`
+}
+
+type ArticleCreateReq struct {
+	Title      string `json:"title" form:"title"`
+	Cid        int    `json:"cid" form:"cid"`
+	Did        int    `json:"did" form:"did"`
+	Author     string `json:"author" form:"author"`
+	Desc       string `json:"desc" form:"desc"`
+	Keyword    string `json:"keyword" form:"keyword"`
+	Thumb      string `json:"thumb" form:"thumb"`
+	Summary    string `json:"summary" form:"summary"`
+	Content    string `json:"content" form:"content"`
+	IsHot      int    `json:"is_hot"   form:"is_hot,default=0"`
+	IsNew      int    `json:"is_new"   form:"is_new,default=0"`
+	IsRecom    int    `json:"is_recom" form:"is_recom,default=0"`
+	Weight     int    `json:"weight" form:"weight"`
+	PublicTime int64  `json:"public_time" form:"public_time"`
+	Month      string `json:"month" form:"month"`
+}
+
+type ArticleFieldReq struct {
+	Id      int  `json:"id" form:"id" binding:"required"`
+	Status  *int `json:"status" form:"status" binding:"omitempty"`
+	IsHot   *int `json:"is_hot" form:"is_hot" binding:"omitempty"`
+	IsNew   *int `json:"is_new" form:"is_new" binding:"omitempty"`
+	IsRecom *int `json:"is_recom" form:"is_recom" binding:"omitempty"`
 }
 
 func (article *Article) TableName() string {
 	return "sl_article"
-}
-
-type FrontArticle struct {
-	Article
-	TagIds       []int
-	TagNames     []string
-	CategoryName string
 }
 
 type ArticleReq struct {
@@ -45,9 +77,20 @@ type ArticleListRes struct {
 	Total int64     `json:"total"`
 	List  []Article `json:"list"`
 }
-type FrontArticleListRes struct {
-	Total int64              `json:"total"`
-	List  []FrontArticleInfo `json:"list"`
+
+type FrontArticleInfo struct {
+	Id         int    `json:"id" `
+	Title      string `json:"title"`
+	Cid        int    `json:"cid"`
+	Did        int    `json:"did"`
+	Author     string `json:"author"`
+	PublicTime int64  `json:"public_time" `
+}
+type FrontArticle struct {
+	Article
+	TagIds       []int
+	TagNames     []string
+	CategoryName string
 }
 
 type FrontArticleListReq struct {
@@ -56,6 +99,12 @@ type FrontArticleListReq struct {
 	Cid   int    `json:"cid" form:"cid"`
 	Tid   int    `json:"tid" form:"tid"`
 }
+
+type FrontArticleListRes struct {
+	Total int64              `json:"total"`
+	List  []FrontArticleInfo `json:"list"`
+}
+
 type FrontCategoryArticleListReq struct {
 	Cid int `json:"cid" form:"cid"  binding:"required"`
 }

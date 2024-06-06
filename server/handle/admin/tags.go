@@ -101,3 +101,21 @@ func (h *TagsHandler) Delete(ctx *gin.Context) {
 	}
 	appGin.Success(res)
 }
+
+func (h *TagsHandler) ChangeField(ctx *gin.Context) {
+	var (
+		appGin   = app.Gin{C: ctx}
+		reqField models.TagsFieldReq
+	)
+	err := ctx.ShouldBind(&reqField)
+	if err != nil {
+		appGin.Error(exception.ERROR, err.Error(), nil)
+		return
+	}
+	res, err := h.srv.ChangeField(ctx, reqField)
+	if err != nil {
+		appGin.Error(exception.ERROR, err.Error(), nil)
+		return
+	}
+	appGin.Success(res)
+}

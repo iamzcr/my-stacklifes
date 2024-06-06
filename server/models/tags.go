@@ -8,11 +8,13 @@ type Tags struct {
 	Author string `json:"author"`
 	Weight int    `json:"weight"`
 	Status int    `json:"status"`
+	CommonField
 }
 
-type TagsInfo struct {
-	Tags
-	CommonField
+type TagsMine struct {
+	Id   int    `json:"id"`
+	Name string `json:"name"`
+	Mark string `json:"mark"`
 }
 
 func (c *Tags) TableName() string {
@@ -24,10 +26,17 @@ type TagsListReq struct {
 	Name string `json:"name" form:"name"`
 }
 
+type TagsListRes struct {
+	Total int64  `json:"total"`
+	List  []Tags `json:"list"`
+}
+
 type TagsNoPageReq struct {
 	Name string `json:"name" form:"name"`
 }
-
+type TagsNoPageListRes struct {
+	List []TagsMine `json:"list"`
+}
 type TagsUpdateReq struct {
 	Id     int    `json:"id" form:"id"`
 	Name   string `json:"name" form:"name" binding:"required"`
@@ -35,7 +44,6 @@ type TagsUpdateReq struct {
 	Type   int    `json:"type" form:"type"`
 	Author string `json:"author" form:"author"`
 	Weight int    `json:"weight" form:"weight" binding:"required"`
-	Status int    `json:"status" form:"status"`
 }
 
 type TagsCreateReq struct {
@@ -44,13 +52,13 @@ type TagsCreateReq struct {
 	Type   int    `json:"type" form:"type"`
 	Author string `json:"author" form:"author"`
 	Weight int    `json:"weight" form:"weight" binding:"required"`
-	Status int    `json:"status" form:"status"`
 }
 
 type TagsDelReq struct {
 	Id int `json:"id" form:"id" binding:"required"`
 }
-type TagsListRes struct {
-	Total int64  `json:"total"`
-	List  []Tags `json:"list"`
+
+type TagsFieldReq struct {
+	Id     int `json:"id" form:"id" binding:"required"`
+	Status int `json:"status" form:"status"`
 }

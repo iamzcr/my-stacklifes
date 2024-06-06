@@ -57,7 +57,7 @@ func (s *ReadService) Create(ctx *gin.Context, req models.ReadCreateReq) (interf
 	read.Referer = req.Referer
 	read.Aid = req.Aid
 
-	err := s.dbClient.MysqlClient.Save(&read).Error
+	err := s.dbClient.MysqlClient.Create(&read).Error
 	if err != nil {
 		return nil, err
 	}

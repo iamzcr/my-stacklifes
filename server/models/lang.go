@@ -33,8 +33,9 @@ type LangCreateReq struct {
 }
 
 type LangChangeFieldReq struct {
-	Default int `json:"default" form:"default"`
-	Status  int `json:"status" form:"status" `
+	Id      int  `json:"id" form:"id" binding:"required"`
+	Default *int `form:"default" binding:"omitempty"`
+	Status  *int `form:"status" binding:"omitempty"`
 }
 
 type LangDelReq struct {

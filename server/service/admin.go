@@ -44,16 +44,16 @@ func (s *AdminService) GetList(ctx *gin.Context, req models.AdminListReq) (inter
 }
 
 func (s *AdminService) GetInfo(ctx *gin.Context, id string) (interface{}, error) {
-	var AdminInfo models.Admin
+	var admin models.Admin
 
-	res := s.dbClient.MysqlClient.Where("id=?", id).Find(&AdminInfo)
+	res := s.dbClient.MysqlClient.Where("id=?", id).Find(&admin)
 	if res.Error != nil {
 		return nil, res.Error
 	}
-	if AdminInfo.Id == 0 {
+	if admin.Id == 0 {
 		return nil, errors.New("Admin error")
 	}
-	return AdminInfo, nil
+	return admin, nil
 }
 
 func (s *AdminService) Create(ctx *gin.Context, req models.AdminCreateReq) (interface{}, error) {
@@ -77,7 +77,7 @@ func (s *AdminService) Create(ctx *gin.Context, req models.AdminCreateReq) (inte
 	admin.Expiration = tools.SetExpiration()
 	admin.Salt = tools.CreateSalt()
 	admin.Password = tools.GenPassword(admin.Salt, req.Password)
-	err := s.dbClient.MysqlClient.Save(&admin).Error
+	err := s.dbClient.MysqlClient.Create(&admin).Error
 	if err != nil {
 		return nil, err
 	}
@@ -86,32 +86,32 @@ func (s *AdminService) Create(ctx *gin.Context, req models.AdminCreateReq) (inte
 
 func (s *AdminService) Delete(ctx *gin.Context, req models.AdminDelReq) (interface{}, error) {
 	var (
-		Admin models.Admin
+		admin models.Admin
 	)
-	s.dbClient.MysqlClient.Where("id=?", req.Id).Find(&Admin)
-	if Admin.Id <= 0 {
+	s.dbClient.MysqlClient.Where("id=?", req.Id).Find(&admin)
+	if admin.Id <= 0 {
 		return nil, errors.New("不存在该记录")
 	}
-	err := s.dbClient.MysqlClient.Delete(&Admin).Error
+	err := s.dbClient.MysqlClient.Delete(&admin).Error
 	if err != nil {
 		return nil, err
 	}
-	return Admin.Id, nil
+	return admin.Id, nil
 }
 
 func (s *AdminService) ChangeField(ctx *gin.Context, req models.AdminFieldReq) (interface{}, error) {
 	var (
-		Admin models.Admin
+		admin models.Admin
 	)
-	s.dbClient.MysqlClient.Where("id=?", req.Id).Find(&Admin)
-	if Admin.Id <= 0 {
+	s.dbClient.MysqlClient.Where("id=?", req.Id).Find(&admin)
+	if admin.Id <= 0 {
 		return nil, errors.New("不存在该记录")
 	}
 
-	Admin.Status = req.Status
-	err := s.dbClient.MysqlClient.Save(&Admin).Error
+	admin.Status = req.Status
+	err := s.dbClient.MysqlClient.Save(&admin).Error
 	if err != nil {
 		return nil, err
 	}
-	return Admin.Id, nil
+	return admin.Id, nil
 }

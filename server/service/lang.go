@@ -94,12 +94,13 @@ func (s *LangService) Update(ctx *gin.Context, req models.LangUpdateReq) (interf
 	}
 	Lang.Name = req.Name
 	Lang.Lang = req.Lang
-	err := s.dbClient.MysqlClient.Save(&Lang).Error
+	err := s.dbClient.MysqlClient.Create(&Lang).Error
 	if err != nil {
 		return nil, err
 	}
 	return Lang.Id, nil
 }
+
 func (s *LangService) Delete(ctx *gin.Context, req models.LangDelReq) (interface{}, error) {
 	var lang models.Lang
 	s.dbClient.MysqlClient.Where("id=?", req.Id).Find(&lang)
@@ -107,6 +108,30 @@ func (s *LangService) Delete(ctx *gin.Context, req models.LangDelReq) (interface
 		return nil, errors.New("不存在该记录")
 	}
 	err := s.dbClient.MysqlClient.Delete(&lang).Error
+	if err != nil {
+		return nil, err
+	}
+	return lang.Id, nil
+}
+
+func (s *LangService) ChangeField(ctx *gin.Context, req models.LangChangeFieldReq) (interface{}, error) {
+	var (
+		lang models.Lang
+	)
+	db := s.dbClient.MysqlClient
+	db.Where("id=?", req.Id).Find(&lang)
+	if lang.Id <= 0 {
+		return nil, errors.New("不存在该记录")
+	}
+	updateData := make(map[string]interface{})
+
+	if req.Status != nil {
+		updateData["status"] = *req.Status
+	}
+	if req.Default != nil {
+		updateData["default"] = *req.Default
+	}
+	err := db.Model(&lang).Where("id=?", req.Id).Updates(&updateData).Error
 	if err != nil {
 		return nil, err
 	}

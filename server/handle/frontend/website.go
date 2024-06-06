@@ -17,7 +17,7 @@ func NewWebsiteHandler() *WebsiteHandler {
 	}
 }
 
-func (h *WebsiteHandler) FrontendList(ctx *gin.Context) {
+func (h *WebsiteHandler) WebsiteFrontendList(ctx *gin.Context) {
 	var appGin = app.Gin{C: ctx}
 	res, err := h.srv.FrontendList(ctx)
 	if err != nil {

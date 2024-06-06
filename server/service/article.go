@@ -42,18 +42,17 @@ func (s *ArticleService) GetList(ctx *gin.Context, req models.ArticleReq) (inter
 	}, nil
 }
 
-func (s *ArticleService) GetDetail(ctx *gin.Context, id string) (interface{}, error) {
-	var (
-		article models.Article
-	)
+func (s *ArticleService) GetInfo(ctx *gin.Context, id string) (interface{}, error) {
+	var article models.Article
+
 	res := s.dbClient.MysqlClient.Where("id=?", id).Find(&article)
 	if res.Error != nil {
 		return nil, res.Error
 	}
 	if article.Id == 0 {
-		return nil, errors.New("article error")
+		return nil, errors.New("Article error")
 	}
-	return models.Article{Id: article.Id, Title: article.Title, Content: article.Content}, nil
+	return article, nil
 }
 
 func (s *ArticleService) GetFrontList(ctx *gin.Context, req models.FrontArticleListReq) (interface{}, error) {
@@ -82,6 +81,7 @@ func (s *ArticleService) GetFrontList(ctx *gin.Context, req models.FrontArticleL
 		List:  articles,
 	}, nil
 }
+
 func (s *ArticleService) GetFrontCategoryArticleList(ctx *gin.Context, cid string) (interface{}, error) {
 	var (
 		articles          []models.FrontArticleInfo
@@ -119,6 +119,27 @@ func (s *ArticleService) GetFrontCategoryArticleList(ctx *gin.Context, cid strin
 	}
 	return models.FrontDirectoryArticleListRes{
 		List: returnArticleList,
+	}, nil
+}
+
+func (s *ArticleService) GetFrontTagsArticleList(id string) (interface{}, error) {
+	var (
+		articleTags = NewArticleTagsService()
+		articles    []models.FrontArticleInfo
+		total       int64
+	)
+	aid, err := articleTags.GetAid(id)
+	if err != nil {
+		return nil, err
+	}
+	db := s.dbClient.MysqlClient
+	err = db.Model(&models.Article{}).Where("id IN (?)", aid).Find(&articles).Count(&total).Error
+	if err != nil {
+		return nil, err
+	}
+	return models.FrontArticleListRes{
+		Total: total,
+		List:  articles,
 	}, nil
 }
 
@@ -163,7 +184,7 @@ func (s *ArticleService) GetFrontDetail(ctx *gin.Context, id string) (interface{
 			tagNames = append(tagNames, tagMap[articleTag.TId])
 		}
 	}
-	//记录阅读人数
+	//记录阅读人数,这里可以考虑用个异步
 	readService := NewReadService()
 	_, _ = readService.Create(ctx, models.ReadCreateReq{
 		Aid:     article.Id,
@@ -175,7 +196,7 @@ func (s *ArticleService) GetFrontDetail(ctx *gin.Context, id string) (interface{
 		Article: models.Article{
 			Id:         article.Id,
 			Title:      article.Title,
-			Cid:        0,
+			Cid:        article.Cid,
 			Author:     article.Author,
 			Desc:       article.Desc,
 			Keyword:    article.Keyword,
@@ -194,4 +215,94 @@ func (s *ArticleService) GetFrontDetail(ctx *gin.Context, id string) (interface{
 		CategoryName: category.Name,
 	}, nil
 
+}
+
+func (s *ArticleService) Create(ctx *gin.Context, req models.ArticleCreateReq) (interface{}, error) {
+	var (
+		article models.Article
+	)
+	article.Title = req.Title
+	article.Cid = req.Cid
+	article.Did = req.Did
+	article.Author = req.Author
+	article.Desc = req.Desc
+	article.Keyword = req.Keyword
+	article.Thumb = req.Thumb
+	article.Summary = req.Summary
+	article.Content = req.Content
+	article.IsHot = req.IsHot
+	article.IsNew = req.IsNew
+	article.IsRecom = req.IsRecom
+	article.Weight = req.Weight
+	article.PublicTime = req.PublicTime
+	article.Month = req.Month
+	err := s.dbClient.MysqlClient.Model(article).Create(&article).Error
+	if err != nil {
+		return nil, err
+	}
+	return article.Id, nil
+}
+
+func (s *ArticleService) Update(ctx *gin.Context, req models.ArticleUpdateReq) (interface{}, error) {
+	var (
+		article models.Article
+		count   int64
+	)
+	db := s.dbClient.MysqlClient
+	err := db.Model(article).Where("id=?", req.Id).Find(&article).Count(&count).Error
+	if err != nil || count < 1 {
+		return nil, errors.New("更新出错")
+	}
+
+	article.Title = req.Title
+	article.Cid = req.Cid
+	article.Did = req.Did
+	article.Author = req.Author
+	article.Desc = req.Desc
+	article.Keyword = req.Keyword
+	article.Thumb = req.Thumb
+	article.Summary = req.Summary
+	article.Content = req.Content
+	article.IsHot = req.IsHot
+	article.IsNew = req.IsNew
+	article.IsRecom = req.IsRecom
+	article.Weight = req.Weight
+	article.PublicTime = req.PublicTime
+	article.Month = req.Month
+	err = db.Model(article).Save(&article).Error
+	if err != nil {
+		return nil, err
+	}
+	return article.Id, nil
+}
+
+func (s *ArticleService) ChangeField(ctx *gin.Context, req models.ArticleFieldReq) (interface{}, error) {
+	var (
+		article models.Article
+		count   int64
+	)
+	db := s.dbClient.MysqlClient
+	db.Model(article).Where("id=?", req.Id).Count(&count)
+	if count <= 0 {
+		return nil, errors.New("不存在该记录")
+	}
+
+	updateData := make(map[string]interface{})
+	if req.Status != nil {
+		updateData["status"] = *req.Status
+	}
+	if req.IsHot != nil {
+		updateData["is_hot"] = *req.IsHot
+	}
+	if req.IsNew != nil {
+		updateData["is_new"] = *req.IsNew
+	}
+	if req.IsRecom != nil {
+		updateData["is_recom"] = *req.IsRecom
+	}
+	err := db.Model(&article).Where("id=?", req.Id).Updates(updateData).Error
+	if err != nil {
+		return nil, err
+	}
+	return req.Id, nil
 }

@@ -45,7 +45,8 @@ func (s *PermitService) PermitNoPageList(ctx *gin.Context, req models.PermitNoPa
 	)
 	db := s.dbClient.MysqlClient
 
-	err := db.Model(&models.Permit{}).Where("permit = ?", req.Parent).Order("id DESC").Select("id,name,parent").Find(&permit).Count(&total).Error
+	err := db.Model(&models.Permit{}).Where("permit = ?", req.Parent).Order("id DESC").
+		Select("id,name,parent").Find(&permit).Count(&total).Error
 	if err != nil {
 		return nil, err
 	}
@@ -80,7 +81,7 @@ func (s *PermitService) Create(ctx *gin.Context, req models.PermitCreateReq) (in
 	permit.Type = req.Type
 	permit.Parent = req.Parent
 	permit.Modules = req.Modules
-	err := s.dbClient.MysqlClient.Save(&permit).Error
+	err := s.dbClient.MysqlClient.Create(&permit).Error
 	if err != nil {
 		return nil, err
 	}

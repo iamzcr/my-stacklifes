@@ -15,10 +15,10 @@ func FrontendRoutersInit(r *gin.Engine) {
 	{
 		frontendRouter.GET("/article", articleHandler.ArticleList)
 		frontendRouter.GET("/category/:id", articleHandler.CategoryArticleList)
-		frontendRouter.GET("/tag/:id", articleHandler.ArticleList)
+		frontendRouter.GET("/tag/:id", articleHandler.TagsArticleList)
 		frontendRouter.GET("/article/detail/:id", articleHandler.ArticleDetail)
 		frontendRouter.GET("/nav", navHandler.GetNavList)
-		frontendRouter.GET("/website", websiteHandler.FrontendList)
+		frontendRouter.GET("/website", websiteHandler.WebsiteFrontendList)
 
 		frontendRouter.POST("/message", messageHandler.Update)
 		frontendRouter.POST("/comment", commentHandler.Update)
