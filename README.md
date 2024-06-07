@@ -18,21 +18,24 @@ git clone https://github.com/iamzcr/my-stacklifes.git
 
 #### 项目服务端运行
 
-```
+```sh
 cd my-stacklifes/server/conf
 vim config.yml
 ```
 
 #### 服务端后台接口
 
-```
+```sh
 cd my-stacklifes/server/cmd/admin
 go run main.go
 ```
 
 #### 服务端前台接口
 
-```
+```sh
 cd my-stacklifes/server/cmd/frontend
 go run main.go
 ```
+
+#### 
+

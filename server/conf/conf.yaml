@@ -3,13 +3,14 @@ app:
   frontend_listen_port: ":8081" #前台端口
   admin_listen_port: ":8080" # 后台端口
   login_jwt_secret : "stacklifes.com"
+  login_jwt_expiration : 168h
   Version: 1.0
 redis:
   host: "127.0.0.1:6379"
   db: 0
   pwd: ""
 mysql:
-  host: "127.0.0.1"
+  host: "172.16.50.52"
   port: 3306
   username: "root"
   pwd: "root"
@@ -19,4 +20,17 @@ mysql:
   max_conn_life_time: 2h          # 单个连接最大存活时间，建议设置比数据库超时时长(wait_timeout)稍小一些
 orm:
   show_log: true                  # 是否打印所有SQL日志
-  slow_sql_log: 0s                 # 慢查询阈值，设置后只打印慢查询日志，默认为500ms
+  slow_sql_log: 0s                # 慢查询阈值，设置后只打印慢查询日志，默认为500ms
+loggers:
+  development: false              #是否开发环境
+  disable_caller: false            #开启开发模式，堆栈跟踪
+  disable_stacktrace: false
+  encoding: json                  # json or console
+  name: stacklifes                  # json or console
+  level: info                     # 日志级别，INFO, WARN, ERROR
+  writers: file                   # 有2个可选项：file,console 选择file会将日志记录到logger_file指定的日志文件中，选择console会将日志输出到标准输出，当然也可以两者同时选择
+  logger_file: logs/access.log
+  logger_warn_file: logs/warn.log
+  logger_error_file: logs/error.log
+  log_rolling_policy: daily         #按天切割
+  log_backup_count: 7               #文件最大保存份数

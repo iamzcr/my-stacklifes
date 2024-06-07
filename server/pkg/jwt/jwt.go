@@ -19,7 +19,7 @@ func CreateToken(username string) (string, error) {
 		return "", err
 	}
 	// 将令牌存储到 Redis 中，并设置过期时间
-	err = redis.RedisClient.Set("login:"+username, authentication, 0).Err()
+	err = redis.RedisClient.Set("login:"+username, authentication, conf.AppConfig.Common.LoginJwtExpiration).Err()
 	if err != nil {
 		return "", err
 	}

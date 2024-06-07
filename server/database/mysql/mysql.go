@@ -14,23 +14,22 @@ import (
 
 var MysqlClient *gorm.DB
 
-func InitMysql() (err error) {
+func InitMysql(config *Config) (err error) {
 	connectMsg := fmt.Sprintf("%s:%s@tcp(%s:%d)/%s?charset=utf8mb4&parseTime=%t&loc=%s",
-		conf.AppConfig.MySQL.Username,
-		conf.AppConfig.MySQL.Password,
-		conf.AppConfig.MySQL.Host,
-		conf.AppConfig.MySQL.Port,
-		conf.AppConfig.MySQL.DbName,
+		config.Username,
+		config.Password,
+		config.Host,
+		config.Port,
+		config.DbName,
 		true,
 		"Local")
-	fmt.Println(connectMsg)
 	mysqlDB, err := sql.Open("mysql", connectMsg)
 	if err != nil {
-		log.Panicf("open mysql failed. database name: %s, err: %+v", conf.AppConfig.MySQL.DbName, err)
+		log.Panicf("open mysql failed. database name: %s, err: %+v", config.DbName, err)
 	}
-	mysqlDB.SetMaxOpenConns(conf.AppConfig.MySQL.MaxOpenConn)
-	mysqlDB.SetMaxIdleConns(conf.AppConfig.MySQL.MaxIdleConn)
-	mysqlDB.SetConnMaxLifetime(conf.AppConfig.MySQL.MaxConnLifeTime)
+	mysqlDB.SetMaxOpenConns(config.MaxOpenConn)
+	mysqlDB.SetMaxIdleConns(config.MaxIdleConn)
+	mysqlDB.SetConnMaxLifetime(config.MaxConnLifeTime)
 
 	//禁止外键约束, 生产环境不建议使用外键约束
 	var ormConfig = &gorm.Config{DisableForeignKeyConstraintWhenMigrating: true}
@@ -61,7 +60,7 @@ func InitMysql() (err error) {
 
 	MysqlClient, err = gorm.Open(mysql.New(mysql.Config{Conn: mysqlDB}), ormConfig)
 	if err != nil {
-		log.Panicf("database connection failed. database name: %s, err: %+v", conf.AppConfig.MySQL.DbName, err)
+		log.Panicf("database connection failed. database name: %s, err: %+v", config.DbName, err)
 	}
 	MysqlClient.Set("gorm:table_options", "CHARSET=utf8mb4")
 	return

@@ -3,7 +3,6 @@ package routers
 import (
 	"github.com/gin-gonic/gin"
 	"my-stacklifes/handle/admin"
-	"my-stacklifes/middleware"
 )
 
 func AdminRoutersInit(r *gin.Engine) {
@@ -34,7 +33,7 @@ func AdminRoutersInit(r *gin.Engine) {
 	readHandler := admin.NewReadHandler()
 	adminRouter := r.Group("/admin") //可以加载这个后面
 	adminRouter.POST("/auth", loginHandler.Login)
-	adminRouter.Use(middleware.JWT())
+	adminRouter.Use()
 	{
 		adminRouter.GET("/option/getFilter", optionHandler.GetFilter)
 

@@ -6,48 +6,38 @@ import (
 	"gopkg.in/yaml.v3"
 	"io/ioutil"
 	"log"
+	"my-stacklifes/database/mysql"
+	"my-stacklifes/database/redis"
+	"my-stacklifes/loggers"
 	"os"
 	"path/filepath"
 	"time"
 )
 
 type CommonConfig struct {
-	Name               string `yaml:"name"`
-	FrontendListenPort string `yaml:"frontend_listen_port"`
-	AdminListenPort    string `yaml:"admin_listen_port"`
-	LoginJwtSecret     string `yaml:"login_jwt_secret"`
-}
-type RedisConfig struct {
-	Host     string `yaml:"host"`
-	Port     int    `yaml:"port"`
-	Password string `yaml:"pwd"`
-	DB       int    `yaml:"db"`
+	Name               string        `yaml:"name"`
+	FrontendListenPort string        `yaml:"frontend_listen_port"`
+	AdminListenPort    string        `yaml:"admin_listen_port"`
+	LoginJwtSecret     string        `yaml:"login_jwt_secret"`
+	LoginJwtExpiration time.Duration `yaml:"login_jwt_expiration"`
 }
 
-type MySQLConfig struct {
-	Host            string        `yaml:"host"`
-	Port            int           `yaml:"port"`
-	Username        string        `yaml:"username"`
-	Password        string        `yaml:"pwd"`
-	DbName          string        `yaml:"dbname"`
-	MaxOpenConn     int           `yaml:"max_open_conn"`
-	MaxIdleConn     int           `yaml:"max_idle_conn"`
-	MaxConnLifeTime time.Duration `yaml:"max_conn_life_time"`
-}
 type OrmConfig struct {
 	ShowLog    bool          `yaml:"show_log"`
 	ShowSqlLog time.Duration `yaml:"slow_sql_log"`
 }
+
 type Config struct {
-	Redis  RedisConfig  `yaml:"redis"`
-	MySQL  MySQLConfig  `yaml:"mysql"`
-	Orm    OrmConfig    `yaml:"orm"`
-	Common CommonConfig `yaml:"app"`
+	Redis   redis.Config         `yaml:"redis"`
+	MySQL   mysql.Config         `yaml:"mysql"`
+	Loggers loggers.LoggerConfig `yaml:"loggers"`
+	Orm     OrmConfig            `yaml:"orm"`
+	Common  CommonConfig         `yaml:"app"`
 }
 
 var AppConfig = &Config{}
 
-func InitConfig() (err error) {
+func InitConfig() (AppConfig *Config, err error) {
 
 	// 获取当前 main.go 文件的目录路径
 	dir, err := filepath.Abs(filepath.Dir("."))
@@ -61,8 +51,6 @@ func InitConfig() (err error) {
 		fmt.Println("无法加载.env文件:", err)
 		// 处理错误逻辑
 	}
-	envmysql := os.Getenv("MYSQL_HOST")
-	fmt.Println(envmysql)
 	// 打开文件
 	file, err := os.Open(filepath.Join(dir, "..", "..", "conf", "conf.yaml"))
 	if err != nil {
