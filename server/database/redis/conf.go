@@ -1,6 +1,6 @@
 package redis
 
-type Config struct {
+type RedisConfig struct {
 	Host     string `yaml:"host"`
 	Port     int    `yaml:"port"`
 	Password string `yaml:"pwd"`

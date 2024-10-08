@@ -22,16 +22,11 @@ type CommonConfig struct {
 	LoginJwtExpiration time.Duration `yaml:"login_jwt_expiration"`
 }
 
-type OrmConfig struct {
-	ShowLog    bool          `yaml:"show_log"`
-	ShowSqlLog time.Duration `yaml:"slow_sql_log"`
-}
-
 type Config struct {
-	Redis   redis.Config         `yaml:"redis"`
-	MySQL   mysql.Config         `yaml:"mysql"`
+	Redis   redis.RedisConfig    `yaml:"redis"`
+	MySQL   mysql.MysqlConfig    `yaml:"mysql"`
+	Orm     mysql.OrmConfig      `yaml:"orm"`
 	Loggers loggers.LoggerConfig `yaml:"loggers"`
-	Orm     OrmConfig            `yaml:"orm"`
 	Common  CommonConfig         `yaml:"app"`
 }
 
@@ -54,7 +49,7 @@ func InitConfig() (AppConfig *Config, err error) {
 	// 打开文件
 	file, err := os.Open(filepath.Join(dir, "..", "..", "conf", "conf.yaml"))
 	if err != nil {
-		log.Fatalf("无法打开文件：%v", err)
+		log.Fatalf("无法加载conf.yaml文件：%v", err)
 	}
 	defer func(file *os.File) {
 		err := file.Close()

@@ -3,22 +3,31 @@ package main
 import (
 	"fmt"
 	"github.com/gin-gonic/gin"
+	"github.com/spf13/pflag"
 	"my-stacklifes/conf"
 	"my-stacklifes/database/mysql"
+	"my-stacklifes/loggers"
 	"my-stacklifes/routers"
 )
 
 func main() {
 	//初始化配置
-	err := conf.InitConfig()
+	pflag.Parse()
+	appConfig, err := conf.InitConfig()
 	if err != nil {
 		fmt.Println("config init:", err)
 	}
+
 	//初始化mysql
-	err = mysql.InitMysql()
+	err = mysql.InitMysql(&appConfig.MySQL)
 	if err != nil {
 		fmt.Println("mysql init:", err)
 	}
+
+	// init logger
+	loggers.InitLogger(&appConfig.Loggers)
+	loggers.Info("http server startup")
+
 	r := gin.Default()
 
 	//路由分组
