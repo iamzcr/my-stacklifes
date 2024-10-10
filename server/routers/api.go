@@ -11,7 +11,7 @@ func ApiRoutersInit(r *gin.Engine) {
 	commentHandler := frontend.NewCommentHandler()
 	websiteHandler := frontend.NewWebsiteHandler()
 	navHandler := frontend.NewNavHandler()
-	apiRouter := r.Group("/api") //可以加载这个后面
+	apiRouter := r.Group("api") //可以加载这个后面
 	{
 		apiRouter.GET("/article", articleHandler.ArticleList)
 		apiRouter.GET("/category/:id", articleHandler.CategoryArticleList)
