@@ -31,14 +31,16 @@ func AdminRoutersInit(r *gin.Engine) {
 	msgHandler := admin.NewMessageHandler()
 	commentHandler := admin.NewCommentHandler()
 	readHandler := admin.NewReadHandler()
-	adminRouter := r.Group("/admin") //可以加载这个后面
+	adminRouter := r.Group("admin") //可以加载这个后面
 	adminRouter.POST("/auth", loginHandler.Login)
 	adminRouter.Use()
 	{
 		adminRouter.GET("/option/getFilter", optionHandler.GetFilter)
+		lang := adminRouter.Group("lang")
+		{
+			lang.GET("list", langHandler.List)
 
-		//
-		adminRouter.GET("/lang/list", langHandler.List)
+		}
 		adminRouter.GET("/lang/info/:id", langHandler.Info)
 		adminRouter.POST("/lang/update", langHandler.Update)
 		adminRouter.POST("/lang/create", langHandler.Create)

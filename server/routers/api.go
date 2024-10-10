@@ -19,7 +19,6 @@ func ApiRoutersInit(r *gin.Engine) {
 		apiRouter.GET("/article/detail/:id", articleHandler.ArticleDetail)
 		apiRouter.GET("/nav", navHandler.GetNavList)
 		apiRouter.GET("/website", websiteHandler.WebsiteFrontendList)
-
 		apiRouter.POST("/message", messageHandler.Update)
 		apiRouter.POST("/comment", commentHandler.Update)
 	}
