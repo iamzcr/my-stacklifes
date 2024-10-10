@@ -35,6 +35,12 @@ func (g *Gin) Success(data interface{}) {
 	return
 }
 
+func (g *Gin) SuccessHtml(data interface{}) {
+	g.C.HTML(http.StatusOK, "index.html", gin.H{
+		"data": data,
+	})
+}
+
 // Error setting gin.JSON
 func (g *Gin) Error(errCode int, msg string, data interface{}) {
 	if msg == "" {

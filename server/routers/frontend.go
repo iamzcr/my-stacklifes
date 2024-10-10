@@ -7,12 +7,14 @@ import (
 
 func FrontendRoutersInit(r *gin.Engine) {
 	articleHandler := frontend.NewArticleHandler()
+	indexHandler := frontend.NewIndexHandler()
 	messageHandler := frontend.NewMessageHandler()
 	commentHandler := frontend.NewCommentHandler()
 	websiteHandler := frontend.NewWebsiteHandler()
 	navHandler := frontend.NewNavHandler()
-	frontendRouter := r.Group("/api") //可以加载这个后面
+	frontendRouter := r.Group("/") //可以加载这个后面
 	{
+		frontendRouter.GET("/index", indexHandler.Index)
 		frontendRouter.GET("/article", articleHandler.ArticleList)
 		frontendRouter.GET("/category/:id", articleHandler.CategoryArticleList)
 		frontendRouter.GET("/tag/:id", articleHandler.TagsArticleList)
