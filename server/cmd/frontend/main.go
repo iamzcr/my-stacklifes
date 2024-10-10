@@ -29,7 +29,7 @@ func main() {
 	loggers.Info("http server startup")
 
 	r := gin.Default()
-
+	r.LoadHTMLGlob("../../templates/frontend/*")
 	//路由分组
 	//路由分组抽离成文件，注册路由
 	routers.FrontendRoutersInit(r)
