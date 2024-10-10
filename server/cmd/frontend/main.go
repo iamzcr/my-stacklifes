@@ -33,9 +33,9 @@ func main() {
 	//路由分组
 	//路由分组抽离成文件，注册路由
 	routers.FrontendRoutersInit(r)
-	fmt.Println("app_config:", conf.AppConfig)
+	fmt.Println("app_config:", appConfig)
 	//启动web服务
-	err = r.Run(conf.AppConfig.Common.FrontendListenPort)
+	err = r.Run(appConfig.Common.FrontendListenPort)
 	if err != nil {
 		fmt.Println("frontend run err:", err)
 		return
