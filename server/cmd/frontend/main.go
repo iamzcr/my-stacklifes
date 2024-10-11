@@ -8,6 +8,7 @@ import (
 	"my-stacklifes/database/mysql"
 	"my-stacklifes/loggers"
 	"my-stacklifes/routers"
+	"net/http"
 )
 
 func main() {
@@ -30,10 +31,11 @@ func main() {
 
 	r := gin.Default()
 	r.LoadHTMLGlob("../../templates/frontend/*")
+
+	r.StaticFS("/static", http.Dir("./static"))
 	//路由分组
 	//路由分组抽离成文件，注册路由
 	routers.FrontendRoutersInit(r)
-	fmt.Println("app_config:", appConfig)
 	//启动web服务
 	err = r.Run(appConfig.Common.FrontendListenPort)
 	if err != nil {
