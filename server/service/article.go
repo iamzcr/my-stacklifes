@@ -3,6 +3,7 @@ package service
 import (
 	"errors"
 	"github.com/gin-gonic/gin"
+	"html/template"
 	"my-stacklifes/database/mysql"
 	"my-stacklifes/models"
 	"my-stacklifes/pkg/tools"
@@ -198,6 +199,7 @@ func (s *ArticleService) GetFrontDetail(ctx *gin.Context, id string) (interface{
 		Referer: ctx.Request.Referer(),
 	})
 	article.Content, _ = tools.ConvertMarkdownToHTML([]byte(article.Content))
+	article.Content = string(template.HTML(article.Content))
 	return models.FrontArticle{
 		Article: models.Article{
 			Id:         article.Id,
