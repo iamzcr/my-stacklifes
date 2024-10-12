@@ -10,3 +10,7 @@ body {
     background-color: #ffffff;
     padding: 1rem 2rem;
 }
+
+code {
+    background: none;
+}
