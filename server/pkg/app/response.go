@@ -36,6 +36,7 @@ func (g *Gin) Success(data interface{}) {
 }
 
 func (g *Gin) SuccessHtml(data interface{}, view string) {
+	print(data)
 	g.C.HTML(http.StatusOK, view, gin.H{
 		"data": data,
 	})
