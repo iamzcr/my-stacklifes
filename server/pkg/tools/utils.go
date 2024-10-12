@@ -1,9 +1,14 @@
 package tools
 
 import (
+	"bytes"
 	"crypto/md5"
 	"encoding/hex"
 	"fmt"
+	"github.com/yuin/goldmark"
+	"github.com/yuin/goldmark/extension"
+	"github.com/yuin/goldmark/parser"
+	"github.com/yuin/goldmark/renderer/html"
 	"math/rand"
 	"time"
 )
@@ -49,4 +54,17 @@ func SetExpiration() (timestamp int64) {
 	oneYearLater := now.AddDate(1, 0, 0)
 	timestamp = oneYearLater.Unix()
 	return
+}
+
+func ConvertMarkdownToHTML(markdownContent []byte) (string, error) {
+	var buf bytes.Buffer
+	md := goldmark.New(
+		goldmark.WithExtensions(extension.GFM, extension.DefinitionList),
+		goldmark.WithParserOptions(parser.WithAutoHeadingID()),
+		goldmark.WithRendererOptions(html.WithHardWraps()),
+	)
+	if err := md.Convert(markdownContent, &buf); err != nil {
+		return "", err
+	}
+	return buf.String(), nil
 }
