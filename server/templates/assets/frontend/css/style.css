@@ -13,6 +13,7 @@ body {
 
 code {
     background-color: transparent;
+    padding: 0;
 }
 pre{
     border: none;
