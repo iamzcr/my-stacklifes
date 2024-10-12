@@ -1,7 +1,6 @@
 package app
 
 import (
-	"fmt"
 	"github.com/gin-gonic/gin"
 	"my-stacklifes/pkg/exception"
 	"net/http"
@@ -37,7 +36,6 @@ func (g *Gin) Success(data interface{}) {
 }
 
 func (g *Gin) SuccessHtml(data interface{}, view string) {
-	fmt.Printf("%v", data)
 	g.C.HTML(http.StatusOK, view, gin.H{
 		"data": data,
 	})
