@@ -6,6 +6,7 @@ import (
 	"encoding/hex"
 	"fmt"
 	"github.com/yuin/goldmark"
+	highlighting "github.com/yuin/goldmark-highlighting/v2"
 	"github.com/yuin/goldmark/extension"
 	"github.com/yuin/goldmark/parser"
 	"github.com/yuin/goldmark/renderer/html"
@@ -59,7 +60,7 @@ func SetExpiration() (timestamp int64) {
 func ConvertMarkdownToHTML(markdownContent []byte) (string, error) {
 	var buf bytes.Buffer
 	md := goldmark.New(
-		goldmark.WithExtensions(extension.GFM, extension.DefinitionList),
+		goldmark.WithExtensions(extension.GFM, extension.DefinitionList, highlighting.Highlighting),
 		goldmark.WithParserOptions(parser.WithAutoHeadingID()),
 		goldmark.WithRendererOptions(html.WithHardWraps()),
 	)
