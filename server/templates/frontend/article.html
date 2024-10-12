@@ -87,8 +87,7 @@
 <script src="/static/js/application.js"></script>
 <!-- 显示转换后的 HTML 内容 -->
 <!-- Bootstrap 4 requires Popper.js -->
-<script src="https://code.jquery.com/jquery-3.3.1.min.js"
-        integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8=" crossorigin="anonymous"></script>
+<script src="https://code.jquery.com/jquery-3.3.1.min.js"  crossorigin="anonymous"></script>
 <script src="https://unpkg.com/popper.js@1.14.1/dist/umd/popper.min.js" crossorigin="anonymous"></script>
 <script src="https://unpkg.com/showdown/dist/showdown.min.js" crossorigin="anonymous"></script>
 <script src="https://cdn.jsdelivr.net/npm/prismjs/prism.min.js"></script>
@@ -98,7 +97,18 @@
         var markdownContent = document.getElementById('markdown-content').innerText;
 
         // 创建一个 Showdown 实例
-        var converter = new showdown.Converter();
+        var converter = new showdown.Converter({
+            extensions: ['highlight'],
+        });
+
+        // 自定义代码块高亮函数
+        converter.setOption('highlight', function(code, lang) {
+            if (lang && Prism.languages[lang]) {
+                return Prism.highlight(code, Prism.languages[lang], lang);
+            } else {
+                return code;
+            }
+        });
 
         // 将 Markdown 转换为 HTML
         var htmlContent = converter.makeHtml(markdownContent);
