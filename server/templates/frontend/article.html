@@ -83,15 +83,14 @@
 </div> <!-- /container -->
 <!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
 <!-- Bootstrap 4 requires Popper.js -->
-<script type="text/javascript" src="/static/js/lib/jquery-3.3.1.min.js" ></script>
+<script type="text/javascript" src="/static/js/lib/jquery-3.3.1.min.js"></script>
 <script type="text/javascript" src="/static/js/lib/popper.min.js"></script>
 <script type="text/javascript" src="/static/js/flat-ui.js"></script>
 <script type="text/javascript" src="/static/js/application.js"></script>
-<script type="text/javascript" src="/static/js/lib/showdown.min.js" ></script>
-<script type="text/javascript" src="/static/js/lib/highlight.min.js"  ></script>
+<script type="text/javascript" src="/static/js/lib/showdown.min.js"></script>
+<script type="text/javascript" src="/static/js/lib/highlight.min.js"></script>
 <script>
-    document.addEventListener("DOMContentLoaded", function() {
-        hljs.highlightAll();
+    window.onload = function () {
         // 获取 Markdown 内容
         var markdownContent = document.getElementById('markdown-content').innerText;
         // 创建一个 Showdown 实例
@@ -100,8 +99,10 @@
         var htmlContent = converter.makeHtml(markdownContent);
         // 将转换后的 HTML 内容显示在页面上
         document.getElementById('html-content').innerHTML = htmlContent;
-
-    });
+        $('pre code').each(function (i, block) {
+            hljs.highlightBlock(block);
+        });
+    }
 </script>
 </body>
 </html>
