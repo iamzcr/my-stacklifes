@@ -1,8 +1,10 @@
 package service
 
 import (
+	"bytes"
 	"errors"
 	"github.com/gin-gonic/gin"
+	"github.com/yuin/goldmark"
 	"my-stacklifes/database/mysql"
 	"my-stacklifes/models"
 	"my-stacklifes/pkg/tools"
@@ -197,7 +199,10 @@ func (s *ArticleService) GetFrontDetail(ctx *gin.Context, id string) (interface{
 		Ip:      ctx.ClientIP(),
 		Referer: ctx.Request.Referer(),
 	})
-
+	var buf bytes.Buffer
+	if err := goldmark.Convert([]byte(article.Content), &buf); err != nil {
+		panic(err)
+	}
 	return models.FrontArticle{
 		Article: models.Article{
 			Id:         article.Id,
