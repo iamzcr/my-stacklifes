@@ -60,7 +60,9 @@ func SetExpiration() (timestamp int64) {
 func ConvertMarkdownToHTML(markdownContent []byte) (string, error) {
 	var buf bytes.Buffer
 	md := goldmark.New(
-		goldmark.WithExtensions(extension.GFM, extension.DefinitionList, highlighting.Highlighting),
+		goldmark.WithExtensions(extension.GFM, extension.DefinitionList, highlighting.NewHighlighting(
+			highlighting.WithStyle("dracula"),
+		)),
 		goldmark.WithParserOptions(parser.WithAutoHeadingID()),
 		goldmark.WithRendererOptions(html.WithHardWraps()),
 	)
