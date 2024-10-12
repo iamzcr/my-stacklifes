@@ -42,7 +42,8 @@ func (h *ArticleHandler) ArticleDetail(ctx *gin.Context) {
 		appGin.Error(exception.ERROR, err.Error(), nil)
 		return
 	}
-	appGin.Success(detailData)
+	//appGin.Success(detailData)
+	appGin.SuccessHtml(detailData)
 }
 
 // 分类获取文章目录列表
