@@ -10,7 +10,7 @@
     <link href="/static/css/flat-ui.css" rel="stylesheet">
     <link href="/static/css/style.css" rel="stylesheet">
     <link rel="shortcut icon" href="/static/favicon.ico">
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/highlight.js/styles/default.min.css">
+    <link href="/static/css/vendor/highlight/dark.min.css" rel="stylesheet">
 </head>
 <body>
 <div class="row">
@@ -87,28 +87,21 @@
 <script src="/static/js/application.js"></script>
 <!-- 显示转换后的 HTML 内容 -->
 <!-- Bootstrap 4 requires Popper.js -->
-<script src="https://code.jquery.com/jquery-3.3.1.min.js"  crossorigin="anonymous"></script>
+<script src="/static/js/lib/jquery-3.3.1.min.js"  crossorigin="anonymous"></script>
+<script src="/static/js/lib/highlight.min.js"  crossorigin="anonymous"></script>
 <script src="https://unpkg.com/popper.js@1.14.1/dist/umd/popper.min.js" crossorigin="anonymous"></script>
 <script src="https://unpkg.com/showdown/dist/showdown.min.js" crossorigin="anonymous"></script>
-<script src="https://cdn.jsdelivr.net/npm/highlight.js/lib/highlight.js"></script>
 <script>
     document.addEventListener("DOMContentLoaded", function() {
         // 获取 Markdown 内容
         var markdownContent = document.getElementById('markdown-content').innerText;
-
         // 创建一个 Showdown 实例
         var converter = new showdown.Converter();
-
         // 将 Markdown 转换为 HTML
         var htmlContent = converter.makeHtml(markdownContent);
-
         // 将转换后的 HTML 内容显示在页面上
         document.getElementById('html-content').innerHTML = htmlContent;
-
-        // 使用 Highlight.js 对代码块进行语法高亮
-        document.querySelectorAll('pre code').forEach((block) => {
-            hljs.highlightBlock(block);
-        });
+        hljs.highlightAll();
     });
 </script>
 </body>
