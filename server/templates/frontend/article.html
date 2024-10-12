@@ -87,10 +87,11 @@
 <script type="text/javascript" src="/static/js/lib/popper.min.js"></script>
 <script type="text/javascript" src="/static/js/flat-ui.js"></script>
 <script type="text/javascript" src="/static/js/application.js"></script>
+<script type="text/javascript" src="/static/js/lib/showdown.min.js" ></script>
 <script type="text/javascript" src="/static/js/lib/highlight.min.js"  ></script>
-<script type="text/javascript" src="https://unpkg.com/showdown/dist/showdown.min.js" ></script>
 <script>
     document.addEventListener("DOMContentLoaded", function() {
+        hljs.highlightAll();
         // 获取 Markdown 内容
         var markdownContent = document.getElementById('markdown-content').innerText;
         // 创建一个 Showdown 实例
@@ -99,7 +100,7 @@
         var htmlContent = converter.makeHtml(markdownContent);
         // 将转换后的 HTML 内容显示在页面上
         document.getElementById('html-content').innerHTML = htmlContent;
-        hljs.highlightAll();
+
     });
 </script>
 </body>
