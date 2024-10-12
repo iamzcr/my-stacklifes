@@ -59,8 +59,6 @@
             <div class="jumbotron">
                 <h3>{{.data.Article.Title}}</h3>
                 {{.data.Article.Content}}
-            </div>
-            <div>
                 <p><strong>下载(redis-6.2.14版本安装示例)</strong></p> <p><a href="https://redis.io/downloads/"><strong>https://redis.io/downloads/</strong></a> 或者https://github.com/redis/redis/releases</p> <p><strong>解压</strong></p> <pre><code class="language-shell">wget https://github.com/redis/redis/archive/refs/tags/6.2.14.tar.gz tar xzvf 6.2.14.tar.gz </code></pre> <p><strong>安装</strong></p> <pre><code class="language-shell">yum -y install gcc gcc-c++ libstdc++-devel cd redis-6.2.14 make cd src make install PREFIX=/usr/local/redis </code></pre> <p><strong>移动配置文件到安装目录下</strong></p> <pre><code class="language-shell">cd ../ mkdir -p /usr/local/redis/etc mv redis.conf /usr/local/redis/etc </code></pre> <p><strong>配置redis为后台启动，将daemonize no 改成daemonize yes，设置redis端口和密码，将port 6379 改成 port 你的端口，去掉requirepass注释，并设置requirepass 你的密码。</strong></p> <pre><code class="language-shell">vi /usr/local/redis/etc/redis.conf </code></pre> <p><strong>开启redis</strong></p> <pre><code class="language-shell">/usr/local/redis/bin/redis-server /usr/local/redis/etc/redis.conf </code></pre> <p><strong>登录操作redis</strong></p> <pre><code class="language-shell">/usr/local/redis/bin/redis-cli -p 端口 -h 主机 //如果设置了密码，你需要执行下面命令才能操作redis auth 你的密码 </code></pre> <p><strong>关闭redis</strong></p> <pre><code class="language-shell">/usr/local/redis/bin/redis-cli shutdown #指定端口和密码关闭 /usr/local/redis/bin/redis-cli -p 端口 -a 密码 shutdown</code></pre>
             </div>
             <div class="text-center">
