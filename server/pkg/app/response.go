@@ -1,11 +1,9 @@
 package app
 
 import (
-	"fmt"
 	"github.com/gin-gonic/gin"
 	"my-stacklifes/pkg/exception"
 	"net/http"
-	"reflect"
 )
 
 type Gin struct {
@@ -38,15 +36,6 @@ func (g *Gin) Success(data interface{}) {
 }
 
 func (g *Gin) SuccessHtml(data interface{}, view string) {
-	v := reflect.ValueOf(data)
-	typeOfData := v.Type()
-
-	for i := 0; i < v.NumField(); i++ {
-		field := v.Field(i)
-		fieldName := typeOfData.Field(i).Name
-		fieldValue := field.Interface()
-		fmt.Printf("Field Name: %s, Field Value: %v\n", fieldName, fieldValue)
-	}
 	g.C.HTML(http.StatusOK, view, gin.H{
 		"data": data,
 	})

@@ -58,12 +58,10 @@
         <div class="col-sm-10">
             <!-- Main component for a primary marketing message or call to action -->
             <div class="jumbotron">
-                <!-- Markdown 内容从模板中读取 -->
-                <div id="markdown-content" style="display: none;">
-                    {{.data.Article.Content}}
-                </div>
                 <h3>{{.data.Article.Title}}</h3>
-                <div id="html-content"></div>
+                <div class="content">
+                    {{.data.Article.ContentHtml}}
+                </div>
             </div>
             <div class="text-center">
                 <div class="pagination pagination-inverse">
@@ -89,20 +87,6 @@
 <script type="text/javascript" src="/static/js/application.js"></script>
 <script type="text/javascript" src="/static/js/lib/showdown.min.js"></script>
 <script type="text/javascript" src="/static/js/lib/highlight.min.js"></script>
-<script>
-    window.onload = function () {
-        // 获取 Markdown 内容
-        var markdownContent = document.getElementById('markdown-content').innerText;
-        // 创建一个 Showdown 实例
-        var converter = new showdown.Converter();
-        // 将 Markdown 转换为 HTML
-        var htmlContent = converter.makeHtml(markdownContent);
-        // 将转换后的 HTML 内容显示在页面上
-        document.getElementById('html-content').innerHTML = htmlContent;
-        $('pre code').each(function (i, block) {
-            hljs.highlightBlock(block);
-        });
-    }
-</script>
+
 </body>
 </html>

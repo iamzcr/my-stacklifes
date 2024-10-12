@@ -1,5 +1,7 @@
 package models
 
+import "html/template"
+
 type Article struct {
 	Id          int                    `json:"id" `
 	Title       string                 `json:"title"`
@@ -11,6 +13,7 @@ type Article struct {
 	Thumb       string                 `json:"thumb" `
 	Summary     string                 `json:"summary" `
 	Content     string                 `json:"content"`
+	ContentHtml template.HTML          `json:"content_html"`
 	IsHot       int                    `json:"is_hot"`
 	IsNew       int                    `json:"is_new"`
 	IsRecom     int                    `json:"is_recom" `

@@ -3,6 +3,7 @@ package service
 import (
 	"errors"
 	"github.com/gin-gonic/gin"
+	"html/template"
 	"my-stacklifes/database/mysql"
 	"my-stacklifes/models"
 	"my-stacklifes/pkg/tools"
@@ -197,24 +198,26 @@ func (s *ArticleService) GetFrontDetail(ctx *gin.Context, id string) (interface{
 		Ip:      ctx.ClientIP(),
 		Referer: ctx.Request.Referer(),
 	})
-
+	content, _ := tools.ConvertMarkdownToHTML([]byte(article.Content))
+	contentHtml := template.HTML(content)
 	return models.FrontArticle{
 		Article: models.Article{
-			Id:         article.Id,
-			Title:      article.Title,
-			Cid:        article.Cid,
-			Author:     article.Author,
-			Desc:       article.Desc,
-			Keyword:    article.Keyword,
-			Thumb:      article.Thumb,
-			Summary:    article.Summary,
-			Content:    article.Content,
-			IsHot:      article.IsHot,
-			IsNew:      article.IsNew,
-			IsRecom:    article.IsRecom,
-			Weight:     article.Weight,
-			PublicTime: article.PublicTime,
-			Month:      article.Month,
+			Id:          article.Id,
+			Title:       article.Title,
+			Cid:         article.Cid,
+			Author:      article.Author,
+			Desc:        article.Desc,
+			Keyword:     article.Keyword,
+			Thumb:       article.Thumb,
+			Summary:     article.Summary,
+			Content:     article.Content,
+			ContentHtml: contentHtml,
+			IsHot:       article.IsHot,
+			IsNew:       article.IsNew,
+			IsRecom:     article.IsRecom,
+			Weight:      article.Weight,
+			PublicTime:  article.PublicTime,
+			Month:       article.Month,
 		},
 		TagIds:       tagIds,
 		TagNames:     tagNames,
