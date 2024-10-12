@@ -35,8 +35,8 @@ func (g *Gin) Success(data interface{}) {
 	return
 }
 
-func (g *Gin) SuccessHtml(data interface{}) {
-	g.C.HTML(http.StatusOK, "index.html", gin.H{
+func (g *Gin) SuccessHtml(data interface{}, view string) {
+	g.C.HTML(http.StatusOK, view, gin.H{
 		"data": data,
 	})
 }

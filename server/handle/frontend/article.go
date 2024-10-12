@@ -43,7 +43,7 @@ func (h *ArticleHandler) ArticleDetail(ctx *gin.Context) {
 		return
 	}
 	//appGin.Success(detailData)
-	appGin.SuccessHtml(detailData)
+	appGin.SuccessHtml(detailData, "actile.html")
 }
 
 // 分类获取文章目录列表

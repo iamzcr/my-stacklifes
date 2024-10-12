@@ -33,5 +33,5 @@ func (h *IndexHandler) Index(ctx *gin.Context) {
 		appGin.Error(exception.ERROR, err.Error(), nil)
 		return
 	}
-	appGin.SuccessHtml(list)
+	appGin.SuccessHtml(list, "index.html")
 }
