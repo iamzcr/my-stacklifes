@@ -96,7 +96,10 @@
         // 获取 Markdown 内容
         var markdownContent = document.getElementById('markdown-content').innerText;
         // 创建一个 Showdown 实例
-        var converter = new showdown.Converter();
+        var converter = new showdown.Converter({
+            // 启用代码块语法高亮
+            extensions: ['highlight'],
+        });
         // 将 Markdown 转换为 HTML
         var htmlContent = converter.makeHtml(markdownContent);
         // 将转换后的 HTML 内容显示在页面上
