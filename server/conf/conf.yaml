@@ -13,7 +13,7 @@ mysql:
   host: "127.0.0.1"
   port: 3306
   username: "root"
-  pwd: "root123456"
+  pwd: "pwd123456"
   dbname: "stacklifes"
   max_open_conn: 60               # 最大打开的连接数, 需要小于数据库配置中的max_connections数
   max_idle_conn: 10                 # 最大闲置的连接数，0意味着使用默认的大小2， 小于0表示不使用连接池
