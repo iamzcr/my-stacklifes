@@ -30,7 +30,7 @@ pre {
     text-align: center;
 }
 
-.footer-banner {
+.left-banner {
     background-color: #1abc9c;
     color: #d1f2eb;
     margin-left: 42px;
@@ -38,32 +38,32 @@ pre {
     padding: 0 30px 30px;
 }
 
-.footer-banner .footer-title {
+.left-banner .left-title {
     color: white;
 }
 
-.footer-banner a {
+.left-banner a {
     color: #b7f5e9;
     text-decoration: underline;
 }
 
-.footer-banner a:hover {
+.left-banner a:hover {
     text-decoration: none;
 }
 
-.footer-banner ul {
+.left-banner ul {
     list-style-type: none;
     margin: 0 0 26px;
     padding: 0;
 }
 
-.footer-banner ul li {
+.left-banner ul li {
     border-top: 1px solid #1bc5a3;
     line-height: 19px;
     padding: 6px 0;
 }
 
-.footer-banner ul li:first-child {
+.left-banner ul li:first-child {
     border-top: none;
     padding-top: 1px;
 }
