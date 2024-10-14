@@ -75,34 +75,6 @@ pre {
     color: #1abc9c;
 }
 
-.left-nav li:after {
-    content: " ";
-    display: block;
-    width: 20px;
-    height: 20px;
-    position: absolute;
-    top: 50%;
-    right: 22px;
-    margin-top: -10px;
-    background: white;
-    border-radius: 50%;
-}
-
-.left-nav li.left-nav-done:after {
-    content: "\e60a";
-    font-family: 'Flat-UI-Pro-Icons';
-    text-align: center;
-    font-size: 12px;
-    line-height: 21px;
-    font-style: normal;
-    font-weight: normal;
-    font-variant: normal;
-    text-transform: none;
-    -webkit-font-smoothing: antialiased;
-    -moz-osx-font-smoothing: grayscale;
-    background: #1abc9c;
-    color: #2c3e50;
-}
 
 .left-nav-search {
     position: relative;
