@@ -28,20 +28,24 @@ func NewIndexHandler() *IndexHandler {
 
 func (h *IndexHandler) Index(ctx *gin.Context) {
 	var appGin = app.Gin{C: ctx}
-	query := models.FrontArticleListReq{}
-	err := ctx.ShouldBindQuery(&query)
+	articleQuery := models.FrontArticleListReq{}
+	err := ctx.ShouldBindQuery(&articleQuery)
+	if err != nil {
+		appGin.Error(exception.ERROR, err.Error(), nil)
+		return
+	}
+	tagsQuery := models.TagsNoPageListRes{}
+	err = ctx.ShouldBindQuery(&tagsQuery)
 	if err != nil {
 		appGin.Error(exception.ERROR, err.Error(), nil)
 		return
 	}
 	var indexList = &IndexList{}
-	articleList, err := h.srv.GetFrontList(ctx, query)
-	tagList, err := h.tagSrv.GetNoPageList(ctx, models.TagsNoPageListRes{})
+	articleList, err := h.srv.GetFrontList(ctx, articleQuery)
+	tagList, err := h.tagSrv.GetNoPageList(ctx, tagsQuery)
 	indexList.ArticleList = articleList
 	indexList.TagList = tagList
-
 	fmt.Println(indexList)
-
 	if err != nil {
 		appGin.Error(exception.ERROR, err.Error(), nil)
 		return
