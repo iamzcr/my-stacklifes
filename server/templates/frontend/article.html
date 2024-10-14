@@ -57,8 +57,11 @@
         <div class="col-sm-10">
             <!-- Main component for a primary marketing message or call to action -->
             <div class="jumbotron">
-                <h3>{{.data.Article.Title}}</h3>
-                <div class="content">
+                <h3 class="article-title">{{.data.Article.Title}}</h3>
+                <div class="article-tag">
+                    <span>分类：{{.data.CategoryName}}</span> <span>时间：  {{.data.Article.PublicTime}}</span>
+                </div>
+                <div class="article-content">
                     {{.data.Article.ContentHtml}}
                 </div>
             </div>
