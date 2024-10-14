@@ -8,34 +8,31 @@ http://iamzcr.com
 
 服务端：golang1.22
 
-数据库：redis6.0+，mysql8.0+
+数据库：redis6.0+，mysql5.7+
 
-前端，vue3 ，navie ui
+前端模板，https://designmodo.github.io/Flat-UI/
 
 #### 下载项目
 
 git clone https://github.com/iamzcr/my-stacklifes.git
 
-#### 项目服务端运行
+#### 项目配置
 
 ```sh
 cd my-stacklifes/server/conf
-vim config.yml
+vim conf.yml
 ```
 
-#### 服务端后台接口
+#### admin服务运行
 
 ```sh
 cd my-stacklifes/server/cmd/admin
 go run main.go
 ```
 
-#### 服务端前台接口
+#### frontend服务运行
 
 ```sh
 cd my-stacklifes/server/cmd/frontend
 go run main.go
 ```
-
-#### 
-
