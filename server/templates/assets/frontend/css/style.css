@@ -30,42 +30,40 @@ pre {
     text-align: center;
 }
 
-.left-banner {
-    background-color: transparent;
+.footer-banner {
+    background-color: #1abc9c;
     color: #d1f2eb;
     margin-left: 42px;
-    border-radius: .3rem;
     min-height: 316px;
     padding: 0 30px 30px;
 }
 
-.left-banner .left-title {
+.footer-banner .footer-title {
     color: white;
-    background-color: #2f4154;
 }
 
-.left-banner a {
+.footer-banner a {
     color: #b7f5e9;
     text-decoration: underline;
 }
 
-.left-banner a:hover {
+.footer-banner a:hover {
     text-decoration: none;
 }
 
-.left-banner ul {
+.footer-banner ul {
     list-style-type: none;
     margin: 0 0 26px;
     padding: 0;
 }
 
-.left-banner ul li {
+.footer-banner ul li {
     border-top: 1px solid #1bc5a3;
     line-height: 19px;
     padding: 6px 0;
 }
 
-.left-banner ul li:first-child {
+.footer-banner ul li:first-child {
     border-top: none;
     padding-top: 1px;
 }
