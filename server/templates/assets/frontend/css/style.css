@@ -31,7 +31,7 @@ pre {
 }
 
 .left-banner {
-    background-color: #2f4154;
+    background-color: transparent;
     color: #d1f2eb;
     margin-left: 42px;
     border-radius: .3rem;
@@ -41,6 +41,7 @@ pre {
 
 .left-banner .left-title {
     color: white;
+    background-color: #2f4154;
 }
 
 .left-banner a {
