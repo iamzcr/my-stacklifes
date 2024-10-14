@@ -40,9 +40,9 @@ pre {
 .left-nav ul {
     background-color: #ffffff;
     margin: 0;
-    padding: 0;
     list-style-type: none;
     border-radius: 0 0 6px 6px;
+    padding-top:16px;
 }
 
 .left-nav li {
@@ -71,7 +71,7 @@ pre {
 }
 
 .left-nav li.left-nav-done .left-nav-name {
-    color: #1abc9c;
+    color: #5d6d7e;
 }
 
 .left-nav-search {
@@ -81,12 +81,6 @@ pre {
     border-radius: 6px 6px 0 0;
     color: #ffffff;
     padding: 19px 25px 20px;
-}
-
-.left-nav-icon {
-    float: left;
-    font-size: 24px;
-    padding: 11px 22px 0 0;
 }
 
 .left-nav-content {
