@@ -36,3 +36,9 @@ go run main.go
 cd my-stacklifes/server/cmd/frontend
 go run main.go
 ```
+
+## License
+
+[MIT](https://opensource.org/licenses/MIT)
+
+Copyright (c) 2023-present, IAMZCR
