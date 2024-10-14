@@ -51,8 +51,7 @@ pre {
     cursor: pointer;
     font-size: 14px;
     line-height: 1.214;
-    margin-top: 2px;
-    padding: 10px 25px 10px 25px;
+    padding: 7px 25px 7px 25px;
     position: relative;
     transition: .25s;
 }
