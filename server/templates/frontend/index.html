@@ -53,14 +53,16 @@
         <div class="col-sm-2">
             <div class="left-nav">
                 <div class="left-nav-search">
-                    最新文章
+                    热门文章
                 </div>
                 <ul>
+                    {{range index,value := .data.ArticleList}}
                     <li class="left-nav-done">
                         <div class="left-nav-content">
-                            <a><h5 class="left-nav-name">最新文章最新文章最新文章最新文章最新文章最新文章</h5></a>
+                            <a><h5 class="left-nav-name">{{value}}</h5></a>
                         </div>
                     </li>
+                    {{end}}
                 </ul>
             </div><!-- /.left-nav -->
             <div class="left-nav">
@@ -68,12 +70,9 @@
                     标签
                 </div>
                 <div class="left-nav-tag">
-                    <a class="btn btn-block btn-lg btn-success">tags</a>
-                    <a class="btn btn-block btn-lg btn-success">tags</a>
-                    <a class="btn btn-block btn-lg btn-success">tags</a>
-                    <a class="btn btn-block btn-lg btn-success">tags</a>
-                    <a class="btn btn-block btn-lg btn-success">tags</a>
-                    <a class="btn btn-block btn-lg btn-success">tags</a>
+                    <a class="btn btn-success">tags</a>
+                    <a class="btn btn-success">tags</a>
+                    <a class="btn btn-success">tags</a>
                 </div>
             </div><!-- /.left-nav -->
         </div>
