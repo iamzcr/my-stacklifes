@@ -52,7 +52,7 @@ pre {
     font-size: 14px;
     line-height: 1.214;
     margin-top: 2px;
-    padding: 18px 42px 21px 25px;
+    padding: 10px 42px 10px 25px;
     position: relative;
     transition: .25s;
 }
@@ -82,34 +82,6 @@ pre {
     border-radius: 6px 6px 0 0;
     color: #ffffff;
     padding: 19px 25px 20px;
-}
-
-
-input.left-nav-search-field {
-    background: none;
-    border: none;
-    color: #34495e;
-    font-size: 19px;
-    font-weight: 700;
-    margin: 0;
-    line-height: 23px;
-    padding: 5px 0;
-    text-indent: 0;
-    box-shadow: none;
-    outline: none;
-}
-
-input.left-nav-search-field::-moz-placeholder {
-    color: #34495e;
-    opacity: 1;
-}
-
-input.left-nav-search-field:-ms-input-placeholder {
-    color: #34495e;
-}
-
-input.left-nav-search-field::-webkit-input-placeholder {
-    color: #34495e;
 }
 
 .left-nav-icon {
