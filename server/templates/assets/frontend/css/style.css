@@ -30,6 +30,13 @@ pre {
     text-align: center;
 }
 
+.left {
+    background-color: #edeff1;
+    color: #bac1c8;
+    font-size: 15px;
+    padding: 0;
+}
+
 .left-banner {
     background-color: #1abc9c;
     color: #d1f2eb;
@@ -66,4 +73,16 @@ pre {
 .left-banner ul li:first-child {
     border-top: none;
     padding-top: 1px;
+}
+
+
+.left-banner a {
+    color: #9aa4af;
+    font-weight: 700;
+}
+
+.left-banner p {
+    font-size: 15px;
+    line-height: 20px;
+    margin-bottom: 10px;
 }
