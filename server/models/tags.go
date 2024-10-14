@@ -35,7 +35,8 @@ type TagsNoPageReq struct {
 	Name string `json:"name" form:"name"`
 }
 type TagsNoPageListRes struct {
-	List []TagsMine `json:"list"`
+	List   []TagsMine `json:"list"`
+	Status int        `json:"status" form:"status,default=1" `
 }
 type TagsUpdateReq struct {
 	Id     int    `json:"id" form:"id"`

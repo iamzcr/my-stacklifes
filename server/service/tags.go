@@ -42,6 +42,20 @@ func (s *TagsService) GetList(ctx *gin.Context, req models.TagsListReq) (interfa
 	}, nil
 }
 
+func (s *TagsService) GetNoPageList(ctx *gin.Context, req models.TagsNoPageListRes) (interface{}, error) {
+	var tags []models.TagsMine
+	db := s.dbClient.MysqlClient
+	err := db.Model(&models.Tags{}).Where("status = ?", req.Status).Select("id,mark,name").
+		Order("id DESC").Find(&tags).Error
+
+	if err != nil {
+		return nil, err
+	}
+	return models.TagsNoPageListRes{
+		List: tags,
+	}, nil
+}
+
 func (s *TagsService) GetInfo(ctx *gin.Context, id string) (interface{}, error) {
 	var tagsInfo models.Tags
 	res := s.dbClient.MysqlClient.Where("id=?", id).Find(&tagsInfo)
