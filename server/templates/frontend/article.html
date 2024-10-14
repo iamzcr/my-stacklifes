@@ -58,8 +58,12 @@
             <!-- Main component for a primary marketing message or call to action -->
             <div class="jumbotron">
                 <h3 class="article-title">{{.data.Article.Title}}</h3>
-                <div class="article-tag">
-                    <span>分类：{{.data.CategoryName}}</span> <span>时间：  {{.data.Article.PublicTime}}</span>
+                <div class="article-tag ">
+                    <span>
+                        作者-<strong>{{.data.Article.Author}}</strong>;
+                        分类-<strong>{{.data.CategoryName}}</strong>;
+                        时间-<strong>{{.data.Article.PublicTime}}</strong>
+                    </span>
                 </div>
                 <div class="article-content">
                     {{.data.Article.ContentHtml}}
