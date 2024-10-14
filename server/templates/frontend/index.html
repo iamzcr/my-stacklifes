@@ -56,7 +56,7 @@
                     热门文章
                 </div>
                 <ul>
-                    {{range $index,$value := .data.ArticleList}}
+                    {{range $index,$value := .data.ArticleList.List}}
                     <li class="left-nav-done">
                         <div class="left-nav-content">
                             <a><h5 class="left-nav-name">{{$value}}</h5></a>
