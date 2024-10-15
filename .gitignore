@@ -1,3 +1,4 @@
 server/.idea
 server/go.mod
 server/go.sum
+server/conf/conf.yaml
