@@ -10,7 +10,7 @@ func FrontendRoutersInit(r *gin.Engine) {
 	// 共享数据
 	r.Use(func(c *gin.Context) {
 		c.Set("tags", middleware.GetFrontendTags(c))
-		c.Set("nav", middleware.GetFrontendNav(c))
+		c.Set("navs", middleware.GetFrontendNav(c))
 		c.Next()
 	})
 

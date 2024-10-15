@@ -37,8 +37,16 @@ type CategoryNoPageReq struct {
 	Parent int `json:"parent" form:"parent,default=0"`
 	Status int `json:"status" form:"status,default=1" `
 }
-
 type CategoryNoPageListRes struct {
+	List []CategoryMine `json:"list"`
+}
+
+type CategoryNavListReq struct {
+	Parent int `json:"parent" form:"parent,default=0"`
+	Status int `json:"status" form:"status,default=1" `
+	Type   int `json:"type" form:"type,default=1" `
+}
+type CategoryNavListRes struct {
 	List []CategoryMine `json:"list"`
 }
 

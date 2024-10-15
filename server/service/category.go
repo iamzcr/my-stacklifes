@@ -140,3 +140,17 @@ func (s *CategoryService) Delete(ctx *gin.Context, req models.CategoryDelReq) (i
 	}
 	return category.Id, nil
 }
+
+func (s *CategoryService) GetNavList(ctx *gin.Context, req models.CategoryNavListReq) (interface{}, error) {
+	var categorys []models.CategoryMine
+	db := s.dbClient.MysqlClient
+	err := db.Model(&models.Category{}).Where("status = ?", req.Status).Where("type = ?", req.Type).Select("id,mark,name").
+		Order("id DESC").Find(&categorys).Error
+
+	if err != nil {
+		return nil, err
+	}
+	return models.CategoryNavListRes{
+		List: categorys,
+	}, nil
+}
