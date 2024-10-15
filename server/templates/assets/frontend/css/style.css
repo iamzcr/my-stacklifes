@@ -43,7 +43,7 @@ pre {
     padding: 0;
     list-style-type: none;
     border-radius: 0 0 6px 6px;
-    padding-top:16px;
+    padding-top: 16px;
 }
 
 .left-nav li {
@@ -91,6 +91,15 @@ pre {
 
 .left-nav-name {
     color: white;
-    font-size: 17px;
+    font-size: 14px;
     margin: 1px 0 3px;
+}
+
+.left-nav-tag {
+    padding: 10px;
+    background-color: #ffffff;
+}
+
+.left-nav-tag a {
+    color: #ffffff;
 }
