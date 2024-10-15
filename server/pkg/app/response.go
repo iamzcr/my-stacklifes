@@ -37,9 +37,11 @@ func (g *Gin) Success(data interface{}) {
 
 func (g *Gin) SuccessHtml(data interface{}, view string) {
 	nav, _ := g.C.Get("nav")
+	tags, _ := g.C.Get("tags")
 	g.C.HTML(http.StatusOK, view, gin.H{
 		"data": data,
 		"nav":  nav,
+		"tags": tags,
 	})
 }
 
