@@ -9,7 +9,12 @@ import (
 
 func GetFrontendTags(ctx *gin.Context) interface{} {
 	var tagSrv = service.NewTagsService()
-	tagList, _ := tagSrv.GetNoPageList(ctx, models.TagsNoPageListRes{})
+	query := models.TagsNoPageListRes{}
+	err := ctx.ShouldBindQuery(&query)
+	if err != nil {
+		return nil
+	}
+	tagList, _ := tagSrv.GetNoPageList(ctx, query)
 	fmt.Println(tagList)
 	return tagList
 }
