@@ -14,8 +14,6 @@ type IndexHandler struct {
 }
 type IndexList struct {
 	ArticleList interface{}
-	TagList     interface{}
-	NavList     interface{}
 }
 
 func NewIndexHandler() *IndexHandler {
@@ -33,20 +31,10 @@ func (h *IndexHandler) Index(ctx *gin.Context) {
 		appGin.Error(exception.ERROR, err.Error(), nil)
 		return
 	}
-	tagsQuery := models.TagsNoPageListRes{}
-	err = ctx.ShouldBindQuery(&tagsQuery)
-	if err != nil {
-		appGin.Error(exception.ERROR, err.Error(), nil)
-		return
-	}
-	var indexList = &IndexList{}
 	articleList, err := h.srv.GetFrontList(ctx, articleQuery)
-	tagList, err := h.tagSrv.GetNoPageList(ctx, tagsQuery)
-	indexList.ArticleList = articleList
-	indexList.TagList = tagList
 	if err != nil {
 		appGin.Error(exception.ERROR, err.Error(), nil)
 		return
 	}
-	appGin.SuccessHtml(indexList, "index.html")
+	appGin.SuccessHtml(articleList, "index.html")
 }

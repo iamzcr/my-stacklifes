@@ -3,6 +3,7 @@ package routers
 import (
 	"github.com/gin-gonic/gin"
 	"my-stacklifes/handle/frontend"
+	"my-stacklifes/middleware"
 )
 
 func FrontendRoutersInit(r *gin.Engine) {
@@ -12,6 +13,11 @@ func FrontendRoutersInit(r *gin.Engine) {
 	commentHandler := frontend.NewCommentHandler()
 	websiteHandler := frontend.NewWebsiteHandler()
 	navHandler := frontend.NewNavHandler()
+	// 共享数据
+	r.Use(func(c *gin.Context) {
+		c.Set("tags", middleware.GetFrontendTags(c))
+		c.Next()
+	})
 	r.GET("/", indexHandler.Index)
 	r.GET("/article", articleHandler.ArticleList)
 	r.GET("/category/:id", articleHandler.CategoryArticleList)
