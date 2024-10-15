@@ -83,9 +83,7 @@
             {{range $index,$value := .data.ArticleList.List}}
             <div class="jumbotron">
                 <a><h5>{{$value.Title}}</h5></a>
-                <p>
-                    <a class="btn btn-lg btn-primary" href="/article/detail/{{$value.Id}}" role="button">继续阅读</a>
-                </p>
+                <a class="btn btn-sm btn-primary" href="/article/detail/{{$value.Id}}" role="button">继续阅读</a>
             </div>
             {{end}}
             <div class="text-center">
