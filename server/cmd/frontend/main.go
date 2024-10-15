@@ -36,11 +36,7 @@ func main() {
 	//路由分组
 	//路由分组抽离成文件，注册路由
 	// 共享数据
-	r.Use(func(c *gin.Context) {
-		c.Set("tags", middleware.GetFrontendTags(c))
-		c.Set("nav", middleware.GetFrontendNav(c))
-		c.Next()
-	})
+	r.Use(middleware.GetFrontendNav())
 
 	r.GET("/", frontend.NewIndexHandler().Index)
 	r.GET("/article", frontend.NewArticleHandler().ArticleList)
