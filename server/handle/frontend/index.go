@@ -31,10 +31,10 @@ func (h *IndexHandler) Index(ctx *gin.Context) {
 		appGin.Error(exception.ERROR, err.Error(), nil)
 		return
 	}
-	articleList, err := h.srv.GetFrontList(ctx, articleQuery)
+	list, err := h.srv.GetFrontList(ctx, articleQuery)
 	if err != nil {
 		appGin.Error(exception.ERROR, err.Error(), nil)
 		return
 	}
-	appGin.SuccessHtml(articleList, "index.html")
+	appGin.SuccessHtml(list, "index.html")
 }

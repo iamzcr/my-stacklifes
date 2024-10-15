@@ -70,7 +70,7 @@
                     标签
                 </div>
                 <div class="left-nav-tag">
-                    {{range $index,$value := .tags}}
+                    {{range $index,$value := .tags.List}}
                     <span class="left-nav-tag-a">
                         <a href="/tag/{{$value.Id}}" class="btn btn-success">{{$value.Name}}</a>
                     </span>
