@@ -101,3 +101,9 @@ pre {
     color: #ffffff;
 }
 
+.left-nav-tag-a {
+    color: #ffffff;
+    float: left;
+    margin-right: 10px;
+}
+

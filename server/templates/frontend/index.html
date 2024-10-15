@@ -71,7 +71,9 @@
                 </div>
                 <div class="left-nav-tag">
                     {{range $index,$value := .data.TagList.List}}
+                    <div class="left-nav-tag-a">
                         <a  href="/tag/{{$value.Id}}" class="btn btn-success">{{$value.Name}}</a>
+                    </div>
                     {{end}}
                 </div>
             </div><!-- /.left-nav -->
