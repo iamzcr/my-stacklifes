@@ -59,7 +59,7 @@
                     {{range $index,$value := .data.ArticleList.List}}
                     <li class="left-nav-done">
                         <div class="left-nav-content">
-                            <a><h5 class="left-nav-name">{{$value.Title}}</h5></a>
+                            <a href="/article/detail/{{$value.Id}}"><h5 class="left-nav-name">{{$value.Title}}</h5></a>
                         </div>
                     </li>
                     {{end}}
@@ -70,9 +70,9 @@
                     标签
                 </div>
                 <div class="left-nav-tag">
-                    <a class="btn btn-success">tags</a>
-                    <a class="btn btn-success">tags</a>
-                    <a class="btn btn-success">tags</a>
+                    {{range $index,$value := .data.TagList.List}}
+                        <a  href="/tag/{{$value.Id}}" class="btn btn-success">{{$value.Name}}</a>
+                    {{end}}
                 </div>
             </div><!-- /.left-nav -->
         </div>
