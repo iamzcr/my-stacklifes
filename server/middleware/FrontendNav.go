@@ -4,6 +4,9 @@ import (
 	"github.com/gin-gonic/gin"
 )
 
-func GetFrontendNav(ctx *gin.Context) interface{} {
-	return "test"
+func GetFrontendNav() gin.HandlerFunc {
+	return func(c *gin.Context) {
+		c.Set("nav", "test")
+		c.Next()
+	}
 }
