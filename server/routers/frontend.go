@@ -7,18 +7,20 @@ import (
 )
 
 func FrontendRoutersInit(r *gin.Engine) {
-	articleHandler := frontend.NewArticleHandler()
-	indexHandler := frontend.NewIndexHandler()
-	messageHandler := frontend.NewMessageHandler()
-	commentHandler := frontend.NewCommentHandler()
-	websiteHandler := frontend.NewWebsiteHandler()
-	navHandler := frontend.NewNavHandler()
 	// 共享数据
 	r.Use(func(c *gin.Context) {
 		c.Set("tags", middleware.GetFrontendTags(c))
 		c.Set("nav", middleware.GetFrontendNav(c))
 		c.Next()
 	})
+
+	articleHandler := frontend.NewArticleHandler()
+	indexHandler := frontend.NewIndexHandler()
+	messageHandler := frontend.NewMessageHandler()
+	commentHandler := frontend.NewCommentHandler()
+	websiteHandler := frontend.NewWebsiteHandler()
+	navHandler := frontend.NewNavHandler()
+
 	r.GET("/", indexHandler.Index)
 	r.GET("/article", articleHandler.ArticleList)
 	r.GET("/category/:id", articleHandler.CategoryArticleList)

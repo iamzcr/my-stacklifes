@@ -6,8 +6,9 @@ import (
 	"github.com/spf13/pflag"
 	"my-stacklifes/conf"
 	"my-stacklifes/database/mysql"
+	"my-stacklifes/handle/frontend"
 	"my-stacklifes/loggers"
-	"my-stacklifes/routers"
+	"my-stacklifes/middleware"
 )
 
 func main() {
@@ -34,7 +35,24 @@ func main() {
 	r.Static("/static", "../../templates/assets/frontend")
 	//路由分组
 	//路由分组抽离成文件，注册路由
-	routers.FrontendRoutersInit(r)
+	// 共享数据
+	r.Use(func(c *gin.Context) {
+		c.Set("tags", middleware.GetFrontendTags(c))
+		c.Set("nav", middleware.GetFrontendNav(c))
+		c.Next()
+	})
+
+	r.GET("/", frontend.NewIndexHandler().Index)
+	r.GET("/article", frontend.NewArticleHandler().ArticleList)
+	r.GET("/category/:id", frontend.NewArticleHandler().CategoryArticleList)
+	r.GET("/tag/:id", frontend.NewArticleHandler().TagsArticleList)
+	r.GET("/article/detail/:id", frontend.NewArticleHandler().ArticleDetail)
+	r.GET("/nav", frontend.NewNavHandler().GetNavList)
+	r.GET("/website", frontend.NewWebsiteHandler().WebsiteFrontendList)
+	r.POST("/message", frontend.NewMessageHandler().Update)
+	r.POST("/comment", frontend.NewCommentHandler().Update)
+
+	//routers.FrontendRoutersInit(r)
 	//启动web服务
 	err = r.Run(appConfig.Common.FrontendListenPort)
 	if err != nil {
