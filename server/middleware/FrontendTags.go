@@ -1,7 +1,6 @@
 package middleware
 
 import (
-	"fmt"
 	"github.com/gin-gonic/gin"
 	"my-stacklifes/models"
 	"my-stacklifes/service"
@@ -15,6 +14,5 @@ func GetFrontendTags(ctx *gin.Context) interface{} {
 		return nil
 	}
 	tagList, _ := tagSrv.GetNoPageList(ctx, query)
-	fmt.Println(tagList)
 	return tagList
 }
