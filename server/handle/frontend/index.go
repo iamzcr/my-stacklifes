@@ -1,7 +1,6 @@
 package frontend
 
 import (
-	"fmt"
 	"github.com/gin-gonic/gin"
 	"my-stacklifes/models"
 	"my-stacklifes/pkg/app"
@@ -45,7 +44,6 @@ func (h *IndexHandler) Index(ctx *gin.Context) {
 	tagList, err := h.tagSrv.GetNoPageList(ctx, tagsQuery)
 	indexList.ArticleList = articleList
 	indexList.TagList = tagList
-	fmt.Println(indexList)
 	if err != nil {
 		appGin.Error(exception.ERROR, err.Error(), nil)
 		return

@@ -52,7 +52,32 @@
 <div class="container-fluid">
     <div class="row">
         <div class="col-sm-2">
-            111
+            <div class="left-nav">
+                <div class="left-nav-search">
+                    热门文章
+                </div>
+                <ul>
+                    {{range $index,$value := .data.ArticleList.List}}
+                    <li class="left-nav-done">
+                        <div class="left-nav-content">
+                            <a href="/article/detail/{{$value.Id}}"><h5 class="left-nav-name">{{$value.Title}}</h5></a>
+                        </div>
+                    </li>
+                    {{end}}
+                </ul>
+            </div><!-- /.left-nav -->
+            <div class="left-nav">
+                <div class="left-nav-search">
+                    标签
+                </div>
+                <div class="left-nav-tag">
+                    {{range $index,$value := .data.TagList.List}}
+                    <span class="left-nav-tag-a">
+                        <a href="/tag/{{$value.Id}}" class="btn btn-success">{{$value.Name}}</a>
+                    </span>
+                    {{end}}
+                </div>
+            </div><!-- /.left-nav -->
         </div>
         <div class="col-sm-10">
             <!-- Main component for a primary marketing message or call to action -->
