@@ -22,7 +22,7 @@ func (h *LoginHandler) Login(ctx *gin.Context) {
 	var (
 		appGin = app.Gin{C: ctx}
 	)
-	appGin.SuccessAdminHtml("", "login/index.html")
+	appGin.SuccessAdminHtml("", "index.html")
 }
 
 func (h *LoginHandler) Auth(ctx *gin.Context) {
