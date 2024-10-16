@@ -118,6 +118,7 @@ type FrontArticleListReq struct {
 	Title string `json:"title" form:"title"`
 	Cid   int    `json:"cid" form:"cid"`
 	Tid   int    `json:"tid" form:"tid"`
+	IsHot int    `json:"is_hot"   form:"is_hot,default=0"`
 }
 
 type FrontArticleListRes struct {

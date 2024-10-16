@@ -12,10 +12,10 @@
     </div><!-- /.left-nav -->
     <div class="left-nav">
         <div class="left-nav-search">
-            热门文章 {{.nav}}
+            热门文章
         </div>
         <ul>
-            {{range $index,$value := .data.List}}
+            {{range $index,$value := .hot_articles.List}}
             <li class="left-nav-done">
                 <div class="left-nav-content">
                     <a href="/article/detail/{{$value.Id}}"><h5 class="left-nav-name">{{$value.Title}}</h5></a>

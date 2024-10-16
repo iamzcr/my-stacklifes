@@ -11,6 +11,7 @@ func FrontendRoutersInit(r *gin.Engine) {
 	r.Use(func(c *gin.Context) {
 		c.Set("tags", middleware.GetFrontendTags(c))
 		c.Set("navs", middleware.GetFrontendNav(c))
+		c.Set("hotArticles", middleware.GetFrontendHotArticles(c))
 		c.Next()
 	})
 
