@@ -7,6 +7,7 @@ import (
 
 func AdminRoutersInit(r *gin.Engine) {
 	loginHandler := admin.NewLoginHandler()
+	indexHandler := admin.NewIndexHandler()
 	//分类
 	categoryHandler := admin.NewCategoryHandler()
 	directoryHandler := admin.NewDirectoryHandler()
@@ -36,12 +37,9 @@ func AdminRoutersInit(r *gin.Engine) {
 	adminRouter.POST("/auth", loginHandler.Auth)
 	adminRouter.Use()
 	{
+		adminRouter.GET("/", indexHandler.Index)
 		adminRouter.GET("/option/getFilter", optionHandler.GetFilter)
-		lang := adminRouter.Group("lang")
-		{
-			lang.GET("list", langHandler.List)
-
-		}
+		adminRouter.GET("/lang/list", langHandler.List)
 		adminRouter.GET("/lang/info/:id", langHandler.Info)
 		adminRouter.POST("/lang/update", langHandler.Update)
 		adminRouter.POST("/lang/create", langHandler.Create)
