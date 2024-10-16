@@ -20,6 +20,13 @@ func NewLoginHandler() *LoginHandler {
 
 func (h *LoginHandler) Login(ctx *gin.Context) {
 	var (
+		appGin = app.Gin{C: ctx}
+	)
+	appGin.SuccessAdminHtml("", "login.html")
+}
+
+func (h *LoginHandler) Auth(ctx *gin.Context) {
+	var (
 		appGin   = app.Gin{C: ctx}
 		reqLogin models.LoginReq
 	)

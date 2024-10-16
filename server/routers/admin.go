@@ -32,7 +32,8 @@ func AdminRoutersInit(r *gin.Engine) {
 	commentHandler := admin.NewCommentHandler()
 	readHandler := admin.NewReadHandler()
 	adminRouter := r.Group("admin") //可以加载这个后面
-	adminRouter.POST("/auth", loginHandler.Login)
+	adminRouter.GET("/login", loginHandler.Login)
+	adminRouter.POST("/auth", loginHandler.Auth)
 	adminRouter.Use()
 	{
 		adminRouter.GET("/option/getFilter", optionHandler.GetFilter)

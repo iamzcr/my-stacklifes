@@ -45,6 +45,12 @@ func (g *Gin) SuccessHtml(data interface{}, view string) {
 	})
 }
 
+func (g *Gin) SuccessAdminHtml(data interface{}, view string) {
+	g.C.HTML(http.StatusOK, view, gin.H{
+		"data": data,
+	})
+}
+
 // Error setting gin.JSON
 func (g *Gin) Error(errCode int, msg string, data interface{}) {
 	if msg == "" {
