@@ -2,6 +2,7 @@ package service
 
 import (
 	"errors"
+	"fmt"
 	"my-stacklifes/database/mysql"
 	"my-stacklifes/models"
 )
@@ -22,8 +23,8 @@ func (s *ArticleTagsService) GetAid(id string) ([]int, error) {
 		count       int64
 	)
 	s.dbClient.MysqlClient.Model(&models.ArticleTags{}).Where("tid=?", id).Find(&acticleTags).Count(&count)
+	fmt.Println(acticleTags)
 	for _, acticleTag := range acticleTags {
-
 		aids = append(aids, acticleTag.AId)
 	}
 	if count < 0 {
