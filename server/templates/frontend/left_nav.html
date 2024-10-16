@@ -1,0 +1,40 @@
+<div class="col-sm-2">
+    <div class="left-nav">
+        <div class="left-nav-search">
+            关于我
+        </div>
+        <div class="left-nav-about">
+            <p>一个喜欢踢足球的程序员</p>
+            <p> Github： <a href="https://designmodo.com/flat-free" target="_blank">https://github.com/iamzcr</a>
+            </p>
+            <p> Blog： <a href="https://designmodo.com/flat-free" target="_blank">http://www.iamzcr.com/</a></p>
+        </div>
+    </div><!-- /.left-nav -->
+    <div class="left-nav">
+        <div class="left-nav-search">
+            热门文章 {{.nav}}
+        </div>
+        <ul>
+            {{range $index,$value := .data.List}}
+            <li class="left-nav-done">
+                <div class="left-nav-content">
+                    <a href="/article/detail/{{$value.Id}}"><h5 class="left-nav-name">{{$value.Title}}</h5></a>
+                </div>
+            </li>
+            {{end}}
+        </ul>
+    </div><!-- /.left-nav -->
+
+    <div class="left-nav">
+        <div class="left-nav-search">
+            标签
+        </div>
+        <div class="left-nav-tag">
+            {{range $index,$value := .tags.List}}
+            <span class="left-nav-tag-a">
+                        <a href="/tag/{{$value.Id}}" class="btn btn-primary">{{$value.Name}}</a>
+                    </span>
+            {{end}}
+        </div>
+    </div><!-- /.left-nav -->
+</div>
