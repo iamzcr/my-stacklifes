@@ -17,7 +17,7 @@ func (p *PageInfo) GetPageInfo() (limit, offset int) {
 	}
 	limit = p.PageSize
 	if p.PageSize < 1 {
-		limit = 10
+		limit = 5
 	}
 	offset = (p.Page - 1) * limit
 	return
