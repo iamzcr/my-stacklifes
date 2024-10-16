@@ -25,7 +25,7 @@ func (s *ArticleTagsService) GetAid(id string) ([]int, error) {
 	s.dbClient.MysqlClient.Model(&models.ArticleTags{}).Debug().Where("tid=?", id).Find(&acticleTags).Count(&count)
 	fmt.Println(acticleTags)
 	for _, acticleTag := range acticleTags {
-		aids = append(aids, acticleTag.AId)
+		aids = append(aids, acticleTag.Aid)
 	}
 	if count < 0 {
 		return nil, errors.New("no acticle")

@@ -188,9 +188,9 @@ func (s *ArticleService) GetFrontDetail(ctx *gin.Context, id string) (interface{
 	}
 
 	for _, articleTag := range articleTags {
-		tagIds = append(tagIds, articleTag.TId)
-		if _, ok := tagMap[articleTag.TId]; ok {
-			tagNames = append(tagNames, tagMap[articleTag.TId])
+		tagIds = append(tagIds, articleTag.Tid)
+		if _, ok := tagMap[articleTag.Tid]; ok {
+			tagNames = append(tagNames, tagMap[articleTag.Tid])
 		}
 	}
 	//记录阅读人数,这里可以考虑用个异步
