@@ -2,7 +2,6 @@ package service
 
 import (
 	"errors"
-	"fmt"
 	"github.com/gin-gonic/gin"
 	"html/template"
 	"my-stacklifes/database/mysql"
@@ -137,7 +136,6 @@ func (s *ArticleService) GetFrontTagsArticleList(id string) (interface{}, error)
 		total       int64
 	)
 	aid, err := articleTags.GetAid(id)
-	fmt.Println(aid)
 	if err != nil {
 		return nil, err
 	}
