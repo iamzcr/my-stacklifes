@@ -22,7 +22,7 @@ func (s *ArticleTagsService) GetAid(id string) ([]int, error) {
 		aids        []int
 		count       int64
 	)
-	s.dbClient.MysqlClient.Model(&models.ArticleTags{}).Where("tid=?", id).Find(&acticleTags).Count(&count)
+	s.dbClient.MysqlClient.Model(&models.ArticleTags{}).Debug().Where("tid=?", id).Find(&acticleTags).Count(&count)
 	fmt.Println(acticleTags)
 	for _, acticleTag := range acticleTags {
 		aids = append(aids, acticleTag.AId)
