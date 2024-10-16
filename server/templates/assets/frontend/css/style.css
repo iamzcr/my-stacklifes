@@ -120,5 +120,9 @@ pre {
 
 .footer {
     background-color: #ffffff;
+    height: 120px;
+}
+.icp{
+    margin-top: 40px;
 }
 
