@@ -104,8 +104,12 @@ pre {
 .left-nav-about{
     padding: 10px;
     color: #5d6d7e;
+    background-color: #ffffff;
 }
-
+.left-nav-about p{
+    font-size: 15px;
+    margin: 0;
+}
 .left-nav-tag-a {
     color: #ffffff;
     margin-right: 10px;
