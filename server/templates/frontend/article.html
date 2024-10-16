@@ -1,17 +1,4 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="utf-8">
-    <title>堆栈</title>
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <!-- Loading Bootstrap -->
-    <link href="/static/css/vendor/bootstrap.min.css" rel="stylesheet">
-    <!-- Loading Flat UI -->
-    <link href="/static/css/flat-ui.css" rel="stylesheet">
-    <link href="/static/css/style.css" rel="stylesheet">
-    <link rel="shortcut icon" href="/static/favicon.ico">
-</head>
-<body>
+{{template "header.html" .}}
 {{template "nav.html" .}}
 <div class="container-fluid">
     <div class="row">
@@ -45,13 +32,5 @@
             </div>
         </div>
     </div>
-
 </div> <!-- /container -->
-<!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
-<!-- Bootstrap 4 requires Popper.js -->
-<script type="text/javascript" src="/static/js/lib/jquery-3.3.1.min.js"></script>
-<script type="text/javascript" src="/static/js/lib/popper.min.js"></script>
-<script type="text/javascript" src="/static/js/flat-ui.js"></script>
-<script type="text/javascript" src="/static/js/application.js"></script>
-</body>
-</html>
+{{template "footer.html" .}}

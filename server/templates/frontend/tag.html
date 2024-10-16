@@ -1,10 +1,19 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <title>Title</title>
-</head>
-<body>
-
-</body>
-</html>
+{{template "header.html" .}}
+<!--引入公共模板-->
+{{template "nav.html" .}}
+<div class="container-fluid">
+    <div class="row">
+        {{template "left_nav.html" .}}
+        <div class="col-sm-10">
+            <!-- Main component for a primary marketing message or call to action -->
+            {{range $index,$value := .data.List}}
+            <div class="jumbotron">
+                <a href="/article/detail/{{$value.Id}}"><h5>{{$value.Title}}</h5></a>
+                <p>作者:{{$value.Author}} 发布时间:{{$value.PublicTime}}</p>
+                <p><a class="btn btn-sm btn-primary" href="/article/detail/{{$value.Id}}" role="button">继续阅读</a></p>
+            </div>
+            {{end}}
+        </div>
+    </div>
+</div> <!-- /container -->
+{{template "footer.html" .}}
