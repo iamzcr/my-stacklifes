@@ -10,10 +10,10 @@
                 </div>
                 {{range $index,$value := .data.List}}
                 <div class="dropdown">
-                    <button class="btn btn-secondary dropdown-toggle" type="button" id="{{$value.DirectoryID}}" data-bs-toggle="dropdown" aria-expanded="false">
+                    <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton{{$value.DirectoryID}}" data-bs-toggle="dropdown" aria-expanded="false">
                         {{$value.DirectoryName}}
                     </button>
-                    <ul class="dropdown-menu" aria-labelledby="{{$value.DirectoryID}">
+                    <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton{{$value.DirectoryID}}">
                         {{range $a_index,$a_value := $value.Articles}}
                         <li><a class="dropdown-item"  href="#">{{$a_value.Title}}</a></li>
                         {{end}}
