@@ -108,10 +108,10 @@ type FrontArticleInfo struct {
 }
 type FrontArticle struct {
 	Article
-	TagIds       []int
-	TagNames     []string
-	CategoryName string
-	List         []DirectoryArticle
+	TagIds               []int
+	TagNames             []string
+	CategoryName         string
+	DirectoryArticleList []DirectoryArticle
 }
 
 type FrontArticleListReq struct {
@@ -132,7 +132,7 @@ type FrontCategoryArticleListReq struct {
 }
 
 type FrontDirectoryArticleListRes struct {
-	List []DirectoryArticle `json:"list"`
+	DirectoryArticleList []DirectoryArticle `json:"list"`
 }
 type DirectoryArticle struct {
 	DirectoryID   int                `json:"d_id"`

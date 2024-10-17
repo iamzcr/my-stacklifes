@@ -6,7 +6,7 @@
         <div class="left-nav-directory">
             <div id="accordion">
                 <div class="card">
-                    {{range $index,$value := .data.List}}
+                    {{range $index,$value := .data.DirectoryArticleList}}
                     <div class="card-header" id="headingOne{{$value.DirectoryID}}">
                         <button class="btn btn-link" data-toggle="collapse" data-target="#collapseOne{{$value.DirectoryID}}" aria-expanded="true" aria-controls="collapseOne{{$value.DirectoryID}}">
                             {{$value.DirectoryName}}
