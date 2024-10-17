@@ -107,6 +107,7 @@ pre {
     background-color: #ffffff;
     color: #ffffff;
 }
+
 .left-nav-directory .card-header {
     position: relative;
     padding: 0;
@@ -118,12 +119,20 @@ pre {
     position: absolute;
     right: 10px;
 }
+
 .left-nav-directory .card-header .btn.collapsed::after {
     content: '\e601'; /* Unicode for down arrow */
 }
-.left-nav-directory .card-body{
-    padding: 0.25rem 1.25rem 0.25rem 1.25rem;
+
+.left-nav-directory .card-body {
+    padding: 0.75rem 1.25rem 0.75rem 1.25rem;
 }
+
+.left-nav-directory .card-body a {
+    color: #5d6d7e;
+    font-size: 16px;
+}
+
 .left-nav-about {
     padding: 10px;
     color: #5d6d7e;

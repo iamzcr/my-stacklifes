@@ -20,7 +20,7 @@
                             <div id="collapseOne{{$value.DirectoryID}}" class="collapse show" aria-labelledby="headingOne{{$value.DirectoryID}}" data-parent="#accordion">
                                 {{range $a_index,$a_value := $value.Articles}}
                                 <div class="card-body">
-                                    <a href="#">{{$a_value.Title}}</a>
+                                    <a href="/article/detail/{{$a_value.Id}}">{{$a_value.Title}}</a>
                                 </div>
                                 {{end}}
                             </div>
