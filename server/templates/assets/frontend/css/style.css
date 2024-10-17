@@ -9,6 +9,7 @@ body {
 .jumbotron {
     background-color: #ffffff;
     padding: 1rem 2rem;
+    margin-bottom:1rem
 }
 
 code {
@@ -125,4 +126,5 @@ pre {
 .icp{
     margin-top: 40px;
 }
+
 
