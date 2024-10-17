@@ -66,7 +66,7 @@ func (s *DirectoryService) GetListByCid(cid string) ([]models.DirectoryMine, []i
 	var directorys []models.DirectoryMine
 	var directoryIds []int
 	err := db.Model(&models.Directory{}).Where("cid = ?", cid).
-		Order("id DESC").Find(&directorys).Error
+		Order("weight DESC").Find(&directorys).Error
 	if err != nil {
 		return nil, nil, err
 	}

@@ -145,7 +145,7 @@ func (s *CategoryService) GetNavList(ctx *gin.Context, req models.CategoryNavLis
 	var categorys []models.CategoryMine
 	db := s.dbClient.MysqlClient
 	err := db.Model(&models.Category{}).Where("status = ?", req.Status).Where("type = ?", req.Type).Select("id,mark,name").
-		Order("id DESC").Find(&categorys).Error
+		Order("weight ASC").Find(&categorys).Error
 
 	if err != nil {
 		return nil, err
