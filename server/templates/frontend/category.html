@@ -4,16 +4,21 @@
 <div class="container-fluid">
     <div class="row">
         <div class="col-sm-2">
-            <div class="left-nav">
+            < class="left-nav">
                 <div class="left-nav-search">
                     分类目录
                 </div>
+
                 <ul>
                     {{range $index,$value := .data.List}}
-                    <li class="left-nav-done">
-                        <div class="left-nav-content">
-                            <a href="/directory/{{$value.DirectoryID}}"><h5 class="left-nav-name">{{$value.DirectoryName}}</h5></a>
-                        </div>
+                    <li class="dropdown">
+                        <a href="#" class="dropdown-toggle" data-toggle="dropdown">{{$value.DirectoryName}}</a>
+                        <span class="dropdown-arrow"></span>
+                        <ul class="dropdown-menu">
+                            {{range $a_index,$a_value := $value.Articles}}
+                            <li><a href="#">{{$a_value.Title}}</a></li>
+                            {{end}}
+                        </ul>
                     </li>
                     {{end}}
                 </ul>
