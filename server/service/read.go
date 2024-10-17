@@ -1,7 +1,6 @@
 package service
 
 import (
-	"errors"
 	"github.com/gin-gonic/gin"
 	"my-stacklifes/database/mysql"
 	"my-stacklifes/models"
@@ -43,15 +42,17 @@ func (s *ReadService) GetList(ctx *gin.Context, req models.ReadReq) (interface{}
 
 func (s *ReadService) Create(ctx *gin.Context, req models.ReadCreateReq) (interface{}, error) {
 	var (
-		read  models.Read
-		count int64
+		read models.Read
+		//count int64
 	)
+	/**
 	s.dbClient.MysqlClient.Model(read).
 		Where("ip=?", req.Ip).
 		Count(&count)
 	if count > 0 {
 		return nil, errors.New("记录已存在")
 	}
+	*/
 
 	read.Ip = req.Ip
 	read.Referer = req.Referer
