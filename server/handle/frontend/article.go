@@ -36,8 +36,8 @@ func (h *ArticleHandler) ArticleList(ctx *gin.Context) {
 
 func (h *ArticleHandler) ArticleDetail(ctx *gin.Context) {
 	var appGin = app.Gin{C: ctx}
-	id := ctx.Param("id")
-	detailData, err := h.srv.GetFrontDetail(ctx, id)
+	aid := ctx.Param("aid")
+	detailData, err := h.srv.GetFrontDetail(ctx, aid)
 	if err != nil {
 		appGin.Error(exception.ERROR, err.Error(), nil)
 		return
