@@ -147,7 +147,7 @@ pre {
 }
 
 .left-nav-about p img{
-    min-width: 47%;
+    max-width: 47%;
 }
 
 .left-nav-tag-a {
