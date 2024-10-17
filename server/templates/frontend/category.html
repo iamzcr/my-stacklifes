@@ -5,7 +5,7 @@
     <div class="row">
         <div class="col-sm-10">
             <!-- Main component for a primary marketing message or call to action -->
-            {{range $index,$value := .data.List}}
+            {{range $index,$value := .data.DirectoryArticleList}}
             {{range $a_index,$a_value := $value.Articles}}
             <div class="jumbotron">
                 <a href="/article/detail/{{$a_value.Cid}}/{{$a_value.Id}}"><h5>{{$a_value.Title}}</h5></a>
