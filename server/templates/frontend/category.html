@@ -12,15 +12,12 @@
                     <div id="accordion">
                         <div class="card">
                             {{range $index,$value := .data.List}}
-                            <div class="card-header" id="headingOne {{$value.DirectoryID}}">
-                                <h5 class="mb-0">
-                                    <button class="btn btn-link" data-toggle="collapse" data-target="#{{$value.DirectoryID}}" aria-expanded="true" aria-controls="{{$value.DirectoryID}}">
-                                        {{$value.DirectoryName}}
-                                    </button>
-                                </h5>
+                            <div class="card-header" id="headingOne{{$value.DirectoryID}}">
+                                <button class="btn btn-link" data-toggle="collapse" data-target="#collapseOne{{$value.DirectoryID}}" aria-expanded="true" aria-controls="collapseOne{{$value.DirectoryID}}">
+                                    {{$value.DirectoryName}}
+                                </button>
                             </div>
-
-                            <div id="{{$value.DirectoryID}}" class="collapse show" aria-labelledby="{{$value.DirectoryID}}" data-parent="#accordion">
+                            <div id="{{$value.DirectoryID}}" class="collapse show" aria-labelledby="headingOne{{$value.DirectoryID}}" data-parent="#accordion">
                                 {{range $a_index,$a_value := $value.Articles}}
                                 <div class="card-body">
                                     <a href="#">{{$a_value.Title}}</a>

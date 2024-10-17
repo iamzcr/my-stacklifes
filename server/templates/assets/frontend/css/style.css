@@ -111,13 +111,13 @@ pre {
     position: relative;
 }
 .left-nav-directory .card-header .btn::after {
-    content: '\f107'; /* Unicode for right arrow */
+    content: '\e605'; /* Unicode for right arrow */
     font-family: 'FontAwesome';
     position: absolute;
     right: 10px;
 }
 .left-nav-directory .card-header .btn.collapsed::after {
-    content: '\f106'; /* Unicode for down arrow */
+    content: '\e601'; /* Unicode for down arrow */
 }
 
 .left-nav-about {
