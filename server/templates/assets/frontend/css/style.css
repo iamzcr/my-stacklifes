@@ -126,14 +126,16 @@ pre {
 }
 
 .left-nav-directory .card-body {
-    padding: 0.75rem 1.25rem 0.75rem 1.25rem;
+    padding: 0.325rem 1.25rem 0.325rem 1.25rem;
 }
 
 .left-nav-directory .card-body a {
     color: #5d6d7e;
     font-size: 16px;
 }
-
+.left-nav-directory .card-body a:first-child {
+    padding-top: 0.75rem;
+}
 .left-nav-about {
     padding: 10px;
     color: #5d6d7e;
