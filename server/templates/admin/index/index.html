@@ -1,8 +1,8 @@
 {{define "index/index.html"}}
-{{template "public/header" .}}
+{{template "public/header.html" .}}
 
-{{template "public/left_nav" .}}
-{{template "public/nav" .}}
+{{template "public/left_nav.html" .}}
+{{template "public/nav.html" .}}
 <!-- page content -->
 <div class="right_col" role="main">
     <!-- top tiles -->
@@ -723,5 +723,5 @@
     </div>
 </div>
 <!-- /page content -->
-{{template "public/footer" .}}
+{{template "public/footer.html" .}}
 {{end}}
