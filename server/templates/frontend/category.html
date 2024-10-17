@@ -8,18 +8,20 @@
                 <div class="left-nav-search">
                     分类目录
                 </div>
-                <div class="left-nav-tag">
-                    {{range $index,$value := .data.List}}
-                    <li class="dropdown">
-                        <a href="#" class="dropdown-toggle" data-toggle="dropdown">{{$value.DirectoryName}}</a>
-                        <span class="dropdown-arrow"></span>
-                        <ul class="dropdown-menu">
-                            {{range $a_index,$a_value := $value.Articles}}
-                            <li><a href="#">{{$a_value.Title}}</a></li>
-                            {{end}}
-                        </ul>
-                    </li>
-                    {{end}}
+                <div class="left-nav-directory">
+                    <ul>
+                        {{range $index,$value := .data.List}}
+                        <li class="dropdown">
+                            <a href="#" class="dropdown-toggle" data-toggle="dropdown">{{$value.DirectoryName}}</a>
+                            <span class="dropdown-arrow"></span>
+                            <ul class="dropdown-menu">
+                                {{range $a_index,$a_value := $value.Articles}}
+                                <li><a href="#">{{$a_value.Title}}</a></li>
+                                {{end}}
+                            </ul>
+                        </li>
+                        {{end}}
+                    </ul>
                 </div>
             </div><!-- /.left-nav -->
         </div>
@@ -30,7 +32,8 @@
             <div class="jumbotron">
                 <a href="/article/detail/{{$a_value.Id}}"><h5>{{$a_value.Title}}</h5></a>
                 <p>作者:{{$a_value.Author}} 发布时间:{{UnixToTime $a_value.PublicTime}}</p>
-                <p><a class="btn btn-sm btn-primary" href="/article/detail/{{$a_value.Id}}" role="button">继续阅读</a></p>
+                <p><a class="btn btn-sm btn-primary" href="/article/detail/{{$a_value.Id}}" role="button">继续阅读</a>
+                </p>
             </div>
             {{end}}
             {{end}}

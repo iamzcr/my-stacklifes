@@ -9,7 +9,7 @@ body {
 .jumbotron {
     background-color: #ffffff;
     padding: 1rem 2rem;
-    margin-bottom:1rem
+    margin-bottom: 1rem
 }
 
 code {
@@ -102,16 +102,28 @@ pre {
     color: #ffffff;
 }
 
-.left-nav-about{
+.left-nav-directory {
+    padding: 20px;
+    background-color: #ffffff;
+    color: #ffffff;
+}
+
+.left-nav-directory ul li {
+    font-size: 18px;
+}
+
+.left-nav-about {
     padding: 10px;
     color: #5d6d7e;
     background-color: #ffffff;
     text-align: center;
 }
-.left-nav-about p{
+
+.left-nav-about p {
     font-size: 15px;
     margin: 0;
 }
+
 .left-nav-tag-a {
     color: #ffffff;
     margin-right: 10px;
@@ -123,7 +135,8 @@ pre {
     background-color: #ffffff;
     height: 120px;
 }
-.icp{
+
+.icp {
     margin-top: 40px;
 }
 
