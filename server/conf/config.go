@@ -48,11 +48,13 @@ func InitConfig() (AppConfig *Config, err error) {
 	}
 
 	// Get values from .env file
-	APP_FRONTEND_LISTEN_PORT := os.Getenv("APP_FRONTEND_LISTEN_PORT")
-	MYSQL_PASSWORD := os.Getenv("MYSQL_PASSWORD")
+	appFrontendListenPort := os.Getenv("APP_FRONTEND_LISTEN_PORT")
+	mysqlPassword := os.Getenv("MYSQL_PASSWORD")
+	TEST := os.Getenv("TEST")
 
-	fmt.Println("DB_HOST:", APP_FRONTEND_LISTEN_PORT)
-	fmt.Println("DB_PORT:", MYSQL_PASSWORD)
+	fmt.Println("DB_HOST:", appFrontendListenPort)
+	fmt.Println("DB_PORT:", mysqlPassword)
+	fmt.Println("TEST:", TEST)
 	// 打开文件
 	file, err := os.Open(filepath.Join(dir, "..", "..", "conf", "conf.yaml"))
 	if err != nil {
@@ -72,6 +74,7 @@ func InitConfig() (AppConfig *Config, err error) {
 	}
 
 	err = yaml.Unmarshal(yamlFile, &AppConfig)
+
 	if err != nil {
 		log.Fatalf("无法解析YAML文件：%v", err)
 	}
