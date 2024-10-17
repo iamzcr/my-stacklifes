@@ -1,3 +1,4 @@
+{{define "login/index.html"}}
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -18,7 +19,6 @@
     <!-- Custom Theme Style -->
     <link href="/static/build/css/custom.min.css" rel="stylesheet">
     <link rel="shortcut icon" href="/static/favicon.ico">
-
 </head>
 <body class="login">
 <div>
@@ -28,13 +28,13 @@
                 <form>
                     <h1>Login Form</h1>
                     <div>
-                        <input type="text" class="form-control" placeholder="Username" required="" />
+                        <input type="text" class="form-control" placeholder="Username" required=""/>
                     </div>
                     <div>
-                        <input type="password" class="form-control" placeholder="Password" required="" />
+                        <input type="password" class="form-control" placeholder="Password" required=""/>
                     </div>
                     <div>
-                        <a class="btn btn-success submit" href="../index/index.html">登 录</a>
+                        <a class="btn btn-primary submit" href="../index/index.html">登 录</a>
                     </div>
                     <div class="clearfix"></div>
                 </form>
@@ -44,3 +44,4 @@
 </div>
 </body>
 </html>
+{{end}}
