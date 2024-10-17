@@ -10,14 +10,15 @@
                 </div>
                 <div class="left-nav-tag">
                     {{range $index,$value := .data.List}}
-                    <div class="btn-group">
-                        <button data-toggle="dropdown" class="btn btn-primary dropdown-toggle" type="button">Default <span class="caret"></span></button>
-                        <ul role="menu" class="dropdown-menu">
+                    <li class="dropdown">
+                        <a href="#" class="dropdown-toggle" data-toggle="dropdown">Messages</a>
+                        <span class="dropdown-arrow"></span>
+                        <ul class="dropdown-menu">
                             {{range $a_index,$a_value := $value.Articles}}
                             <li><a href="#">{{$a_value.Title}}</a></li>
                             {{end}}
                         </ul>
-                    </div>
+                    </li>
                     {{end}}
                 </div>
             </div><!-- /.left-nav -->
