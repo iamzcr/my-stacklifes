@@ -1,9 +1,9 @@
-{{template "header.html" .}}
+{{template "header" .}}
 <!--引入公共模板-->
-{{template "nav.html" .}}
+{{template "nav" .}}
 <div class="container-fluid">
     <div class="row">
-        {{template "left_nav.html" .}}
+        {{template "left_nav" .}}
         <div class="col-sm-10">
             <!-- Main component for a primary marketing message or call to action -->
             {{range $index,$value := .data.List}}
@@ -16,4 +16,4 @@
         </div>
     </div>
 </div> <!-- /container -->
-{{template "footer.html" .}}
+{{template "footer" .}}
