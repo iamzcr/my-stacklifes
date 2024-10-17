@@ -76,7 +76,7 @@ func (s *ArticleService) GetFrontList(ctx *gin.Context, req models.FrontArticleL
 		db = db.Where("cid = ?", req.Cid)
 	}
 	limit, offset := req.GetPageInfo()
-	err := db.Model(&models.Article{}).Limit(limit).
+	err := db.Model(&models.Article{}).Debug().Limit(limit).
 		Offset(offset).
 		Order("id DESC").
 		Find(&articles).

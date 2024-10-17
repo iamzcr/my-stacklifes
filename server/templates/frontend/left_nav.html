@@ -23,7 +23,7 @@
             {{range $index,$value := .hot_articles.List}}
             <li class="left-nav-done">
                 <div class="left-nav-content">
-                    <a href="/article/detail/{{$value.Id}}"><h5 class="left-nav-name">{{$value.Title}}</h5></a>
+                    <a href="/article/detail/{{$value.Cid}}/{{$value.Id}}"><h5 class="left-nav-name">{{$value.Title}}</h5></a>
                 </div>
             </li>
             {{end}}
