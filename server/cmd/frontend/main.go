@@ -4,9 +4,11 @@ import (
 	"fmt"
 	"github.com/gin-gonic/gin"
 	"github.com/spf13/pflag"
+	"html/template"
 	"my-stacklifes/conf"
 	"my-stacklifes/database/mysql"
 	"my-stacklifes/loggers"
+	"my-stacklifes/pkg/tools"
 	"my-stacklifes/routers"
 )
 
@@ -29,6 +31,12 @@ func main() {
 	loggers.Info("http server startup")
 
 	r := gin.Default()
+
+	//自定义模板函数  注意要把这个函数放在加载模板前
+	r.SetFuncMap(template.FuncMap{
+		"UnixToTime": tools.UnixToTime,
+	})
+
 	r.LoadHTMLGlob("../../templates/frontend/*")
 
 	r.Static("/static", "../../templates/assets/frontend")

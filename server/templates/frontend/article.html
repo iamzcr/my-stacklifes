@@ -11,7 +11,7 @@
                     <span>
                         作者-<strong>{{.data.Article.Author}}</strong>;
                         分类-<strong>{{.data.CategoryName}}</strong>;
-                        时间-<strong>{{.data.Article.PublicTime}}</strong>
+                        时间-<strong>{{UnixToTime .data.Article.PublicTime}}</strong>
                     </span>
                 </div>
                 <div class="article-content">
