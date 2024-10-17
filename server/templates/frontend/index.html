@@ -7,9 +7,9 @@
             <!-- Main component for a primary marketing message or call to action -->
             {{range $index,$value := .data.List}}
             <div class="jumbotron">
-                <a href="/article/detail/cid/{{$value.Cid}}/aid/{{$value.Id}}"><h5>{{$value.Title}}</h5></a>
+                <a href="/article/detail/{{$value.Cid}}/{{$value.Id}}"><h5>{{$value.Title}}</h5></a>
                 <p>作者:{{$value.Author}} 发布时间:{{UnixToTime $value.PublicTime}}</p>
-                <p><a class="btn btn-sm btn-primary" href="/article/detail/cid/{{$value.Cid}}/aid/{{$value.Id}}" role="button">继续阅读</a></p>
+                <p><a class="btn btn-sm btn-primary" href="/article/detail/{{$value.Cid}}/{{$value.Id}}" role="button">继续阅读</a></p>
             </div>
             {{end}}
         </div>
