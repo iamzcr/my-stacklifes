@@ -111,7 +111,7 @@ type FrontArticle struct {
 	TagIds               []int
 	TagNames             []string
 	CategoryName         string
-	DirectoryArticleList []DirectoryArticle
+	DirectoryArticleList []DirectoryArticle //分类目录里面的文章
 }
 
 type FrontArticleListReq struct {
