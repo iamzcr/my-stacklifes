@@ -37,7 +37,6 @@ func main() {
 	loggers.Info("http server startup")
 
 	r := gin.Default()
-	r.LoadHTMLGlob("../../templates/admin/*")
 	r.LoadHTMLGlob("../../templates/admin/**/*")
 	r.Static("/static", "../../templates/assets/admin")
 	//路由分组抽离成文件，注册路由
