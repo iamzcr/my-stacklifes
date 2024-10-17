@@ -134,9 +134,7 @@ pre {
     font-size: 16px;
     display: inline-block;
 }
-.left-nav-directory .card-body a:first-child {
-    padding-top: 0.75rem;
-}
+
 .left-nav-about {
     padding: 10px;
     color: #5d6d7e;
