@@ -46,6 +46,13 @@ func InitConfig() (AppConfig *Config, err error) {
 		fmt.Println("无法加载.env文件:", err)
 		// 处理错误逻辑
 	}
+
+	// Get values from .env file
+	APP_FRONTEND_LISTEN_PORT := os.Getenv("APP_FRONTEND_LISTEN_PORT")
+	MYSQL_PASSWORD := os.Getenv("MYSQL_PASSWORD")
+
+	fmt.Println("DB_HOST:", APP_FRONTEND_LISTEN_PORT)
+	fmt.Println("DB_PORT:", MYSQL_PASSWORD)
 	// 打开文件
 	file, err := os.Open(filepath.Join(dir, "..", "..", "conf", "conf.yaml"))
 	if err != nil {
