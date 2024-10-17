@@ -162,7 +162,7 @@ func (s *ArticleService) GetFrontDetail(ctx *gin.Context, id string) (interface{
 	)
 
 	db := s.dbClient.MysqlClient
-	err := db.Where("id=?", id).Find(&article).Error
+	err := db.Where("id=?", id).Debug().Find(&article).Error
 	if err != nil {
 		return nil, err
 	}
