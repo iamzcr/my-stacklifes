@@ -20,5 +20,5 @@ func (h *IndexHandler) Index(ctx *gin.Context) {
 	var (
 		appGin = app.Gin{C: ctx}
 	)
-	appGin.SuccessAdminHtml("", "index.html")
+	appGin.SuccessAdminHtml("", "index/index.html")
 }
