@@ -11,7 +11,7 @@
             <div class="jumbotron">
                 <a href="/article/detail/{{$value.Id}}"><h5>{{$a_value.Title}}</h5></a>
                 <p>作者:{{$a_value.Author}} 发布时间:{{UnixToTime $a_value.PublicTime}}</p>
-                <p><a class="btn btn-sm btn-primary" href="/article/detail/{{$value.Id}}" role="button">继续阅读</a></p>
+                <p><a class="btn btn-sm btn-primary" href="/article/detail/{{$a_value.Id}}" role="button">继续阅读</a></p>
             </div>
             {{end}}
             {{end}}
