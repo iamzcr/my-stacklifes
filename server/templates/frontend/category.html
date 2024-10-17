@@ -11,7 +11,7 @@
                 <div class="left-nav-tag">
                     {{range $index,$value := .data.List}}
                     <li class="dropdown">
-                        <a href="#" class="dropdown-toggle" data-toggle="dropdown">Messages</a>
+                        <a href="#" class="dropdown-toggle" data-toggle="dropdown">{{$value.DirectoryName}}</a>
                         <span class="dropdown-arrow"></span>
                         <ul class="dropdown-menu">
                             {{range $a_index,$a_value := $value.Articles}}
