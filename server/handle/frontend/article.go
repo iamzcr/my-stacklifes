@@ -56,7 +56,8 @@ func (h *ArticleHandler) CategoryArticleList(ctx *gin.Context) {
 		appGin.Error(exception.ERROR, err.Error(), nil)
 		return
 	}
-	appGin.Success(list)
+	//appGin.Success(list)
+	appGin.SuccessHtml(list, "category.html")
 }
 
 // 标签获取文章列表
