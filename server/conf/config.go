@@ -40,21 +40,6 @@ func InitConfig() (AppConfig *Config, err error) {
 		log.Fatal(err)
 	}
 
-	//env方式加载
-	err = godotenv.Load(filepath.Join(dir, "..", "..", ".env"))
-	if err != nil {
-		fmt.Println("无法加载.env文件:", err)
-		// 处理错误逻辑
-	}
-
-	// Get values from .env file
-	appFrontendListenPort := os.Getenv("APP_FRONTEND_LISTEN_PORT")
-	mysqlPassword := os.Getenv("MYSQL_PASSWORD")
-	TEST := os.Getenv("TEST")
-
-	fmt.Println("DB_HOST:", appFrontendListenPort)
-	fmt.Println("DB_PORT:", mysqlPassword)
-	fmt.Println("TEST:", TEST)
 	// 打开文件
 	file, err := os.Open(filepath.Join(dir, "..", "..", "conf", "conf.yaml"))
 	if err != nil {
@@ -75,6 +60,21 @@ func InitConfig() (AppConfig *Config, err error) {
 
 	err = yaml.Unmarshal(yamlFile, &AppConfig)
 
+	//env方式加载
+	err = godotenv.Load(filepath.Join(dir, "..", "..", ".env"))
+	if err != nil {
+		fmt.Println("无法加载.env文件:", err)
+		// 处理错误逻辑
+	}
+
+	appFrontendListenPort := os.Getenv("APP_FRONTEND_LISTEN_PORT")
+	mysqlPassword := os.Getenv("MYSQL_PASSWORD")
+	if appFrontendListenPort != "" {
+		AppConfig.Common.FrontendListenPort = appFrontendListenPort // Default value
+	}
+	if mysqlPassword != "" {
+		AppConfig.MySQL.Password = mysqlPassword // Default value
+	}
 	if err != nil {
 		log.Fatalf("无法解析YAML文件：%v", err)
 	}

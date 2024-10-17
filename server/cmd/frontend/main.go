@@ -16,6 +16,7 @@ func main() {
 	//初始化配置
 	pflag.Parse()
 	appConfig, err := conf.InitConfig()
+	fmt.Println(appConfig)
 	if err != nil {
 		fmt.Println("config init:", err)
 	}
