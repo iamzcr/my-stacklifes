@@ -111,6 +111,7 @@ type FrontArticle struct {
 	TagIds       []int
 	TagNames     []string
 	CategoryName string
+	List         []DirectoryArticle
 }
 
 type FrontArticleListReq struct {

@@ -200,30 +200,40 @@ func (s *ArticleService) GetFrontDetail(ctx *gin.Context, id string) (interface{
 	})
 	content, _ := tools.ConvertMarkdownToHTML([]byte(article.Content))
 	contentHtml := template.HTML(content)
-	return models.FrontArticle{
-		Article: models.Article{
-			Id:          article.Id,
-			Title:       article.Title,
-			Cid:         article.Cid,
-			Author:      article.Author,
-			Desc:        article.Desc,
-			Keyword:     article.Keyword,
-			Thumb:       article.Thumb,
-			Summary:     article.Summary,
-			Content:     article.Content,
-			ContentHtml: contentHtml,
-			IsHot:       article.IsHot,
-			IsNew:       article.IsNew,
-			IsRecom:     article.IsRecom,
-			Weight:      article.Weight,
-			PublicTime:  article.PublicTime,
-			Month:       article.Month,
-		},
-		TagIds:       tagIds,
-		TagNames:     tagNames,
-		CategoryName: category.Name,
-	}, nil
 
+	tempList, err := NewArticleService().GetFrontCategoryArticleList(ctx, string(rune(article.Cid)))
+	tempList = models.FrontDirectoryArticleListRes{
+		List: []models.DirectoryArticle{},
+	}
+	// 使用类型断言将接口类型转换为 models.FrontDirectoryArticleListRes 类型 ,这里应该有更好的处理方式
+	if res, ok := tempList.(models.FrontDirectoryArticleListRes); ok {
+		return models.FrontArticle{
+			Article: models.Article{
+				Id:          article.Id,
+				Title:       article.Title,
+				Cid:         article.Cid,
+				Author:      article.Author,
+				Desc:        article.Desc,
+				Keyword:     article.Keyword,
+				Thumb:       article.Thumb,
+				Summary:     article.Summary,
+				Content:     article.Content,
+				ContentHtml: contentHtml,
+				IsHot:       article.IsHot,
+				IsNew:       article.IsNew,
+				IsRecom:     article.IsRecom,
+				Weight:      article.Weight,
+				PublicTime:  article.PublicTime,
+				Month:       article.Month,
+			},
+			TagIds:       tagIds,
+			TagNames:     tagNames,
+			CategoryName: category.Name,
+			List:         res.List,
+		}, nil
+	} else {
+		return nil, errors.New("类型断言失败")
+	}
 }
 
 func (s *ArticleService) Create(ctx *gin.Context, req models.ArticleCreateReq) (interface{}, error) {
