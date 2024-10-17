@@ -1,6 +1,7 @@
 package frontend
 
 import (
+	"fmt"
 	"github.com/gin-gonic/gin"
 	"my-stacklifes/models"
 	"my-stacklifes/pkg/app"
@@ -38,6 +39,7 @@ func (h *ArticleHandler) ArticleDetail(ctx *gin.Context) {
 	var appGin = app.Gin{C: ctx}
 	id := ctx.Param("id")
 	detailData, err := h.srv.GetFrontDetail(ctx, id)
+	fmt.Println(detailData)
 	if err != nil {
 		appGin.Error(exception.ERROR, err.Error(), nil)
 		return

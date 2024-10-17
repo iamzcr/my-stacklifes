@@ -2,11 +2,13 @@ package service
 
 import (
 	"errors"
+	"fmt"
 	"github.com/gin-gonic/gin"
 	"html/template"
 	"my-stacklifes/database/mysql"
 	"my-stacklifes/models"
 	"my-stacklifes/pkg/tools"
+	"strconv"
 )
 
 type ArticleService struct {
@@ -200,11 +202,9 @@ func (s *ArticleService) GetFrontDetail(ctx *gin.Context, id string) (interface{
 	})
 	content, _ := tools.ConvertMarkdownToHTML([]byte(article.Content))
 	contentHtml := template.HTML(content)
-
-	tempList, err := NewArticleService().GetFrontCategoryArticleList(ctx, string(rune(article.Cid)))
-	tempList = models.FrontDirectoryArticleListRes{
-		List: []models.DirectoryArticle{},
-	}
+	fmt.Println(article.Cid)
+	tempList, err := NewArticleService().GetFrontCategoryArticleList(ctx, strconv.Itoa(article.Cid))
+	fmt.Println(tempList)
 	// 使用类型断言将接口类型转换为 models.FrontDirectoryArticleListRes 类型 ,这里应该有更好的处理方式
 	if res, ok := tempList.(models.FrontDirectoryArticleListRes); ok {
 		return models.FrontArticle{
