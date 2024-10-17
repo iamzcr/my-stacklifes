@@ -1,0 +1,27 @@
+<div class="col-sm-2">
+    <div class="left-nav">
+        <div class="left-nav-search">
+            分类目录
+        </div>
+        <div class="left-nav-directory">
+            <div id="accordion">
+                <div class="card">
+                    {{range $index,$value := .data.List}}
+                    <div class="card-header" id="headingOne{{$value.DirectoryID}}">
+                        <button class="btn btn-link" data-toggle="collapse" data-target="#collapseOne{{$value.DirectoryID}}" aria-expanded="true" aria-controls="collapseOne{{$value.DirectoryID}}">
+                            {{$value.DirectoryName}}
+                        </button>
+                    </div>
+                    <div id="collapseOne{{$value.DirectoryID}}" class="collapse show" aria-labelledby="headingOne{{$value.DirectoryID}}" data-parent="#accordion">
+                        <div class="card-body">
+                            {{range $a_index,$a_value := $value.Articles}}
+                            <a href="/article/detail/{{$a_value.Id}}">{{$a_value.Title}}</a>
+                            {{end}}
+                        </div>
+                    </div>
+                    {{end}}
+                </div>
+            </div>
+        </div>
+    </div><!-- /.left-nav -->
+</div>
