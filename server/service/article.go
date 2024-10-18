@@ -2,6 +2,7 @@ package service
 
 import (
 	"errors"
+	"fmt"
 	"github.com/gin-gonic/gin"
 	"html/template"
 	"my-stacklifes/database/mysql"
@@ -154,8 +155,8 @@ func (s *ArticleService) GetFrontTagsArticleList(id string) (interface{}, error)
 func (s *ArticleService) GetFrontDetail(ctx *gin.Context, id string) (interface{}, error) {
 	var (
 		article              models.Article
-		preFrontArticleInfo  models.FrontArticleInfo
-		nextFrontArticleInfo models.FrontArticleInfo
+		preFrontArticleInfo  models.Article
+		nextFrontArticleInfo models.Article
 		category             models.Category
 		articleTags          []models.ArticleTags
 		tags                 []models.Tags
@@ -180,7 +181,8 @@ func (s *ArticleService) GetFrontDetail(ctx *gin.Context, id string) (interface{
 
 	_ = db.Where("id<?", id).Debug().Select("id,cid").Order("id DESC").Limit(1).Find(&preFrontArticleInfo).Error
 	_ = db.Where("id>?", id).Debug().Select("id,cid").Order("id DESC").Limit(1).Find(&nextFrontArticleInfo).Error
-
+	fmt.Println(nextFrontArticleInfo)
+	fmt.Println(preFrontArticleInfo)
 	err = db.Where("id=?", article.Cid).Find(&category).Error
 	if err != nil {
 		return nil, err
