@@ -31,7 +31,8 @@ func (h *ArticleHandler) List(ctx *gin.Context) {
 		appGin.Error(exception.ERROR, err.Error(), nil)
 		return
 	}
-	appGin.Success(list)
+	//appGin.Success(list)
+	appGin.SuccessAdminHtml(list, "article/list.html")
 }
 
 func (h *ArticleHandler) Info(ctx *gin.Context) {
