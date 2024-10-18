@@ -3,8 +3,8 @@
 <html lang="en">
 <head>
     {{template "public/header" .}}
-    <link href="/static/vendor/toastui/toastui.css" rel="stylesheet">
-    <link href="/static/vendor/toastui/odemirror.min.css" rel="stylesheet">
+    <link href="/static/vendors/toastui/toastui.css" rel="stylesheet">
+    <link href="/static/vendors/toastui/odemirror.min.css" rel="stylesheet">
 </head>
 <body class="nav-md">
 <div class="container body">
@@ -66,10 +66,11 @@
                 </div>
             </div>
         </div>
+        {{template "public/footer_nav" .}}
     </div>
 </div>
 {{template "public/footer" .}}
-<script src="/static/vendor/toastui/toastui.js"></script>
+<script src="/static/vendors/toastui/toastui.js"></script>
 <script>
     document.addEventListener('DOMContentLoaded', function() {
         var editor = new toastui.Editor({
