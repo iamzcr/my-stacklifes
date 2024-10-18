@@ -110,7 +110,7 @@ type FrontArticle struct {
 	Article
 	TagIds               []int
 	TagNames             []string
-	CategoryName         string
+	Category             Category
 	DirectoryArticleList []DirectoryArticle //分类目录里面的文章
 	PreArticle           Article            //上一篇
 	NextArticle          Article            //下一篇

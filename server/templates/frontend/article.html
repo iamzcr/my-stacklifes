@@ -9,7 +9,7 @@
                 <div class="article-tag ">
                     <span>
                         作者-<strong>{{.data.Article.Author}}</strong>;
-                        分类-<strong>{{.data.CategoryName}}</strong>;
+                        分类-<a href="/category/{{.data.Category.Id}}"><strong>{{.data.Category.Name}}</strong></a>;
                         时间-<strong>{{UnixToTime .data.Article.PublicTime}}</strong>
                     </span>
                 </div>
