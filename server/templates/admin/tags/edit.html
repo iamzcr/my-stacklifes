@@ -1,0 +1,52 @@
+{{define "category/edit.html"}}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    {{template "public/header" .}}
+</head>
+<body class="nav-md">
+<div class="container body">
+    <div class="main_container">
+
+        {{template "public/left_nav" .}}
+        {{template "public/nav" .}}
+        <!-- page content -->
+        <div class="right_col" role="main">
+            <div class="row">
+                <div class="col-md-12 col-sm-12 ">
+                    <div class="x_panel">
+                        <div class="x_content">
+                            <form id="demo-form2" data-parsley-validate class="form-horizontal form-label-left">
+                                <div class="item form-group">
+                                    <label class="col-form-label col-md-1 label-align">标签名称</label>
+                                    <div class="col-md-2">
+                                        <input type="text" name="name" required="required" class="form-control ">
+                                    </div>
+                                </div>
+                                <div class="item form-group">
+                                    <label class="col-form-label col-md-1 label-align">排序</label>
+                                    <div class="col-md-2">
+                                        <input type="text" name="weight" required="required" class="form-control">
+                                    </div>
+                                </div>
+                                <div class="item form-group">
+                                    <div class="col-md-6 offset-md-1">
+                                        <button type="submit" class="btn btn-success">提交</button>
+                                    </div>
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        {{template "public/footer_nav" .}}
+    </div>
+</div>
+{{template "public/footer" .}}
+<script>
+
+</script>
+</body>
+</html>
+{{end}}

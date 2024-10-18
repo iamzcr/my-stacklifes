@@ -47,6 +47,7 @@ func AdminRoutersInit(r *gin.Engine) {
 		adminRouter.POST("/lang/change_field", langHandler.ChangeField)
 
 		adminRouter.GET("/category/list", categoryHandler.List)
+		adminRouter.GET("/category/edit", categoryHandler.List)
 		adminRouter.GET("/category/info/:id", categoryHandler.Info)
 		adminRouter.GET("/category/no_page_list", categoryHandler.NoPageList)
 		adminRouter.POST("/category/update", categoryHandler.Update)
