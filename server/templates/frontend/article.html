@@ -18,14 +18,20 @@
                 </div>
                 <div class="text-center">
                     <div class="pagination pagination-inverse">
-                        <a href="/article/detail/{{.data.PreArticle.Cid}}/{{.data.PreArticle.Id}}" class="btn btn-inverse previous">
+                        {{ if .data.PreArticle.Id }}
+                        <a href="/article/detail/{{.data.PreArticle.Cid}}/{{.data.PreArticle.Id}}"
+                           class="btn btn-inverse previous">
                             <i class="fui-arrow-left"></i>
-                            上一遍
+                            上一篇
                         </a>
-                        <a href="/article/detail/{{.data.NextArticle.Cid}}/{{.data.PreArticle.Id}}" class="btn btn-inverse next">
+                        {{ end }}
+                        {{ if .data.NextArticle.Id }}
+                        <a href="/article/detail/{{.data.NextArticle.Cid}}/{{.data.NextArticle.Id}}"
+                           class="btn btn-inverse next">
                             下一篇
                             <i class="fui-arrow-right"></i>
                         </a>
+                        {{ end }}
                     </div> <!-- /pagination -->
                 </div>
             </div>
