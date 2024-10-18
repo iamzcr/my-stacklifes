@@ -1,8 +1,10 @@
-{{define "category/list.html"}}
+{{define "article/edit.html"}}
 <!DOCTYPE html>
 <html lang="en">
 <head>
     {{template "public/header" .}}
+    <link href="/static/vendor/toastui/toastui.css" rel="stylesheet">
+    <link href="/static/vendor/toastui/odemirror.min.css" rel="stylesheet">
 </head>
 <body class="nav-md">
 <div class="container body">
@@ -42,7 +44,13 @@
                                         <input id="middle-name" class="form-control" type="text" name="middle-name">
                                     </div>
                                 </div>
-
+                                <div class="item form-group">
+                                    <label for="middle-name" class="col-form-label col-md-3 col-sm-3 label-align">Middle
+                                        Name / Initial</label>
+                                    <div class="col-md-6 col-sm-6 ">
+                                        <div id="editor"></div>
+                                    </div>
+                                </div>
                                 <div class="ln_solid"></div>
                                 <div class="item form-group">
                                     <div class="col-md-6 col-sm-6 offset-md-3">
@@ -61,6 +69,18 @@
     </div>
 </div>
 {{template "public/footer" .}}
+<script src="/static/vendor/toastui/toastui.js"></script>
+<script>
+    document.addEventListener('DOMContentLoaded', function() {
+        var editor = new toastui.Editor({
+            el: document.querySelector('#editor'),
+            height: '600px',
+            initialEditType: 'markdown',
+            previewStyle: 'vertical',
+            usageStatistics: false
+        });
+    });
+</script>
 </body>
 </html>
 {{end}}
