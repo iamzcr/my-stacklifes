@@ -81,6 +81,7 @@ func AdminRoutersInit(r *gin.Engine) {
 		adminRouter.POST("/website/delete", websiteHandler.Delete)
 
 		adminRouter.GET("/tags/list", tagsHandler.List)
+		adminRouter.GET("/tags/list_json", tagsHandler.ListJson)
 		adminRouter.GET("/tags/info/:id", tagsHandler.Info)
 		adminRouter.POST("/tags/create", tagsHandler.Create)
 		adminRouter.POST("/tags/update", tagsHandler.Update)

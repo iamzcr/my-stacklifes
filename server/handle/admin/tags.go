@@ -17,8 +17,12 @@ func NewTagsHandler() *TagsHandler {
 		srv: service.NewTagsService(),
 	}
 }
-
 func (h *TagsHandler) List(ctx *gin.Context) {
+	var appGin = app.Gin{C: ctx}
+	assignData := "assignData"
+	appGin.SuccessAdminHtml(assignData, "tags/list.html")
+}
+func (h *TagsHandler) ListJson(ctx *gin.Context) {
 	var appGin = app.Gin{C: ctx}
 	listReq := models.TagsListReq{}
 	err := ctx.ShouldBindQuery(&listReq)

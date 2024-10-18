@@ -1,7 +1,6 @@
 package admin
 
 import (
-	"fmt"
 	"github.com/gin-gonic/gin"
 	"my-stacklifes/models"
 	"my-stacklifes/pkg/app"
@@ -21,7 +20,6 @@ func NewCategoryHandler() *CategoryHandler {
 func (h *CategoryHandler) List(ctx *gin.Context) {
 	var appGin = app.Gin{C: ctx}
 	assignData := "assignData"
-	fmt.Println(assignData)
 	appGin.SuccessAdminHtml(assignData, "category/list.html")
 }
 func (h *CategoryHandler) ListJson(ctx *gin.Context) {

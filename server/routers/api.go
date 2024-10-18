@@ -120,7 +120,7 @@ func ApiRoutersInit(r *gin.Engine) {
 		adminRouter.GET("/read/list", adminReadHandler.List)
 		adminRouter.GET("/comment/list", adminCommentHandler.List)
 
-		adminRouter.GET("/article/list", adminArticleHandler.List)
+		adminRouter.GET("/article/list_json", adminArticleHandler.ListJson)
 		adminRouter.GET("/article/info/:id", adminArticleHandler.Info)
 		adminRouter.POST("/article/create", adminArticleHandler.Create)
 		adminRouter.POST("/article/update", adminArticleHandler.Update)

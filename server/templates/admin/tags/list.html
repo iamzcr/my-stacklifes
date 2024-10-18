@@ -1,4 +1,4 @@
-{{define "tags/list.html"}}
+{{define "category/list.html"}}
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -13,6 +13,7 @@
         <div class="right_col" role="main">
             <div class="row">
                 <div class="col">
+                    <button class="btn btn-sm btn-primary" id="search">搜索</button>
                     <a href="/admin/tags/edit" class="btn btn-sm btn-success">新增</a>
                 </div>
             </div>
@@ -23,35 +24,18 @@
                             <div class="row">
                                 <div class="col-sm-12">
                                     <div class="card-box table-responsive">
-                                        <table id="datatable" class="table table-striped table-bordered"
-                                               style="width:100%">
+                                        <table id="list-table" class="table table-striped table-bordered" style="width:100%">
                                             <thead>
                                             <tr>
-                                                <th>Name</th>
-                                                <th>Position</th>
-                                                <th>Office</th>
-                                                <th>Age</th>
-                                                <th>Start date</th>
-                                                <th>Salary</th>
+                                                <th>ID</th>
+                                                <th>类型</th>
+                                                <th>名称</th>
+                                                <th>操作人</th>
+                                                <th>状态</th>
+                                                <th>时间</th>
                                             </tr>
                                             </thead>
                                             <tbody>
-                                            <tr>
-                                                <td>Tiger Nixon</td>
-                                                <td>System Architect</td>
-                                                <td>Edinburgh</td>
-                                                <td>61</td>
-                                                <td>2011/04/25</td>
-                                                <td>$320,800</td>
-                                            </tr>
-                                            <tr>
-                                                <td>Donna Snider</td>
-                                                <td>Customer Support</td>
-                                                <td>New York</td>
-                                                <td>27</td>
-                                                <td>2011/01/25</td>
-                                                <td>$112,000</td>
-                                            </tr>
                                             </tbody>
                                         </table>
                                     </div>
@@ -66,6 +50,37 @@
     </div>
 </div>
 {{template "public/footer" .}}
+<script type="text/javascript">
+    var listTable = $('#list-table').DataTable({
+        "processing": true,
+        "serverSide": true,
+        "ajax": {
+            "url": "/admin/tags/list_json",
+            "type": "GET",
+            "dataSrc": function (json) {
+                return json.data.list; // Assuming your data is stored in a `data` property
+            }
+        },
+        "columns": [
+            {"data": "id"},
+            {"data": "type"},
+            {"data": "name"},
+            {"data": "author"},
+            {"data": "status"},
+            {"data": "create_time"},
+        ]
+    });
+
+    $("#search").click(function () {
+        listTable.ajax.reload();
+    });
+
+    $('#list-table').on('mouseover', 'tbody tr', function () {
+        $(this).addClass('info');
+    }).on('mouseout', 'tbody tr', function () {
+        $(this).removeClass('info');
+    });
+</script>
 </body>
 </html>
 {{end}}
