@@ -2,7 +2,6 @@ package service
 
 import (
 	"errors"
-	"fmt"
 	"github.com/gin-gonic/gin"
 	"html/template"
 	"my-stacklifes/database/mysql"
@@ -77,7 +76,7 @@ func (s *ArticleService) GetFrontList(ctx *gin.Context, req models.FrontArticleL
 		db = db.Where("cid = ?", req.Cid)
 	}
 	limit, offset := req.GetPageInfo()
-	err := db.Model(&models.Article{}).Debug().Limit(limit).
+	err := db.Model(&models.Article{}).Limit(limit).
 		Offset(offset).
 		Order("id DESC").
 		Find(&articles).
@@ -169,7 +168,6 @@ func (s *ArticleService) GetFrontDetail(ctx *gin.Context, id string) (interface{
 		return nil, err
 	}
 
-	fmt.Println(article)
 	if article.Id == 0 {
 		return nil, errors.New("文章不存在")
 	}
@@ -182,7 +180,6 @@ func (s *ArticleService) GetFrontDetail(ctx *gin.Context, id string) (interface{
 		return nil, err
 	}
 
-	fmt.Println(category)
 	err = db.Find(&tags).Error
 	if err != nil {
 		return nil, err
