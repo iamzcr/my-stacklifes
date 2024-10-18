@@ -179,8 +179,8 @@ func (s *ArticleService) GetFrontDetail(ctx *gin.Context, id string) (interface{
 		return nil, err
 	}
 
-	_ = db.Where("id<?", id).Debug().Select("id,cid").Order("id DESC").Limit(1).Find(&preFrontArticleInfo).Error
-	_ = db.Where("id>?", id).Debug().Select("id,cid").Order("id DESC").Limit(1).Find(&nextFrontArticleInfo).Error
+	_ = db.Where("id<?", id).Select("id,cid").Order("id DESC").Limit(1).Find(&preFrontArticleInfo).Error
+	_ = db.Where("id>?", id).Select("id,cid").Order("id DESC").Limit(1).Find(&nextFrontArticleInfo).Error
 	fmt.Println(nextFrontArticleInfo)
 	fmt.Println(preFrontArticleInfo)
 	err = db.Where("id=?", article.Cid).Find(&category).Error
