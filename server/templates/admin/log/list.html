@@ -57,7 +57,7 @@
             "url": "/admin/log/list_json",
             "type": "GET",
             "dataSrc": function (json) {
-                return json.list; // Assuming your data is stored in a `data` property
+                return json.data.list; // Assuming your data is stored in a `data` property
             }
         },
         "columns": [
