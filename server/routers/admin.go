@@ -101,6 +101,7 @@ func AdminRoutersInit(r *gin.Engine) {
 		adminRouter.POST("/menu/delete", menuHandler.Delete)
 
 		adminRouter.GET("/log/list", logHandler.List)
+		adminRouter.GET("/log/list_json", logHandler.ListJson)
 		adminRouter.GET("/msg/list", msgHandler.List)
 		adminRouter.GET("/read/list", readHandler.List)
 		adminRouter.GET("/comment/list", commentHandler.List)

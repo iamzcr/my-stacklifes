@@ -13,7 +13,7 @@
         <div class="right_col" role="main">
             <div class="row">
                 <div class="col">
-                    <a href="/admin/log/list" class="btn btn-sm btn-success" id="search">搜索</a>
+                    <a href="/admin/log/list_json" class="btn btn-sm btn-success" id="search">搜索</a>
                 </div>
             </div>
             <div class="row">
@@ -54,7 +54,7 @@
         "processing": true,
         "serverSide": true,
         "ajax": {
-            "url": "/admin/log/list",
+            "url": "/admin/log/list_json",
             "type": "GET",
             "dataSrc": function (json) {
                 return json.data; // Assuming your data is stored in a `data` property
