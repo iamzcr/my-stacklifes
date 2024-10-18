@@ -57,13 +57,14 @@
             "url": "/admin/log/list_json",
             "type": "GET",
             "dataSrc": function (json) {
-                return json.data; // Assuming your data is stored in a `data` property
+                return json.list; // Assuming your data is stored in a `data` property
             }
         },
         "columns": [
             {"data": "id"},
             {"data": "type"},
             {"data": "username"},
+            {"data": "ip"},
             {"data": "content"},
             {"data": "create_time"},
         ]
