@@ -171,4 +171,6 @@ pre {
     padding: 20px;
     background-color: #ffffff;
 }
-
+.left-nav-msg .form-group{
+    margin-bottom: 10px;
+}
