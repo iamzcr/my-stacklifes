@@ -1,6 +1,7 @@
 package admin
 
 import (
+	"fmt"
 	"github.com/gin-gonic/gin"
 	"my-stacklifes/models"
 	"my-stacklifes/pkg/app"
@@ -17,8 +18,13 @@ func NewArticleHandler() *ArticleHandler {
 		srv: service.NewArticleService(),
 	}
 }
-
 func (h *ArticleHandler) List(ctx *gin.Context) {
+	var appGin = app.Gin{C: ctx}
+	assignData := "assignData"
+	fmt.Println(assignData)
+	appGin.SuccessAdminHtml(assignData, "article/list.html")
+}
+func (h *ArticleHandler) ListJson(ctx *gin.Context) {
 	var appGin = app.Gin{C: ctx}
 	query := models.ArticleReq{}
 	err := ctx.ShouldBindQuery(&query)
@@ -32,7 +38,6 @@ func (h *ArticleHandler) List(ctx *gin.Context) {
 		return
 	}
 	appGin.Success(list)
-	//appGin.SuccessAdminHtml(list, "article/list.html")
 }
 
 func (h *ArticleHandler) Edit(ctx *gin.Context) {
