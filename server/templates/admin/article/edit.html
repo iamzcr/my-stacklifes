@@ -32,9 +32,9 @@
                                     </div>
                                 </div>
                                 <div class="item form-group">
-                                    <label  class="col-form-label col-md-1 label-align">内容</label>
+                                    <label class="col-form-label col-md-1 label-align">内容</label>
                                     <div class="col-md-11">
-                                        <textarea id="editor"></textarea>
+                                        <div id="editor"></div>
                                     </div>
                                 </div>
                                 <div class="item form-group">
@@ -54,13 +54,15 @@
 {{template "public/footer" .}}
 <script src="/static/vendors/toastui/toastui.js"></script>
 <script>
-    document.addEventListener('DOMContentLoaded', function() {
+    document.addEventListener('DOMContentLoaded', function () {
         var editor = new toastui.Editor({
             el: document.querySelector('#editor'),
             height: '600px',
             initialEditType: 'markdown',
             previewStyle: 'vertical',
-            usageStatistics: false
+            usageStatistics: false,
+            exts: ['scrollSync', 'colorSyntax', 'uml', 'chart', 'mark', 'table'],
+            codeBlockLanguages: ['javascript', 'html', 'css', 'php', 'golang', 'shell', 'bash', 'sql', 'python']
         });
     });
 </script>
