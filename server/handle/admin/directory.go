@@ -31,7 +31,8 @@ func (h *DirectoryHandler) List(ctx *gin.Context) {
 		appGin.Error(exception.ERROR, err.Error(), nil)
 		return
 	}
-	appGin.Success(list)
+	//appGin.Success(list)
+	appGin.SuccessAdminHtml(list, "category/list.html")
 }
 
 func (h *DirectoryHandler) NoPageList(ctx *gin.Context) {
