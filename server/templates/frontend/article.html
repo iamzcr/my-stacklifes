@@ -18,11 +18,11 @@
                 </div>
                 <div class="text-center">
                     <div class="pagination pagination-inverse">
-                        <a href="#fakelink" class="btn btn-inverse previous">
+                        <a href="/article/detail/{{.data.PreArticle.Cid}}/{{.data.PreArticle.Id}}" class="btn btn-inverse previous">
                             <i class="fui-arrow-left"></i>
                             上一遍
                         </a>
-                        <a href="#fakelink" class="btn btn-inverse next">
+                        <a href="/article/detail/{{.data.NextArticle.Cid}}/{{.data.PreArticle.Id}}" class="btn btn-inverse next">
                             下一篇
                             <i class="fui-arrow-right"></i>
                         </a>

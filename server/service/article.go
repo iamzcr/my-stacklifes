@@ -153,13 +153,15 @@ func (s *ArticleService) GetFrontTagsArticleList(id string) (interface{}, error)
 
 func (s *ArticleService) GetFrontDetail(ctx *gin.Context, id string) (interface{}, error) {
 	var (
-		article     models.Article
-		category    models.Category
-		articleTags []models.ArticleTags
-		tags        []models.Tags
-		tagIds      []int
-		tagNames    []string
-		tagMap      = make(map[int]string)
+		article              models.Article
+		preFrontArticleInfo  models.FrontArticleInfo
+		nextFrontArticleInfo models.FrontArticleInfo
+		category             models.Category
+		articleTags          []models.ArticleTags
+		tags                 []models.Tags
+		tagIds               []int
+		tagNames             []string
+		tagMap               = make(map[int]string)
 	)
 
 	db := s.dbClient.MysqlClient
@@ -175,6 +177,10 @@ func (s *ArticleService) GetFrontDetail(ctx *gin.Context, id string) (interface{
 	if err != nil {
 		return nil, err
 	}
+
+	_ = db.Where("id<?", id).Select("id,cid").Order("id DESC").Limit(1).Find(&preFrontArticleInfo).Error
+	_ = db.Where("id>?", id).Select("id,cid").Order("id DESC").Limit(1).Find(&nextFrontArticleInfo).Error
+
 	err = db.Where("id=?", article.Cid).Find(&category).Error
 	if err != nil {
 		return nil, err
@@ -229,6 +235,8 @@ func (s *ArticleService) GetFrontDetail(ctx *gin.Context, id string) (interface{
 			TagNames:             tagNames,
 			CategoryName:         category.Name,
 			DirectoryArticleList: res.DirectoryArticleList,
+			PreArticle:           preFrontArticleInfo,
+			NextArticle:          nextFrontArticleInfo,
 		}, nil
 	} else {
 		return nil, errors.New("类型断言失败")

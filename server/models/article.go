@@ -112,6 +112,8 @@ type FrontArticle struct {
 	TagNames             []string
 	CategoryName         string
 	DirectoryArticleList []DirectoryArticle //分类目录里面的文章
+	PreArticle           FrontArticleInfo   //上一篇
+	NextArticle          FrontArticleInfo   //下一篇
 }
 
 type FrontArticleListReq struct {
