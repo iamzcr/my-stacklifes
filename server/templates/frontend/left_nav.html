@@ -48,7 +48,7 @@
             留言
         </div>
         <div class="left-nav-msg">
-            <form role="form">
+            <form role="form" id="msgForm">
                 <div class="form-group">
                     <label for="name">你的昵称</label>
                     <input type="text" class="form-control" name="name" id="name">
@@ -65,8 +65,29 @@
                     <label for="content">内容</label>
                     <textarea class="form-control" rows="3"  name="content" id="content"></textarea>
                 </div>
-                <button type="submit" class="btn btn-primary">提交</button>
+                <button type="submit" class="btn btn-primary" onclick="submitForm()">提交</button>
             </form>
         </div>
     </div><!-- /.left-nav -->
 </div>
+<script type="text/javascript">
+    function submitForm() {
+        var formData = $("#msgForm").serialize();
+
+        $.ajax({
+            type: "POST",
+            url: "/message", // 提交表单数据的URL
+            data: formData,
+            success: function(response) {
+                // 处理成功响应
+                console.log(response);
+                alert('Form submitted successfully!');
+            },
+            error: function(error) {
+                // 处理错误响应
+                console.error(error);
+                alert('Error submitting form!');
+            }
+        });
+    }
+</script>
