@@ -35,6 +35,23 @@ func (h *ArticleHandler) List(ctx *gin.Context) {
 	appGin.SuccessAdminHtml(list, "article/list.html")
 }
 
+func (h *ArticleHandler) Edit(ctx *gin.Context) {
+	var appGin = app.Gin{C: ctx}
+	query := models.ArticleReq{}
+	err := ctx.ShouldBindQuery(&query)
+	if err != nil {
+		appGin.Error(exception.ERROR, err.Error(), nil)
+		return
+	}
+	list, err := h.srv.GetList(ctx, query)
+	if err != nil {
+		appGin.Error(exception.ERROR, err.Error(), nil)
+		return
+	}
+	//appGin.Success(list)
+	appGin.SuccessAdminHtml(list, "article/edit.html")
+}
+
 func (h *ArticleHandler) Info(ctx *gin.Context) {
 	var appGin = app.Gin{C: ctx}
 	id := ctx.Param("id")

@@ -105,6 +105,7 @@ func AdminRoutersInit(r *gin.Engine) {
 		adminRouter.GET("/comment/list", commentHandler.List)
 
 		adminRouter.GET("/article/list", articleHandler.List)
+		adminRouter.GET("/article/edit", articleHandler.Edit)
 		adminRouter.GET("/article/info/:id", articleHandler.Info)
 		adminRouter.POST("/article/create", articleHandler.Create)
 		adminRouter.POST("/article/update", articleHandler.Update)
