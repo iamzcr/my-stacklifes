@@ -32,7 +32,7 @@ func (h *DirectoryHandler) List(ctx *gin.Context) {
 		return
 	}
 	//appGin.Success(list)
-	appGin.SuccessAdminHtml(list, "category/list.html")
+	appGin.SuccessAdminHtml(list, "directory/list.html")
 }
 
 func (h *DirectoryHandler) NoPageList(ctx *gin.Context) {
