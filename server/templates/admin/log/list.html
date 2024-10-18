@@ -13,7 +13,7 @@
         <div class="right_col" role="main">
             <div class="row">
                 <div class="col">
-                    <button  class="btn btn-sm btn-success" id="search">搜索</button>
+                    <button class="btn btn-sm btn-success" id="search">搜索</button>
                 </div>
             </div>
             <div class="row">
@@ -27,12 +27,12 @@
                                                style="width:100%">
                                             <thead>
                                             <tr>
-                                                <th>Name</th>
-                                                <th>Position</th>
-                                                <th>Office</th>
-                                                <th>Age</th>
-                                                <th>Start date</th>
-                                                <th>Salary</th>
+                                                <th>ID</th>
+                                                <th>类型</th>
+                                                <th>操作人</th>
+                                                <th>IP</th>
+                                                <th>内容</th>
+                                                <th>时间</th>
                                             </tr>
                                             </thead>
                                             <tbody></tbody>
@@ -61,12 +61,11 @@
             }
         },
         "columns": [
-            {"data": "name"},
-            {"data": "position"},
-            {"data": "office"},
-            {"data": "age"},
-            {"data": "start_date"},
-            {"data": "salary"}
+            {"data": "id"},
+            {"data": "type"},
+            {"data": "username"},
+            {"data": "content"},
+            {"data": "create_time"},
         ]
     });
 

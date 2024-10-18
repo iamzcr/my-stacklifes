@@ -10,7 +10,7 @@ Target Server Type    : MYSQL
 Target Server Version : 80039
 File Encoding         : 65001
 
-Date: 2024-10-17 22:26:08
+Date: 2024-10-18 19:52:13
 */
 
 SET FOREIGN_KEY_CHECKS=0;
@@ -286,37 +286,20 @@ DROP TABLE IF EXISTS `sl_log`;
 CREATE TABLE `sl_log` (
   `id` int unsigned NOT NULL AUTO_INCREMENT COMMENT '日志表自增id',
   `username` varchar(32) NOT NULL DEFAULT '' COMMENT '用户名',
+  `ip` varchar(32) CHARACTER SET utf8mb3 COLLATE utf8mb3_general_ci DEFAULT NULL,
   `content` varchar(500) NOT NULL DEFAULT '' COMMENT '简要描述',
   `create_time` int DEFAULT '0' COMMENT '创建时间',
   `update_time` int DEFAULT NULL,
+  `type` int DEFAULT NULL,
   PRIMARY KEY (`id`),
   KEY `username` (`username`),
   KEY `create_time` (`create_time`)
-) ENGINE=InnoDB AUTO_INCREMENT=89 DEFAULT CHARSET=utf8mb3 COMMENT='日志表';
+) ENGINE=InnoDB AUTO_INCREMENT=90 DEFAULT CHARSET=utf8mb3 COMMENT='日志表';
 
 -- ----------------------------
 -- Records of sl_log
 -- ----------------------------
-
--- ----------------------------
--- Table structure for sl_log_fail
--- ----------------------------
-DROP TABLE IF EXISTS `sl_log_fail`;
-CREATE TABLE `sl_log_fail` (
-  `id` int NOT NULL AUTO_INCREMENT,
-  `type` int DEFAULT NULL,
-  `username` varchar(64) DEFAULT NULL COMMENT '登录名',
-  `ip` varchar(128) DEFAULT NULL COMMENT '登录ip',
-  `content` varchar(64) DEFAULT NULL COMMENT '错误信息',
-  `create_time` int DEFAULT NULL,
-  `update_time` int DEFAULT NULL,
-  PRIMARY KEY (`id`),
-  KEY `username_ip` (`username`,`ip`) USING BTREE
-) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8mb3;
-
--- ----------------------------
--- Records of sl_log_fail
--- ----------------------------
+INSERT INTO `sl_log` VALUES ('89', 'nicholas', null, 'test', '0', null, null);
 
 -- ----------------------------
 -- Table structure for sl_menu
@@ -380,11 +363,14 @@ CREATE TABLE `sl_message` (
   `create_time` int DEFAULT NULL,
   `update_time` int DEFAULT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8mb3 COMMENT='留言表';
+) ENGINE=InnoDB AUTO_INCREMENT=6 DEFAULT CHARSET=utf8mb3 COMMENT='留言表';
 
 -- ----------------------------
 -- Records of sl_message
 -- ----------------------------
+INSERT INTO `sl_message` VALUES ('3', '172.16.50.35', 'zcr', '1076686352@qq.com', 'iamzcr.com', '0', '文章好好', '0', '0');
+INSERT INTO `sl_message` VALUES ('4', '172.16.50.35', '测试', '1076686352@qq.com', '测试', '0', '测试测试测试测试', '0', '0');
+INSERT INTO `sl_message` VALUES ('5', '172.16.50.35', '测试', '1076686352@qq.com', '测试', '0', '测试测试测试测试测试', '0', '0');
 
 -- ----------------------------
 -- Table structure for sl_permit
@@ -435,7 +421,7 @@ CREATE TABLE `sl_read` (
   `create_time` int DEFAULT NULL,
   `update_time` int DEFAULT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=1488 DEFAULT CHARSET=utf8mb3 COMMENT='文章栏目关联表';
+) ENGINE=InnoDB AUTO_INCREMENT=1528 DEFAULT CHARSET=utf8mb3 COMMENT='文章栏目关联表';
 
 -- ----------------------------
 -- Records of sl_read
@@ -498,6 +484,46 @@ INSERT INTO `sl_read` VALUES ('1484', '306', 'http://172.16.50.47:8080/category/
 INSERT INTO `sl_read` VALUES ('1485', '306', 'http://172.16.50.47:8080/', '172.16.50.35', '0', '0');
 INSERT INTO `sl_read` VALUES ('1486', '306', 'http://172.16.50.47:8080/', '172.16.50.35', '0', '0');
 INSERT INTO `sl_read` VALUES ('1487', '306', 'http://172.16.50.47:8080/', '172.16.50.35', '0', '0');
+INSERT INTO `sl_read` VALUES ('1488', '309', 'http://172.16.50.47:8080/', '172.16.50.35', '0', '0');
+INSERT INTO `sl_read` VALUES ('1489', '309', 'http://172.16.50.47:8080/article/detail/372/309', '172.16.50.35', '0', '0');
+INSERT INTO `sl_read` VALUES ('1490', '307', 'http://172.16.50.47:8080/category/378', '172.16.50.35', '0', '0');
+INSERT INTO `sl_read` VALUES ('1491', '301', 'http://172.16.50.47:8080/category/377', '172.16.50.35', '0', '0');
+INSERT INTO `sl_read` VALUES ('1492', '300', 'http://172.16.50.47:8080/category/371', '172.16.50.35', '0', '0');
+INSERT INTO `sl_read` VALUES ('1493', '301', 'http://172.16.50.47:8080/category/377', '172.16.50.35', '0', '0');
+INSERT INTO `sl_read` VALUES ('1494', '308', 'http://172.16.50.47:8080/', '172.16.50.35', '0', '0');
+INSERT INTO `sl_read` VALUES ('1495', '308', 'http://172.16.50.47:8080/', '172.16.50.35', '0', '0');
+INSERT INTO `sl_read` VALUES ('1496', '308', 'http://172.16.50.47:8080/', '172.16.50.35', '0', '0');
+INSERT INTO `sl_read` VALUES ('1497', '308', 'http://172.16.50.47:8080/', '172.16.50.35', '0', '0');
+INSERT INTO `sl_read` VALUES ('1498', '308', 'http://172.16.50.47:8080/', '172.16.50.35', '0', '0');
+INSERT INTO `sl_read` VALUES ('1499', '308', 'http://172.16.50.47:8080/', '172.16.50.35', '0', '0');
+INSERT INTO `sl_read` VALUES ('1500', '308', 'http://172.16.50.47:8080/', '172.16.50.35', '0', '0');
+INSERT INTO `sl_read` VALUES ('1501', '308', 'http://172.16.50.47:8080/', '172.16.50.35', '0', '0');
+INSERT INTO `sl_read` VALUES ('1502', '308', 'http://172.16.50.47:8080/', '172.16.50.35', '0', '0');
+INSERT INTO `sl_read` VALUES ('1503', '308', 'http://172.16.50.47:8080/', '172.16.50.35', '0', '0');
+INSERT INTO `sl_read` VALUES ('1504', '308', 'http://172.16.50.47:8080/', '172.16.50.35', '0', '0');
+INSERT INTO `sl_read` VALUES ('1505', '308', 'http://172.16.50.47:8080/', '172.16.50.35', '0', '0');
+INSERT INTO `sl_read` VALUES ('1506', '308', 'http://172.16.50.47:8080/', '172.16.50.35', '0', '0');
+INSERT INTO `sl_read` VALUES ('1507', '308', 'http://172.16.50.47:8080/', '172.16.50.35', '0', '0');
+INSERT INTO `sl_read` VALUES ('1508', '308', 'http://172.16.50.47:8080/', '172.16.50.35', '0', '0');
+INSERT INTO `sl_read` VALUES ('1509', '308', 'http://172.16.50.47:8080/', '172.16.50.35', '0', '0');
+INSERT INTO `sl_read` VALUES ('1510', '308', 'http://172.16.50.47:8080/', '172.16.50.35', '0', '0');
+INSERT INTO `sl_read` VALUES ('1511', '308', 'http://172.16.50.47:8080/', '172.16.50.35', '0', '0');
+INSERT INTO `sl_read` VALUES ('1512', '308', 'http://172.16.50.47:8080/', '172.16.50.35', '0', '0');
+INSERT INTO `sl_read` VALUES ('1513', '304', 'http://172.16.50.47:8080/category/371', '172.16.50.35', '0', '0');
+INSERT INTO `sl_read` VALUES ('1514', '304', 'http://172.16.50.47:8080/category/371', '172.16.50.35', '0', '0');
+INSERT INTO `sl_read` VALUES ('1515', '304', 'http://172.16.50.47:8080/category/371', '172.16.50.35', '0', '0');
+INSERT INTO `sl_read` VALUES ('1516', '303', 'http://172.16.50.47:8080/article/detail/371/304', '172.16.50.35', '0', '0');
+INSERT INTO `sl_read` VALUES ('1517', '309', 'http://172.16.50.47:8080/', '172.16.50.35', '0', '0');
+INSERT INTO `sl_read` VALUES ('1518', '308', 'http://172.16.50.47:8080/article/detail/372/309', '172.16.50.35', '0', '0');
+INSERT INTO `sl_read` VALUES ('1519', '307', 'http://172.16.50.47:8080/article/detail/378/308', '172.16.50.35', '0', '0');
+INSERT INTO `sl_read` VALUES ('1520', '305', 'http://172.16.50.47:8080/', '172.16.50.35', '0', '0');
+INSERT INTO `sl_read` VALUES ('1521', '309', 'http://172.16.50.47:8080/', '172.16.50.35', '0', '0');
+INSERT INTO `sl_read` VALUES ('1522', '308', 'http://172.16.50.47:8080/article/detail/372/309', '172.16.50.35', '0', '0');
+INSERT INTO `sl_read` VALUES ('1523', '308', 'http://172.16.50.47:8080/article/detail/372/309', '172.16.50.35', '0', '0');
+INSERT INTO `sl_read` VALUES ('1524', '309', 'http://172.16.50.47:8080/', '172.16.50.35', '0', '0');
+INSERT INTO `sl_read` VALUES ('1525', '309', 'http://172.16.50.47:8080/', '172.16.50.35', '0', '0');
+INSERT INTO `sl_read` VALUES ('1526', '309', 'http://172.16.50.47:8080/', '172.16.50.35', '0', '0');
+INSERT INTO `sl_read` VALUES ('1527', '309', 'http://172.16.50.47:8080/?name=%E6%B5%8B%E8%AF%95&url=%E6%B5%8B%E8%AF%95&email=1076686352%40qq.com&content=%E6%B5%8B%E8%AF%95%E6%B5%8B%E8%AF%95%E6%B5%8B%E8%AF%95%E6%B5%8B%E8%AF%95', '172.16.50.35', '0', '0');
 
 -- ----------------------------
 -- Table structure for sl_tags

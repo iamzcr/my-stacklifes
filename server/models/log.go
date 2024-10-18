@@ -3,6 +3,8 @@ package models
 type Log struct {
 	Id       int    `json:"id" form:"id"`
 	Username string `json:"username" form:"username"`
+	Type     string `json:"type" form:"type"`
+	Ip       string `json:"ip" form:"ip"`
 	Content  string `json:"content" form:"content"`
 	CommonField
 }
