@@ -1,6 +1,7 @@
 package admin
 
 import (
+	"fmt"
 	"github.com/gin-gonic/gin"
 	"my-stacklifes/models"
 	"my-stacklifes/pkg/app"
@@ -17,8 +18,13 @@ func NewCategoryHandler() *CategoryHandler {
 		srv: service.NewCategoryService(),
 	}
 }
-
 func (h *CategoryHandler) List(ctx *gin.Context) {
+	var appGin = app.Gin{C: ctx}
+	assignData := "assignData"
+	fmt.Println(assignData)
+	appGin.SuccessAdminHtml(assignData, "category/list.html")
+}
+func (h *CategoryHandler) ListJson(ctx *gin.Context) {
 	var appGin = app.Gin{C: ctx}
 	listReq := models.CategoryListReq{}
 	err := ctx.ShouldBindQuery(&listReq)
@@ -31,8 +37,7 @@ func (h *CategoryHandler) List(ctx *gin.Context) {
 		appGin.Error(exception.ERROR, err.Error(), nil)
 		return
 	}
-	//appGin.Success(list)
-	appGin.SuccessAdminHtml(list, "category/list.html")
+	appGin.Success(list)
 }
 
 func (h *CategoryHandler) NoPageList(ctx *gin.Context) {
