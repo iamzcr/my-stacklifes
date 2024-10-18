@@ -23,7 +23,8 @@
             {{range $index,$value := .hot_articles.List}}
             <li class="left-nav-done">
                 <div class="left-nav-content">
-                    <a href="/article/detail/{{$value.Cid}}/{{$value.Id}}"><h5 class="left-nav-name">{{$value.Title}}</h5></a>
+                    <a href="/article/detail/{{$value.Cid}}/{{$value.Id}}"><h5 class="left-nav-name">
+                        {{$value.Title}}</h5></a>
                 </div>
             </li>
             {{end}}
@@ -40,6 +41,25 @@
                         <a href="/tag/id/{{$value.Id}}" class="btn btn-primary">{{$value.Name}}</a>
                     </span>
             {{end}}
+        </div>
+    </div><!-- /.left-nav -->
+    <div class="left-nav">
+        <div class="left-nav-search">
+            留言
+        </div>
+        <div class="left-nav-msg">
+            <form role="form">
+                <legend>Form Legend</legend>
+                <div class="form-group">
+                    <label for="exampleInputEmail1">Email</label>
+                    <input type="email" class="form-control" id="exampleInputEmail1" placeholder="Enter email">
+                </div>
+                <div class="form-group">
+                    <label for="exampleInputPassword1">Content</label>
+                    <input type="password" class="form-control" id="exampleInputPassword1" placeholder="Password">
+                </div>
+                <button type="submit" class="btn btn-primary">Submit</button>
+            </form>
         </div>
     </div><!-- /.left-nav -->
 </div>
