@@ -97,7 +97,7 @@ pre {
     margin: 1px 0 3px;
 }
 
-.left-nav-tag .left-nav-msg {
+.left-nav-tag {
     padding: 20px;
     background-color: #ffffff;
     color: #ffffff;
@@ -147,7 +147,7 @@ pre {
     margin: 0;
 }
 
-.left-nav-about p img{
+.left-nav-about p img {
     max-width: 47%;
 }
 
@@ -165,5 +165,10 @@ pre {
 
 .icp {
     margin-top: 40px;
+}
+
+.left-nav-msg {
+    padding: 20px;
+    background-color: #ffffff;
 }
 
