@@ -60,12 +60,8 @@
             "url": "/admin/category/list_json",
             "type": "GET",
             "dataSrc": function (json) {
-                json.recordsTotal = json.data.total;
-                return json.data.list; // Assuming your data is stored in a `data` property
-            },
-            "data": function (d) {
-                d.page = d.start / d.length;
-                d.page_size = d.length;
+                json.data.recordsTotal = json.data.total;
+                return json.data; // Assuming your data is stored in a `data` property
             }
         },
         "columns": [
