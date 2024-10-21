@@ -28,7 +28,7 @@ func (s *DirectoryService) GetList(ctx *gin.Context, req models.DirectoryListReq
 		db = db.Where("name LIKE ?", "%"+req.Name+"%")
 	}
 	limit, offset := req.GetPageInfo()
-	err := db.Limit(limit).
+	err := db.Debug().Limit(limit).
 		Offset(offset).
 		Order("id DESC").
 		Find(&directorys).
