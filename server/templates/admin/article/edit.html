@@ -56,11 +56,7 @@
 <script src="/static/vendors/toastui/toastui.js"></script>
 <script>
     document.addEventListener('DOMContentLoaded', function () {
-        // Get the content from the div and clean up any HTML tags
-        var templateContent = document.querySelector('#editor').innerHTML;
 
-        // Remove HTML tags using a regular expression
-        var cleanTemplateContent = templateContent.replace(/<[^>]+>/g, '');
 
         // Initialize Toast UI Editor with an empty initial value
         var editor = new toastui.Editor({
@@ -71,9 +67,19 @@
             usageStatistics: false,
             exts: ['scrollSync', 'colorSyntax', 'uml', 'chart', 'mark', 'table'],
             codeBlockLanguages: ['javascript', 'html', 'css', 'php', 'golang', 'shell', 'bash', 'sql', 'python']
-            initialValue: cleanTemplateContent
         });
 
+        // Function to update the editor content with the template content
+        function updateEditorContent(templateContent) {
+            editor.setMarkdown(templateContent);
+        }
+
+        // Get the content from the div and clean up any HTML tags
+        var templateContent = document.querySelector('#editor').innerHTML;
+
+        // Remove HTML tags using a regular expression
+        var cleanTemplateContent = templateContent.replace(/<[^>]+>/g, '');
+        updateEditorContent(cleanTemplateContent);
     });
 </script>
 </body>
