@@ -27,11 +27,7 @@ func (h *DirectoryHandler) Add(ctx *gin.Context) {
 func (h *DirectoryHandler) Edit(ctx *gin.Context) {
 	var appGin = app.Gin{C: ctx}
 	id := ctx.Param("id")
-	info, err := h.srv.GetInfo(ctx, id)
-	if err != nil {
-		appGin.Error(exception.ERROR, err.Error(), nil)
-		return
-	}
+	info, _ := h.srv.GetInfo(ctx, id)
 	appGin.SuccessAdminHtml(info, "directory/edit.html")
 }
 
