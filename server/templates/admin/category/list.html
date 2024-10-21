@@ -53,14 +53,18 @@
 {{template "public/footer" .}}
 <script type="text/javascript">
     var listTable = $('#list-table').DataTable({
+        "processing": true,
+        "serverSide": true,
         "ajax": {
             "url": "/admin/category/list_json",
             "type": "GET",
             "dataSrc": function (json) {
                 return json.data.list; // Assuming your data is stored in a `data` property
+            },
+            "data": {
+                "recordsTotal": 'total'
             }
         },
-
         "columns": [
             {"data": "id"},
             {"data": "type"},
@@ -74,10 +78,8 @@
                     return '<a class=" btn btn-sm btn-primary" href="/admin/category/edit/' + row.id + '">Edit</a>';
                 }
             }
-        ],
-        "processing": true,
-        "serverSide": true,
-        "recordsTotal": 'total',
+        ]
+
     });
 
     $("#search").click(function () {
