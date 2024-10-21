@@ -66,6 +66,38 @@
     </div>
 </div>
 {{template "public/footer" .}}
+
+<script type="text/javascript">
+    var listTable = $('#list-table').DataTable({
+        "processing": true,
+        "serverSide": true,
+        "ajax": {
+            "url": "/admin/directory/list_json",
+            "type": "GET",
+            "dataSrc": function (json) {
+                return json.data.list; // Assuming your data is stored in a `data` property
+            }
+        },
+        "columns": [
+            {"data": "id"},
+            {"data": "type"},
+            {"data": "name"},
+            {"data": "author"},
+            {"data": "status"},
+            {"data": "create_time"},
+        ]
+    });
+
+    $("#search").click(function () {
+        listTable.ajax.reload();
+    });
+
+    $('#list-table').on('mouseover', 'tbody tr', function () {
+        $(this).addClass('info');
+    }).on('mouseout', 'tbody tr', function () {
+        $(this).removeClass('info');
+    });
+</script>
 </body>
 </html>
 {{end}}
