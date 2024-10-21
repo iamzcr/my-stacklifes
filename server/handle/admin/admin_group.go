@@ -17,6 +17,14 @@ func NewAdminGroupHandler() *AdminGroupHandler {
 		srv: service.NewAdminGroupService(),
 	}
 }
+
+func (h *AdminGroupHandler) Edit(ctx *gin.Context) {
+	var appGin = app.Gin{C: ctx}
+	id := ctx.Param("id")
+	info, _ := h.srv.GetInfo(ctx, id)
+	appGin.SuccessAdminHtml(info, "admin_group/edit.html")
+}
+
 func (h *AdminGroupHandler) List(ctx *gin.Context) {
 	var appGin = app.Gin{C: ctx}
 	assignData := "assignData"

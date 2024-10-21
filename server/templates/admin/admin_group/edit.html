@@ -1,4 +1,4 @@
-{{define "article/edit.html"}}
+{{define "admin_group/edit.html"}}
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -15,22 +15,18 @@
                 <div class="col-md-12 col-sm-12 ">
                     <div class="x_panel">
                         <div class="x_content">
-                            <form id="demo-form2" data-parsley-validate class="form-horizontal form-label-left">
+                            <form id="inputForm" data-parsley-validate class="form-horizontal form-label-left">
+                                <input type="hidden" name="id" value="{{if .data}}{{.data.Id}}{{end}}" data-id="{{if .data}}{{.data.Id}}{{end}}">
                                 <div class="item form-group">
                                     <label class="col-form-label col-md-1 label-align">名称</label>
                                     <div class="col-md-2">
-                                        <input type="text" required="required" class="form-control ">
-                                    </div>
-                                </div>
-                                <div class="item form-group">
-                                    <label class="col-form-label col-md-1 label-align">Last Name</label>
-                                    <div class="col-md-2">
-                                        <input type="text" name="last-name" required="required" class="form-control">
+                                        <input type="text" name="name"  value="{{if .data}}{{.data.Name}}{{end}}"  required="required" class="form-control">
                                     </div>
                                 </div>
                                 <div class="item form-group">
                                     <div class="col-md-6 offset-md-1">
-                                        <button type="submit" class="btn btn-success">Submit</button>
+                                        <button type="button" class="btn btn-success" onclick="submitForm()">提交
+                                        </button>
                                     </div>
                                 </div>
                             </form>
@@ -44,7 +40,20 @@
 </div>
 {{template "public/footer" .}}
 <script>
-
+    function submitForm() {
+        var formData = $("#inputForm").serialize();
+        $.ajax({
+            type: "POST",
+            url: "/admin/admin_group/create", // 提交表单数据的URL
+            data: formData,
+            success: function (response) {
+                console.log(response);
+            },
+            error: function (error) {
+                console.error(error);
+            }
+        });
+    }
 </script>
 </body>
 </html>
