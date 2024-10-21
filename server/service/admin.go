@@ -74,7 +74,7 @@ func (s *AdminService) Create(ctx *gin.Context, req models.AdminCreateReq) (inte
 	admin.Password = req.Password
 	admin.GroupId = req.GroupId
 
-	admin.Expiration = tools.SetExpiration()
+	admin.ExpirationTime = tools.SetExpiration()
 	admin.Salt = tools.CreateSalt()
 	admin.Password = tools.GenPassword(admin.Salt, req.Password)
 	err := s.dbClient.MysqlClient.Create(&admin).Error
