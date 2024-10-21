@@ -65,12 +65,7 @@
             "data": function (d) {
                 d.page = d.start / d.length + 1;
                 d.page_size = d.length;
-            },
-            "recordsTotal": function (settings, json) {
-                return json.data.total;
-            },
-            "recordsFiltered": function (settings, json) {
-                return json.data.total;
+                d.recordsTotal = 'total';
             },
         },
 
