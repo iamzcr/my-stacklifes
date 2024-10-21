@@ -26,18 +26,18 @@ type Article struct {
 }
 
 type ArticleMine struct {
-	Id          int                    `json:"id" `
-	Title       string                 `json:"title"`
-	Cid         int                    `json:"cid" `
-	Did         int                    `json:"did" `
-	Author      string                 `json:"author"`
-	IsHot       int                    `json:"is_hot"`
-	IsNew       int                    `json:"is_new"`
-	IsRecom     int                    `json:"is_recom" `
-	Weight      int                    `json:"weight"`
-	PublicTime  int64                  `json:"public_time"`
-	Status      int                    `json:"status"`
-	ExtraFields map[string]interface{} `json:"extra_fields" gorm:"-"` //存放回显中文
+	Id         int    `json:"id" `
+	Title      string `json:"title"`
+	Cid        int    `json:"cid" `
+	Did        int    `json:"did" `
+	Author     string `json:"author"`
+	IsHot      int    `json:"is_hot"`
+	IsNew      int    `json:"is_new"`
+	IsRecom    int    `json:"is_recom" `
+	Weight     int    `json:"weight"`
+	PublicTime int64  `json:"public_time"`
+	Status     int    `json:"status"`
+	//ExtraFields map[string]interface{} `json:"extra_fields" gorm:"-"` //存放回显中文
 }
 
 type ArticleUpdateReq struct {
