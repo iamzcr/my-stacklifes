@@ -55,12 +55,8 @@
 {{template "public/footer" .}}
 <script src="/static/vendors/toastui/toastui.js"></script>
 <script>
-
     document.addEventListener('DOMContentLoaded', function () {
-        // Markdown content fetched from your database
-        var markdownText = `Markdown text fetched from your database`;
-
-        // Initialize Toast UI Editor with the Markdown content
+        // Initialize Toast UI Editor with an empty initial value
         var editor = new toastui.Editor({
             el: document.querySelector('#editor'),
             height: '600px',
@@ -68,9 +64,17 @@
             previewStyle: 'vertical',
             usageStatistics: false,
             exts: ['scrollSync', 'colorSyntax', 'uml', 'chart', 'mark', 'table'],
-            codeBlockLanguages: ['javascript', 'html', 'css', 'php', 'golang', 'shell', 'bash', 'sql', 'python'],
-            initialValue: markdownText
+            codeBlockLanguages: ['javascript', 'html', 'css', 'php', 'golang', 'shell', 'bash', 'sql', 'python']
         });
+
+        // Function to update the editor content with the template content
+        function updateEditorContent(templateContent) {
+            editor.setMarkdown(templateContent);
+        }
+
+        // Example event triggering the update with template content
+        var templateContent = document.querySelector('#editor').innerText;
+        updateEditorContent(templateContent);
     });
 </script>
 </body>
