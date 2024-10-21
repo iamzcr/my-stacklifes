@@ -64,7 +64,7 @@
                 return json.data.list; // Assuming your data is stored in a `data` property
             },
             "data": function (d) {
-                d.page = d.start;
+                d.page = d.start / d.length;
                 d.page_size = d.length;
             }
         },
