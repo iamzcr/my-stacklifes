@@ -142,9 +142,9 @@ type DirectoryArticle struct {
 	Articles      []FrontArticleInfo `json:"d_articles"`
 }
 
-func (am *ArticleMine) AddExtraField(key string, value interface{}) {
-	if am.ExtraFields == nil {
-		am.ExtraFields = make(map[string]interface{})
-	}
-	am.ExtraFields[key] = value
-}
+//func (am *ArticleMine) AddExtraField(key string, value interface{}) {
+//	if am.ExtraFields == nil {
+//		am.ExtraFields = make(map[string]interface{})
+//	}
+//	am.ExtraFields[key] = value
+//}
