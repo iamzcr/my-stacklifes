@@ -21,7 +21,6 @@ func NewArticleHandler() *ArticleHandler {
 func (h *ArticleHandler) List(ctx *gin.Context) {
 	var appGin = app.Gin{C: ctx}
 	assignData := "assignData"
-	fmt.Println(assignData)
 	appGin.SuccessAdminHtml(assignData, "article/list.html")
 }
 func (h *ArticleHandler) ListJson(ctx *gin.Context) {
@@ -44,6 +43,7 @@ func (h *ArticleHandler) Edit(ctx *gin.Context) {
 	var appGin = app.Gin{C: ctx}
 	id := ctx.Param("id")
 	info, err := h.srv.GetInfo(ctx, id)
+	fmt.Println(info)
 	if err != nil {
 		appGin.Error(exception.ERROR, err.Error(), nil)
 		return
