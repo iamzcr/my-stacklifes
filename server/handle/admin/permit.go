@@ -20,6 +20,12 @@ func NewPermitHandler() *PermitHandler {
 
 func (h *PermitHandler) List(ctx *gin.Context) {
 	var appGin = app.Gin{C: ctx}
+	assignData := "assignData"
+	appGin.SuccessAdminHtml(assignData, "permit/list.html")
+}
+
+func (h *PermitHandler) ListJson(ctx *gin.Context) {
+	var appGin = app.Gin{C: ctx}
 	query := models.PermitListReq{}
 	err := ctx.ShouldBindQuery(&query)
 	if err != nil {

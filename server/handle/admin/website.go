@@ -20,6 +20,12 @@ func NewWebsiteHandler() *WebsiteHandler {
 
 func (h *WebsiteHandler) List(ctx *gin.Context) {
 	var appGin = app.Gin{C: ctx}
+	assignData := "assignData"
+	appGin.SuccessAdminHtml(assignData, "website/list.html")
+}
+
+func (h *WebsiteHandler) ListJson(ctx *gin.Context) {
+	var appGin = app.Gin{C: ctx}
 	query := models.WebsiteListReq{}
 	err := ctx.ShouldBindQuery(&query)
 	if err != nil {

@@ -21,6 +21,12 @@ func NewAttachHandler() *AttachHandler {
 
 func (h *AttachHandler) List(ctx *gin.Context) {
 	var appGin = app.Gin{C: ctx}
+	assignData := "assignData"
+	appGin.SuccessAdminHtml(assignData, "attach/list.html")
+}
+
+func (h *AttachHandler) ListJson(ctx *gin.Context) {
+	var appGin = app.Gin{C: ctx}
 	query := models.AttachReq{}
 	err := ctx.ShouldBindQuery(&query)
 	if err != nil {

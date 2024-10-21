@@ -20,6 +20,12 @@ func NewMenuHandler() *MenuHandler {
 
 func (h *MenuHandler) List(ctx *gin.Context) {
 	var appGin = app.Gin{C: ctx}
+	assignData := "assignData"
+	appGin.SuccessAdminHtml(assignData, "permit/list.html")
+}
+
+func (h *MenuHandler) ListJson(ctx *gin.Context) {
+	var appGin = app.Gin{C: ctx}
 	query := models.MenuReq{}
 	err := ctx.ShouldBindQuery(&query)
 	if err != nil {

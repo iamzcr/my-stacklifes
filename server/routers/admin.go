@@ -80,6 +80,7 @@ func AdminRoutersInit(r *gin.Engine) {
 		adminRouter.POST("/admin/delete", adminsHandler.Delete)
 
 		adminRouter.GET("/website/list", websiteHandler.List)
+		adminRouter.GET("/website/list_json", websiteHandler.ListJson)
 		adminRouter.GET("/website/info/:id", websiteHandler.Info)
 		adminRouter.POST("/website/create", websiteHandler.Create)
 		adminRouter.POST("/website/delete", websiteHandler.Delete)
@@ -93,6 +94,7 @@ func AdminRoutersInit(r *gin.Engine) {
 		adminRouter.POST("/tags/change_field", tagsHandler.ChangeField)
 
 		adminRouter.GET("/permit/list", permitHandler.List)
+		adminRouter.GET("/permit/list_json", permitHandler.ListJson)
 		adminRouter.GET("/permit/info/:id", permitHandler.Info)
 		adminRouter.GET("/permit/no_page_list", permitHandler.NoPageList)
 		adminRouter.POST("/permit/update", permitHandler.Update)
@@ -100,6 +102,7 @@ func AdminRoutersInit(r *gin.Engine) {
 		adminRouter.POST("/permit/delete", permitHandler.Delete)
 
 		adminRouter.GET("/menu/list", menuHandler.List)
+		adminRouter.GET("/menu/list_json", menuHandler.ListJson)
 		adminRouter.GET("/menu/no_page_list", menuHandler.NoPageList)
 		adminRouter.GET("/menu/info/:id", menuHandler.Info)
 		adminRouter.POST("/menu/create", menuHandler.Create)
@@ -113,6 +116,7 @@ func AdminRoutersInit(r *gin.Engine) {
 		adminRouter.GET("/comment/list", commentHandler.List)
 
 		adminRouter.GET("/article/list", articleHandler.List)
+		adminRouter.GET("/article/list_json", articleHandler.ListJson)
 		adminRouter.GET("/article/edit", articleHandler.Edit)
 		adminRouter.GET("/article/info/:id", articleHandler.Info)
 		adminRouter.POST("/article/create", articleHandler.Create)
@@ -120,6 +124,7 @@ func AdminRoutersInit(r *gin.Engine) {
 		adminRouter.POST("/article/change_field", articleHandler.ChangeField)
 
 		adminRouter.GET("/attach/list", attachHandler.List)
+		adminRouter.GET("/attach/list_json", attachHandler.ListJson)
 		adminRouter.GET("/attach/info", attachHandler.List)
 		adminRouter.GET("/attach/edit", attachHandler.List)
 
