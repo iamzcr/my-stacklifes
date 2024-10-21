@@ -66,10 +66,10 @@
                 d.page = d.start / d.length + 1;
                 d.page_size = d.length;
             },
-            "recordsTotal": function (settings, json) {
+            "iTotalRecords": function (settings, json) {
                 return json.data.total;
             },
-            "recordsFiltered": function (settings, json) {
+            "iTotalDisplayRecords": function (settings, json) {
                 return json.data.total;
             },
         },
