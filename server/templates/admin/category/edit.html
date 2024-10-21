@@ -16,16 +16,17 @@
                     <div class="x_panel">
                         <div class="x_content">
                             <form id="inputForm" data-parsley-validate class="form-horizontal form-label-left">
+                                <input type="hidden" name="id" value="{{if .data}}{{.data.Id}}{{end}}">
                                 <div class="item form-group">
                                     <label class="col-form-label col-md-1 label-align">分类名称</label>
                                     <div class="col-md-2">
-                                        <input type="text" name="name" required="required" class="form-control ">
+                                        <input type="text" name="name"  value="{{if .data}}{{.data.Name}}{{end}}"  required="required" class="form-control">
                                     </div>
                                 </div>
                                 <div class="item form-group">
                                     <label class="col-form-label col-md-1 label-align">排序</label>
                                     <div class="col-md-2">
-                                        <input type="text" name="weight" required="required" class="form-control">
+                                        <input type="text" name="weight"  value="{{if .data}}{{.data.Weight}}{{end}}"  required="required" class="form-control">
                                     </div>
                                 </div>
                                 <div class="item form-group">
@@ -52,14 +53,10 @@
             url: "/admin/category/create", // 提交表单数据的URL
             data: formData,
             success: function (response) {
-                // 处理成功响应
                 console.log(response);
-                alert('Form submitted successfully!');
             },
             error: function (error) {
-                // 处理错误响应
                 console.error(error);
-                alert('Error submitting form!');
             }
         });
     }
