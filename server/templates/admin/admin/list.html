@@ -14,7 +14,7 @@
             <div class="row">
                 <div class="col">
                     <button class="btn btn-sm btn-primary" id="search">搜索</button>
-                    <a href="/admin/admin/edit" class="btn btn-sm btn-success">新增</a>
+                    <a href="/admin/admin/add" class="btn btn-sm btn-success">新增</a>
                 </div>
             </div>
             <div class="row">
@@ -74,8 +74,8 @@
             {"data": "create_time"},
             {
                 data: null,
-                render: function(data, type, row) {
-                    return '<a class=" btn btn-sm btn-primary" href="/admin/admin/edit/"' + row.id + '">Edit</a>';
+                render: function (data, type, row) {
+                    return '<a class=" btn btn-sm btn-primary" href="/admin/admin/edit/' + row.id + '">Edit</a>';
                 }
             }
         ]
