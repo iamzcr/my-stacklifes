@@ -63,8 +63,12 @@
             "url": "/admin/directory/list_json",
             "type": "GET",
             "serverSide": true,
-            "data": dataFunction(data),
-            "dataFilter": dataFilterFunction(data)
+            "data": function (data) {
+                return dataFunction(data);
+            },
+            "dataFilter": function (data) {
+                return dataFilterFunction(data);
+            }
         },
         "columns": [
             {"data": "id"},

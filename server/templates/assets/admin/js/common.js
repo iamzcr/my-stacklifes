@@ -1,7 +1,7 @@
 // data function
-function dataFunction(d) {
-    d.page = d.start / d.length + 1;
-    d.page_size = d.length;
+function dataFunction(data) {
+    data.page = data.start / data.length + 1;
+    data.page_size = data.length;
 }
 
 // data filter function
