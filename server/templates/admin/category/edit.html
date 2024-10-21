@@ -30,7 +30,8 @@
                                 </div>
                                 <div class="item form-group">
                                     <div class="col-md-6 offset-md-1">
-                                        <button type="submit" class="btn btn-success" onclick="submitForm()">提交</button>
+                                        <button type="submit" class="btn btn-success" onclick="submitForm()">提交
+                                        </button>
                                     </div>
                                 </div>
                             </form>
@@ -48,7 +49,7 @@
         var formData = $("#inputForm").serialize();
         $.ajax({
             type: "POST",
-            url: "/category/create", // 提交表单数据的URL
+            url: "/admin/category/create", // 提交表单数据的URL
             data: formData,
             success: function (response) {
                 // 处理成功响应
