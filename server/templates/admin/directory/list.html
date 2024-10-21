@@ -66,11 +66,13 @@
             "dataSrc": function (response) {
                 console.log(response.data)
                 // 对服务端返回的数据进行自定义处理
-                return {
+                // 手动组装数据
+                var responseData = {
                     "recordsTotal": response.data.total,
                     "recordsFiltered": response.data.total,
                     "data": response.data.list
                 };
+                return responseData
             }
         },
 
