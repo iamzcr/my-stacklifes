@@ -61,7 +61,11 @@
             "type": "GET",
             "dataSrc": function (response) {
                 // 对服务端返回的数据进行自定义处理
-                return response.data.list; // Assuming your data is stored in a `data` property
+                return {
+                    recordsTotal: response.data.total,
+                    recordsFiltered: response.data.total,
+                    data: response.data.list
+                };
             },
             "data": function (d) {
                 d.page = d.start / d.length + 1;
