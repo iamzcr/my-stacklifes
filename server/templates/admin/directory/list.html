@@ -65,12 +65,13 @@
             "data": function (d) {
                 d.page = d.start / d.length + 1;
                 d.page_size = d.length;
-            }
-        },
-        "initComplete": function(settings, json) {
-            listTable.page.info().recordsTotal = json.data.total; // Set total records
-            listTable.page.info().recordsDisplay = json.data.total; // Set total records after filtering
-            listTable.draw(); // Redraw the table
+            },
+            "recordsTotal": function (settings, json) {
+                return json.data.total;
+            },
+            "recordsFiltered": function (settings, json) {
+                return json.data.total;
+            },
         },
         "columns": [
             {"data": "id"},

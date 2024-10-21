@@ -63,12 +63,7 @@
                 return json.data.list; // Assuming your data is stored in a `data` property
             }
         },
-        "recordsTotal": function (settings, json) {
-            return json.data.total;
-        },
-        "recordsFiltered": function (settings, json) {
-            return json.data.total;
-        },
+
         "columns": [
             {"data": "id"},
             {"data": "type"},
