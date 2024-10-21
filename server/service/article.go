@@ -31,20 +31,17 @@ func (s *ArticleService) GetList(ctx *gin.Context, req models.ArticleReq) (inter
 		db.Where("title LIKE ?", "%"+req.Title+"%")
 	}
 	limit, offset := req.GetPageInfo()
-	err := db.Limit(limit).
-		Offset(offset).
-		Order("id DESC").
-		Find(&articles).
-		Count(&total).Error
+	err := db.Limit(limit).Offset(offset).Order("id DESC").Find(&articles).Error
+	err = db.Model(&articles).Count(&total).Error
 	if err != nil {
 		return nil, err
 	}
-	for i := range articles {
-		articles[i].AddExtraField("status_name", tools.GetStatusDisplay(articles[i].Status))
-		articles[i].AddExtraField("new_name", tools.GetStatusDisplay(articles[i].IsNew))
-		articles[i].AddExtraField("hot_name", tools.GetStatusDisplay(articles[i].IsHot))
-		articles[i].AddExtraField("recom_name", tools.GetStatusDisplay(articles[i].IsRecom))
-	}
+	//for i := range articles {
+	//	articles[i].AddExtraField("status_name", tools.GetStatusDisplay(articles[i].Status))
+	//	articles[i].AddExtraField("new_name", tools.GetStatusDisplay(articles[i].IsNew))
+	//	articles[i].AddExtraField("hot_name", tools.GetStatusDisplay(articles[i].IsHot))
+	//	articles[i].AddExtraField("recom_name", tools.GetStatusDisplay(articles[i].IsRecom))
+	//}
 	return models.ArticleListRes{
 		Total: total,
 		List:  articles,
