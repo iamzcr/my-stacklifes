@@ -65,17 +65,13 @@
             },
             "dataSrc": function (response) {
                 console.log(response.data)
-                // 对服务端返回的数据进行自定义处理
-                // 手动组装数据
-                var responseData = {
-                    "recordsTotal": response.data.total,
-                    "recordsFiltered": response.data.total,
-                    "data": response.data.list
-                };
-                return responseData
+                return response.data.list
             }
         },
-
+        "initComplete": function(settings, json) {
+            this.api().page.len(json.data.length); // 设置每页显示条目数
+            this.api().page.info(json.data.total); // 设置总记录数
+        },
         "columns": [
             {"data": "id"},
             {"data": "type"},
