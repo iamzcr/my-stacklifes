@@ -35,6 +35,7 @@
                                                 <th>状态</th>
                                                 <th>过期时间</th>
                                                 <th>新增时间</th>
+                                                <th>操作</th>
                                             </tr>
                                             </thead>
                                             <tbody>
@@ -71,6 +72,12 @@
             {"data": "status"},
             {"data": "expiration_time"},
             {"data": "create_time"},
+            {
+                data: null,
+                render: function(data, type, row) {
+                    return '<button href="/admin/admin/edit/data.id" class="edit-btn">编辑</button>';
+                }
+            }
         ]
     });
 
