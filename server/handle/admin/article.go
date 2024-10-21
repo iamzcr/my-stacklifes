@@ -1,7 +1,6 @@
 package admin
 
 import (
-	"fmt"
 	"github.com/gin-gonic/gin"
 	"my-stacklifes/models"
 	"my-stacklifes/pkg/app"
@@ -42,12 +41,7 @@ func (h *ArticleHandler) ListJson(ctx *gin.Context) {
 func (h *ArticleHandler) Edit(ctx *gin.Context) {
 	var appGin = app.Gin{C: ctx}
 	id := ctx.Param("id")
-	info, err := h.srv.GetInfo(ctx, id)
-	fmt.Println(info)
-	if err != nil {
-		appGin.Error(exception.ERROR, err.Error(), nil)
-		return
-	}
+	info, _ := h.srv.GetInfo(ctx, id)
 	appGin.SuccessAdminHtml(info, "article/edit.html")
 }
 
