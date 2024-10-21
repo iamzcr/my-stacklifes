@@ -60,9 +60,14 @@
             "url": "/admin/category/list_json",
             "type": "GET",
             "dataSrc": function (json) {
-                json.data.recordsTotal = json.data.total;
-                return json.data; // Assuming your data is stored in a `data` property
+                return json.data.list; // Assuming your data is stored in a `data` property
             }
+        },
+        "recordsTotal": function (settings, json) {
+            return json.data.total;
+        },
+        "recordsFiltered": function (settings, json) {
+            return json.data.total;
         },
         "columns": [
             {"data": "id"},
