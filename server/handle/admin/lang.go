@@ -20,6 +20,12 @@ func NewLangHandler() *LangHandler {
 
 func (h *LangHandler) List(ctx *gin.Context) {
 	var appGin = app.Gin{C: ctx}
+	assignData := "assignData"
+	appGin.SuccessAdminHtml(assignData, "lang/list.html")
+}
+
+func (h *LangHandler) ListJson(ctx *gin.Context) {
+	var appGin = app.Gin{C: ctx}
 	query := models.LangListReq{}
 	err := ctx.ShouldBindQuery(&query)
 	if err != nil {

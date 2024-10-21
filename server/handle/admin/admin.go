@@ -17,8 +17,13 @@ func NewAdminHandler() *AdminHandler {
 		srv: service.NewAdminService(),
 	}
 }
-
 func (h *AdminHandler) List(ctx *gin.Context) {
+	var appGin = app.Gin{C: ctx}
+	assignData := "assignData"
+	appGin.SuccessAdminHtml(assignData, "admin/list.html")
+}
+
+func (h *AdminHandler) ListJson(ctx *gin.Context) {
 	var appGin = app.Gin{C: ctx}
 	listReq := models.AdminListReq{}
 	err := ctx.ShouldBindQuery(&listReq)

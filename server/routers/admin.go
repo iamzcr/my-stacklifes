@@ -40,6 +40,7 @@ func AdminRoutersInit(r *gin.Engine) {
 		adminRouter.GET("/", indexHandler.Index)
 		adminRouter.GET("/option/getFilter", optionHandler.GetFilter)
 		adminRouter.GET("/lang/list", langHandler.List)
+		adminRouter.GET("/lang/list_json", langHandler.ListJson)
 		adminRouter.GET("/lang/info/:id", langHandler.Info)
 		adminRouter.POST("/lang/update", langHandler.Update)
 		adminRouter.POST("/lang/create", langHandler.Create)
@@ -63,6 +64,8 @@ func AdminRoutersInit(r *gin.Engine) {
 		adminRouter.POST("/directory/delete", directoryHandler.Delete)
 
 		adminRouter.GET("/admin_group/list", adminGroupHandler.List)
+		adminRouter.GET("/admin_group/list_json", adminGroupHandler.ListJson)
+
 		adminRouter.GET("/admin_group/no_page_list", adminGroupHandler.NoPageList)
 		adminRouter.GET("/admin_group/info/:id", adminGroupHandler.Info)
 		adminRouter.POST("/admin_group/update", adminGroupHandler.Update)
@@ -70,6 +73,7 @@ func AdminRoutersInit(r *gin.Engine) {
 		adminRouter.POST("/admin_group/delete", adminGroupHandler.Delete)
 
 		adminRouter.GET("/admin/list", adminsHandler.List)
+		adminRouter.GET("/admin/list_json", adminsHandler.ListJson)
 		adminRouter.GET("/admin/info/:id", adminsHandler.Info)
 		adminRouter.POST("/admin/create", adminsHandler.Create)
 		adminRouter.POST("/admin/change_field", adminsHandler.ChangeField)

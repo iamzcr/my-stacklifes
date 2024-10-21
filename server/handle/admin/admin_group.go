@@ -17,8 +17,12 @@ func NewAdminGroupHandler() *AdminGroupHandler {
 		srv: service.NewAdminGroupService(),
 	}
 }
-
 func (h *AdminGroupHandler) List(ctx *gin.Context) {
+	var appGin = app.Gin{C: ctx}
+	assignData := "assignData"
+	appGin.SuccessAdminHtml(assignData, "admin_group/list.html")
+}
+func (h *AdminGroupHandler) ListJson(ctx *gin.Context) {
 	var appGin = app.Gin{C: ctx}
 	listReq := models.AdminGroupListReq{}
 	err := ctx.ShouldBindQuery(&listReq)
