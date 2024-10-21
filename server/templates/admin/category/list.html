@@ -65,7 +65,8 @@
             "data": function (d) {
                 d.page = d.start / d.length;
                 d.page_size = d.length;
-                d.total = 'total'
+                d.total = 'total';
+                d.recordsFiltered = json.data.total
             }
         },
         "columns": [
