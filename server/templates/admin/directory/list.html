@@ -58,8 +58,6 @@
         "serverSide": true,
         "ajax": function (data, callback, settings) {
             var param = {};
-            param.page = (data.start / data.length)+1;//当前页码
-            param.page_size = data.length;//页面显示记录条数，在页面显示每页显示多少项的时候
             $.ajax({
                 type: "GET",
                 url: "/admin/directory/list_json",
