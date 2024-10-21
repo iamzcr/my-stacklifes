@@ -59,13 +59,18 @@
         "ajax": {
             "url": "/admin/directory/list_json",
             "type": "GET",
-            "dataSrc": function (json) {
-                return json.data.list; // Assuming your data is stored in a `data` property
+            "dataSrc": function (response) {
+                // 对服务端返回的数据进行自定义处理
+                return {
+                    draw: response.data.draw,
+                    recordsTotal: response.data.total,
+                    recordsFiltered: response.data.total,
+                    data: response.data.list
+                };
             },
             "data": function (d) {
                 d.page = d.start / d.length + 1;
                 d.page_size = d.length;
-                d.recordsTotal = 'total';
             },
         },
 

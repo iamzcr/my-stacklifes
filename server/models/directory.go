@@ -30,6 +30,7 @@ type DirectoryListReq struct {
 
 type DirectoryListRes struct {
 	Total int64       `json:"total"`
+	Draw  int64       `json:"draw"`
 	List  []Directory `json:"list"`
 }
 
