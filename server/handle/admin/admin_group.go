@@ -22,6 +22,7 @@ func (h *AdminGroupHandler) List(ctx *gin.Context) {
 	assignData := "assignData"
 	appGin.SuccessAdminHtml(assignData, "admin_group/list.html")
 }
+
 func (h *AdminGroupHandler) ListJson(ctx *gin.Context) {
 	var appGin = app.Gin{C: ctx}
 	listReq := models.AdminGroupListReq{}

@@ -65,7 +65,6 @@ func AdminRoutersInit(r *gin.Engine) {
 
 		adminRouter.GET("/admin_group/list", adminGroupHandler.List)
 		adminRouter.GET("/admin_group/list_json", adminGroupHandler.ListJson)
-
 		adminRouter.GET("/admin_group/no_page_list", adminGroupHandler.NoPageList)
 		adminRouter.GET("/admin_group/info/:id", adminGroupHandler.Info)
 		adminRouter.POST("/admin_group/update", adminGroupHandler.Update)
