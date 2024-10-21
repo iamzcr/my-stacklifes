@@ -27,7 +27,7 @@ func (s *CategoryService) GetList(ctx *gin.Context, req models.CategoryListReq) 
 		db = db.Where("name LIKE ?", "%"+req.Name+"%")
 	}
 	limit, offset := req.GetPageInfo()
-	err := db.Limit(limit).
+	err := db.Debug().Limit(limit).
 		Offset(offset).
 		Order("id DESC").
 		Find(&categories).
