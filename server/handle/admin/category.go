@@ -22,7 +22,7 @@ func (h *CategoryHandler) Edit(ctx *gin.Context) {
 	var appGin = app.Gin{C: ctx}
 	id := ctx.Param("id")
 	info, _ := h.srv.GetInfo(ctx, id)
-	appGin.SuccessAdminHtml(info, "directory/edit.html")
+	appGin.SuccessAdminHtml(info, "category/edit.html")
 }
 
 func (h *CategoryHandler) List(ctx *gin.Context) {
