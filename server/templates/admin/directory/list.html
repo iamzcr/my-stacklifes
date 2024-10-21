@@ -64,8 +64,13 @@
                 d.page_size = d.length;
             },
             "dataSrc": function (response) {
+                console.log(response.data)
                 // 对服务端返回的数据进行自定义处理
-                return response.data;
+                return {
+                    "recordsTotal": response.data.total,
+                    "recordsFiltered": response.data.total,
+                    "data": response.data.list
+                };
             }
         },
 
