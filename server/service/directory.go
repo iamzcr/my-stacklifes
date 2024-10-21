@@ -32,7 +32,7 @@ func (s *DirectoryService) GetList(ctx *gin.Context, req models.DirectoryListReq
 	if err != nil {
 		return nil, err
 	}
-	err = db.Debug().Find(&directorys).Count(&total).Error
+	err = db.Debug().Model(&directorys).Count(&total).Error
 	if err != nil {
 		return nil, err
 	}
