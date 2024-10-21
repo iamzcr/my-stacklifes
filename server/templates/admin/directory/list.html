@@ -63,19 +63,8 @@
             "url": "/admin/directory/list_json",
             "type": "GET",
             "serverSide": true,
-            "data": function (d) {
-                d.page = d.start / d.length + 1;
-                d.page_size = d.length;
-            },
-            "dataFilter": function (data) {
-                var json = jQuery.parseJSON(data);
-                json.recordsTotal = json.data.total;
-                json.recordsFiltered = json.data.total;
-                json.data = json.data.list;
-                return JSON.stringify(json);
-            }
-
-
+            "data": dataFunction(d),
+            "dataFilter": dataFilterFunction(data)
         },
         "columns": [
             {"data": "id"},
