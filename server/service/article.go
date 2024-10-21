@@ -36,12 +36,12 @@ func (s *ArticleService) GetList(ctx *gin.Context, req models.ArticleReq) (inter
 	if err != nil {
 		return nil, err
 	}
-	//for i := range articles {
-	//	articles[i].AddExtraField("status_name", tools.GetStatusDisplay(articles[i].Status))
-	//	articles[i].AddExtraField("new_name", tools.GetStatusDisplay(articles[i].IsNew))
-	//	articles[i].AddExtraField("hot_name", tools.GetStatusDisplay(articles[i].IsHot))
-	//	articles[i].AddExtraField("recom_name", tools.GetStatusDisplay(articles[i].IsRecom))
-	//}
+	for i := range articles {
+		articles[i].AddExtraField("status_name", tools.GetStatusDisplay(articles[i].Status))
+		articles[i].AddExtraField("new_name", tools.GetStatusDisplay(articles[i].IsNew))
+		articles[i].AddExtraField("hot_name", tools.GetStatusDisplay(articles[i].IsHot))
+		articles[i].AddExtraField("recom_name", tools.GetStatusDisplay(articles[i].IsRecom))
+	}
 	return models.ArticleListRes{
 		Total: total,
 		List:  articles,
