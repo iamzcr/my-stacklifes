@@ -64,7 +64,6 @@
                 d.page = d.start / d.length + 1;
                 d.page_size = d.length;
             },
-
             "dataFilter": function (data) {
                 var json = jQuery.parseJSON(data);
                 json.recordsTotal = json.data.total;
