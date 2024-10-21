@@ -19,12 +19,6 @@ func NewDirectoryHandler() *DirectoryHandler {
 	}
 }
 
-func (h *DirectoryHandler) Add(ctx *gin.Context) {
-	var appGin = app.Gin{C: ctx}
-	assignData := "assignData"
-	appGin.SuccessAdminHtml(assignData, "directory/edit.html")
-}
-
 func (h *DirectoryHandler) Edit(ctx *gin.Context) {
 	var appGin = app.Gin{C: ctx}
 	id := ctx.Param("id")
