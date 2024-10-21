@@ -67,16 +67,11 @@
             {"data": "name"},
             {"data": "author"},
             {"data": "status"},
-            {"data": "create_time"},
-            {
-                data: null,
-                render: function (data, type, row) {
-                    return '<a class=" btn btn-sm btn-primary" href="/admin/category/edit/' + row.id + '">编辑</a>';
-                }
-            }
+            {"data": "create_time"}
         ],
         "processing": true,
         "serverSide": true,
+        "recordsTotal": 'total',
     });
 
     $("#search").click(function () {
