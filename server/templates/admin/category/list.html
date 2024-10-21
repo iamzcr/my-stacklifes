@@ -67,7 +67,13 @@
             {"data": "name"},
             {"data": "author"},
             {"data": "status"},
-            {"data": "create_time"}
+            {"data": "create_time"},
+            {
+                data: null,
+                render: function (data, type, row) {
+                    return '<a class=" btn btn-sm btn-primary" href="/admin/category/edit/' + row.id + '">Edit</a>';
+                }
+            }
         ],
         "processing": true,
         "serverSide": true,
