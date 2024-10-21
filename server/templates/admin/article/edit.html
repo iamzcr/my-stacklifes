@@ -55,40 +55,23 @@
 {{template "public/footer" .}}
 <script src="/static/vendors/toastui/toastui.js"></script>
 <script>
+
     document.addEventListener('DOMContentLoaded', function () {
-        // Get the Markdown content from the editor element
-        var markdownText = document.querySelector('#editor').innerText;
+        // Markdown content fetched from your database
+        var markdownText = `Markdown text fetched from your database`;
 
-        // Create a new converter
-        var converter = new toastui.Editor.markdownitHighlight.default({});
-
-        // Convert Markdown to HTML
-        var html = converter.render(markdownText);
-
-        // Initialize Toast UI Editor with the HTML content
+        // Initialize Toast UI Editor with the Markdown content
         var editor = new toastui.Editor({
             el: document.querySelector('#editor'),
             height: '600px',
             initialEditType: 'markdown',
             previewStyle: 'vertical',
             usageStatistics: false,
-            viewer: true,
             exts: ['scrollSync', 'colorSyntax', 'uml', 'chart', 'mark', 'table'],
             codeBlockLanguages: ['javascript', 'html', 'css', 'php', 'golang', 'shell', 'bash', 'sql', 'python'],
-            initialValue: html
+            initialValue: markdownText
         });
     });
-    // document.addEventListener('DOMContentLoaded', function () {
-    //     var editor = new toastui.Editor({
-    //         el: document.querySelector('#editor'),
-    //         height: '600px',
-    //         initialEditType: 'markdown',
-    //         previewStyle: 'vertical',
-    //         usageStatistics: false,
-    //         exts: ['scrollSync', 'colorSyntax', 'uml', 'chart', 'mark', 'table'],
-    //         codeBlockLanguages: ['javascript', 'html', 'css', 'php', 'golang', 'shell', 'bash', 'sql', 'python']
-    //     });
-    // });
 </script>
 </body>
 </html>
