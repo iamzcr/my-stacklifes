@@ -7,7 +7,6 @@
 <body class="nav-md">
 <div class="container body">
     <div class="main_container">
-
         {{template "public/left_nav" .}}
         {{template "public/nav" .}}
         <!-- page content -->
@@ -16,7 +15,7 @@
                 <div class="col-md-12 col-sm-12 ">
                     <div class="x_panel">
                         <div class="x_content">
-                            <form id="demo-form2" data-parsley-validate class="form-horizontal form-label-left">
+                            <form id="inputForm" data-parsley-validate class="form-horizontal form-label-left">
                                 <div class="item form-group">
                                     <label class="col-form-label col-md-1 label-align">分类名称</label>
                                     <div class="col-md-2">
@@ -31,7 +30,7 @@
                                 </div>
                                 <div class="item form-group">
                                     <div class="col-md-6 offset-md-1">
-                                        <button type="submit" class="btn btn-success">提交</button>
+                                        <button type="submit" class="btn btn-success" onclick="submitForm()">提交</button>
                                     </div>
                                 </div>
                             </form>
@@ -45,7 +44,24 @@
 </div>
 {{template "public/footer" .}}
 <script>
-
+    function submitForm() {
+        var formData = $("#inputForm").serialize();
+        $.ajax({
+            type: "POST",
+            url: "/category/create", // 提交表单数据的URL
+            data: formData,
+            success: function (response) {
+                // 处理成功响应
+                console.log(response);
+                alert('Form submitted successfully!');
+            },
+            error: function (error) {
+                // 处理错误响应
+                console.error(error);
+                alert('Error submitting form!');
+            }
+        });
+    }
 </script>
 </body>
 </html>

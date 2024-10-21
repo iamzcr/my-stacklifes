@@ -54,16 +54,22 @@
 {{template "public/footer" .}}
 <script type="text/javascript">
     var listTable = $('#list-table').DataTable({
+        "language": {
+            "url": "/static/vendors/datatables.net/lang/zh.json"
+        },
         "processing": true,
         "serverSide": true,
         "ajax": {
-            "url": "/admin/category/list_json",
+            "url": "/admin/directory/list_json",
             "type": "GET",
-            "dataSrc": function (json) {
-                return json.data.list; // Assuming your data is stored in a `data` property
+            "serverSide": true,
+            "data": function (data) {
+                return dataFunction(data);
+            },
+            "dataFilter": function (data) {
+                return dataFilterFunction(data);
             }
         },
-
         "columns": [
             {"data": "id"},
             {"data": "type"},

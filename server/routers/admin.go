@@ -49,7 +49,8 @@ func AdminRoutersInit(r *gin.Engine) {
 
 		adminRouter.GET("/category/list", categoryHandler.List)
 		adminRouter.GET("/category/list_json", categoryHandler.ListJson)
-		adminRouter.GET("/category/edit", categoryHandler.List)
+		adminRouter.GET("/category/edit/:id", categoryHandler.Edit)
+		adminRouter.GET("/category/add", categoryHandler.Edit)
 		adminRouter.GET("/category/info/:id", categoryHandler.Info)
 		adminRouter.GET("/category/no_page_list", categoryHandler.NoPageList)
 		adminRouter.POST("/category/update", categoryHandler.Update)
