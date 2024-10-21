@@ -17,11 +17,30 @@ func NewDirectoryHandler() *DirectoryHandler {
 		srv: service.NewDirectoryService(),
 	}
 }
+
+func (h *DirectoryHandler) Add(ctx *gin.Context) {
+	var appGin = app.Gin{C: ctx}
+	assignData := "assignData"
+	appGin.SuccessAdminHtml(assignData, "directory/edit.html")
+}
+
+func (h *DirectoryHandler) Edit(ctx *gin.Context) {
+	var appGin = app.Gin{C: ctx}
+	id := ctx.Param("id")
+	info, err := h.srv.GetInfo(ctx, id)
+	if err != nil {
+		appGin.Error(exception.ERROR, err.Error(), nil)
+		return
+	}
+	appGin.SuccessAdminHtml(info, "directory/edit.html")
+}
+
 func (h *DirectoryHandler) List(ctx *gin.Context) {
 	var appGin = app.Gin{C: ctx}
 	assignData := "assignData"
 	appGin.SuccessAdminHtml(assignData, "directory/list.html")
 }
+
 func (h *DirectoryHandler) ListJson(ctx *gin.Context) {
 	var appGin = app.Gin{C: ctx}
 	listReq := models.DirectoryListReq{}
