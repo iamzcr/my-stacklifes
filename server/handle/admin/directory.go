@@ -17,8 +17,12 @@ func NewDirectoryHandler() *DirectoryHandler {
 		srv: service.NewDirectoryService(),
 	}
 }
-
 func (h *DirectoryHandler) List(ctx *gin.Context) {
+	var appGin = app.Gin{C: ctx}
+	assignData := "assignData"
+	appGin.SuccessAdminHtml(assignData, "directory/list.html")
+}
+func (h *DirectoryHandler) ListJson(ctx *gin.Context) {
 	var appGin = app.Gin{C: ctx}
 	listReq := models.DirectoryListReq{}
 	err := ctx.ShouldBindQuery(&listReq)
@@ -31,8 +35,7 @@ func (h *DirectoryHandler) List(ctx *gin.Context) {
 		appGin.Error(exception.ERROR, err.Error(), nil)
 		return
 	}
-	//appGin.Success(list)
-	appGin.SuccessAdminHtml(list, "directory/list.html")
+	appGin.Success(list)
 }
 
 func (h *DirectoryHandler) NoPageList(ctx *gin.Context) {
