@@ -10,7 +10,7 @@ Target Server Type    : MYSQL
 Target Server Version : 80039
 File Encoding         : 65001
 
-Date: 2024-10-21 13:48:50
+Date: 2024-10-21 20:19:32
 */
 
 SET FOREIGN_KEY_CHECKS=0;
@@ -171,7 +171,7 @@ CREATE TABLE `sl_category` (
   UNIQUE KEY `mark` (`mark`) USING BTREE,
   KEY `weight` (`weight`) USING BTREE,
   KEY `type_status` (`type`,`status`) USING BTREE
-) ENGINE=InnoDB AUTO_INCREMENT=379 DEFAULT CHARSET=utf8mb3 COMMENT='菜单';
+) ENGINE=InnoDB AUTO_INCREMENT=380 DEFAULT CHARSET=utf8mb3 COMMENT='菜单';
 
 -- ----------------------------
 -- Records of sl_category
