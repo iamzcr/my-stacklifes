@@ -42,19 +42,13 @@ func (h *ArticleHandler) ListJson(ctx *gin.Context) {
 
 func (h *ArticleHandler) Edit(ctx *gin.Context) {
 	var appGin = app.Gin{C: ctx}
-	query := models.ArticleReq{}
-	err := ctx.ShouldBindQuery(&query)
+	id := ctx.Param("id")
+	info, err := h.srv.GetInfo(ctx, id)
 	if err != nil {
 		appGin.Error(exception.ERROR, err.Error(), nil)
 		return
 	}
-	list, err := h.srv.GetList(ctx, query)
-	if err != nil {
-		appGin.Error(exception.ERROR, err.Error(), nil)
-		return
-	}
-	//appGin.Success(list)
-	appGin.SuccessAdminHtml(list, "article/edit.html")
+	appGin.SuccessAdminHtml(info, "article/edit.html")
 }
 
 func (h *ArticleHandler) Info(ctx *gin.Context) {

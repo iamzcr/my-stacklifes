@@ -120,7 +120,8 @@ func AdminRoutersInit(r *gin.Engine) {
 
 		adminRouter.GET("/article/list", articleHandler.List)
 		adminRouter.GET("/article/list_json", articleHandler.ListJson)
-		adminRouter.GET("/article/edit", articleHandler.Edit)
+		adminRouter.GET("/article/edit/:id", articleHandler.Edit)
+		adminRouter.GET("/article/add", articleHandler.Edit)
 		adminRouter.GET("/article/info/:id", articleHandler.Info)
 		adminRouter.POST("/article/create", articleHandler.Create)
 		adminRouter.POST("/article/update", articleHandler.Update)
