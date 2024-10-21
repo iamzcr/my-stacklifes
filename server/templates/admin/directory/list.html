@@ -59,7 +59,7 @@
         "ajax": {
             "url": "/admin/directory/list_json",
             "type": "GET",
-            "serverSide" : true,
+            "serverSide": true,
             "data": function (d) {
                 d.page = d.start / d.length + 1;
                 d.page_size = d.length;
@@ -67,6 +67,7 @@
             "dataSrc": function (response) {
                 // 对服务端返回的数据进行自定义处理
                 var responseData = {
+                    "draw": 1,
                     "recordsTotal": response.data.total,
                     "recordsFiltered": response.data.total,
                     "data": response.data.list
