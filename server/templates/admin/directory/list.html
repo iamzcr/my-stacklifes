@@ -61,6 +61,10 @@
             "type": "GET",
             "dataSrc": function (json) {
                 return json.data.list; // Assuming your data is stored in a `data` property
+            },
+            "data": function (d) {
+                d.page = d.start / d.length;
+                d.page_size = d.length;
             }
         },
         "recordsTotal": function (settings, json) {
