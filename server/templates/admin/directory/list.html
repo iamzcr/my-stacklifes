@@ -56,24 +56,24 @@
     var listTable = $('#list-table').DataTable({
         "processing": true,
         "serverSide": true,
-        "ajax": function (data, callback, settings) {
-            var param = {};
-            $.ajax({
-                type: "GET",
-                url: "/admin/directory/list_json",
-                data: param,  //传入组装的参数
-                dataType: "json",
-                success: function (result) {
-                    //封装返回数据
-                    var returnData = {};
-                    returnData.draw = result.data.draw;//这里直接自行返回了draw计数器,应该由后台返回
-                    returnData.recordsTotal = result.data.total;//返回数据全部记录
-                    returnData.recordsFiltered = result.data.total;//后台不实现过滤功能，每次查询均视作全部结果
-                    returnData.data = result.data.list;//返回的数据列表
-                    callback(returnData);
-                }
-            });
+        "ajax": {
+            "url": "/admin/directory/list_json",
+            "type": "GET",
+            "dataSrc": function (json) {
+                return json.data.list; // Assuming your data is stored in a `data` property
+            },
+            "data": function (d) {
+                d.page = d.start / d.length + 1;
+                d.page_size = d.length;
+            },
+            "recordsTotal": function (settings, json) {
+                return json.data.total;
+            },
+            "recordsFiltered": function (settings, json) {
+                return json.data.total;
+            },
         },
+
         "columns": [
             {"data": "id"},
             {"data": "type"},
