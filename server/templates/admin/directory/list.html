@@ -54,6 +54,9 @@
 {{template "public/footer" .}}
 <script type="text/javascript">
     var listTable = $('#list-table').DataTable({
+        "language": {
+            "url": "/static/vendors/datatables.net/lang/zh.json"
+        },
         "processing": true,
         "serverSide": true,
         "ajax": {
