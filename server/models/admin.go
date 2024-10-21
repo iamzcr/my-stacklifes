@@ -6,11 +6,11 @@ type Admin struct {
 	Password       string `json:"password" form:"password"`
 	Salt           string `json:"salt" form:"salt"`
 	GroupId        int    `json:"group_id" form:"group_id"`
-	Name           int    `json:"name" form:"name"`
+	Name           string `json:"name" form:"name"`
 	ExpirationTime int64  `json:"expiration_time" form:"expiration_time"`
 	LoginNum       int    `json:"login_num" form:"login_num"  gorm:"default:0"`
 	Status         int    `json:"status" form:"status"  gorm:"default:1"`
-	LastLoginTime  int    `json:"last_login_time" form:"last_login_time"`
+	LastLoginTime  int64  `json:"last_login_time" form:"last_login_time"`
 	LastLoginIp    string `json:"last_login_ip" form:"last_login_ip"`
 	Lang           string `json:"lang" form:"lang" gorm:"default:'zh'"`
 	CommonField
