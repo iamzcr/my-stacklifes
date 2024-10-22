@@ -10,7 +10,7 @@ Target Server Type    : MYSQL
 Target Server Version : 80039
 File Encoding         : 65001
 
-Date: 2024-10-21 20:19:32
+Date: 2024-10-22 22:03:25
 */
 
 SET FOREIGN_KEY_CHECKS=0;
@@ -50,7 +50,7 @@ INSERT INTO `sl_admin` VALUES ('380', 'admin', '50029fc296985a142931182b0ef3764f
 DROP TABLE IF EXISTS `sl_admin_group`;
 CREATE TABLE `sl_admin_group` (
   `id` int unsigned NOT NULL AUTO_INCREMENT COMMENT '用户组自增id',
-  `mark` varchar(11) NOT NULL COMMENT '用户组标识',
+  `mark` varchar(50) CHARACTER SET utf8mb3 COLLATE utf8mb3_general_ci NOT NULL COMMENT '用户组标识',
   `name` varchar(64) NOT NULL DEFAULT '' COMMENT '用户组名称',
   `description` varchar(256) NOT NULL DEFAULT '' COMMENT '描述',
   `menu_permit` text COMMENT '央服权限数据',
@@ -59,7 +59,7 @@ CREATE TABLE `sl_admin_group` (
   `create_time` int DEFAULT '0' COMMENT '创建用户组时间戳',
   `update_time` int DEFAULT NULL COMMENT '更新操作时间',
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=132 DEFAULT CHARSET=utf8mb3 COMMENT='用户组';
+) ENGINE=InnoDB AUTO_INCREMENT=151 DEFAULT CHARSET=utf8mb3 COMMENT='用户组';
 
 -- ----------------------------
 -- Records of sl_admin_group
@@ -171,7 +171,7 @@ CREATE TABLE `sl_category` (
   UNIQUE KEY `mark` (`mark`) USING BTREE,
   KEY `weight` (`weight`) USING BTREE,
   KEY `type_status` (`type`,`status`) USING BTREE
-) ENGINE=InnoDB AUTO_INCREMENT=380 DEFAULT CHARSET=utf8mb3 COMMENT='菜单';
+) ENGINE=InnoDB AUTO_INCREMENT=381 DEFAULT CHARSET=utf8mb3 COMMENT='菜单';
 
 -- ----------------------------
 -- Records of sl_category
@@ -201,11 +201,12 @@ CREATE TABLE `sl_comment` (
   `create_time` int DEFAULT NULL,
   `update_time` int DEFAULT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=13 DEFAULT CHARSET=utf8mb3 COMMENT='文章栏目关联表';
+) ENGINE=InnoDB AUTO_INCREMENT=15 DEFAULT CHARSET=utf8mb3 COMMENT='文章栏目关联表';
 
 -- ----------------------------
 -- Records of sl_comment
 -- ----------------------------
+INSERT INTO `sl_comment` VALUES ('13', '1', '1', '2', '2', '2', '2', '2', '2', '2', null);
 
 -- ----------------------------
 -- Table structure for sl_directory
@@ -308,15 +309,15 @@ INSERT INTO `sl_log` VALUES ('89', 'nicholas', null, 'test', '0', null, null);
 DROP TABLE IF EXISTS `sl_menu`;
 CREATE TABLE `sl_menu` (
   `id` int unsigned NOT NULL AUTO_INCREMENT COMMENT '菜单自增id',
-  `type` varchar(16) DEFAULT NULL COMMENT '菜单类型，中央服，单服',
+  `type` int DEFAULT '1',
   `mark` varchar(60) DEFAULT NULL,
-  `author` varchar(32) NOT NULL DEFAULT '' COMMENT '创建人',
+  `author` varchar(32) CHARACTER SET utf8mb3 COLLATE utf8mb3_general_ci DEFAULT '' COMMENT '创建人',
   `name` varchar(100) NOT NULL DEFAULT '' COMMENT '菜单名称',
   `url` varchar(256) NOT NULL DEFAULT '' COMMENT '链接',
   `parent` int NOT NULL DEFAULT '0' COMMENT '上级菜单id',
   `icon` varchar(128) DEFAULT '' COMMENT '菜单图标',
-  `weight` int NOT NULL DEFAULT '0' COMMENT '排序',
-  `status` tinyint(1) NOT NULL DEFAULT '1' COMMENT '状态',
+  `weight` int DEFAULT '0' COMMENT '排序',
+  `status` int DEFAULT '1' COMMENT '状态',
   `create_time` int DEFAULT '0' COMMENT '创建菜单时间戳',
   `update_time` int DEFAULT NULL COMMENT '更新时间',
   PRIMARY KEY (`id`),
@@ -330,24 +331,24 @@ CREATE TABLE `sl_menu` (
 -- ----------------------------
 -- Records of sl_menu
 -- ----------------------------
-INSERT INTO `sl_menu` VALUES ('229', 'center', 'sys_setting', 'admin', '系统设置', '#', '0', 'fa-cogs', '1', '1', '1487598451', '1487681759');
-INSERT INTO `sl_menu` VALUES ('232', 'center', 'user_group', 'admin', '用户组管理', 'userGroup/index', '229', '', '4', '1', '1487661857', '1487661857');
-INSERT INTO `sl_menu` VALUES ('233', 'center', 'password', 'admin', '修改密码', 'user/password', '229', '', '5', '1', '1487661888', '1487661888');
-INSERT INTO `sl_menu` VALUES ('257', 'center', 'menu', 'admin', '菜单设置', 'menu/index', '229', '', '0', '1', '1487750865', '1487750865');
-INSERT INTO `sl_menu` VALUES ('258', 'center', 'user', 'admin', '管理员', 'user/index', '229', '', '0', '1', '1488445679', '1488445679');
-INSERT INTO `sl_menu` VALUES ('259', 'center', 'opt_log', 'zcr', '操作日志', 'log/index', '229', '', '0', '1', '1493542152', '1493542152');
-INSERT INTO `sl_menu` VALUES ('266', 'center', 'permit', 'zcr', '权限管理', 'permit/index', '229', 'fa-cogs', '5', '1', '1497860481', '1497860481');
-INSERT INTO `sl_menu` VALUES ('331', 'center', 'base_setting', 'zcr', '基本设置', 'webSite/index', '229', '', '0', '1', '0', null);
-INSERT INTO `sl_menu` VALUES ('346', 'center', 'lang', 'huangxiaowen', '语言设置', 'lang/index', '229', '', '0', '1', '0', null);
-INSERT INTO `sl_menu` VALUES ('364', 'center', 'fail_log', 'zcr', '错误日志', 'log/logFail', '229', '', '0', '1', '1683297510', null);
-INSERT INTO `sl_menu` VALUES ('365', 'center', 'article_manager', 'zcr', '文章管理', '#', '0', 'fa-align-left', '0', '1', '1686320743', null);
-INSERT INTO `sl_menu` VALUES ('366', 'center', 'columns', 'zcr', '栏目管理', 'columns/index', '365', '', '0', '1', '1686320767', null);
-INSERT INTO `sl_menu` VALUES ('367', 'center', 'article', 'zcr', '文章列表', 'article/index', '365', '', '0', '1', '1686320811', null);
-INSERT INTO `sl_menu` VALUES ('368', 'center', 'tags', 'zcr', '标签列表', 'tags/index', '365', '', '0', '1', '1686320883', null);
-INSERT INTO `sl_menu` VALUES ('369', 'center', 'attach', 'zcr', '素材列表', 'attach/index', '365', '', '0', '1', '1686320908', null);
-INSERT INTO `sl_menu` VALUES ('370', 'center', 'read', 'zcr', '阅读记录', 'read/index', '365', '', '0', '1', '1686404032', null);
-INSERT INTO `sl_menu` VALUES ('371', 'center', 'comment', 'zcr', '评论记录', 'comment/index', '365', '', '0', '1', '1686404049', null);
-INSERT INTO `sl_menu` VALUES ('372', 'center', 'message', 'zcr', '留言管理', 'message/index', '365', '', '0', '1', '1686473492', null);
+INSERT INTO `sl_menu` VALUES ('229', '1', 'sys_setting', 'nicholas', '系统设置', '#', '0', 'fa-cogs', '1', '1', '1487598451', '1487681759');
+INSERT INTO `sl_menu` VALUES ('232', '1', 'user_group', 'nicholas', '用户组管理', 'userGroup/index', '229', '', '4', '1', '1487661857', '1487661857');
+INSERT INTO `sl_menu` VALUES ('233', '1', 'password', 'nicholas', '修改密码', 'user/password', '229', '', '5', '1', '1487661888', '1487661888');
+INSERT INTO `sl_menu` VALUES ('257', '1', 'menu', 'nicholas', '菜单设置', 'menu/index', '229', '', '0', '1', '1487750865', '1487750865');
+INSERT INTO `sl_menu` VALUES ('258', '1', 'user', 'nicholas', '管理员', 'user/index', '229', '', '0', '1', '1488445679', '1488445679');
+INSERT INTO `sl_menu` VALUES ('259', '1', 'opt_log', 'nicholas', '操作日志', 'log/index', '229', '', '0', '1', '1493542152', '1493542152');
+INSERT INTO `sl_menu` VALUES ('266', '1', 'permit', 'nicholas', '权限管理', 'permit/index', '229', 'fa-cogs', '5', '1', '1497860481', '1497860481');
+INSERT INTO `sl_menu` VALUES ('331', '1', 'base_setting', 'nicholas', '基本设置', 'webSite/index', '229', '', '0', '1', '1497860481', null);
+INSERT INTO `sl_menu` VALUES ('346', '1', 'lang', 'nicholas', '语言设置', 'lang/index', '229', '', '0', '1', '1497860481', null);
+INSERT INTO `sl_menu` VALUES ('364', '1', 'fail_log', 'nicholas', '错误日志', 'log/logFail', '229', '', '0', '1', '1683297510', null);
+INSERT INTO `sl_menu` VALUES ('365', '1', 'article_manager', 'nicholas', '文章管理', '#', '0', 'fa-align-left', '0', '1', '1686320743', null);
+INSERT INTO `sl_menu` VALUES ('366', '1', 'columns', 'nicholas', '栏目管理', 'columns/index', '365', '', '0', '1', '1686320767', null);
+INSERT INTO `sl_menu` VALUES ('367', '1', 'article', 'nicholas', '文章列表', 'article/index', '365', '', '0', '1', '1686320811', null);
+INSERT INTO `sl_menu` VALUES ('368', '1', 'tags', 'nicholas', '标签列表', 'tags/index', '365', '', '0', '1', '1686320883', null);
+INSERT INTO `sl_menu` VALUES ('369', '1', 'attach', 'nicholas', '素材列表', 'attach/index', '365', '', '0', '1', '1686320908', null);
+INSERT INTO `sl_menu` VALUES ('370', '1', 'read', 'nicholas', '阅读记录', 'read/index', '365', '', '0', '1', '1686404032', null);
+INSERT INTO `sl_menu` VALUES ('371', '1', 'comment', 'nicholas', '评论记录', 'comment/index', '365', '', '0', '1', '1686404049', null);
+INSERT INTO `sl_menu` VALUES ('372', '1', 'message', 'nicholas', '留言管理', 'message/index', '365', '', '0', '1', '1686473492', null);
 
 -- ----------------------------
 -- Table structure for sl_message
@@ -379,36 +380,41 @@ INSERT INTO `sl_message` VALUES ('5', '172.16.50.35', '测试', '1076686352@qq.c
 DROP TABLE IF EXISTS `sl_permit`;
 CREATE TABLE `sl_permit` (
   `id` int unsigned NOT NULL AUTO_INCREMENT COMMENT '权限表自增id',
-  `type` char(10) NOT NULL DEFAULT '' COMMENT '类型：央服center、单服single',
-  `parent` varchar(100) NOT NULL DEFAULT '' COMMENT '权限分组名称',
+  `type` int NOT NULL DEFAULT '1',
+  `mark` varchar(255) DEFAULT NULL,
+  `parent` int NOT NULL DEFAULT '0',
   `name` varchar(100) NOT NULL DEFAULT '' COMMENT '权限名称',
   `modules` text COMMENT '模块',
+  `author` varchar(255) DEFAULT NULL,
   `status` int DEFAULT '1',
+  `weight` int DEFAULT NULL,
   `create_time` int DEFAULT '0' COMMENT '创建时间',
   `update_time` int DEFAULT NULL,
   PRIMARY KEY (`id`),
   UNIQUE KEY `name` (`name`) USING BTREE
-) ENGINE=InnoDB AUTO_INCREMENT=389 DEFAULT CHARSET=utf8mb3 COMMENT='权限表';
+) ENGINE=InnoDB AUTO_INCREMENT=391 DEFAULT CHARSET=utf8mb3 COMMENT='权限表';
 
 -- ----------------------------
 -- Records of sl_permit
 -- ----------------------------
-INSERT INTO `sl_permit` VALUES ('347', 'admin', '系统设置', '菜单设置', '[\"menu\\/*\"]', '1', '1638326322', '1644307078');
-INSERT INTO `sl_permit` VALUES ('348', 'admin', '系统设置', '权限管理', '[\"permit\\/*\"]', '1', '1638326345', null);
-INSERT INTO `sl_permit` VALUES ('349', 'admin', '系统设置', '用户组管理', '[\"usergroup\\/*\"]', '1', '1638326356', null);
-INSERT INTO `sl_permit` VALUES ('350', 'admin', '系统设置', '操作日志', '[\"log\\/*\"]', '1', '1638326383', null);
-INSERT INTO `sl_permit` VALUES ('351', 'admin', '系统设置', '基本设置', '[\"website\\/*\"]', '1', '1638326400', null);
-INSERT INTO `sl_permit` VALUES ('352', 'admin', '系统设置', '管理员', '[\"user\\/index\",\"user\\/add\",\"user\\/updatedata\",\"user\\/changestatus\"]', '1', '1638326593', null);
-INSERT INTO `sl_permit` VALUES ('353', 'admin', '系统设置', '修改密码', '[\"user\\/password\"]', '1', '1638326603', null);
-INSERT INTO `sl_permit` VALUES ('370', 'admin', '系统设置', '语言设置', '[\"lang\\/*\"]', '1', '1644303935', null);
-INSERT INTO `sl_permit` VALUES ('381', 'admin', '文章管理', '栏目管理', '[\"columns\\/*\"]', '1', '1686320713', null);
-INSERT INTO `sl_permit` VALUES ('382', 'admin', '文章管理', '文章列表', '[\"article\\/*\"]', '1', '1686320836', '1686395061');
-INSERT INTO `sl_permit` VALUES ('383', 'admin', '文章管理', '标签列表', '[\"tags\\/*\"]', '1', '1686320863', null);
-INSERT INTO `sl_permit` VALUES ('384', 'admin', '文章管理', '素材列表', '[\"attach\\/*\"]', '1', '1686320939', null);
-INSERT INTO `sl_permit` VALUES ('385', 'admin', '文章管理', '上传设置', '[\"upload\\/*\"]', '1', '1686385392', null);
-INSERT INTO `sl_permit` VALUES ('386', 'admin', '文章管理', '阅读记录', '[\"read\\/*\"]', '1', '1686404070', null);
-INSERT INTO `sl_permit` VALUES ('387', 'admin', '文章管理', '评论记录', '[\"comment\\/*\"]', '1', '1686404093', null);
-INSERT INTO `sl_permit` VALUES ('388', 'admin', '文章管理', '留言管理', '[\"message\\/*\"]', '1', '1686473511', null);
+INSERT INTO `sl_permit` VALUES ('347', '1', null, '389', '菜单设置', '[\"menu\\/*\"]', 'nicholas', '1', null, '1638326322', '1644307078');
+INSERT INTO `sl_permit` VALUES ('348', '1', null, '389', '权限管理', '[\"permit\\/*\"]', 'nicholas', '1', null, '1638326345', null);
+INSERT INTO `sl_permit` VALUES ('349', '1', null, '389', '用户组管理', '[\"usergroup\\/*\"]', 'nicholas', '1', null, '1638326356', null);
+INSERT INTO `sl_permit` VALUES ('350', '1', null, '389', '操作日志', '[\"log\\/*\"]', 'nicholas', '1', null, '1638326383', null);
+INSERT INTO `sl_permit` VALUES ('351', '1', null, '389', '基本设置', '[\"website\\/*\"]', 'nicholas', '1', null, '1638326400', null);
+INSERT INTO `sl_permit` VALUES ('352', '1', null, '389', '管理员', '[\"user\\/index\",\"user\\/add\",\"user\\/updatedata\",\"user\\/changestatus\"]', 'nicholas', '1', null, '1638326593', null);
+INSERT INTO `sl_permit` VALUES ('353', '1', null, '389', '修改密码', '[\"user\\/password\"]', 'nicholas', '1', null, '1638326603', null);
+INSERT INTO `sl_permit` VALUES ('370', '1', null, '389', '语言设置', '[\"lang\\/*\"]', 'nicholas', '1', null, '1644303935', null);
+INSERT INTO `sl_permit` VALUES ('381', '1', null, '390', '栏目管理', '[\"columns\\/*\"]', 'nicholas', '1', null, '1686320713', null);
+INSERT INTO `sl_permit` VALUES ('382', '1', null, '390', '文章列表', '[\"article\\/*\"]', 'nicholas', '1', null, '1686320836', '1686395061');
+INSERT INTO `sl_permit` VALUES ('383', '1', null, '390', '标签列表', '[\"tags\\/*\"]', 'nicholas', '1', null, '1686320863', null);
+INSERT INTO `sl_permit` VALUES ('384', '1', null, '390', '素材列表', '[\"attach\\/*\"]', 'nicholas', '1', null, '1686320939', null);
+INSERT INTO `sl_permit` VALUES ('385', '1', null, '390', '上传设置', '[\"upload\\/*\"]', 'nicholas', '1', null, '1686385392', null);
+INSERT INTO `sl_permit` VALUES ('386', '1', null, '390', '阅读记录', '[\"read\\/*\"]', 'nicholas', '1', null, '1686404070', null);
+INSERT INTO `sl_permit` VALUES ('387', '1', null, '390', '评论记录', '[\"comment\\/*\"]', 'nicholas', '1', null, '1686404093', null);
+INSERT INTO `sl_permit` VALUES ('388', '1', null, '390', '留言管理', '[\"message\\/*\"]', 'nicholas', '1', null, '1686473511', null);
+INSERT INTO `sl_permit` VALUES ('389', '1', null, '0', '系统设置', null, 'nicholas', '1', null, '1686473511', null);
+INSERT INTO `sl_permit` VALUES ('390', '1', null, '0', '文章管理', null, 'nicholas', '1', null, '1686473511', null);
 
 -- ----------------------------
 -- Table structure for sl_read
@@ -497,7 +503,7 @@ INSERT INTO `sl_read` VALUES ('1496', '308', 'http://172.16.50.47:8080/', '172.1
 INSERT INTO `sl_read` VALUES ('1497', '308', 'http://172.16.50.47:8080/', '172.16.50.35', '0', '0');
 INSERT INTO `sl_read` VALUES ('1498', '308', 'http://172.16.50.47:8080/', '172.16.50.35', '0', '0');
 INSERT INTO `sl_read` VALUES ('1499', '308', 'http://172.16.50.47:8080/', '172.16.50.35', '0', '0');
-INSERT INTO `sl_read` VALUES ('1500', '308', 'http://172.16.50.47:8080/', '172.16.50.35', '0', '0');
+INSERT INTO `sl_read` VALUES ('1500', '308', 'http://172.16.50.47:8080/', '127.0.0.1', '0', '0');
 INSERT INTO `sl_read` VALUES ('1501', '308', 'http://172.16.50.47:8080/', '172.16.50.35', '0', '0');
 INSERT INTO `sl_read` VALUES ('1502', '308', 'http://172.16.50.47:8080/', '172.16.50.35', '0', '0');
 INSERT INTO `sl_read` VALUES ('1503', '308', 'http://172.16.50.47:8080/', '172.16.50.35', '0', '0');
@@ -557,14 +563,16 @@ CREATE TABLE `sl_tags` (
 DROP TABLE IF EXISTS `sl_website`;
 CREATE TABLE `sl_website` (
   `id` int NOT NULL AUTO_INCREMENT,
+  `name` varchar(255) DEFAULT NULL,
   `key` varchar(32) DEFAULT NULL,
   `value` text,
   `update_time` int DEFAULT NULL,
   `create_time` int DEFAULT NULL,
   PRIMARY KEY (`id`),
   UNIQUE KEY `key` (`key`) USING BTREE
-) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=utf8mb3;
+) ENGINE=InnoDB AUTO_INCREMENT=6 DEFAULT CHARSET=utf8mb3;
 
 -- ----------------------------
 -- Records of sl_website
 -- ----------------------------
+INSERT INTO `sl_website` VALUES ('4', '关键词', 'keyword', '堆栈，博客', '0', '0');
