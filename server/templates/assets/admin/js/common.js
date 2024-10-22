@@ -2,9 +2,13 @@
 function dataFunction(data) {
     data.page = data.start / data.length + 1;
     data.page_size = data.length;
-    let ip = $('#ip-input').val(); // 从输入框获取IP地址
+    let ip = $('#ip-input').val();
     if (typeof ip !== undefined) {
         data.ip = ip;
+    }
+    let name = $('#name-input').val();
+    if (typeof name !== undefined) {
+        data.name = name;
     }
 }
 
