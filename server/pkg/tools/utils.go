@@ -83,19 +83,24 @@ func UnixToTime(timestamp int64) string {
 func ConvertToPinyin(text string) string {
 	a := pinyin.NewArgs()
 	a.Style = pinyin.Normal
-
 	// 正则表达式匹配中文、字母和数字
 	re := regexp.MustCompile(`[^\x00-\x7F]+|[a-zA-Z]+|\d+`)
 	matches := re.FindAllString(text, -1)
-	fmt.Println(matches)
 	var result []string
 	for _, match := range matches {
 		if strings.IndexAny(match, "0123456789") != -1 || strings.IndexAny(match, "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ") != -1 {
 			result = append(result, match) // 保留字母和数字部分
 		} else {
 			py := pinyin.Pinyin(match, a)
-			fmt.Println(py)
-			result = append(result, strings.Join(py[0], "")) // 添加完整拼音
+			if len(py) > 1 {
+				var pinyinStr []string
+				for _, p := range py {
+					pinyinStr = append(pinyinStr, strings.Join(p, ""))
+				}
+				result = append(result, strings.Join(pinyinStr, "")) // 添加拼音
+			} else {
+				result = append(result, strings.Join(py[0], "")) // 添加完整拼音
+			}
 		}
 	}
 
