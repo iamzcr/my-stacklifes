@@ -1,6 +1,7 @@
 package admin
 
 import (
+	"fmt"
 	"github.com/gin-gonic/gin"
 	"my-stacklifes/models"
 	"my-stacklifes/pkg/app"
@@ -49,6 +50,7 @@ func (h *MenuHandler) Edit(ctx *gin.Context) {
 		MenuInfo:    MenuInfo,
 		MenuParents: MenuParents,
 	}
+	fmt.Println(menuAssignList)
 	appGin.SuccessAdminHtml(menuAssignList, "menu/edit.html")
 }
 
