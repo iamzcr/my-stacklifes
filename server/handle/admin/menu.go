@@ -1,7 +1,6 @@
 package admin
 
 import (
-	"fmt"
 	"github.com/gin-gonic/gin"
 	"my-stacklifes/models"
 	"my-stacklifes/pkg/app"
@@ -19,15 +18,6 @@ func NewMenuHandler() *MenuHandler {
 	}
 }
 
-func (h *MenuHandler) Edit(ctx *gin.Context) {
-	var appGin = app.Gin{C: ctx}
-	id := ctx.Param("id")
-	info, _ := h.srv.GetInfo(ctx, id)
-	parentList := h.srv.GetParentList()
-	fmt.Println(parentList)
-	appGin.SuccessAdminHtml(info, "menu/edit.html")
-}
-
 func (h *MenuHandler) List(ctx *gin.Context) {
 	var appGin = app.Gin{C: ctx}
 	assignData := "assignData"
@@ -36,7 +26,7 @@ func (h *MenuHandler) List(ctx *gin.Context) {
 
 func (h *MenuHandler) ListJson(ctx *gin.Context) {
 	var appGin = app.Gin{C: ctx}
-	query := models.MenuReq{}
+	query := models.MenuListReq{}
 	err := ctx.ShouldBindQuery(&query)
 	if err != nil {
 		appGin.Error(exception.ERROR, err.Error(), nil)
@@ -48,6 +38,15 @@ func (h *MenuHandler) ListJson(ctx *gin.Context) {
 		return
 	}
 	appGin.Success(list)
+}
+
+func (h *MenuHandler) Edit(ctx *gin.Context) {
+	var appGin = app.Gin{C: ctx}
+	id := ctx.Param("id")
+	menuAssignList := models.MenuAssignList{}
+	menuAssignList.MenuInfo = h.srv.GetInfo(ctx, id)
+	menuAssignList.MenuParents = h.srv.GetParentList()
+	appGin.SuccessAdminHtml(menuAssignList, "menu/edit.html")
 }
 
 func (h *MenuHandler) NoPageList(ctx *gin.Context) {
@@ -69,11 +68,7 @@ func (h *MenuHandler) NoPageList(ctx *gin.Context) {
 func (h *MenuHandler) Info(ctx *gin.Context) {
 	var appGin = app.Gin{C: ctx}
 	id := ctx.Param("id")
-	infoData, err := h.srv.GetInfo(ctx, id)
-	if err != nil {
-		appGin.Error(exception.ERROR, err.Error(), nil)
-		return
-	}
+	infoData := h.srv.GetInfo(ctx, id)
 	appGin.Success(infoData)
 }
 

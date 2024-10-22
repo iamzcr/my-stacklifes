@@ -14,13 +14,6 @@ type Menu struct {
 	CommonField
 }
 
-type MenuMine struct {
-	Id         int    `json:"id" form:"id"`
-	Name       string `json:"name" form:"name"`
-	Parent     string `json:"parent" form:"parent"`
-	ParentName string `json:"parent_name" form:"parent_name"`
-}
-
 func (c *Menu) TableName() string {
 	return "sl_menu"
 }
@@ -48,14 +41,32 @@ type MenuCreateReq struct {
 	Mark   string `json:"mark" form:"mark"`
 }
 
-type MenuReq struct {
+type MenuListReq struct {
 	PageInfo
 	Name string `json:"name" form:"name"`
 }
-
+type MenuInfo struct {
+	Id         int    `json:"id"`
+	Name       string `json:"name"`
+	Type       int    `json:"type"`
+	Mark       string `json:"mark"`
+	Parent     int    `json:"parent"`
+	ParentName string `json:"parent_name"`
+	Author     string `json:"author"`
+	Url        string `json:"url"`
+	Icon       string `json:"icon"`
+	Weight     string `json:"weight"`
+	Status     string `json:"status"`
+}
 type MenuListRes struct {
-	Total int64  `json:"total"`
-	List  []Menu `json:"list"`
+	Total int64      `json:"total"`
+	List  []MenuInfo `json:"list"`
+}
+
+type MenuMine struct {
+	Id     int    `json:"id" form:"id"`
+	Name   string `json:"name" form:"name"`
+	Parent string `json:"parent" form:"parent"`
 }
 
 type MenuNoPageReq struct {
@@ -65,6 +76,11 @@ type MenuNoPageReq struct {
 
 type MenuNoPageListRes struct {
 	List []MenuMine `json:"list"`
+}
+
+type MenuAssignList struct {
+	MenuInfo    Menu
+	MenuParents []MenuMine
 }
 
 type MenuDelReq struct {

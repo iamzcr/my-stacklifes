@@ -28,9 +28,11 @@
                                 <div class="item form-group">
                                     <label class="col-form-label col-md-1 label-align">父级菜单</label>
                                     <div class="col-md-2">
-                                        <input type="text" name="value"
-                                               value="{{if .data}}{{.data.Parent}}{{end}}" required="required"
-                                               class="form-control">
+                                        <select class="form-control" name="parent">
+                                            {{range $index,$value := .data.MenuParents}}
+                                            <option value="{{$value.Id}}">{{$value.Name}}</option>
+                                            {{end}}
+                                        </select>
                                     </div>
                                 </div>
                                 <div class="item form-group">
