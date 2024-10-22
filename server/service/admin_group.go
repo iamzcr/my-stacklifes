@@ -3,9 +3,9 @@ package service
 import (
 	"errors"
 	"github.com/gin-gonic/gin"
-	"github.com/mozillazg/go-pinyin"
 	"my-stacklifes/database/mysql"
 	"my-stacklifes/models"
+	"my-stacklifes/pkg/tools"
 )
 
 type AdminGroupService struct {
@@ -80,11 +80,9 @@ func (s *AdminGroupService) Create(ctx *gin.Context, req models.AdminGroupCreate
 	if count > 0 {
 		return nil, errors.New("记录已存在")
 	}
-	a := pinyin.NewArgs()
-	a.Style = pinyin.Normal
 	adminGroup.Name = req.Name
+	adminGroup.Mark = tools.ConvertToPinyinWithNumbers(req.Name)
 	adminGroup.Description = req.Description
-	adminGroup.Mark = pinyin.Slug(req.Name, pinyin.NewArgs())
 	err := s.dbClient.MysqlClient.Save(&adminGroup).Error
 	if err != nil {
 		return nil, err

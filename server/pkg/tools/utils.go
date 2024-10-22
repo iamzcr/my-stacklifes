@@ -5,12 +5,15 @@ import (
 	"crypto/md5"
 	"encoding/hex"
 	"fmt"
+	"github.com/mozillazg/go-pinyin"
 	"github.com/yuin/goldmark"
 	highlighting "github.com/yuin/goldmark-highlighting/v2"
 	"github.com/yuin/goldmark/extension"
 	"github.com/yuin/goldmark/parser"
 	"github.com/yuin/goldmark/renderer/html"
 	"math/rand"
+	"regexp"
+	"strings"
 	"time"
 )
 
@@ -75,4 +78,23 @@ func ConvertMarkdownToHTML(markdownContent []byte) (string, error) {
 func UnixToTime(timestamp int64) string {
 	t := time.Unix(timestamp, 0)
 	return t.Format("2006-01-02 15:04:05")
+}
+
+func ConvertToPinyinWithNumbers(text string) string {
+	a := pinyin.NewArgs()
+	// 正则表达式匹配中文和数字
+	re := regexp.MustCompile(`[^\x00-\x7F]+|\d+`)
+	matches := re.FindAllString(text, -1)
+
+	var result []string
+	for _, match := range matches {
+		if strings.IndexAny(match, "0123456789") != -1 {
+			result = append(result, match) // 保留数字部分
+		} else {
+			py := pinyin.Pinyin(match, a)
+			result = append(result, strings.Join(py[0], "")) // 转换为拼音
+		}
+	}
+
+	return strings.Join(result, "")
 }
