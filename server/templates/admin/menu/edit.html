@@ -16,8 +16,8 @@
                     <div class="x_panel">
                         <div class="x_content">
                             <form id="inputForm" data-parsley-validate class="form-horizontal form-label-left">
-                                <input type="hidden" name="id" id="id" value="{{if .data.MenuInfo}}{{.data.Id}}{{end}}"
-                                       data-id="{{if .data.MenuInfo}}{{.data.Id}}{{end}}">
+                                <input type="hidden" name="id" id="id" value="{{if.data.MenuInfo}}{{.data.MenuInfo.Id}}{{end}}"
+                                       data-id="{{if .data.MenuInfo}}{{.data.MenuInfo.Id}}{{end}}">
                                 <div class="item form-group">
                                     <label class="col-form-label col-md-1 label-align">名称</label>
                                     <div class="col-md-2">
