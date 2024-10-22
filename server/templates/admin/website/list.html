@@ -13,8 +13,13 @@
         <div class="right_col" role="main">
             <div class="row">
                 <div class="col">
-                    <button class="btn btn-sm btn-primary" id="search">搜索</button>
-                    <a href="/admin/website/add" class="btn btn-sm btn-success">新增</a>
+                    <form class="form-inline">
+                        <div class="form-group mx-sm-1 mb-2">
+                            <input type="text" name="ip" id="ip-input" class="form-control" placeholder="ip">
+                        </div>
+                        <button class="btn btn-primary mb-2" id="search">搜索</button>
+                        <a href="/admin/website/add" class="btn  btn-success mb-2">新增</a>
+                    </form>
                 </div>
             </div>
             <div class="row">
