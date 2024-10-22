@@ -29,8 +29,8 @@ func (s *ReadService) GetList(ctx *gin.Context, req models.ReadReq) (interface{}
 	err := db.Limit(limit).
 		Offset(offset).
 		Order("id DESC").
-		Find(&reads).
-		Count(&total).Error
+		Find(&reads).Error
+	db.Model(reads).Count(&total)
 	if err != nil {
 		return nil, err
 	}
