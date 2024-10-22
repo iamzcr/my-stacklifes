@@ -1,16 +1,16 @@
 package models
 
 type Menu struct {
-	Id     int    `json:"id"`
-	Name   string `json:"name"`
-	Type   int    `json:"type"`
-	Mark   string `json:"mark"`
-	Parent int    `json:"parent"`
-	Author string `json:"author"`
-	Url    string `json:"url"`
-	Icon   string `json:"icon"`
-	Weight string `json:"weight"`
-	Status string `json:"status"`
+	Id     int    `json:"id"  form:"id" `
+	Name   string `json:"name" form:"name"  binding:"required"`
+	Type   int    `json:"type" form:"type,default=1"`
+	Mark   string `json:"mark" form:"mark" `
+	Parent int    `json:"parent"  form:"parent" binding:"required"`
+	Author string `json:"author"  form:"author"`
+	Url    string `json:"url"  form:"url" binding:"required"`
+	Icon   string `json:"icon" form:"icon"  `
+	Weight string `json:"weight" form:"weight,default=1"`
+	Status string `json:"status" form:"status,default=1"`
 	CommonField
 }
 
@@ -20,7 +20,7 @@ func (c *Menu) TableName() string {
 
 type MenuUpdateReq struct {
 	Id     int    `json:"id"`
-	Url    string `json:"url"  binding:"required"`
+	Url    string `json:"url"  form:"url"   binding:"required"`
 	Icon   string `json:"icon"`
 	Name   string `json:"name" form:"name"  binding:"required"`
 	Type   int    `json:"type" form:"type,default=1"`
