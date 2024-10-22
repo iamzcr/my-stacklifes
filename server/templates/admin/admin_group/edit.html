@@ -63,7 +63,7 @@
             data: formData,
             success: function (response) {
                 if (response.code !== 200) {
-                    Swal.fire({icon: "error", text: response.msg});
+                    Swal.fire({icon: "error", text: response.message});
                 } else {
                     window.location.replace("/admin/admin_group/list");
                 }
