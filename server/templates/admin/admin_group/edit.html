@@ -51,10 +51,10 @@
 {{template "public/footer" .}}
 <script>
     function submitForm() {
-        let url = "/admin/admin_group/crte"
+        let url = "/admin/admin_group/create"
         let id = $("#id").data("id");
         if (id) {
-            url = "/admin/admin_group/upd"
+            url = "/admin/admin_group/update"
         }
         let formData = $("#inputForm").serialize();
         $.ajax({
@@ -68,7 +68,7 @@
                 window.location.replace("/admin/admin_group/list");
             },
             error: function (error) {
-                Swal.fire({icon: "error", text: error});
+                Swal.fire({icon: "error", text: 'error'});
             }
         });
     }
