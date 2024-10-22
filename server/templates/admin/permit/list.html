@@ -13,7 +13,13 @@
         <div class="right_col" role="main">
             <div class="row">
                 <div class="col">
-                    <a href="/admin/article/edit" class="btn btn-sm btn-success">新增</a>
+                    <form class="form-inline">
+                        <div class="form-group mx-sm-1 mb-2">
+                            <input type="text" name="name" id="name-input" class="form-control  form-control-sm" placeholder="name">
+                        </div>
+                        <button class="btn btn-sm btn-primary mb-2" id="search">搜索</button>
+                        <a href="/admin/permit/add" class="btn btn-sm btn-success mb-2">新增</a>
+                    </form>
                 </div>
             </div>
             <div class="row">
@@ -23,35 +29,25 @@
                             <div class="row">
                                 <div class="col-sm-12">
                                     <div class="card-box table-responsive">
-                                        <table id="datatable" class="table table-striped table-bordered"
+                                        <table id="list-table" class="table table-striped table-bordered"
                                                style="width:100%">
                                             <thead>
                                             <tr>
-                                                <th>Name</th>
-                                                <th>Position</th>
-                                                <th>Office</th>
-                                                <th>Age</th>
-                                                <th>Start date</th>
-                                                <th>Salary</th>
+                                                <th>ID</th>
+                                                <th>名称</th>
+                                                <th>标识</th>
+                                                <th>类型</th>
+                                                <th>操作人</th>
+                                                <th>父级</th>
+                                                <th>排序</th>
+                                                <th>状态</th>
+                                                <th>具体权限</th>
+                                                <th>时间</th>
+                                                <th>操作</th>
+
                                             </tr>
                                             </thead>
                                             <tbody>
-                                            <tr>
-                                                <td>Tiger Nixon</td>
-                                                <td>System Architect</td>
-                                                <td>Edinburgh</td>
-                                                <td>61</td>
-                                                <td>2011/04/25</td>
-                                                <td>$320,800</td>
-                                            </tr>
-                                            <tr>
-                                                <td>Donna Snider</td>
-                                                <td>Customer Support</td>
-                                                <td>New York</td>
-                                                <td>27</td>
-                                                <td>2011/01/25</td>
-                                                <td>$112,000</td>
-                                            </tr>
                                             </tbody>
                                         </table>
                                     </div>
@@ -68,23 +64,41 @@
 {{template "public/footer" .}}
 <script type="text/javascript">
     var listTable = $('#list-table').DataTable({
+        "language": {
+            "url": "/static/vendors/datatables.net/lang/zh.json"
+        },
         "processing": true,
         "serverSide": true,
         "ajax": {
             "url": "/admin/permit/list_json",
             "type": "GET",
-            "dataSrc": function (json) {
-                return json.data.list; // Assuming your data is stored in a `data` property
+            "serverSide": true,
+            "data": function (data) {
+                return dataFunction(data);
+            },
+            "dataFilter": function (data) {
+                return dataFilterFunction(data);
             }
         },
         "columns": [
             {"data": "id"},
-            {"data": "type"},
             {"data": "name"},
+            {"data": "mark"},
+            {"data": "type"},
             {"data": "author"},
+            {"data": "parent"},
+            {"data": "weight"},
             {"data": "status"},
+            {"data": "modules"},
             {"data": "create_time"},
+            {
+                "data": null,
+                render: function (data, type, row) {
+                    return '<a class=" btn btn-sm btn-primary" href="/admin/permit/edit/' + row.id + '">Edit</a>';
+                }
+            }
         ]
+
     });
 
     $("#search").click(function () {

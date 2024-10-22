@@ -21,31 +21,30 @@ type MenuMine struct {
 }
 
 func (c *Menu) TableName() string {
-	return "sl_Menu"
+	return "sl_menu"
 }
 
 type MenuUpdateReq struct {
 	Id     int    `json:"id"`
-	Name   string `json:"name"`
-	Type   string `json:"type"`
-	Mark   string `json:"mark"`
-	Parent string `json:"parent"`
-	Author string `json:"author"`
-	Url    string `json:"url"`
+	Url    string `json:"url"  binding:"required"`
 	Icon   string `json:"icon"`
-	Weight string `json:"weight"`
+	Name   string `json:"name" form:"name"  binding:"required"`
+	Type   string `json:"type" form:"type,default=1"`
+	Parent int    `json:"parent" form:"parent,default=0"`
+	Weight string `json:"weight" form:"weight"`
+	Author string `json:"author" form:"author,default=nicholas"`
+	Mark   string `json:"mark" form:"mark"`
 }
 
 type MenuCreateReq struct {
-	Id     int    `json:"id"`
-	Name   string `json:"name"`
-	Type   string `json:"type"`
-	Mark   string `json:"mark"`
-	Parent string `json:"parent"`
-	Author string `json:"author"`
-	Url    string `json:"url"`
+	Url    string `json:"url"  binding:"required"`
 	Icon   string `json:"icon"`
-	Weight string `json:"weight"`
+	Name   string `json:"name" form:"name"  binding:"required"`
+	Type   string `json:"type" form:"type,default=1"`
+	Parent int    `json:"parent" form:"parent,default=0"`
+	Weight string `json:"weight" form:"weight"`
+	Author string `json:"author" form:"author,default=nicholas"`
+	Mark   string `json:"mark" form:"mark"`
 }
 
 type MenuReq struct {
