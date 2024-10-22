@@ -57,6 +57,13 @@ func AdminRoutersInit(r *gin.Engine) {
 		adminRouter.POST("/website/create", websiteHandler.Create)
 		adminRouter.POST("/website/delete", websiteHandler.Delete)
 
+		adminRouter.GET("/log/list", logHandler.List)
+		adminRouter.GET("/log/list_json", logHandler.ListJson)
+		adminRouter.GET("/msg/list", msgHandler.List)
+		adminRouter.GET("/read/list", readHandler.List)
+		adminRouter.GET("/read/list_json", readHandler.ListJson)
+		adminRouter.GET("/comment/list", commentHandler.List)
+
 		adminRouter.GET("/option/getFilter", optionHandler.GetFilter)
 		adminRouter.GET("/lang/list", langHandler.List)
 		adminRouter.GET("/lang/list_json", langHandler.ListJson)
@@ -116,12 +123,6 @@ func AdminRoutersInit(r *gin.Engine) {
 		adminRouter.POST("/menu/create", menuHandler.Create)
 		adminRouter.POST("/menu/update", menuHandler.Update)
 		adminRouter.POST("/menu/delete", menuHandler.Delete)
-
-		adminRouter.GET("/log/list", logHandler.List)
-		adminRouter.GET("/log/list_json", logHandler.ListJson)
-		adminRouter.GET("/msg/list", msgHandler.List)
-		adminRouter.GET("/read/list", readHandler.List)
-		adminRouter.GET("/comment/list", commentHandler.List)
 
 		adminRouter.GET("/article/list", articleHandler.List)
 		adminRouter.GET("/article/list_json", articleHandler.ListJson)
