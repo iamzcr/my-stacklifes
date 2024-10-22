@@ -80,19 +80,21 @@ func UnixToTime(timestamp int64) string {
 	return t.Format("2006-01-02 15:04:05")
 }
 
-func ConvertToPinyinWithNumbers(text string) string {
+func ConvertToPinyin(text string) string {
 	a := pinyin.NewArgs()
-	// 正则表达式匹配中文和数字
-	re := regexp.MustCompile(`[^\x00-\x7F]+|\d+`)
+	a.Style = pinyin.Tone2
+
+	// 正则表达式匹配中文、字母和数字
+	re := regexp.MustCompile(`[^\x00-\x7F]+|[a-zA-Z]+|\d+`)
 	matches := re.FindAllString(text, -1)
 
 	var result []string
 	for _, match := range matches {
-		if strings.IndexAny(match, "0123456789") != -1 {
-			result = append(result, match) // 保留数字部分
+		if strings.IndexAny(match, "0123456789") != -1 || strings.IndexAny(match, "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ") != -1 {
+			result = append(result, match) // 保留字母和数字部分
 		} else {
 			py := pinyin.Pinyin(match, a)
-			result = append(result, strings.Join(py[0], "")) // 转换为拼音
+			result = append(result, strings.Join(py[0], "")) // 添加完整拼音
 		}
 	}
 

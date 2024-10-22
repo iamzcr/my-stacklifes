@@ -81,7 +81,7 @@ func (s *AdminGroupService) Create(ctx *gin.Context, req models.AdminGroupCreate
 		return nil, errors.New("记录已存在")
 	}
 	adminGroup.Name = req.Name
-	adminGroup.Mark = tools.ConvertToPinyinWithNumbers(req.Name)
+	adminGroup.Mark = tools.ConvertToPinyin(req.Name)
 	adminGroup.Description = req.Description
 	err := s.dbClient.MysqlClient.Save(&adminGroup).Error
 	if err != nil {
