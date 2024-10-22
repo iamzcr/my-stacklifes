@@ -13,22 +13,3 @@ function dataFilterFunction(data) {
     return JSON.stringify(json);
 }
 
-function submitDelForm(url, id) {
-    if (typeof id === 'undefined' || typeof url === 'undefined') {
-        Swal.fire("fail");
-    }
-    $.ajax({
-        type: "POST",
-        url: url, // 提交表单数据的URL
-        data: {id: id},
-        success: function (response) {
-            if (response.code !== 1) {
-                Swal.fire(response.msg);
-            }
-            Swal.fire("success");
-        },
-        error: function (error) {
-            Swal.fire(error);
-        }
-    });
-}

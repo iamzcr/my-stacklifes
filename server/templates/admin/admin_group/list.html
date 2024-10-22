@@ -78,8 +78,8 @@
             {
                 data: null,
                 render: function (data, type, row) {
-                    return '<a class=" btn btn-sm btn-primary" href="/admin/admin_group/edit/' + row.id + '">编辑</a>' +
-                        '<button class="btn btn-sm btn-danger" onclick="submitDelForm(' + '\'/admin/admin_group/delete\',' + row.id + ')">编辑</button>'
+                    return '<a class="btn btn-sm btn-primary" href="/admin/admin_group/edit/' + row.id + '">编辑</a>' +
+                        '<button class="btn btn-sm btn-danger" onclick="submitDelForm(' + '\'/admin/admin_group/delete\',' + row.id + ')">删除</button>'
                 }
             }
         ]
@@ -93,6 +93,26 @@
         $(this).removeClass('info');
     });
 
+    function submitDelForm(url, id) {
+        if (typeof id === 'undefined' || typeof url === 'undefined') {
+            Swal.fire({icon: "error"});
+        }
+        $.ajax({
+            type: "POST",
+            url: url, // 提交表单数据的URL
+            data: {id: id},
+            success: function (response) {
+                console.log(response)
+                if (response.code !== 200) {
+                    Swal.fire({icon: "error", text: response.msg});
+                }
+                listTable.draw()
+            },
+            error: function (error) {
+                Swal.fire({icon: "error", text: error});
+            }
+        });
+    }
 </script>
 </body>
 </html>
