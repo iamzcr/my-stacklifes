@@ -80,6 +80,7 @@ func UnixToTime(timestamp int64) string {
 	return t.Format("2006-01-02 15:04:05")
 }
 
+// 中文转拼音
 func ConvertToPinyin(text string) string {
 	a := pinyin.NewArgs()
 	a.Style = pinyin.Normal
