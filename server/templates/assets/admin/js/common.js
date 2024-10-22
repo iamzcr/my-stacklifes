@@ -10,6 +10,11 @@ function dataFunction(data) {
     if (typeof name !== undefined) {
         data.name = name;
     }
+    let content = $('#content-input').val();
+    if (typeof content !== undefined) {
+        data.name = content;
+    }
+
 }
 
 // data filter function
