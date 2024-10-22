@@ -13,11 +13,8 @@ function dataFilterFunction(data) {
     return JSON.stringify(json);
 }
 
-function submitDelForm(url) {
-    let id = $(this).data("id");
-    console.log(id)
-    console.log(url)
-    if (!id) {
+function submitDelForm(url, id) {
+    if (typeof id === 'undefined' || typeof url === 'undefined') {
         Swal.fire("fail");
     }
     $.ajax({
