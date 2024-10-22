@@ -28,7 +28,7 @@ func (g *Gin) Response(httpCode, errCode int, data interface{}) {
 
 func (g *Gin) Success(data interface{}) {
 	g.C.JSON(http.StatusOK, Response{
-		Code: exception.ERROR,
+		Code: exception.SUCCESS,
 		Msg:  exception.GetMsg(exception.SUCCESS),
 		Data: data,
 	})
