@@ -1,4 +1,4 @@
-{{define "comment/list.html"}}
+{{define "message/list.html"}}
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -34,8 +34,6 @@
                                             <thead>
                                             <tr>
                                                 <th>ID</th>
-                                                <th>文章</th>
-                                                <th>来源</th>
                                                 <th>ip</th>
                                                 <th>名称</th>
                                                 <th>邮箱</th>
@@ -69,7 +67,7 @@
         "processing": true,
         "serverSide": true,
         "ajax": {
-            "url": "/admin/comment/list_json",
+            "url": "/admin/message/list_json",
             "type": "GET",
             "serverSide": true,
             "data": function (data) {
@@ -81,8 +79,6 @@
         },
         "columns": [
             {"data": "id"},
-            {"data": "aid"},
-            {"data": "referer"},
             {"data": "ip"},
             {"data": "name"},
             {"data": "email"},
@@ -93,7 +89,7 @@
             {
                 data: null,
                 render: function (data, type, row) {
-                    return '<button class="btn btn-sm btn-danger" onclick="submitDelForm(' + '\'/admin/comment/delete\',' + row.id + ')">删除</button>'
+                    return '<button class="btn btn-sm btn-danger" onclick="submitDelForm(' + '\'/admin/message/delete\',' + row.id + ')">删除</button>'
                 }
             }
         ]

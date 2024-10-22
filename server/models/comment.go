@@ -34,3 +34,7 @@ type CommentCreateReq struct {
 	Url     string `json:"url" form:"url"`
 	Aid     int    `json:"aid" form:"aid"`
 }
+
+type CommentDelReq struct {
+	Id int `json:"id" form:"id" binding:"required"`
+}

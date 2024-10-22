@@ -20,8 +20,8 @@ func NewCommentService() *CommentService {
 
 func (s *CommentService) GetList(ctx *gin.Context, req models.CommentReq) (interface{}, error) {
 	var (
-		categories []models.Comment
-		total      int64
+		comment []models.Comment
+		total   int64
 	)
 	db := s.dbClient.MysqlClient
 	if len(req.Name) > 0 {
@@ -31,14 +31,18 @@ func (s *CommentService) GetList(ctx *gin.Context, req models.CommentReq) (inter
 	err := db.Limit(limit).
 		Offset(offset).
 		Order("id DESC").
-		Find(&categories).
+		Find(&comment).
 		Count(&total).Error
+	if err != nil {
+		return nil, err
+	}
+	err = db.Model(comment).Count(&total).Error
 	if err != nil {
 		return nil, err
 	}
 	return models.CommentListRes{
 		Total: total,
-		List:  categories,
+		List:  comment,
 	}, nil
 }
 
@@ -62,4 +66,17 @@ func (s *CommentService) Update(ctx *gin.Context, req models.CommentCreateReq) (
 		return nil, err
 	}
 	return comment, nil
+}
+
+func (s *CommentService) Delete(ctx *gin.Context, req models.CommentDelReq) (interface{}, error) {
+	var comment models.Comment
+	s.dbClient.MysqlClient.Where("id=?", req.Id).Find(&comment)
+	if comment.Id <= 0 {
+		return nil, errors.New("不存在该记录")
+	}
+	err := s.dbClient.MysqlClient.Delete(&comment).Error
+	if err != nil {
+		return nil, err
+	}
+	return comment.Id, nil
 }

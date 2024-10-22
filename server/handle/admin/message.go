@@ -17,8 +17,12 @@ func NewMessageHandler() *MessageHandler {
 		srv: service.NewMessageService(),
 	}
 }
-
 func (h *MessageHandler) List(ctx *gin.Context) {
+	var appGin = app.Gin{C: ctx}
+	assignData := "assignData"
+	appGin.SuccessAdminHtml(assignData, "message/list.html")
+}
+func (h *MessageHandler) ListJson(ctx *gin.Context) {
 	var appGin = app.Gin{C: ctx}
 	listReq := models.MessageReq{}
 	err := ctx.ShouldBindQuery(&listReq)
@@ -32,4 +36,23 @@ func (h *MessageHandler) List(ctx *gin.Context) {
 		return
 	}
 	appGin.Success(list)
+}
+
+func (h *MessageHandler) Delete(ctx *gin.Context) {
+
+	var (
+		appGin = app.Gin{C: ctx}
+		reqDel models.MessageDelReq
+	)
+	err := ctx.ShouldBind(&reqDel)
+	if err != nil {
+		appGin.Error(exception.ERROR, err.Error(), nil)
+		return
+	}
+	res, err := h.srv.Delete(ctx, reqDel)
+	if err != nil {
+		appGin.Error(exception.ERROR, err.Error(), nil)
+		return
+	}
+	appGin.Success(res)
 }

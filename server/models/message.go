@@ -30,3 +30,7 @@ type MsgCreateReq struct {
 	Content string `json:"content" form:"content" binding:"required"`
 	Url     string `json:"url" form:"url"`
 }
+
+type MessageDelReq struct {
+	Id int `json:"id" form:"id" binding:"required"`
+}

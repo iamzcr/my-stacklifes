@@ -20,8 +20,8 @@ func NewMessageService() *MessageService {
 
 func (s *MessageService) GetList(ctx *gin.Context, req models.MessageReq) (interface{}, error) {
 	var (
-		categories []models.Message
-		total      int64
+		message []models.Message
+		total   int64
 	)
 	db := s.dbClient.MysqlClient
 	if len(req.Name) > 0 {
@@ -31,14 +31,17 @@ func (s *MessageService) GetList(ctx *gin.Context, req models.MessageReq) (inter
 	err := db.Limit(limit).
 		Offset(offset).
 		Order("id DESC").
-		Find(&categories).
-		Count(&total).Error
+		Find(&message).Error
+	if err != nil {
+		return nil, err
+	}
+	err = db.Model(message).Count(&total).Error
 	if err != nil {
 		return nil, err
 	}
 	return models.MessageListRes{
 		Total: total,
-		List:  categories,
+		List:  message,
 	}, nil
 }
 
@@ -60,4 +63,17 @@ func (s *MessageService) Update(ctx *gin.Context, req models.MsgCreateReq) (inte
 		return nil, err
 	}
 	return message, nil
+}
+
+func (s *MessageService) Delete(ctx *gin.Context, req models.MessageDelReq) (interface{}, error) {
+	var message models.Message
+	s.dbClient.MysqlClient.Where("id=?", req.Id).Find(&message)
+	if message.Id <= 0 {
+		return nil, errors.New("不存在该记录")
+	}
+	err := s.dbClient.MysqlClient.Delete(&message).Error
+	if err != nil {
+		return nil, err
+	}
+	return message.Id, nil
 }
