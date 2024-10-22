@@ -3,7 +3,7 @@ package models
 type Permit struct {
 	Id      int    `json:"id"`
 	Name    string `json:"name"`
-	Type    string `json:"type"`
+	Type    int    `json:"type"`
 	Parent  int    `json:"parent"`
 	Modules string `json:"modules"`
 	Status  string `json:"status"`
@@ -44,7 +44,7 @@ type PermitNoPageListRes struct {
 type PermitUpdateReq struct {
 	Id      int    `json:"id" form:"id"`
 	Name    string `json:"name" form:"name"  binding:"required"`
-	Type    string `json:"type" form:"type,default=1"`
+	Type    int    `json:"type" form:"type,default=1"`
 	Parent  int    `json:"parent" form:"parent,default=0"`
 	Weight  string `json:"weight" form:"weight"`
 	Author  string `json:"author" form:"author,default=nicholas"`
@@ -54,7 +54,7 @@ type PermitUpdateReq struct {
 
 type PermitCreateReq struct {
 	Name    string `json:"name" form:"name"  binding:"required"`
-	Type    string `json:"type" form:"type,default=1"`
+	Type    int    `json:"type" form:"type,default=1"`
 	Parent  int    `json:"parent" form:"parent,default=0"`
 	Author  string `json:"author" form:"author,default=nicholas"`
 	Modules string `json:"modules" form:"modules"  binding:"required"`

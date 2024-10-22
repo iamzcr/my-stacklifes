@@ -3,7 +3,7 @@ package models
 type Menu struct {
 	Id     int    `json:"id"`
 	Name   string `json:"name"`
-	Type   string `json:"type"`
+	Type   int    `json:"type"`
 	Mark   string `json:"mark"`
 	Parent int    `json:"parent"`
 	Author string `json:"author"`
@@ -29,7 +29,7 @@ type MenuUpdateReq struct {
 	Url    string `json:"url"  binding:"required"`
 	Icon   string `json:"icon"`
 	Name   string `json:"name" form:"name"  binding:"required"`
-	Type   string `json:"type" form:"type,default=1"`
+	Type   int    `json:"type" form:"type,default=1"`
 	Parent int    `json:"parent" form:"parent,default=0"`
 	Weight string `json:"weight" form:"weight"`
 	Author string `json:"author" form:"author,default=nicholas"`
@@ -40,7 +40,7 @@ type MenuCreateReq struct {
 	Url    string `json:"url"  binding:"required"`
 	Icon   string `json:"icon"`
 	Name   string `json:"name" form:"name"  binding:"required"`
-	Type   string `json:"type" form:"type,default=1"`
+	Type   int    `json:"type" form:"type,default=1"`
 	Parent int    `json:"parent" form:"parent,default=0"`
 	Weight string `json:"weight" form:"weight"`
 	Author string `json:"author" form:"author,default=nicholas"`
