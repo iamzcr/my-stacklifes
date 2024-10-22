@@ -26,10 +26,18 @@
                                     </div>
                                 </div>
                                 <div class="item form-group">
-                                    <label class="col-form-label col-md-1 label-align">描述</label>
+                                    <label class="col-form-label col-md-1 label-align">key</label>
                                     <div class="col-md-2">
-                                        <input type="text" name="description"
-                                               value="{{if .data}}{{.data.Description}}{{end}}" required="required"
+                                        <input type="text" name="key"
+                                               value="{{if .data}}{{.data.Key}}{{end}}" required="required"
+                                               class="form-control">
+                                    </div>
+                                </div>
+                                <div class="item form-group">
+                                    <label class="col-form-label col-md-1 label-align">value</label>
+                                    <div class="col-md-2">
+                                        <input type="text" name="value"
+                                               value="{{if .data}}{{.data.Value}}{{end}}" required="required"
                                                class="form-control">
                                     </div>
                                 </div>
