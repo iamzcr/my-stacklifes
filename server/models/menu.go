@@ -5,7 +5,7 @@ type Menu struct {
 	Name   string `json:"name"`
 	Type   string `json:"type"`
 	Mark   string `json:"mark"`
-	Parent string `json:"parent"`
+	Parent int    `json:"parent"`
 	Author string `json:"author"`
 	Url    string `json:"url"`
 	Icon   string `json:"icon"`
