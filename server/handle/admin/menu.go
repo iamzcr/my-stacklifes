@@ -43,9 +43,11 @@ func (h *MenuHandler) ListJson(ctx *gin.Context) {
 func (h *MenuHandler) Edit(ctx *gin.Context) {
 	var appGin = app.Gin{C: ctx}
 	id := ctx.Param("id")
+	MenuInfo, _ := h.srv.GetInfo(ctx, id)
+	MenuParents, _ := h.srv.GetParentList()
 	menuAssignList := models.MenuAssignList{
-		MenuInfo:    h.srv.GetInfo(ctx, id),
-		MenuParents: h.srv.GetParentList(),
+		MenuInfo:    MenuInfo,
+		MenuParents: MenuParents,
 	}
 	appGin.SuccessAdminHtml(menuAssignList, "menu/edit.html")
 }
