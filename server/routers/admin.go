@@ -38,6 +38,17 @@ func AdminRoutersInit(r *gin.Engine) {
 	adminRouter.Use()
 	{
 		adminRouter.GET("/", indexHandler.Index)
+
+		adminRouter.GET("/admin_group/list", adminGroupHandler.List)
+		adminRouter.GET("/admin_group/list_json", adminGroupHandler.ListJson)
+		adminRouter.GET("/admin_group/add", adminGroupHandler.Edit)
+		adminRouter.GET("/admin_group/edit/:id", adminGroupHandler.Edit)
+		adminRouter.GET("/admin_group/no_page_list", adminGroupHandler.NoPageList)
+		adminRouter.GET("/admin_group/info/:id", adminGroupHandler.Info)
+		adminRouter.POST("/admin_group/update", adminGroupHandler.Update)
+		adminRouter.POST("/admin_group/create", adminGroupHandler.Create)
+		adminRouter.POST("/admin_group/delete/:id", adminGroupHandler.Delete)
+
 		adminRouter.GET("/option/getFilter", optionHandler.GetFilter)
 		adminRouter.GET("/lang/list", langHandler.List)
 		adminRouter.GET("/lang/list_json", langHandler.ListJson)
@@ -66,16 +77,6 @@ func AdminRoutersInit(r *gin.Engine) {
 		adminRouter.POST("/directory/update", directoryHandler.Update)
 		adminRouter.POST("/directory/create", directoryHandler.Create)
 		adminRouter.POST("/directory/delete", directoryHandler.Delete)
-
-		adminRouter.GET("/admin_group/list", adminGroupHandler.List)
-		adminRouter.GET("/admin_group/list_json", adminGroupHandler.ListJson)
-		adminRouter.GET("/admin_group/add", adminGroupHandler.Edit)
-		adminRouter.GET("/admin_group/edit/:id", adminGroupHandler.Edit)
-		adminRouter.GET("/admin_group/no_page_list", adminGroupHandler.NoPageList)
-		adminRouter.GET("/admin_group/info/:id", adminGroupHandler.Info)
-		adminRouter.POST("/admin_group/update", adminGroupHandler.Update)
-		adminRouter.POST("/admin_group/create", adminGroupHandler.Create)
-		adminRouter.POST("/admin_group/delete", adminGroupHandler.Delete)
 
 		adminRouter.GET("/admin/list", adminsHandler.List)
 		adminRouter.GET("/admin/list_json", adminsHandler.ListJson)
