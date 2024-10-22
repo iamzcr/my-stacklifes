@@ -1,10 +1,10 @@
 package models
 
 type Website struct {
-	Id    int    `json:"id"`
-	Key   string `json:"key"`
-	Name  string `json:"name"`
-	Value string `json:"value"`
+	Id    int    `json:"id" form:"id" `
+	Name  string `json:"name" form:"name"`
+	Key   string `json:"key" form:"key"`
+	Value string `json:"value" form:"value" `
 	CommonField
 }
 type WebsiteMine struct {
@@ -28,9 +28,16 @@ type WebsiteListRes struct {
 }
 
 type WebsiteCreateReq struct {
-	Key   string `json:"key"`
-	Name  string `json:"name"`
-	Value string `json:"value"`
+	Name  string `json:"name" form:"name" binding:"required"`
+	Key   string `json:"key" form:"key" binding:"required"`
+	Value string `json:"value" form:"value" binding:"required"`
+}
+
+type WebsiteUpdateReq struct {
+	Id    int    `json:"id" form:"id"  binding:"required"`
+	Name  string `json:"name" form:"name" binding:"required"`
+	Key   string `json:"key" form:"key" binding:"required"`
+	Value string `json:"value" form:"value" binding:"required"`
 }
 
 type WebsiteDelReq struct {

@@ -75,6 +75,29 @@ func (s *WebsiteService) Create(ctx *gin.Context, req models.WebsiteCreateReq) (
 	return website.Id, nil
 }
 
+func (s *WebsiteService) Update(ctx *gin.Context, req models.WebsiteUpdateReq) (interface{}, error) {
+	var (
+		website models.Website
+		count   int64
+	)
+	res := s.dbClient.MysqlClient.Where("id=?", req.Id).Find(&website)
+	if res.Error != nil {
+		return nil, res.Error
+	}
+	s.dbClient.MysqlClient.Model(website).Where("id != ? and key=?", req.Id, req.Key).Count(&count)
+	if count > 0 {
+		return nil, errors.New("记录已存在")
+	}
+	website.Name = req.Name
+	website.Key = req.Key
+	website.Value = req.Value
+	err := s.dbClient.MysqlClient.Save(&website).Error
+	if err != nil {
+		return nil, err
+	}
+	return website.Id, nil
+}
+
 func (s *WebsiteService) Delete(ctx *gin.Context, req models.WebsiteDelReq) (interface{}, error) {
 	var website models.Website
 	s.dbClient.MysqlClient.Where("id=?", req.Id).Find(&website)

@@ -18,6 +18,13 @@ func NewWebsiteHandler() *WebsiteHandler {
 	}
 }
 
+func (h *WebsiteHandler) Edit(ctx *gin.Context) {
+	var appGin = app.Gin{C: ctx}
+	id := ctx.Param("id")
+	info, _ := h.srv.GetInfo(ctx, id)
+	appGin.SuccessAdminHtml(info, "website/edit.html")
+}
+
 func (h *WebsiteHandler) List(ctx *gin.Context) {
 	var appGin = app.Gin{C: ctx}
 	assignData := "assignData"
@@ -63,6 +70,25 @@ func (h *WebsiteHandler) Create(ctx *gin.Context) {
 		return
 	}
 	res, err := h.srv.Create(ctx, reqCreate)
+	if err != nil {
+		appGin.Error(exception.ERROR, err.Error(), nil)
+		return
+	}
+	appGin.Success(res)
+}
+
+func (h *WebsiteHandler) Update(ctx *gin.Context) {
+
+	var (
+		appGin    = app.Gin{C: ctx}
+		reqUpdate models.WebsiteUpdateReq
+	)
+	err := ctx.ShouldBind(&reqUpdate)
+	if err != nil {
+		appGin.Error(exception.ERROR, err.Error(), nil)
+		return
+	}
+	res, err := h.srv.Update(ctx, reqUpdate)
 	if err != nil {
 		appGin.Error(exception.ERROR, err.Error(), nil)
 		return

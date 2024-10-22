@@ -49,6 +49,14 @@ func AdminRoutersInit(r *gin.Engine) {
 		adminRouter.POST("/admin_group/create", adminGroupHandler.Create)
 		adminRouter.POST("/admin_group/delete", adminGroupHandler.Delete)
 
+		adminRouter.GET("/website/list", websiteHandler.List)
+		adminRouter.GET("/website/list_json", websiteHandler.ListJson)
+		adminRouter.GET("/website/add", websiteHandler.Edit)
+		adminRouter.GET("/website/edit/:id", websiteHandler.Edit)
+		adminRouter.GET("/website/info/:id", websiteHandler.Info)
+		adminRouter.POST("/website/create", websiteHandler.Create)
+		adminRouter.POST("/website/delete", websiteHandler.Delete)
+
 		adminRouter.GET("/option/getFilter", optionHandler.GetFilter)
 		adminRouter.GET("/lang/list", langHandler.List)
 		adminRouter.GET("/lang/list_json", langHandler.ListJson)
@@ -84,12 +92,6 @@ func AdminRoutersInit(r *gin.Engine) {
 		adminRouter.POST("/admin/create", adminsHandler.Create)
 		adminRouter.POST("/admin/change_field", adminsHandler.ChangeField)
 		adminRouter.POST("/admin/delete", adminsHandler.Delete)
-
-		adminRouter.GET("/website/list", websiteHandler.List)
-		adminRouter.GET("/website/list_json", websiteHandler.ListJson)
-		adminRouter.GET("/website/info/:id", websiteHandler.Info)
-		adminRouter.POST("/website/create", websiteHandler.Create)
-		adminRouter.POST("/website/delete", websiteHandler.Delete)
 
 		adminRouter.GET("/tags/list", tagsHandler.List)
 		adminRouter.GET("/tags/list_json", tagsHandler.ListJson)
