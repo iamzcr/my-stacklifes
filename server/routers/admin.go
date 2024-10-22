@@ -29,7 +29,7 @@ func AdminRoutersInit(r *gin.Engine) {
 	permitHandler := admin.NewPermitHandler()
 	menuHandler := admin.NewMenuHandler()
 	websiteHandler := admin.NewWebsiteHandler()
-	msgHandler := admin.NewMessageHandler()
+	messageHandler := admin.NewMessageHandler()
 	commentHandler := admin.NewCommentHandler()
 	readHandler := admin.NewReadHandler()
 	adminRouter := r.Group("admin") //可以加载这个后面
@@ -59,10 +59,15 @@ func AdminRoutersInit(r *gin.Engine) {
 
 		adminRouter.GET("/log/list", logHandler.List)
 		adminRouter.GET("/log/list_json", logHandler.ListJson)
-		adminRouter.GET("/msg/list", msgHandler.List)
+
 		adminRouter.GET("/read/list", readHandler.List)
 		adminRouter.GET("/read/list_json", readHandler.ListJson)
+		adminRouter.GET("/message/list", messageHandler.List)
+		adminRouter.GET("/message/list_json", messageHandler.ListJson)
+		adminRouter.GET("/message/delete", messageHandler.Delete)
 		adminRouter.GET("/comment/list", commentHandler.List)
+		adminRouter.GET("/comment/list_json", commentHandler.ListJson)
+		adminRouter.GET("/comment/delete", commentHandler.Delete)
 
 		adminRouter.GET("/option/getFilter", optionHandler.GetFilter)
 		adminRouter.GET("/lang/list", langHandler.List)
