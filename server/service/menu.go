@@ -5,6 +5,7 @@ import (
 	"github.com/gin-gonic/gin"
 	"my-stacklifes/database/mysql"
 	"my-stacklifes/models"
+	"my-stacklifes/pkg/constant"
 )
 
 type MenuService struct {
@@ -53,6 +54,15 @@ func (s *MenuService) GetNoPageList(ctx *gin.Context, req models.MenuNoPageReq) 
 	return models.MenuNoPageListRes{
 		List: menus,
 	}, nil
+}
+
+func (s *MenuService) GetParentList() (menus []models.MenuMine) {
+	db := s.dbClient.MysqlClient
+	db.Where("status = ?", constant.STATUS_TRUE).
+		Where("parent =?", constant.TOP_PARENT).
+		Select("id,parent,name").
+		Order("id DESC").Find(&menus)
+	return menus
 }
 
 func (s *MenuService) GetInfo(ctx *gin.Context, id string) (interface{}, error) {

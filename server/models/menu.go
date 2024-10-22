@@ -15,9 +15,10 @@ type Menu struct {
 }
 
 type MenuMine struct {
-	Id     int    `json:"id" form:"id"`
-	Name   string `json:"name" form:"name"`
-	Parent string `json:"parent" form:"parent"`
+	Id         int    `json:"id" form:"id"`
+	Name       string `json:"name" form:"name"`
+	Parent     string `json:"parent" form:"parent"`
+	ParentName string `json:"parent_name" form:"parent_name"`
 }
 
 func (c *Menu) TableName() string {
@@ -58,8 +59,8 @@ type MenuListRes struct {
 }
 
 type MenuNoPageReq struct {
-	Parent int `json:"parent" form:"parent,default=0"`
-	Status int `json:"status" form:"status,default=1" `
+	Parent int `json:"parent" form:"parent"`
+	Status int `json:"status" form:"status" `
 }
 
 type MenuNoPageListRes struct {

@@ -1,6 +1,7 @@
 package admin
 
 import (
+	"fmt"
 	"github.com/gin-gonic/gin"
 	"my-stacklifes/models"
 	"my-stacklifes/pkg/app"
@@ -22,6 +23,8 @@ func (h *MenuHandler) Edit(ctx *gin.Context) {
 	var appGin = app.Gin{C: ctx}
 	id := ctx.Param("id")
 	info, _ := h.srv.GetInfo(ctx, id)
+	parentList := h.srv.GetParentList()
+	fmt.Println(parentList)
 	appGin.SuccessAdminHtml(info, "menu/edit.html")
 }
 
