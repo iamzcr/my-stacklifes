@@ -58,8 +58,8 @@ func (s *MenuService) GetNoPageList(ctx *gin.Context, req models.MenuNoPageReq) 
 
 func (s *MenuService) GetParentList() (menus []models.MenuMine) {
 	db := s.dbClient.MysqlClient
-	db.Where("status = ?", constant.STATUS_TRUE).
-		Where("parent =?", constant.TOP_PARENT).
+	db.Debug().Where("status = ?", constant.STATUS_TRUE).
+		Where("parent=?", constant.TOP_PARENT).
 		Select("id,parent,name").
 		Order("id DESC").Find(&menus)
 	return menus
