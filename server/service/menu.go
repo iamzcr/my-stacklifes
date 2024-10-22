@@ -119,9 +119,12 @@ func (s *MenuService) Delete(ctx *gin.Context, req models.MenuDelReq) (interface
 
 func (s *MenuService) GetInfo(ctx *gin.Context, id string) (interface{}, error) {
 	var menu models.Menu
-	err := s.dbClient.MysqlClient.Where("id=?", id).Find(&menu).Error
-	if err != nil {
-		return nil, err
+	res := s.dbClient.MysqlClient.Where("id=?", id).Find(&menu)
+	if res.Error != nil {
+		return nil, res.Error
+	}
+	if menu.Id == 0 {
+		return nil, errors.New("website error")
 	}
 	return menu, nil
 }
