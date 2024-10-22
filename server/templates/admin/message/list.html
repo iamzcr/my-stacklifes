@@ -102,6 +102,27 @@
     }).on('mouseout', 'tbody tr', function () {
         $(this).removeClass('info');
     });
+
+    function submitDelForm(url, id) {
+        if (typeof id === 'undefined' || typeof url === 'undefined') {
+            Swal.fire({icon: "error"});
+        }
+        $.ajax({
+            type: "POST",
+            url: url, // 提交表单数据的URL
+            data: {id: id},
+            success: function (response) {
+                console.log(response)
+                if (response.code !== 200) {
+                    Swal.fire({icon: "error", text: response.msg});
+                }
+                listTable.draw()
+            },
+            error: function (error) {
+                Swal.fire({icon: "error", text: 'error'});
+            }
+        });
+    }
 </script>
 </body>
 </html>
