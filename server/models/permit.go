@@ -1,15 +1,15 @@
 package models
 
 type Permit struct {
-	Id      int    `json:"id" form:"id"`
-	Name    string `json:"name" form:"name"`
-	Type    string `json:"type" form:"type"`
-	Parent  int    `json:"parent" form:"parent" gorm:"default:1"`
-	Modules string `json:"modules" form:"modules"`
-	Status  string `json:"status" form:"status"`
-	Weight  string `json:"weight" form:"weight"`
-	Author  string `json:"author" form:"author"`
-	Mark    string `json:"mark" form:"mark"`
+	Id      int    `json:"id"`
+	Name    string `json:"name"`
+	Type    string `json:"type"`
+	Parent  int    `json:"parent"`
+	Modules string `json:"modules"`
+	Status  string `json:"status"`
+	Weight  string `json:"weight"`
+	Author  string `json:"author"`
+	Mark    string `json:"mark"`
 	CommonField
 }
 
