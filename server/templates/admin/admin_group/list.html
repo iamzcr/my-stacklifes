@@ -79,22 +79,21 @@
                 data: null,
                 render: function (data, type, row) {
                     let renderData = '<a class=" btn btn-sm btn-primary" href="/admin/admin_group/edit/' + row.id + '">编辑</a>' +
-                        '<a class=" btn btn-sm btn-primary" href="/admin/admin_group/delete/' + row.id + '">删除</a>';
+                        '<button class=" btn btn-sm btn-danger"  onclick="submitDelForm("/admin/admin_group/create",' + row.id + ')">删除</button>';
                     return renderData;
                 }
             }
         ]
     });
-
     $("#search").click(function () {
         listTable.ajax.reload();
     });
-
     $('#list-table').on('mouseover', 'tbody tr', function () {
         $(this).addClass('info');
     }).on('mouseout', 'tbody tr', function () {
         $(this).removeClass('info');
     });
+
 </script>
 </body>
 </html>

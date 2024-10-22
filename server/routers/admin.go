@@ -47,7 +47,7 @@ func AdminRoutersInit(r *gin.Engine) {
 		adminRouter.GET("/admin_group/info/:id", adminGroupHandler.Info)
 		adminRouter.POST("/admin_group/update", adminGroupHandler.Update)
 		adminRouter.POST("/admin_group/create", adminGroupHandler.Create)
-		adminRouter.POST("/admin_group/delete/:id", adminGroupHandler.Delete)
+		adminRouter.POST("/admin_group/delete", adminGroupHandler.Delete)
 
 		adminRouter.GET("/option/getFilter", optionHandler.GetFilter)
 		adminRouter.GET("/lang/list", langHandler.List)

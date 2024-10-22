@@ -83,6 +83,7 @@ func (s *AdminGroupService) Create(ctx *gin.Context, req models.AdminGroupCreate
 	a := pinyin.NewArgs()
 	a.Style = pinyin.Normal
 	adminGroup.Name = req.Name
+	adminGroup.Description = req.Description
 	adminGroup.Mark = pinyin.Slug(req.Name, pinyin.NewArgs())
 	err := s.dbClient.MysqlClient.Save(&adminGroup).Error
 	if err != nil {
@@ -105,7 +106,7 @@ func (s *AdminGroupService) Update(ctx *gin.Context, req models.AdminGroupUpdate
 		return nil, errors.New("记录已存在")
 	}
 	adminGroup.Name = req.Name
-	adminGroup.Mark = req.Mark
+	adminGroup.Description = req.Description
 	err := s.dbClient.MysqlClient.Save(&adminGroup).Error
 	if err != nil {
 		return nil, err
