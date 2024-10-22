@@ -31,9 +31,9 @@ type MenuUpdateReq struct {
 }
 
 type MenuCreateReq struct {
-	Url    string `json:"url"  binding:"required"`
+	Url    string `json:"url"  form:"url" binding:"required"`
 	Icon   string `json:"icon"`
-	Name   string `json:"name" form:"name"  binding:"required"`
+	Name   string `json:"name" form:"name" binding:"required"`
 	Type   int    `json:"type" form:"type,default=1"`
 	Parent int    `json:"parent" form:"parent,default=0"`
 	Weight string `json:"weight" form:"weight"`
