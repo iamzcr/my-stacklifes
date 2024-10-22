@@ -17,8 +17,13 @@ func NewReadHandler() *ReadHandler {
 		srv: service.NewReadService(),
 	}
 }
-
 func (h *ReadHandler) List(ctx *gin.Context) {
+	var appGin = app.Gin{C: ctx}
+	assignData := "assignData"
+	appGin.SuccessAdminHtml(assignData, "read/list.html")
+}
+
+func (h *ReadHandler) ListJson(ctx *gin.Context) {
 	var appGin = app.Gin{C: ctx}
 	listReq := models.ReadReq{}
 	err := ctx.ShouldBindQuery(&listReq)
