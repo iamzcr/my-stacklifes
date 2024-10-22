@@ -13,7 +13,12 @@ function dataFilterFunction(data) {
     return JSON.stringify(json);
 }
 
-function submitDelForm(id, url) {
+function submitDelForm() {
+    let id = $(this).data("id");
+    let url = $(this).data("url");
+    if (!id || !url) {
+        Swal.fire("fail");
+    }
     $.ajax({
         type: "POST",
         url: url, // 提交表单数据的URL
