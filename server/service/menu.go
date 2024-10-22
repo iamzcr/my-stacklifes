@@ -117,9 +117,13 @@ func (s *MenuService) Delete(ctx *gin.Context, req models.MenuDelReq) (interface
 	return menu.Id, nil
 }
 
-func (s *MenuService) GetInfo(ctx *gin.Context, id string) (menu models.Menu) {
-	s.dbClient.MysqlClient.Where("id=?", id).Find(&menu)
-	return menu
+func (s *MenuService) GetInfo(ctx *gin.Context, id string) (interface{}, error) {
+	var menu models.Menu
+	err := s.dbClient.MysqlClient.Where("id=?", id).Find(&menu).Error
+	if err != nil {
+		return nil, err
+	}
+	return menu, nil
 }
 
 func (s *MenuService) GetNoPageList(ctx *gin.Context, req models.MenuNoPageReq) (interface{}, error) {
@@ -136,13 +140,17 @@ func (s *MenuService) GetNoPageList(ctx *gin.Context, req models.MenuNoPageReq) 
 	}, nil
 }
 
-func (s *MenuService) GetParentList() (menus []models.MenuMine) {
+func (s *MenuService) GetParentList() (interface{}, error) {
+	var menus []models.MenuMine
 	db := s.dbClient.MysqlClient
-	db.Model(&models.Menu{}).Debug().Where("status = ?", constant.STATUS_TRUE).
+	err := db.Model(&models.Menu{}).Debug().Where("status = ?", constant.STATUS_TRUE).
 		Where("parent=?", constant.TOP_PARENT).
 		Select("id,parent,name").
-		Order("id DESC").Find(&menus)
-	return menus
+		Order("id DESC").Find(&menus).Error
+	if err != nil {
+		return nil, err
+	}
+	return menus, nil
 }
 
 func (s *MenuService) GetTreeList(ctx *gin.Context, req models.MenuListReq) (interface{}, error) {

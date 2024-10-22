@@ -79,8 +79,8 @@ type MenuNoPageListRes struct {
 }
 
 type MenuAssignList struct {
-	MenuInfo    Menu
-	MenuParents []MenuMine
+	MenuInfo    interface{}
+	MenuParents interface{}
 }
 
 type MenuDelReq struct {
