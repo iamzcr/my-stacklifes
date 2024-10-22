@@ -13,10 +13,11 @@ function dataFilterFunction(data) {
     return JSON.stringify(json);
 }
 
-function submitDelForm() {
+function submitDelForm(url) {
     let id = $(this).data("id");
-    let url = $(this).data("url");
-    if (!id || !url) {
+    console.log(id)
+    console.log(url)
+    if (!id) {
         Swal.fire("fail");
     }
     $.ajax({
