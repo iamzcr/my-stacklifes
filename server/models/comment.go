@@ -1,15 +1,16 @@
 package models
 
 type Comment struct {
-	Id      int    `json:"id" `
-	Name    string `json:"name" `
-	Ip      string `json:"ip" `
-	Aid     int    `json:"aid"`
-	Refer   string `json:"refer" `
-	Email   string `json:"email"`
-	Url     string `json:"url"`
-	IsReply int8   `json:"is_reply" `
-	Content string `json:"content" `
+	Id      int    `json:"id"  form:"id"`
+	Aid     int    `json:"aid"  form:"aid"`
+	Refer   string `json:"refer"  form:"refer" `
+	Name    string `json:"name" form:"name"`
+	Ip      string `json:"ip" form:"ip"`
+	Email   string `json:"email" form:"email"`
+	Url     string `json:"url" form:"url"`
+	IsReply int8   `json:"is_reply" form:"is_reply"`
+	Content string `json:"content" form:"content"`
+
 	CommonField
 }
 

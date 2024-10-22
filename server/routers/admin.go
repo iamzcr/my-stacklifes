@@ -59,15 +59,14 @@ func AdminRoutersInit(r *gin.Engine) {
 
 		adminRouter.GET("/log/list", logHandler.List)
 		adminRouter.GET("/log/list_json", logHandler.ListJson)
-
 		adminRouter.GET("/read/list", readHandler.List)
 		adminRouter.GET("/read/list_json", readHandler.ListJson)
 		adminRouter.GET("/message/list", messageHandler.List)
 		adminRouter.GET("/message/list_json", messageHandler.ListJson)
-		adminRouter.GET("/message/delete", messageHandler.Delete)
+		adminRouter.POST("/message/delete", messageHandler.Delete)
 		adminRouter.GET("/comment/list", commentHandler.List)
 		adminRouter.GET("/comment/list_json", commentHandler.ListJson)
-		adminRouter.GET("/comment/delete", commentHandler.Delete)
+		adminRouter.POST("/comment/delete", commentHandler.Delete)
 
 		adminRouter.GET("/option/getFilter", optionHandler.GetFilter)
 		adminRouter.GET("/lang/list", langHandler.List)
