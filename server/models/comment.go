@@ -3,7 +3,7 @@ package models
 type Comment struct {
 	Id      int    `json:"id"  form:"id"`
 	Aid     int    `json:"aid"  form:"aid"`
-	Refer   string `json:"refer"  form:"refer" `
+	Referer string `json:"referer"  form:"referer" `
 	Name    string `json:"name" form:"name"`
 	Ip      string `json:"ip" form:"ip"`
 	Email   string `json:"email" form:"email"`

@@ -58,7 +58,7 @@ func (s *CommentService) Update(ctx *gin.Context, req models.CommentCreateReq) (
 	comment.Content = req.Content
 	comment.Url = req.Url
 	comment.Aid = req.Aid
-	comment.Refer = ctx.Request.Referer()
+	comment.Referer = ctx.Request.Referer()
 	comment.Email = req.Email
 	comment.Ip = ctx.ClientIP()
 	err := s.dbClient.MysqlClient.Create(&comment).Error
