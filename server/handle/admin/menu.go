@@ -18,10 +18,17 @@ func NewMenuHandler() *MenuHandler {
 	}
 }
 
+func (h *MenuHandler) Edit(ctx *gin.Context) {
+	var appGin = app.Gin{C: ctx}
+	id := ctx.Param("id")
+	info, _ := h.srv.GetInfo(ctx, id)
+	appGin.SuccessAdminHtml(info, "menu/edit.html")
+}
+
 func (h *MenuHandler) List(ctx *gin.Context) {
 	var appGin = app.Gin{C: ctx}
 	assignData := "assignData"
-	appGin.SuccessAdminHtml(assignData, "permit/list.html")
+	appGin.SuccessAdminHtml(assignData, "menu/list.html")
 }
 
 func (h *MenuHandler) ListJson(ctx *gin.Context) {

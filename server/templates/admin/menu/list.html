@@ -13,8 +13,13 @@
         <div class="right_col" role="main">
             <div class="row">
                 <div class="col">
-                    <button class="btn btn-sm btn-primary" id="search">搜索</button>
-                    <a href="/admin/category/edit" class="btn btn-sm btn-success">新增</a>
+                    <form class="form-inline">
+                        <div class="form-group mx-sm-1 mb-2">
+                            <input type="text" name="name" id="name-input" class="form-control  form-control-sm" placeholder="name">
+                        </div>
+                        <button class="btn btn-sm btn-primary mb-2" id="search">搜索</button>
+                        <a href="/admin/menu/add" class="btn btn-sm btn-success mb-2">新增</a>
+                    </form>
                 </div>
             </div>
             <div class="row">
@@ -29,11 +34,17 @@
                                             <thead>
                                             <tr>
                                                 <th>ID</th>
-                                                <th>类型</th>
                                                 <th>名称</th>
+                                                <th>标识</th>
+                                                <th>类型</th>
                                                 <th>操作人</th>
+                                                <th>跳转地址</th>
+                                                <th>父级菜单</th>
+                                                <th>排序</th>
+                                                <th>icon</th>
                                                 <th>状态</th>
                                                 <th>时间</th>
+                                                <th>操作</th>
                                             </tr>
                                             </thead>
                                             <tbody>
@@ -53,23 +64,42 @@
 {{template "public/footer" .}}
 <script type="text/javascript">
     var listTable = $('#list-table').DataTable({
+        "language": {
+            "url": "/static/vendors/datatables.net/lang/zh.json"
+        },
         "processing": true,
         "serverSide": true,
         "ajax": {
             "url": "/admin/menu/list_json",
             "type": "GET",
-            "dataSrc": function (json) {
-                return json.data.list; // Assuming your data is stored in a `data` property
+            "serverSide": true,
+            "data": function (data) {
+                return dataFunction(data);
+            },
+            "dataFilter": function (data) {
+                return dataFilterFunction(data);
             }
         },
         "columns": [
             {"data": "id"},
-            {"data": "type"},
             {"data": "name"},
+            {"data": "mark"},
+            {"data": "type"},
             {"data": "author"},
+            {"data": "url"},
+            {"data": "parent"},
+            {"data": "weight"},
+            {"data": "icon"},
             {"data": "status"},
             {"data": "create_time"},
+            {
+                "data": null,
+                render: function (data, type, row) {
+                    return '<a class=" btn btn-sm btn-primary" href="/admin/menu/edit/' + row.id + '">Edit</a>';
+                }
+            }
         ]
+
     });
 
     $("#search").click(function () {

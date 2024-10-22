@@ -27,7 +27,11 @@ func (s *PermitService) GetList(ctx *gin.Context, req models.PermitListReq) (int
 		db = db.Where("name LIKE ?", "%"+req.Name+"%")
 	}
 	limit, offset := req.GetPageInfo()
-	err := db.Limit(limit).Offset(offset).Order("id DESC").Find(&permit).Count(&total).Error
+	err := db.Limit(limit).Offset(offset).Order("id DESC").Find(&permit).Error
+	if err != nil {
+		return nil, err
+	}
+	db.Model(permit).Count(&total)
 	if err != nil {
 		return nil, err
 	}

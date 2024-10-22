@@ -20,20 +20,23 @@ func NewMenuService() *MenuService {
 func (s *MenuService) GetList(ctx *gin.Context, req models.MenuReq) (interface{}, error) {
 	var (
 		menus []models.Menu
-		count int64
+		total int64
 	)
 	db := s.dbClient.MysqlClient
 	if len(req.Name) > 0 {
 		db = db.Where("name LIKE ?", "%"+req.Name+"%")
 	}
 	limit, offset := req.GetPageInfo()
-	err := db.Limit(limit).Offset(offset).Order("id DESC").Find(&menus).Count(&count).Error
+	err := db.Limit(limit).Offset(offset).Order("id DESC").Find(&menus).Error
 	if err != nil {
 		return nil, err
 	}
-
+	db.Model(menus).Count(&total)
+	if err != nil {
+		return nil, err
+	}
 	return models.MenuListRes{
-		Total: count,
+		Total: total,
 		List:  menus,
 	}, nil
 }

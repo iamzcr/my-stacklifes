@@ -18,6 +18,13 @@ func NewPermitHandler() *PermitHandler {
 	}
 }
 
+func (h *PermitHandler) Edit(ctx *gin.Context) {
+	var appGin = app.Gin{C: ctx}
+	id := ctx.Param("id")
+	info, _ := h.srv.GetInfo(ctx, id)
+	appGin.SuccessAdminHtml(info, "menu/edit.html")
+}
+
 func (h *PermitHandler) List(ctx *gin.Context) {
 	var appGin = app.Gin{C: ctx}
 	assignData := "assignData"

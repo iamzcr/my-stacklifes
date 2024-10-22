@@ -1,0 +1,91 @@
+{{define "menu/edit.html"}}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    {{template "public/header" .}}
+</head>
+<body class="nav-md">
+<div class="container body">
+    <div class="main_container">
+        {{template "public/left_nav" .}}
+        {{template "public/nav" .}}
+        <!-- page content -->
+        <div class="right_col" role="main">
+            <div class="row">
+                <div class="col-md-12 col-sm-12 ">
+                    <div class="x_panel">
+                        <div class="x_content">
+                            <form id="inputForm" data-parsley-validate class="form-horizontal form-label-left">
+                                <input type="hidden" name="id" id="id" value="{{if .data}}{{.data.Id}}{{end}}"
+                                       data-id="{{if .data}}{{.data.Id}}{{end}}">
+                                <div class="item form-group">
+                                    <label class="col-form-label col-md-1 label-align">名称</label>
+                                    <div class="col-md-2">
+                                        <input type="text" name="name" value="{{if .data}}{{.data.Name}}{{end}}"
+                                               required="required" class="form-control">
+                                    </div>
+                                </div>
+                                <div class="item form-group">
+                                    <label class="col-form-label col-md-1 label-align">父级菜单</label>
+                                    <div class="col-md-2">
+                                        <input type="text" name="value"
+                                               value="{{if .data}}{{.data.Parent}}{{end}}" required="required"
+                                               class="form-control">
+                                    </div>
+                                </div>
+                                <div class="item form-group">
+                                    <label class="col-form-label col-md-1 label-align">url</label>
+                                    <div class="col-md-2">
+                                        <input type="text" name="url" value="{{if .data}}{{.data.Url}}{{end}}" required="required" class="form-control">
+                                    </div>
+                                </div>
+                                <div class="item form-group">
+                                    <label class="col-form-label col-md-1 label-align">排序</label>
+                                    <div class="col-md-2">
+                                        <input type="text" name="weight" value="{{if .data}}{{.data.Weight}}{{end}}" required="required" class="form-control">
+                                    </div>
+                                </div>
+                                <div class="item form-group">
+                                    <div class="col-md-6 offset-md-1">
+                                        <button type="button" class="btn btn-success" onclick="submitForm()">提交
+                                        </button>
+                                    </div>
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        {{template "public/footer_nav" .}}
+    </div>
+</div>
+{{template "public/footer" .}}
+<script>
+    function submitForm() {
+        let url = "/admin/menu/create"
+        let id = $("#id").data("id");
+        if (id) {
+            url = "/admin/menu/update"
+        }
+        let formData = $("#inputForm").serialize();
+        $.ajax({
+            type: "POST",
+            url: url, // 提交表单数据的URL
+            data: formData,
+            success: function (response) {
+                if (response.code !== 200) {
+                    Swal.fire({icon: "error", text: response.message});
+                } else {
+                    window.location.replace("/admin/menu/list");
+                }
+            },
+            error: function (error) {
+                Swal.fire({icon: "error", text: 'error'});
+            }
+        });
+    }
+</script>
+</body>
+</html>
+{{end}}
