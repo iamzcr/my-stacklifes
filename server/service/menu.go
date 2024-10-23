@@ -51,6 +51,7 @@ func (s *MenuService) GetList(ctx *gin.Context, req models.MenuListReq) (interfa
 			parentMap[menu.Id] = menu.Name
 		}
 	}
+	fmt.Println(parentMap)
 	for _, menuTemp := range menus {
 		parentName := "顶级菜单"
 		if _, ok := parentMap[menuTemp.Parent]; ok {
