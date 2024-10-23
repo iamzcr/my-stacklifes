@@ -22,11 +22,12 @@ func NewMenuService() *MenuService {
 
 func (s *MenuService) GetList(ctx *gin.Context, req models.MenuListReq) (interface{}, error) {
 	var (
-		menus     []models.Menu
-		total     int64
-		menuList  []models.MenuInfo
-		parentMap = make(map[int]string)
-		statusMap = map[int]string{
+		menus       []models.Menu
+		parentMenus []models.Menu
+		total       int64
+		menuList    []models.MenuInfo
+		parentMap   = make(map[int]string)
+		statusMap   = map[int]string{
 			constant.StatusTrue:  constant.StatusTrueName,
 			constant.StatusFalse: constant.StatusFalseName,
 		}
@@ -39,23 +40,20 @@ func (s *MenuService) GetList(ctx *gin.Context, req models.MenuListReq) (interfa
 		db = db.Where("name LIKE ?", "%"+req.Name+"%")
 	}
 	limit, offset := req.GetPageInfo()
-	err := db.Debug().Limit(limit).Offset(offset).Order("id DESC").Find(&menus).
+	err := db.Limit(limit).Offset(offset).Order("id DESC").Find(&menus).
 		Limit(-1).Offset(-1).Count(&total).Error
 	if err != nil {
 		return nil, err
 	}
-	for _, menu := range menus {
-		fmt.Println(menu.Parent)
-		if menu.Parent == constant.TopParent {
-			parentMap[menu.Id] = menu.Name
-		}
+	db.Where("parent=?", constant.TopParent).Select("id,name").Order("id DESC").Find(&parentMenus)
+	fmt.Println(parentMenus)
+	for _, parentMenu := range parentMenus {
+		parentMap[parentMenu.Id] = parentMenu.Name
 	}
 	fmt.Println(parentMap)
 	for _, menuTemp := range menus {
 		parentName := "顶级菜单"
 		if _, ok := parentMap[menuTemp.Parent]; ok {
-			fmt.Println(menuTemp.Parent)
-			fmt.Println(menuTemp.Name)
 			parentName = parentMap[menuTemp.Parent]
 		}
 		menuList = append(menuList, models.MenuInfo{
