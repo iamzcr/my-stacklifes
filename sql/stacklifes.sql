@@ -10,7 +10,7 @@ Target Server Type    : MYSQL
 Target Server Version : 80039
 File Encoding         : 65001
 
-Date: 2024-10-22 22:09:31
+Date: 2024-10-23 18:06:12
 */
 
 SET FOREIGN_KEY_CHECKS=0;
@@ -232,7 +232,7 @@ CREATE TABLE `sl_directory` (
   UNIQUE KEY `mark` (`mark`) USING BTREE,
   KEY `weight` (`weight`) USING BTREE,
   KEY `type_status` (`type`,`status`) USING BTREE
-) ENGINE=InnoDB AUTO_INCREMENT=402 DEFAULT CHARSET=utf8mb3 COMMENT='菜单';
+) ENGINE=InnoDB AUTO_INCREMENT=405 DEFAULT CHARSET=utf8mb3 COMMENT='菜单';
 
 -- ----------------------------
 -- Records of sl_directory
@@ -247,10 +247,10 @@ INSERT INTO `sl_directory` VALUES ('383', '377', null, '0', null, 'nicholas', '�
 INSERT INTO `sl_directory` VALUES ('384', '372', null, '0', null, 'nicholas', 'gin开发框架', '1', '1', '0', null);
 INSERT INTO `sl_directory` VALUES ('385', '375', null, '0', null, 'nicholas', '索引', '0', '1', '0', null);
 INSERT INTO `sl_directory` VALUES ('386', '375', null, '0', null, 'nicholas', '事务', '0', '1', '0', null);
-INSERT INTO `sl_directory` VALUES ('387', '373', null, '0', null, 'nicholas', '后台开发', '2', '1', '0', null);
+INSERT INTO `sl_directory` VALUES ('387', '373', null, '0', null, 'nicholas', '后台开发', '1', '1', '0', null);
 INSERT INTO `sl_directory` VALUES ('388', '373', null, '0', null, 'nicholas', 'api开发', '3', '1', '0', null);
-INSERT INTO `sl_directory` VALUES ('389', '373', null, '0', null, 'nicholas', '数据清洗', '4', '1', '0', null);
-INSERT INTO `sl_directory` VALUES ('390', '373', null, '0', null, 'nicholas', '架构设计', '1', '1', '0', null);
+INSERT INTO `sl_directory` VALUES ('389', '373', null, '0', null, 'nicholas', '数据清洗', '2', '1', '0', null);
+INSERT INTO `sl_directory` VALUES ('390', '373', null, '0', null, 'nicholas', '架构设计', '4', '1', '0', null);
 INSERT INTO `sl_directory` VALUES ('391', '371', null, '0', null, 'nicholas', 'MongoDB', '0', '1', '0', null);
 INSERT INTO `sl_directory` VALUES ('392', '372', null, '0', null, 'nicholas', '常用库', '2', '1', '0', null);
 INSERT INTO `sl_directory` VALUES ('393', '372', null, '0', null, 'nicholas', 'GC机制', '3', '1', '0', null);
@@ -261,6 +261,9 @@ INSERT INTO `sl_directory` VALUES ('397', '378', null, '0', null, 'nicholas', 'C
 INSERT INTO `sl_directory` VALUES ('398', '377', null, '0', null, 'nicholas', '设计模式(PHP)', '0', '1', '0', null);
 INSERT INTO `sl_directory` VALUES ('399', '375', null, '0', null, 'nicholas', '锁', '0', '1', '0', null);
 INSERT INTO `sl_directory` VALUES ('401', '370', null, '0', null, 'nicholas', '事务处理', '0', '1', '0', null);
+INSERT INTO `sl_directory` VALUES ('402', '372', null, '0', null, 'nicholas', '数据类型', '4', '1', '0', null);
+INSERT INTO `sl_directory` VALUES ('403', '373', null, '0', null, 'nicholas', '业务分析', '5', '1', '0', null);
+INSERT INTO `sl_directory` VALUES ('404', '373', null, '0', null, 'nicholas', '分包机制', '0', '1', '0', null);
 
 -- ----------------------------
 -- Table structure for sl_lang
@@ -329,29 +332,29 @@ CREATE TABLE `sl_menu` (
   KEY `parent` (`parent`) USING BTREE,
   KEY `weight` (`weight`) USING BTREE,
   KEY `type_status` (`type`,`status`) USING BTREE
-) ENGINE=InnoDB AUTO_INCREMENT=373 DEFAULT CHARSET=utf8mb3 COMMENT='菜单';
+) ENGINE=InnoDB AUTO_INCREMENT=384 DEFAULT CHARSET=utf8mb3 COMMENT='菜单';
 
 -- ----------------------------
 -- Records of sl_menu
 -- ----------------------------
 INSERT INTO `sl_menu` VALUES ('229', '1', 'sys_setting', 'nicholas', '系统设置', '#', '0', 'fa-cogs', '1', '1', '1487598451', '1487681759');
-INSERT INTO `sl_menu` VALUES ('232', '1', 'user_group', 'nicholas', '用户组管理', 'userGroup/index', '229', '', '4', '1', '1487661857', '1487661857');
-INSERT INTO `sl_menu` VALUES ('233', '1', 'password', 'nicholas', '修改密码', 'user/password', '229', '', '5', '1', '1487661888', '1487661888');
-INSERT INTO `sl_menu` VALUES ('257', '1', 'menu', 'nicholas', '菜单设置', 'menu/index', '229', '', '0', '1', '1487750865', '1487750865');
-INSERT INTO `sl_menu` VALUES ('258', '1', 'user', 'nicholas', '管理员', 'user/index', '229', '', '0', '1', '1488445679', '1488445679');
-INSERT INTO `sl_menu` VALUES ('259', '1', 'opt_log', 'nicholas', '操作日志', 'log/index', '229', '', '0', '1', '1493542152', '1493542152');
-INSERT INTO `sl_menu` VALUES ('266', '1', 'permit', 'nicholas', '权限管理', 'permit/index', '229', 'fa-cogs', '5', '1', '1497860481', '1497860481');
-INSERT INTO `sl_menu` VALUES ('331', '1', 'base_setting', 'nicholas', '基本设置', 'webSite/index', '229', '', '0', '1', '1497860481', null);
-INSERT INTO `sl_menu` VALUES ('346', '1', 'lang', 'nicholas', '语言设置', 'lang/index', '229', '', '0', '1', '1497860481', null);
-INSERT INTO `sl_menu` VALUES ('364', '1', 'fail_log', 'nicholas', '错误日志', 'log/logFail', '229', '', '0', '1', '1683297510', null);
-INSERT INTO `sl_menu` VALUES ('365', '1', 'article_manager', 'nicholas', '文章管理', '#', '0', 'fa-align-left', '0', '1', '1686320743', null);
-INSERT INTO `sl_menu` VALUES ('366', '1', 'columns', 'nicholas', '栏目管理', 'columns/index', '365', '', '0', '1', '1686320767', null);
-INSERT INTO `sl_menu` VALUES ('367', '1', 'article', 'nicholas', '文章列表', 'article/index', '365', '', '0', '1', '1686320811', null);
-INSERT INTO `sl_menu` VALUES ('368', '1', 'tags', 'nicholas', '标签列表', 'tags/index', '365', '', '0', '1', '1686320883', null);
-INSERT INTO `sl_menu` VALUES ('369', '1', 'attach', 'nicholas', '素材列表', 'attach/index', '365', '', '0', '1', '1686320908', null);
-INSERT INTO `sl_menu` VALUES ('370', '1', 'read', 'nicholas', '阅读记录', 'read/index', '365', '', '0', '1', '1686404032', null);
-INSERT INTO `sl_menu` VALUES ('371', '1', 'comment', 'nicholas', '评论记录', 'comment/index', '365', '', '0', '1', '1686404049', null);
-INSERT INTO `sl_menu` VALUES ('372', '1', 'message', 'nicholas', '留言管理', 'message/index', '365', '', '0', '1', '1686473492', null);
+INSERT INTO `sl_menu` VALUES ('232', '1', 'user_group', 'nicholas', '用户组', '/admin/admin_group/list', '229', '', '4', '1', '1487661857', '1487661857');
+INSERT INTO `sl_menu` VALUES ('233', '1', 'password', 'nicholas', '修改密码', '/admin/admin/password', '229', '', '5', '1', '1487661888', '1487661888');
+INSERT INTO `sl_menu` VALUES ('257', '1', 'menu', 'nicholas', '菜单设置', '/admin/menu/list', '229', '', '0', '1', '1487750865', '1487750865');
+INSERT INTO `sl_menu` VALUES ('258', '1', 'user', 'nicholas', '管理员', '/admin/admin/list', '229', '', '0', '1', '1488445679', '1488445679');
+INSERT INTO `sl_menu` VALUES ('259', '1', 'opt_log', 'nicholas', '操作日志', '/admin/log/list', '229', '', '0', '1', '1493542152', '1493542152');
+INSERT INTO `sl_menu` VALUES ('266', '1', 'permit', 'nicholas', '权限管理', '/admin/permit/list', '229', 'fa-cogs', '5', '1', '1497860481', '1497860481');
+INSERT INTO `sl_menu` VALUES ('331', '1', 'base_setting', 'nicholas', '基本设置', '/admin/web_site/list', '229', '', '0', '1', '1497860481', null);
+INSERT INTO `sl_menu` VALUES ('346', '1', 'lang', 'nicholas', '语言设置', '/admin/lang/list', '229', '', '0', '1', '1497860481', null);
+INSERT INTO `sl_menu` VALUES ('365', '1', 'article_manager', 'nicholas', '文章管理', '#', '0', 'fa-align-left', '2', '1', '1686320743', null);
+INSERT INTO `sl_menu` VALUES ('367', '1', 'article', 'nicholas', '文章列表', '/admin/article/list', '365', '', '7', '1', '1686320811', null);
+INSERT INTO `sl_menu` VALUES ('368', '1', 'tags', 'nicholas', '标签列表', '/admin/tags/list', '365', '', '4', '1', '1686320883', null);
+INSERT INTO `sl_menu` VALUES ('369', '1', 'attach', 'nicholas', '素材列表', '/admin/attach/list', '365', '', '3', '1', '1686320908', null);
+INSERT INTO `sl_menu` VALUES ('370', '1', 'read', 'nicholas', '阅读记录', '/admin/read/list', '365', '', '1', '1', '1686404032', null);
+INSERT INTO `sl_menu` VALUES ('371', '1', 'comment', 'nicholas', '评论记录', '/admin/comment/list', '365', '', '2', '1', '1686404049', null);
+INSERT INTO `sl_menu` VALUES ('372', '1', 'message', 'nicholas', '留言管理', '/admin/message/list', '365', '', '0', '1', '1686473492', null);
+INSERT INTO `sl_menu` VALUES ('373', '1', 'category', 'nicholas', '分类列表', '/admin/category/list', '365', '', '6', '1', '1686320883', null);
+INSERT INTO `sl_menu` VALUES ('374', '1', 'directory', 'nicholas', '目录列表', '/admin/directory/list', '365', '', '5', '1', '1686320883', null);
 
 -- ----------------------------
 -- Table structure for sl_message

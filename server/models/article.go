@@ -3,26 +3,52 @@ package models
 import "html/template"
 
 type Article struct {
-	Id          int                    `json:"id" `
-	Title       string                 `json:"title"`
-	Cid         int                    `json:"cid" `
-	Did         int                    `json:"did" `
-	Author      string                 `json:"author"`
-	Desc        string                 `json:"desc"`
-	Keyword     string                 `json:"keyword" `
-	Thumb       string                 `json:"thumb" `
-	Summary     string                 `json:"summary" `
-	Content     string                 `json:"content"`
-	ContentHtml template.HTML          `json:"content_html"`
-	IsHot       int                    `json:"is_hot"`
-	IsNew       int                    `json:"is_new"`
-	IsRecom     int                    `json:"is_recom" `
-	Weight      int                    `json:"weight"`
-	PublicTime  int64                  `json:"public_time"`
-	Month       string                 `json:"month"`
-	Status      int                    `json:"status"`
-	ExtraFields map[string]interface{} `json:"extra_fields" gorm:"-"` //存放回显中文
+	Id          int           `json:"id" `
+	Title       string        `json:"title"`
+	Cid         int           `json:"cid" `
+	Did         int           `json:"did" `
+	Author      string        `json:"author"`
+	Desc        string        `json:"desc"`
+	Keyword     string        `json:"keyword" `
+	Thumb       string        `json:"thumb" `
+	Summary     string        `json:"summary" `
+	Content     string        `json:"content"`
+	ContentHtml template.HTML `json:"content_html"`
+	IsHot       int           `json:"is_hot" gorm:"column:parent;type:int(11);default:0"`
+	IsNew       int           `json:"is_new" gorm:"column:parent;type:int(11);default:0"`
+	IsRecom     int           `json:"is_recom" gorm:"column:parent;type:int(11);default:0"`
+	Weight      int           `json:"weight" gorm:"column:parent;type:int(11);default:0"`
+	PublicTime  int64         `json:"public_time"`
+	Month       string        `json:"month"`
+	Status      int           `json:"status" gorm:"column:parent;type:int(11);default:0"`
 	CommonField
+}
+
+func (article *Article) TableName() string {
+	return "sl_article"
+}
+
+type ArticleInfo struct {
+	Id          int           `json:"id" `
+	Title       string        `json:"title"`
+	Cid         int           `json:"cid" `
+	Did         int           `json:"did" `
+	Author      string        `json:"author"`
+	Desc        string        `json:"desc"`
+	Keyword     string        `json:"keyword" `
+	Thumb       string        `json:"thumb" `
+	Summary     string        `json:"summary" `
+	Content     string        `json:"content"`
+	ContentHtml template.HTML `json:"content_html"`
+	IsHot       int           `json:"is_hot"`
+	IsNew       int           `json:"is_new"`
+	IsRecom     int           `json:"is_recom" `
+	Weight      int           `json:"weight"`
+	PublicTime  string        `json:"public_time"`
+	Month       string        `json:"month"`
+	Status      int           `json:"status"`
+	CreateTime  string        `json:"create_time"`
+	UpdatedTime string        `json:"updated_time"`
 }
 
 type ArticleMine struct {
@@ -83,10 +109,6 @@ type ArticleFieldReq struct {
 	IsHot   *int `json:"is_hot" form:"is_hot" binding:"omitempty"`
 	IsNew   *int `json:"is_new" form:"is_new" binding:"omitempty"`
 	IsRecom *int `json:"is_recom" form:"is_recom" binding:"omitempty"`
-}
-
-func (article *Article) TableName() string {
-	return "sl_article"
 }
 
 type ArticleReq struct {
