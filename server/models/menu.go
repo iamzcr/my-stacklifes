@@ -60,8 +60,8 @@ type MenuInfo struct {
 	Status int    `json:"status"`
 }
 type MenuListRes struct {
-	Total int64      `json:"total"`
-	List  []MenuInfo `json:"list"`
+	Total int64  `json:"total"`
+	List  []Menu `json:"list"`
 }
 
 type MenuMine struct {

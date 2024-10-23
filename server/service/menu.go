@@ -20,7 +20,7 @@ func NewMenuService() *MenuService {
 
 func (s *MenuService) GetList(ctx *gin.Context, req models.MenuListReq) (interface{}, error) {
 	var (
-		menus []models.MenuInfo
+		menus []models.Menu
 		total int64
 	)
 	db := s.dbClient.MysqlClient
@@ -28,11 +28,8 @@ func (s *MenuService) GetList(ctx *gin.Context, req models.MenuListReq) (interfa
 		db = db.Where("name LIKE ?", "%"+req.Name+"%")
 	}
 	limit, offset := req.GetPageInfo()
-	err := db.Model(&models.Menu{}).Limit(limit).Offset(offset).Order("id DESC").Find(&menus).Error
-	if err != nil {
-		return nil, err
-	}
-	db.Model(&models.Menu{}).Count(&total)
+	err := db.Limit(limit).Offset(offset).Order("id DESC").Find(&menus).
+		Limit(-1).Offset(-1).Count(&total).Error
 	if err != nil {
 		return nil, err
 	}
@@ -159,7 +156,7 @@ func (s *MenuService) GetParentList() (interface{}, error) {
 
 func (s *MenuService) GetTreeList(ctx *gin.Context, req models.MenuListReq) (interface{}, error) {
 	var (
-		menus []models.MenuInfo
+		menus []models.Menu
 		total int64
 	)
 	db := s.dbClient.MysqlClient
