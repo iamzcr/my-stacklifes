@@ -61,7 +61,6 @@ type MenuInfo struct {
 	Type        int    `json:"type"`
 	Mark        string `json:"mark"`
 	Parent      int    `json:"parent"`
-	ParentName  string `json:"parent_name"`
 	Author      string `json:"author"`
 	Url         string `json:"url"`
 	Icon        string `json:"icon"`
@@ -69,16 +68,15 @@ type MenuInfo struct {
 	Status      int    `json:"status"`
 	CreateTime  string `json:"create_time"`
 	UpdatedTime string `json:"updated_time"`
+	ParentName  string `json:"parent_name"`
+	StatusName  string `json:"status_name"`
+	TypeName    string `json:"type_name"`
 }
 
 type MenuMine struct {
 	Id     int    `json:"id" form:"id"`
 	Name   string `json:"name" form:"name"`
 	Parent int    `json:"parent" form:"parent"`
-}
-
-type MenuRes struct {
-	List []MenuMine `json:"list"`
 }
 
 type MenuAssignList struct {

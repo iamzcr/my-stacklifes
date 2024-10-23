@@ -15,7 +15,8 @@
                 <div class="col">
                     <form class="form-inline">
                         <div class="form-group mx-sm-1 mb-2">
-                            <input type="text" name="name" id="name-input" class="form-control  form-control-sm" placeholder="name">
+                            <input type="text" name="name" id="name-input" class="form-control  form-control-sm"
+                                   placeholder="name">
                         </div>
                         <button class="btn btn-sm btn-primary mb-2" id="search">搜索</button>
                         <a href="/admin/menu/add" class="btn btn-sm btn-success mb-2">新增</a>
@@ -84,13 +85,13 @@
             {"data": "id"},
             {"data": "name"},
             {"data": "mark"},
-            {"data": "type"},
+            {"data": "type_name"},
             {"data": "author"},
             {"data": "url"},
             {"data": "parent_name"},
             {"data": "weight"},
             {"data": "icon"},
-            {"data": "status"},
+            {"data": "status_name"},
             {"data": "create_time"},
             {
                 "data": null,
@@ -112,6 +113,7 @@
     }).on('mouseout', 'tbody tr', function () {
         $(this).removeClass('info');
     });
+
     function submitDelForm(url, id) {
         if (typeof id === 'undefined' || typeof url === 'undefined') {
             Swal.fire({icon: "error"});

@@ -37,6 +37,13 @@ func (s *MenuService) GetList(ctx *gin.Context, req models.MenuListReq) (interfa
 	var (
 		menuList  []models.MenuInfo
 		parentMap = make(map[int]string)
+		statusMap = map[int]string{
+			constant.StatusTrue:  constant.StatusTrueName,
+			constant.StatusFalse: constant.StatusFalseName,
+		}
+		typeMap = map[int]string{
+			constant.MenuNavType: constant.MenuNavTypeName,
+		}
 	)
 	for _, menu := range menus {
 		if menu.Parent == constant.TopParent {
@@ -55,6 +62,8 @@ func (s *MenuService) GetList(ctx *gin.Context, req models.MenuListReq) (interfa
 			Status:      menu.Status,
 			Weight:      menu.Weight,
 			ParentName:  parentName,
+			StatusName:  statusMap[menu.Status],
+			TypeName:    typeMap[menu.Type],
 			Parent:      menu.Parent,
 			Type:        menu.Type,
 			Mark:        menu.Mark,
