@@ -1,6 +1,7 @@
 package app
 
 import (
+	"fmt"
 	"github.com/gin-gonic/gin"
 	"my-stacklifes/pkg/exception"
 	"net/http"
@@ -48,8 +49,11 @@ func (g *Gin) SuccessHtml(data interface{}, view string) {
 }
 
 func (g *Gin) SuccessAdminHtml(data interface{}, view string) {
+	menuTree, _ := g.C.Get("menuTree")
+	fmt.Println(menuTree)
 	g.C.HTML(http.StatusOK, view, gin.H{
-		"data": data,
+		"data":     data,
+		"menuTree": menuTree,
 	})
 }
 

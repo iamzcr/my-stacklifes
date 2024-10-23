@@ -175,3 +175,37 @@ func (s *MenuService) GetParentList() (interface{}, error) {
 	}
 	return menuLists, nil
 }
+
+func (s *MenuService) GetTreeList() interface{} {
+	var menus []models.Menu
+	var menuTreeLists []models.MenuTree
+	db := s.dbClient.MysqlClient
+	err := db.Where("status = ?", constant.StatusTrue).
+		Select("id,parent,name,url,weight").
+		Order("weight DESC").Find(&menus).Error
+	if err != nil {
+		return nil
+	}
+	for _, menu := range menus {
+		menuTreeLists = append(menuTreeLists, models.MenuTree{
+			Id:     menu.Id,
+			Parent: menu.Parent,
+			Name:   menu.Name,
+			Url:    menu.Url,
+		})
+	}
+	menuTreeLists = s.buildMenuTree(menuTreeLists, 0)
+	return menuTreeLists
+}
+
+func (s *MenuService) buildMenuTree(menus []models.MenuTree, parent int) []models.MenuTree {
+	var tree []models.MenuTree
+	for _, menu := range menus {
+		if menu.Parent == parent {
+			children := s.buildMenuTree(menus, menu.Id)
+			menu.Children = children
+			tree = append(tree, menu)
+		}
+	}
+	return tree
+}

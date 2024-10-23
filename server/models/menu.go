@@ -84,6 +84,15 @@ type MenuAssignList struct {
 	MenuParents interface{}
 }
 
+// Menu 结构体表示菜单项
+type MenuTree struct {
+	Id       int
+	Name     string
+	Url      string
+	Parent   int
+	Children []MenuTree
+}
+
 type MenuDelReq struct {
 	Id int `json:"id" form:"id" binding:"required"`
 }
