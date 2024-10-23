@@ -50,27 +50,27 @@ func (s *MenuService) GetList(ctx *gin.Context, req models.MenuListReq) (interfa
 			parentMap[menu.Id] = menu.Name
 		}
 	}
-	for _, menu := range menus {
+	for _, menuTemp := range menus {
 		parentName := "顶级菜单"
-		if _, ok := parentMap[menu.Parent]; ok {
-			parentName = parentMap[menu.Parent]
+		if _, ok := parentMap[menuTemp.Parent]; ok {
+			parentName = parentMap[menuTemp.Parent]
 		}
 		menuList = append(menuList, models.MenuInfo{
-			Id:          menu.Id,
-			Name:        menu.Name,
-			Author:      menu.Author,
-			Status:      menu.Status,
-			Weight:      menu.Weight,
+			Id:          menuTemp.Id,
+			Name:        menuTemp.Name,
+			Author:      menuTemp.Author,
+			Status:      menuTemp.Status,
+			Weight:      menuTemp.Weight,
 			ParentName:  parentName,
-			StatusName:  statusMap[menu.Status],
-			TypeName:    typeMap[menu.Type],
-			Parent:      menu.Parent,
-			Type:        menu.Type,
-			Mark:        menu.Mark,
-			Url:         menu.Url,
-			Icon:        menu.Icon,
-			CreateTime:  tools.UnixToTime(menu.CreateTime),
-			UpdatedTime: tools.UnixToTime(menu.UpdatedTime),
+			StatusName:  statusMap[menuTemp.Status],
+			TypeName:    typeMap[menuTemp.Type],
+			Parent:      menuTemp.Parent,
+			Type:        menuTemp.Type,
+			Mark:        menuTemp.Mark,
+			Url:         menuTemp.Url,
+			Icon:        menuTemp.Icon,
+			CreateTime:  tools.UnixToTime(menuTemp.CreateTime),
+			UpdatedTime: tools.UnixToTime(menuTemp.UpdatedTime),
 		})
 
 	}
