@@ -22,8 +22,8 @@ type MenuUpdateReq struct {
 	Id     int    `json:"id"  form:"id"  binding:"required"`
 	Name   string `json:"name" form:"name"  binding:"required"`
 	Url    string `json:"url"  form:"url" binding:"required"`
-	Parent int    `json:"parent"  form:"parent,default=0" binding:"required"`
-	Weight int    `json:"weight" form:"weight,default=0" binding:"required"`
+	Parent int    `json:"parent"  form:"parent,default=0"`
+	Weight int    `json:"weight" form:"weight,default=0"`
 	Type   int    `json:"type" form:"type,default=1"`
 	Status int    `json:"status" form:"status,default=1"`
 	Author string `json:"author" form:"author,default=nicholas"`
@@ -32,10 +32,10 @@ type MenuUpdateReq struct {
 }
 
 type MenuCreateReq struct {
-	Name   string `json:"name" form:"name"  binding:"required"`
+	Name   string `json:"name" form:"name" binding:"required"`
 	Url    string `json:"url"  form:"url" binding:"required"`
-	Parent int    `json:"parent" form:"parent,default=0" binding:"required"`
-	Weight int    `json:"weight" form:"weight,default=0" binding:"required"`
+	Parent int    `json:"parent" form:"parent,default=0" `
+	Weight int    `json:"weight" form:"weight,default=0"`
 	Type   int    `json:"type" form:"type,default=1"`
 	Status int    `json:"status" form:"status,default=1"`
 	Author string `json:"author" form:"author,default=nicholas"`

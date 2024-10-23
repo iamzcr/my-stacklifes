@@ -162,7 +162,7 @@ func (s *MenuService) GetParentList() (interface{}, error) {
 	var menuLists []models.MenuMine
 	var menus []models.MenuMine
 	db := s.dbClient.MysqlClient
-	err := db.Model(&models.Menu{}).Debug().Where("status = ?", constant.StatusTrue).
+	err := db.Model(&models.Menu{}).Where("status = ?", constant.StatusTrue).
 		Where("parent=?", constant.TopParent).
 		Select("id,parent,name").
 		Order("id DESC").Find(&menus).Error
