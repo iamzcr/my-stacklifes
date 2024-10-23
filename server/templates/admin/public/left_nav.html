@@ -20,11 +20,13 @@
                     <li><a href="/admin"><i class="fa fa-laptop"></i> 概况</a></li>
                     {{range $index,$value := .menuTree}}
                     <li><a><i class="fa fa-home"></i> {{$value.Name}} <span class="fa fa-chevron-down"></span></a>
+                        {{if $value.Children}}
                         <ul class="nav child_menu">
-                            {{range $m_index,$m_value := $value}}
+                            {{range $m_index,$m_value := $value.Children}}
                             <li><a href="{{$m_value.Url}}">{{$m_value.Name}}</a></li>
                             {{end}}
                         </ul>
+                        {{end}}
                     </li>
                     {{end}}
                 </ul>

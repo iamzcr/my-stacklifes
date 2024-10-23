@@ -199,13 +199,13 @@ func (s *MenuService) GetTreeList() interface{} {
 }
 
 func (s *MenuService) buildMenuTree(menus []models.MenuTree, parent int) []models.MenuTree {
-	var tree []models.MenuTree
+	var menuTree []models.MenuTree
 	for _, menu := range menus {
 		if menu.Parent == parent {
 			children := s.buildMenuTree(menus, menu.Id)
 			menu.Children = children
-			tree = append(tree, menu)
+			menuTree = append(menuTree, menu)
 		}
 	}
-	return tree
+	return menuTree
 }
