@@ -22,8 +22,17 @@ func NewMenuService() *MenuService {
 
 func (s *MenuService) GetList(ctx *gin.Context, req models.MenuListReq) (interface{}, error) {
 	var (
-		menus []models.Menu
-		total int64
+		menus     []models.Menu
+		total     int64
+		menuList  []models.MenuInfo
+		parentMap = make(map[int]string)
+		statusMap = map[int]string{
+			constant.StatusTrue:  constant.StatusTrueName,
+			constant.StatusFalse: constant.StatusFalseName,
+		}
+		typeMap = map[int]string{
+			constant.MenuNavType: constant.MenuNavTypeName,
+		}
 	)
 	db := s.dbClient.MysqlClient
 	if len(req.Name) > 0 {
@@ -35,22 +44,9 @@ func (s *MenuService) GetList(ctx *gin.Context, req models.MenuListReq) (interfa
 	if err != nil {
 		return nil, err
 	}
-	var (
-		menuList  []models.MenuInfo
-		parentMap = make(map[int]string)
-		statusMap = map[int]string{
-			constant.StatusTrue:  constant.StatusTrueName,
-			constant.StatusFalse: constant.StatusFalseName,
-		}
-		typeMap = map[int]string{
-			constant.MenuNavType: constant.MenuNavTypeName,
-		}
-	)
-	fmt.Println(menus)
 	for _, menu := range menus {
 		fmt.Println(menu.Parent)
 		if menu.Parent == constant.TopParent {
-			fmt.Println(menu.Name)
 			parentMap[menu.Id] = menu.Name
 		}
 	}
