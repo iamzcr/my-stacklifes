@@ -2,6 +2,7 @@ package service
 
 import (
 	"errors"
+	"fmt"
 	"github.com/gin-gonic/gin"
 	"my-stacklifes/database/mysql"
 	"my-stacklifes/models"
@@ -53,6 +54,8 @@ func (s *MenuService) GetList(ctx *gin.Context, req models.MenuListReq) (interfa
 	for _, menuTemp := range menus {
 		parentName := "顶级菜单"
 		if _, ok := parentMap[menuTemp.Parent]; ok {
+			fmt.Println(menuTemp.Parent)
+			fmt.Println(menuTemp.Name)
 			parentName = parentMap[menuTemp.Parent]
 		}
 		menuList = append(menuList, models.MenuInfo{
