@@ -109,7 +109,6 @@ func ApiRoutersInit(r *gin.Engine) {
 		adminRouter.POST("/permit/delete", adminPermitHandler.Delete)
 
 		adminRouter.GET("/menu/list", adminMenuHandler.List)
-		adminRouter.GET("/menu/no_page_list", adminMenuHandler.NoPageList)
 		adminRouter.GET("/menu/info/:id", adminMenuHandler.Info)
 		adminRouter.POST("/menu/create", adminMenuHandler.Create)
 		adminRouter.POST("/menu/update", adminMenuHandler.Update)
