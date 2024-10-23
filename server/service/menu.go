@@ -2,7 +2,6 @@ package service
 
 import (
 	"errors"
-	"fmt"
 	"github.com/gin-gonic/gin"
 	"my-stacklifes/database/mysql"
 	"my-stacklifes/models"
@@ -46,11 +45,9 @@ func (s *MenuService) GetList(ctx *gin.Context, req models.MenuListReq) (interfa
 		return nil, err
 	}
 	db.Where("parent=?", constant.TopParent).Select("id,name").Order("id DESC").Find(&parentMenus)
-	fmt.Println(parentMenus)
 	for _, parentMenu := range parentMenus {
 		parentMap[parentMenu.Id] = parentMenu.Name
 	}
-	fmt.Println(parentMap)
 	for _, menuTemp := range menus {
 		parentName := "顶级菜单"
 		if _, ok := parentMap[menuTemp.Parent]; ok {
@@ -96,7 +93,7 @@ func (s *MenuService) Create(ctx *gin.Context, req models.MenuCreateReq) (interf
 	menu.Parent = req.Parent
 	menu.Url = req.Url
 	menu.Weight = req.Weight
-	err := db.Debug().Create(&menu).Error
+	err := db.Create(&menu).Error
 	if err != nil {
 		return nil, err
 	}
@@ -121,7 +118,7 @@ func (s *MenuService) Update(ctx *gin.Context, req models.MenuUpdateReq) (interf
 	menu.Parent = req.Parent
 	menu.Url = req.Url
 	menu.Weight = req.Weight
-	err := db.Debug().Save(&menu).Error
+	err := db.Save(&menu).Error
 	if err != nil {
 		return nil, err
 	}
@@ -162,6 +159,7 @@ func (s *MenuService) GetInfo(ctx *gin.Context, id string) (interface{}, error) 
 }
 
 func (s *MenuService) GetParentList() (interface{}, error) {
+	var menuLists []models.MenuMine
 	var menus []models.MenuMine
 	db := s.dbClient.MysqlClient
 	err := db.Model(&models.Menu{}).Debug().Where("status = ?", constant.StatusTrue).
@@ -171,5 +169,9 @@ func (s *MenuService) GetParentList() (interface{}, error) {
 	if err != nil {
 		return nil, err
 	}
-	return menus, nil
+	menuLists = append(menuLists, models.MenuMine{Id: 0, Name: "顶级菜单", Parent: 0})
+	for _, menu := range menus {
+		menuLists = append(menuLists, menu)
+	}
+	return menuLists, nil
 }
