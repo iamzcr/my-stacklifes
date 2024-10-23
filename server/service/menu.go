@@ -95,7 +95,7 @@ func (s *MenuService) Create(ctx *gin.Context, req models.MenuCreateReq) (interf
 	menu.Parent = req.Parent
 	menu.Url = req.Url
 	menu.Weight = req.Weight
-	err := db.Create(&menu).Error
+	err := db.Debug().Create(&menu).Error
 	if err != nil {
 		return nil, err
 	}
