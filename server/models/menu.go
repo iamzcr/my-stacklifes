@@ -48,17 +48,16 @@ type MenuListReq struct {
 	Name string `json:"name" form:"name"`
 }
 type MenuInfo struct {
-	Id         int    `json:"id"`
-	Name       string `json:"name"`
-	Type       int    `json:"type"`
-	Mark       string `json:"mark"`
-	Parent     int    `json:"parent"`
-	ParentName string `json:"parent_name"`
-	Author     string `json:"author"`
-	Url        string `json:"url"`
-	Icon       string `json:"icon"`
-	Weight     int    `json:"weight"`
-	Status     int    `json:"status"`
+	Id     int    `json:"id"`
+	Name   string `json:"name"`
+	Type   int    `json:"type"`
+	Mark   string `json:"mark"`
+	Parent int    `json:"parent"`
+	Author string `json:"author"`
+	Url    string `json:"url"`
+	Icon   string `json:"icon"`
+	Weight int    `json:"weight"`
+	Status int    `json:"status"`
 }
 type MenuListRes struct {
 	Total int64      `json:"total"`
