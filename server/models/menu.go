@@ -45,23 +45,30 @@ type MenuCreateReq struct {
 
 type MenuListReq struct {
 	PageInfo
-	Name string `json:"name" form:"name"`
+	Name   string `json:"name" form:"name"`
+	Parent int    `json:"parent" form:"parent"`
+	Status int    `json:"status" form:"status" `
 }
-type MenuInfo struct {
-	Id     int    `json:"id"`
-	Name   string `json:"name"`
-	Type   int    `json:"type"`
-	Mark   string `json:"mark"`
-	Parent int    `json:"parent"`
-	Author string `json:"author"`
-	Url    string `json:"url"`
-	Icon   string `json:"icon"`
-	Weight int    `json:"weight"`
-	Status int    `json:"status"`
-}
+
 type MenuListRes struct {
-	Total int64  `json:"total"`
-	List  []Menu `json:"list"`
+	Total int64      `json:"total"`
+	List  []MenuInfo `json:"list"`
+}
+
+type MenuInfo struct {
+	Id          int    `json:"id"`
+	Name        string `json:"name"`
+	Type        int    `json:"type"`
+	Mark        string `json:"mark"`
+	Parent      int    `json:"parent"`
+	ParentName  string `json:"parent_name"`
+	Author      string `json:"author"`
+	Url         string `json:"url"`
+	Icon        string `json:"icon"`
+	Weight      int    `json:"weight"`
+	Status      int    `json:"status"`
+	CreateTime  string `json:"create_time"`
+	UpdatedTime string `json:"updated_time"`
 }
 
 type MenuMine struct {
@@ -70,12 +77,7 @@ type MenuMine struct {
 	Parent int    `json:"parent" form:"parent"`
 }
 
-type MenuNoPageReq struct {
-	Parent int `json:"parent" form:"parent"`
-	Status int `json:"status" form:"status" `
-}
-
-type MenuNoPageListRes struct {
+type MenuRes struct {
 	List []MenuMine `json:"list"`
 }
 

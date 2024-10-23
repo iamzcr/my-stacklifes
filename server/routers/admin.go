@@ -82,7 +82,6 @@ func AdminRoutersInit(r *gin.Engine) {
 		adminRouter.GET("/menu/list_json", menuHandler.ListJson)
 		adminRouter.GET("/menu/add", menuHandler.Edit)
 		adminRouter.GET("/menu/edit/:id", menuHandler.Edit)
-		adminRouter.GET("/menu/no_page_list", menuHandler.NoPageList)
 		adminRouter.GET("/menu/info/:id", menuHandler.Info)
 		adminRouter.POST("/menu/create", menuHandler.Create)
 		adminRouter.POST("/menu/update", menuHandler.Update)

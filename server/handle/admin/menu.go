@@ -52,22 +52,6 @@ func (h *MenuHandler) Edit(ctx *gin.Context) {
 	appGin.SuccessAdminHtml(menuAssignList, "menu/edit.html")
 }
 
-func (h *MenuHandler) NoPageList(ctx *gin.Context) {
-	var appGin = app.Gin{C: ctx}
-	listReq := models.MenuNoPageReq{}
-	err := ctx.ShouldBindQuery(&listReq)
-	if err != nil {
-		appGin.Error(exception.ERROR, err.Error(), nil)
-		return
-	}
-	list, err := h.srv.GetNoPageList(ctx, listReq)
-	if err != nil {
-		appGin.Error(exception.ERROR, err.Error(), nil)
-		return
-	}
-	appGin.Success(list)
-}
-
 func (h *MenuHandler) Info(ctx *gin.Context) {
 	var appGin = app.Gin{C: ctx}
 	id := ctx.Param("id")

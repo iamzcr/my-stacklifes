@@ -6,6 +6,7 @@ import (
 	"my-stacklifes/database/mysql"
 	"my-stacklifes/models"
 	"my-stacklifes/pkg/constant"
+	"my-stacklifes/pkg/tools"
 )
 
 type MenuService struct {
@@ -28,14 +29,45 @@ func (s *MenuService) GetList(ctx *gin.Context, req models.MenuListReq) (interfa
 		db = db.Where("name LIKE ?", "%"+req.Name+"%")
 	}
 	limit, offset := req.GetPageInfo()
-	err := db.Limit(limit).Offset(offset).Order("id DESC").Find(&menus).
+	err := db.Debug().Limit(limit).Offset(offset).Order("id DESC").Find(&menus).
 		Limit(-1).Offset(-1).Count(&total).Error
 	if err != nil {
 		return nil, err
 	}
+	var (
+		menuList  []models.MenuInfo
+		parentMap = make(map[int]string)
+	)
+	for _, menu := range menus {
+		if menu.Parent == constant.TopParent {
+			parentMap[menu.Id] = menu.Name
+		}
+	}
+	for _, menu := range menus {
+		parentName := "顶级菜单"
+		if _, ok := parentMap[menu.Parent]; ok {
+			parentName = parentMap[menu.Parent]
+		}
+		menuList = append(menuList, models.MenuInfo{
+			Id:          menu.Id,
+			Name:        menu.Name,
+			Author:      menu.Author,
+			Status:      menu.Status,
+			Weight:      menu.Weight,
+			ParentName:  parentName,
+			Parent:      menu.Parent,
+			Type:        menu.Type,
+			Mark:        menu.Mark,
+			Url:         menu.Url,
+			Icon:        menu.Icon,
+			CreateTime:  tools.UnixToTime(menu.CreateTime),
+			UpdatedTime: tools.UnixToTime(menu.UpdatedTime),
+		})
+
+	}
 	return models.MenuListRes{
 		Total: total,
-		List:  menus,
+		List:  menuList,
 	}, nil
 }
 
@@ -127,48 +159,15 @@ func (s *MenuService) GetInfo(ctx *gin.Context, id string) (interface{}, error) 
 	return menu, nil
 }
 
-func (s *MenuService) GetNoPageList(ctx *gin.Context, req models.MenuNoPageReq) (interface{}, error) {
-	var menus []models.MenuMine
-	db := s.dbClient.MysqlClient
-	err := db.Model(&models.Menu{}).Where("status = ?", req.Status).Select("id,parent,name").
-		Order("id DESC").Find(&menus).Error
-
-	if err != nil {
-		return nil, err
-	}
-	return models.MenuNoPageListRes{
-		List: menus,
-	}, nil
-}
-
 func (s *MenuService) GetParentList() (interface{}, error) {
 	var menus []models.MenuMine
 	db := s.dbClient.MysqlClient
-	err := db.Model(&models.Menu{}).Debug().Where("status = ?", constant.STATUS_TRUE).
-		Where("parent=?", constant.TOP_PARENT).
+	err := db.Model(&models.Menu{}).Debug().Where("status = ?", constant.StatusTrue).
+		Where("parent=?", constant.TopParent).
 		Select("id,parent,name").
 		Order("id DESC").Find(&menus).Error
 	if err != nil {
 		return nil, err
 	}
 	return menus, nil
-}
-
-func (s *MenuService) GetTreeList(ctx *gin.Context, req models.MenuListReq) (interface{}, error) {
-	var (
-		menus []models.Menu
-		total int64
-	)
-	db := s.dbClient.MysqlClient
-	db = db.Model(&models.Menu{}).Where("status = ?", 1)
-	err := db.Order("id DESC").
-		Find(&menus).
-		Count(&total).Error
-	if err != nil {
-		return nil, err
-	}
-	return models.MenuListRes{
-		Total: total,
-		List:  menus,
-	}, nil
 }
