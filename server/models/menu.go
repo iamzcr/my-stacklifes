@@ -3,14 +3,14 @@ package models
 type Menu struct {
 	Id     int    `json:"id"  form:"id" `
 	Name   string `json:"name" form:"name"  binding:"required"`
-	Type   int    `json:"type" form:"type,default=1"`
-	Mark   string `json:"mark" form:"mark" `
-	Parent int    `json:"parent"  form:"parent" binding:"required"`
-	Author string `json:"author"  form:"author"`
 	Url    string `json:"url"  form:"url" binding:"required"`
-	Icon   string `json:"icon" form:"icon"  `
-	Weight int    `json:"weight" form:"weight,default=1"`
+	Parent int    `json:"parent"  form:"parent,default=0" binding:"required"`
+	Weight int    `json:"weight" form:"weight,default=0" binding:"required"`
+	Type   int    `json:"type" form:"type,default=1"`
 	Status int    `json:"status" form:"status,default=1"`
+	Author string `json:"author" form:"author,default=nicholas"`
+	Icon   string `json:"icon" form:"icon"`
+	Mark   string `json:"mark" form:"mark" `
 	CommonField
 }
 
@@ -19,28 +19,28 @@ func (c *Menu) TableName() string {
 }
 
 type MenuUpdateReq struct {
-	Id     int    `json:"id"`
-	Url    string `json:"url"  form:"url"   binding:"required"`
-	Icon   string `json:"icon"`
+	Id     int    `json:"id"  form:"id"  binding:"required"`
 	Name   string `json:"name" form:"name"  binding:"required"`
+	Url    string `json:"url"  form:"url" binding:"required"`
+	Parent int    `json:"parent"  form:"parent,default=0" binding:"required"`
+	Weight int    `json:"weight" form:"weight,default=0" binding:"required"`
 	Type   int    `json:"type" form:"type,default=1"`
-	Parent int    `json:"parent" form:"parent,default=0"`
 	Status int    `json:"status" form:"status,default=1"`
-	Weight int    `json:"weight" form:"weight"`
 	Author string `json:"author" form:"author,default=nicholas"`
-	Mark   string `json:"mark" form:"mark"`
+	Icon   string `json:"icon" form:"icon"`
+	Mark   string `json:"mark" form:"mark" `
 }
 
 type MenuCreateReq struct {
+	Name   string `json:"name" form:"name"  binding:"required"`
 	Url    string `json:"url"  form:"url" binding:"required"`
-	Icon   string `json:"icon"`
-	Name   string `json:"name" form:"name" binding:"required"`
+	Parent int    `json:"parent"  form:"parent,default=0" binding:"required"`
+	Weight int    `json:"weight" form:"weight,default=0" binding:"required"`
 	Type   int    `json:"type" form:"type,default=1"`
-	Parent int    `json:"parent" form:"parent,default=0"`
 	Status int    `json:"status" form:"status,default=1"`
-	Weight int    `json:"weight" form:"weight"`
 	Author string `json:"author" form:"author,default=nicholas"`
-	Mark   string `json:"mark" form:"mark"`
+	Icon   string `json:"icon" form:"icon"`
+	Mark   string `json:"mark" form:"mark" `
 }
 
 type MenuListReq struct {

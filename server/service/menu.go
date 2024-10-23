@@ -91,14 +91,10 @@ func (s *MenuService) Create(ctx *gin.Context, req models.MenuCreateReq) (interf
 		return nil, errors.New("记录已存在")
 	}
 	menu.Name = req.Name
-	menu.Type = req.Type
-	menu.Mark = req.Mark
+	menu.Mark = tools.ConvertToPinyin(req.Name)
 	menu.Parent = req.Parent
-	menu.Author = req.Author
 	menu.Url = req.Url
-	menu.Icon = req.Icon
 	menu.Weight = req.Weight
-	menu.Status = req.Status
 	err := db.Create(&menu).Error
 	if err != nil {
 		return nil, err
@@ -121,12 +117,8 @@ func (s *MenuService) Update(ctx *gin.Context, req models.MenuUpdateReq) (interf
 		return nil, errors.New("记录已存在")
 	}
 	menu.Name = req.Name
-	menu.Type = req.Type
-	menu.Mark = req.Mark
 	menu.Parent = req.Parent
-	menu.Author = req.Author
 	menu.Url = req.Url
-	menu.Icon = req.Icon
 	menu.Weight = req.Weight
 	err := db.Save(&menu).Error
 	if err != nil {
