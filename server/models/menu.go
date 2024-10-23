@@ -9,8 +9,8 @@ type Menu struct {
 	Author string `json:"author"  form:"author"`
 	Url    string `json:"url"  form:"url" binding:"required"`
 	Icon   string `json:"icon" form:"icon"  `
-	Weight string `json:"weight" form:"weight,default=1"`
-	Status string `json:"status" form:"status,default=1"`
+	Weight int    `json:"weight" form:"weight,default=1"`
+	Status int    `json:"status" form:"status,default=1"`
 	CommonField
 }
 
@@ -25,7 +25,8 @@ type MenuUpdateReq struct {
 	Name   string `json:"name" form:"name"  binding:"required"`
 	Type   int    `json:"type" form:"type,default=1"`
 	Parent int    `json:"parent" form:"parent,default=0"`
-	Weight string `json:"weight" form:"weight"`
+	Status int    `json:"status" form:"status,default=1"`
+	Weight int    `json:"weight" form:"weight"`
 	Author string `json:"author" form:"author,default=nicholas"`
 	Mark   string `json:"mark" form:"mark"`
 }
@@ -36,7 +37,8 @@ type MenuCreateReq struct {
 	Name   string `json:"name" form:"name" binding:"required"`
 	Type   int    `json:"type" form:"type,default=1"`
 	Parent int    `json:"parent" form:"parent,default=0"`
-	Weight string `json:"weight" form:"weight"`
+	Status int    `json:"status" form:"status,default=1"`
+	Weight int    `json:"weight" form:"weight"`
 	Author string `json:"author" form:"author,default=nicholas"`
 	Mark   string `json:"mark" form:"mark"`
 }
@@ -55,8 +57,8 @@ type MenuInfo struct {
 	Author     string `json:"author"`
 	Url        string `json:"url"`
 	Icon       string `json:"icon"`
-	Weight     string `json:"weight"`
-	Status     string `json:"status"`
+	Weight     int    `json:"weight"`
+	Status     int    `json:"status"`
 }
 type MenuListRes struct {
 	Total int64      `json:"total"`
@@ -66,7 +68,7 @@ type MenuListRes struct {
 type MenuMine struct {
 	Id     int    `json:"id" form:"id"`
 	Name   string `json:"name" form:"name"`
-	Parent string `json:"parent" form:"parent"`
+	Parent int    `json:"parent" form:"parent"`
 }
 
 type MenuNoPageReq struct {

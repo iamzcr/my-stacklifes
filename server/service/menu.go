@@ -60,6 +60,7 @@ func (s *MenuService) Create(ctx *gin.Context, req models.MenuCreateReq) (interf
 	menu.Url = req.Url
 	menu.Icon = req.Icon
 	menu.Weight = req.Weight
+	menu.Status = req.Status
 	err := db.Create(&menu).Error
 	if err != nil {
 		return nil, err

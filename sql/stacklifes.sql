@@ -10,7 +10,7 @@ Target Server Type    : MYSQL
 Target Server Version : 80039
 File Encoding         : 65001
 
-Date: 2024-10-22 22:03:25
+Date: 2024-10-22 22:09:31
 */
 
 SET FOREIGN_KEY_CHECKS=0;
@@ -56,15 +56,18 @@ CREATE TABLE `sl_admin_group` (
   `menu_permit` text COMMENT '央服权限数据',
   `menu_modules` text COMMENT '央服权限模块',
   `allow_ip` text COMMENT 'ip白名单',
+  `status` int DEFAULT '1',
   `create_time` int DEFAULT '0' COMMENT '创建用户组时间戳',
   `update_time` int DEFAULT NULL COMMENT '更新操作时间',
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=151 DEFAULT CHARSET=utf8mb3 COMMENT='用户组';
+) ENGINE=InnoDB AUTO_INCREMENT=153 DEFAULT CHARSET=utf8mb3 COMMENT='用户组';
 
 -- ----------------------------
 -- Records of sl_admin_group
 -- ----------------------------
-INSERT INTO `sl_admin_group` VALUES ('1', 'super', '超级管理员', '拥有所有权限', '[\"347\",\"348\",\"349\",\"350\",\"351\",\"352\",\"353\",\"370\",\"381\",\"382\",\"383\",\"384\",\"385\",\"386\",\"387\",\"388\"]', '[\"menu\\/*\",\"permit\\/*\",\"usergroup\\/*\",\"log\\/*\",\"website\\/*\",\"user\\/index\",\"user\\/add\",\"user\\/updatedata\",\"user\\/changestatus\",\"user\\/password\",\"lang\\/*\",\"columns\\/*\",\"article\\/*\",\"tags\\/*\",\"attach\\/*\",\"upload\\/*\",\"read\\/*\",\"comment\\/*\",\"message\\/*\"]', null, '1487580864', '1487580864');
+INSERT INTO `sl_admin_group` VALUES ('1', 'super', '超级管理员', '拥有所有权限', '[\"347\",\"348\",\"349\",\"350\",\"351\",\"352\",\"353\",\"370\",\"381\",\"382\",\"383\",\"384\",\"385\",\"386\",\"387\",\"388\"]', '[\"menu\\/*\",\"permit\\/*\",\"usergroup\\/*\",\"log\\/*\",\"website\\/*\",\"user\\/index\",\"user\\/add\",\"user\\/updatedata\",\"user\\/changestatus\",\"user\\/password\",\"lang\\/*\",\"columns\\/*\",\"article\\/*\",\"tags\\/*\",\"attach\\/*\",\"upload\\/*\",\"read\\/*\",\"comment\\/*\",\"message\\/*\"]', null, '1', '1487580864', '1487580864');
+INSERT INTO `sl_admin_group` VALUES ('151', 'ceshi', '测试', '', '', '', '', '1', '0', '0');
+INSERT INTO `sl_admin_group` VALUES ('152', 'ceshi222', '测试222', '', '', '', '', '1', '0', '0');
 
 -- ----------------------------
 -- Table structure for sl_article
@@ -566,6 +569,7 @@ CREATE TABLE `sl_website` (
   `name` varchar(255) DEFAULT NULL,
   `key` varchar(32) DEFAULT NULL,
   `value` text,
+  `staus` int DEFAULT '1',
   `update_time` int DEFAULT NULL,
   `create_time` int DEFAULT NULL,
   PRIMARY KEY (`id`),
@@ -575,4 +579,4 @@ CREATE TABLE `sl_website` (
 -- ----------------------------
 -- Records of sl_website
 -- ----------------------------
-INSERT INTO `sl_website` VALUES ('4', '关键词', 'keyword', '堆栈，博客', '0', '0');
+INSERT INTO `sl_website` VALUES ('4', '关键词', 'keyword', '堆栈，博客', '1', '0', '0');
