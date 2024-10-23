@@ -120,7 +120,7 @@ func (s *MenuService) Update(ctx *gin.Context, req models.MenuUpdateReq) (interf
 	menu.Parent = req.Parent
 	menu.Url = req.Url
 	menu.Weight = req.Weight
-	err := db.Save(&menu).Error
+	err := db.Debug().Save(&menu).Error
 	if err != nil {
 		return nil, err
 	}

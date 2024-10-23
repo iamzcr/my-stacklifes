@@ -34,7 +34,7 @@ type MenuUpdateReq struct {
 type MenuCreateReq struct {
 	Name   string `json:"name" form:"name"  binding:"required"`
 	Url    string `json:"url"  form:"url" binding:"required"`
-	Parent int    `json:"parent"  form:"parent,default=0" binding:"required"`
+	Parent int    `json:"parent" form:"parent,default=0" binding:"required"`
 	Weight int    `json:"weight" form:"weight,default=0" binding:"required"`
 	Type   int    `json:"type" form:"type,default=1"`
 	Status int    `json:"status" form:"status,default=1"`
