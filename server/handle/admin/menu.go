@@ -20,8 +20,7 @@ func NewMenuHandler() *MenuHandler {
 
 func (h *MenuHandler) List(ctx *gin.Context) {
 	var appGin = app.Gin{C: ctx}
-	assignData := "assignData"
-	appGin.SuccessAdminHtml(assignData, "menu/list.html")
+	appGin.SuccessAdminHtml("", "menu/list.html")
 }
 
 func (h *MenuHandler) ListJson(ctx *gin.Context) {

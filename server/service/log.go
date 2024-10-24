@@ -50,6 +50,7 @@ func (s *LogService) GetList(ctx *gin.Context, req models.LogReq) (interface{}, 
 }
 func (s *LogService) Create(ctx *gin.Context, req models.LogCreateReq) (interface{}, error) {
 	var log models.Log
+
 	log.Ip = ctx.ClientIP()
 	log.Content = req.Content
 	log.CreateTime = time.Now().Unix()
@@ -57,5 +58,6 @@ func (s *LogService) Create(ctx *gin.Context, req models.LogCreateReq) (interfac
 	if err != nil {
 		return nil, err
 	}
+
 	return log.Id, nil
 }

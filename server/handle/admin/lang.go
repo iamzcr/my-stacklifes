@@ -20,8 +20,7 @@ func NewLangHandler() *LangHandler {
 
 func (h *LangHandler) List(ctx *gin.Context) {
 	var appGin = app.Gin{C: ctx}
-	assignData := "assignData"
-	appGin.SuccessAdminHtml(assignData, "lang/list.html")
+	appGin.SuccessAdminHtml("", "lang/list.html")
 }
 
 func (h *LangHandler) ListJson(ctx *gin.Context) {

@@ -19,8 +19,7 @@ func NewCommentHandler() *CommentHandler {
 }
 func (h *CommentHandler) List(ctx *gin.Context) {
 	var appGin = app.Gin{C: ctx}
-	assignData := "assignData"
-	appGin.SuccessAdminHtml(assignData, "comment/list.html")
+	appGin.SuccessAdminHtml("", "comment/list.html")
 }
 func (h *CommentHandler) ListJson(ctx *gin.Context) {
 	var appGin = app.Gin{C: ctx}

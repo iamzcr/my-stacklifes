@@ -19,8 +19,7 @@ func NewArticleHandler() *ArticleHandler {
 }
 func (h *ArticleHandler) List(ctx *gin.Context) {
 	var appGin = app.Gin{C: ctx}
-	assignData := "assignData"
-	appGin.SuccessAdminHtml(assignData, "article/list.html")
+	appGin.SuccessAdminHtml("", "article/list.html")
 }
 func (h *ArticleHandler) ListJson(ctx *gin.Context) {
 	var appGin = app.Gin{C: ctx}

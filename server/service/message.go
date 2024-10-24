@@ -55,12 +55,15 @@ func (s *MessageService) GetList(ctx *gin.Context, req models.MessageReq) (inter
 
 func (s *MessageService) Create(ctx *gin.Context, req models.MsgCreateReq) (interface{}, error) {
 	var message models.Message
+
 	if len(req.Name) <= 0 || len(req.Content) <= 0 {
 		return nil, errors.New("params is null")
 	}
+
 	if !tools.ValidEmail(req.Email) {
 		return nil, errors.New("email error")
 	}
+
 	message.Name = req.Name
 	message.Url = req.Url
 	message.Email = req.Email
@@ -71,19 +74,23 @@ func (s *MessageService) Create(ctx *gin.Context, req models.MsgCreateReq) (inte
 	if err != nil {
 		return nil, err
 	}
-	return message, nil
+
+	return message.Id, nil
 }
 
 func (s *MessageService) Delete(ctx *gin.Context, req models.MessageDelReq) (interface{}, error) {
 	var message models.Message
+
 	db := s.dbClient.MysqlClient
-	db.Where("id=?", req.Id).Find(&message)
+	db.Where("id=?", req.Id).First(&message)
 	if message.Id <= 0 {
 		return nil, errors.New("不存在该记录")
 	}
+
 	err := db.Delete(&message).Error
 	if err != nil {
 		return nil, err
 	}
+
 	return message.Id, nil
 }

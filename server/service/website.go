@@ -143,7 +143,7 @@ func (s *WebsiteService) FrontendList(ctx *gin.Context) (interface{}, error) {
 	if err != nil {
 		return nil, err
 	}
-	
+
 	return models.WebsiteFrontendList{
 		List: websiteList,
 	}, nil

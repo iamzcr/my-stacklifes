@@ -19,8 +19,7 @@ func NewAdminHandler() *AdminHandler {
 }
 func (h *AdminHandler) List(ctx *gin.Context) {
 	var appGin = app.Gin{C: ctx}
-	assignData := "assignData"
-	appGin.SuccessAdminHtml(assignData, "admin/list.html")
+	appGin.SuccessAdminHtml("", "admin/list.html")
 }
 
 func (h *AdminHandler) ListJson(ctx *gin.Context) {

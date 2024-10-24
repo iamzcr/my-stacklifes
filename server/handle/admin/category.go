@@ -27,8 +27,7 @@ func (h *CategoryHandler) Edit(ctx *gin.Context) {
 
 func (h *CategoryHandler) List(ctx *gin.Context) {
 	var appGin = app.Gin{C: ctx}
-	assignData := "assignData"
-	appGin.SuccessAdminHtml(assignData, "category/list.html")
+	appGin.SuccessAdminHtml("", "category/list.html")
 }
 
 func (h *CategoryHandler) ListJson(ctx *gin.Context) {

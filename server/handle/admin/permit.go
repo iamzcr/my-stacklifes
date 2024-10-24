@@ -20,8 +20,7 @@ func NewPermitHandler() *PermitHandler {
 
 func (h *PermitHandler) List(ctx *gin.Context) {
 	var appGin = app.Gin{C: ctx}
-	assignData := "assignData"
-	appGin.SuccessAdminHtml(assignData, "permit/list.html")
+	appGin.SuccessAdminHtml("", "permit/list.html")
 }
 
 func (h *PermitHandler) ListJson(ctx *gin.Context) {

@@ -19,7 +19,7 @@ func NewReadHandler() *ReadHandler {
 }
 func (h *ReadHandler) List(ctx *gin.Context) {
 	var appGin = app.Gin{C: ctx}
-	assignData := "assignData"
+	assignData := ""
 	appGin.SuccessAdminHtml(assignData, "read/list.html")
 }
 

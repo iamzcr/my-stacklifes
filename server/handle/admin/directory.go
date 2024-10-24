@@ -27,7 +27,7 @@ func (h *DirectoryHandler) Edit(ctx *gin.Context) {
 
 func (h *DirectoryHandler) List(ctx *gin.Context) {
 	var appGin = app.Gin{C: ctx}
-	assignData := "assignData"
+	assignData := ""
 	appGin.SuccessAdminHtml(assignData, "directory/list.html")
 }
 

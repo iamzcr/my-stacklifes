@@ -20,8 +20,7 @@ func NewLogHandler() *LogHandler {
 
 func (h *LogHandler) List(ctx *gin.Context) {
 	var appGin = app.Gin{C: ctx}
-	assignData := "assignData"
-	appGin.SuccessAdminHtml(assignData, "log/list.html")
+	appGin.SuccessAdminHtml("", "log/list.html")
 }
 
 func (h *LogHandler) ListJson(ctx *gin.Context) {

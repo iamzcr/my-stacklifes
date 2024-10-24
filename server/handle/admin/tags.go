@@ -19,7 +19,7 @@ func NewTagsHandler() *TagsHandler {
 }
 func (h *TagsHandler) List(ctx *gin.Context) {
 	var appGin = app.Gin{C: ctx}
-	assignData := "assignData"
+	assignData := ""
 	appGin.SuccessAdminHtml(assignData, "tags/list.html")
 }
 func (h *TagsHandler) ListJson(ctx *gin.Context) {

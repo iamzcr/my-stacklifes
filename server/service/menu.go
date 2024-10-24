@@ -81,11 +81,13 @@ func (s *MenuService) GetList(ctx *gin.Context, req models.MenuListReq) (interfa
 
 func (s *MenuService) Create(ctx *gin.Context, req models.MenuCreateReq) (interface{}, error) {
 	var menu models.Menu
+
 	db := s.dbClient.MysqlClient
 	db.Where("name=?", req.Name).First(&menu)
 	if menu.Id > 0 {
-		return nil, errors.New("记录已存在")
+		return nil, errors.New("已存在有相同的名称记录")
 	}
+
 	menu.Name = req.Name
 	menu.Mark = tools.ConvertToPinyin(req.Name)
 	menu.Parent = req.Parent
@@ -96,6 +98,7 @@ func (s *MenuService) Create(ctx *gin.Context, req models.MenuCreateReq) (interf
 	if err != nil {
 		return nil, err
 	}
+
 	return menu.Id, nil
 }
 
@@ -139,33 +142,39 @@ func (s *MenuService) Delete(ctx *gin.Context, req models.MenuDelReq) (interface
 	if menu.Id <= 0 {
 		return nil, errors.New("不存在该记录")
 	}
-	db.Model(menu).Where("parent=?", req.Id).Count(&count)
+
+	db.Model(&menu).Where("parent=?", req.Id).Count(&count)
 	if count > 0 {
-		return nil, errors.New("该菜单下有子菜单")
+		return nil, errors.New("该菜单下有子菜单,不能删除")
 	}
+
 	err := db.Delete(&menu).Error
 	if err != nil {
 		return nil, err
 	}
+
 	_, _ = NewLogService().Create(ctx, models.LogCreateReq{Content: "del menu"})
 	return menu.Id, nil
 }
 
 func (s *MenuService) GetInfo(ctx *gin.Context, id string) (interface{}, error) {
 	var menu models.Menu
-	res := s.dbClient.MysqlClient.Where("id=?", id).Find(&menu)
+
+	res := s.dbClient.MysqlClient.Where("id=?", id).First(&menu)
 	if res.Error != nil {
 		return nil, res.Error
 	}
-	if menu.Id == 0 {
-		return nil, errors.New("permit error")
+	if menu.Id <= 0 {
+		return nil, errors.New("menu error")
 	}
+
 	return menu, nil
 }
 
 func (s *MenuService) GetParentList(ctx *gin.Context) (interface{}, error) {
 	var menuLists []models.MenuMine
 	var menus []models.MenuMine
+
 	db := s.dbClient.MysqlClient
 	err := db.Model(&models.Menu{}).Where("status = ?", constant.StatusTrue).
 		Where("parent=?", constant.TopParent).
@@ -174,16 +183,19 @@ func (s *MenuService) GetParentList(ctx *gin.Context) (interface{}, error) {
 	if err != nil {
 		return nil, err
 	}
+
 	menuLists = append(menuLists, models.MenuMine{Id: 0, Name: "顶级菜单", Parent: 0})
 	for _, menu := range menus {
 		menuLists = append(menuLists, menu)
 	}
+
 	return menuLists, nil
 }
 
 func (s *MenuService) GetTreeList() interface{} {
 	var menus []models.Menu
 	var menuTreeLists []models.MenuTree
+
 	db := s.dbClient.MysqlClient
 	err := db.Where("status = ?", constant.StatusTrue).
 		Select("id,parent,name,url,weight").
@@ -191,6 +203,7 @@ func (s *MenuService) GetTreeList() interface{} {
 	if err != nil {
 		return nil
 	}
+
 	for _, menu := range menus {
 		menuTreeLists = append(menuTreeLists, models.MenuTree{
 			Id:     menu.Id,
@@ -200,11 +213,13 @@ func (s *MenuService) GetTreeList() interface{} {
 		})
 	}
 	menuTreeLists = s.buildMenuTree(menuTreeLists, 0)
+
 	return menuTreeLists
 }
 
 func (s *MenuService) buildMenuTree(menus []models.MenuTree, parent int) []models.MenuTree {
 	var menuTree []models.MenuTree
+
 	for _, menu := range menus {
 		if menu.Parent == parent {
 			children := s.buildMenuTree(menus, menu.Id)
@@ -212,5 +227,6 @@ func (s *MenuService) buildMenuTree(menus []models.MenuTree, parent int) []model
 			menuTree = append(menuTree, menu)
 		}
 	}
+
 	return menuTree
 }

@@ -27,8 +27,7 @@ func (h *AdminGroupHandler) Edit(ctx *gin.Context) {
 
 func (h *AdminGroupHandler) List(ctx *gin.Context) {
 	var appGin = app.Gin{C: ctx}
-	assignData := "assignData"
-	appGin.SuccessAdminHtml(assignData, "admin_group/list.html")
+	appGin.SuccessAdminHtml("", "admin_group/list.html")
 }
 
 func (h *AdminGroupHandler) ListJson(ctx *gin.Context) {

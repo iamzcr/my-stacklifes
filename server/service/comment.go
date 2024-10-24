@@ -62,9 +62,11 @@ func (s *CommentService) Create(ctx *gin.Context, req models.CommentCreateReq) (
 	if req.Name == "" || req.Content == "" || req.Aid == 0 {
 		return nil, errors.New("params is null")
 	}
+
 	if !tools.ValidEmail(req.Email) {
 		return nil, errors.New("email error")
 	}
+
 	comment.Name = req.Name
 	comment.Content = req.Content
 	comment.Url = req.Url
@@ -77,19 +79,23 @@ func (s *CommentService) Create(ctx *gin.Context, req models.CommentCreateReq) (
 	if err != nil {
 		return nil, err
 	}
-	return comment, nil
+
+	return comment.Id, nil
 }
 
 func (s *CommentService) Delete(ctx *gin.Context, req models.CommentDelReq) (interface{}, error) {
 	var comment models.Comment
+
 	db := s.dbClient.MysqlClient
-	db.Where("id=?", req.Id).Find(&comment)
+	db.Where("id=?", req.Id).First(&comment)
 	if comment.Id <= 0 {
 		return nil, errors.New("不存在该记录")
 	}
+
 	err := db.Delete(&comment).Error
 	if err != nil {
 		return nil, err
 	}
+
 	return comment.Id, nil
 }

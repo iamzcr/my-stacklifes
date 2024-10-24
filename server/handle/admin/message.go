@@ -19,8 +19,7 @@ func NewMessageHandler() *MessageHandler {
 }
 func (h *MessageHandler) List(ctx *gin.Context) {
 	var appGin = app.Gin{C: ctx}
-	assignData := "assignData"
-	appGin.SuccessAdminHtml(assignData, "message/list.html")
+	appGin.SuccessAdminHtml("", "message/list.html")
 }
 func (h *MessageHandler) ListJson(ctx *gin.Context) {
 	var appGin = app.Gin{C: ctx}

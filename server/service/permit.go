@@ -78,15 +78,15 @@ func (s *PermitService) GetList(ctx *gin.Context, req models.PermitListReq) (int
 	}, nil
 }
 func (s *PermitService) Create(ctx *gin.Context, req models.PermitCreateReq) (interface{}, error) {
-	var (
-		permit models.Permit
-		count  int64
-	)
+	var permit models.Permit
+
 	db := s.dbClient.MysqlClient
-	db.Where("name=?", req.Name).Count(&count)
-	if count > 0 {
-		return nil, errors.New("记录已存在")
+
+	db.Where("name=?", req.Name).First(&permit)
+	if permit.Id > 0 {
+		return nil, errors.New("已存在有相同的名称记录")
 	}
+
 	permit.Name = req.Name
 	permit.Mark = tools.ConvertToPinyin(req.Name)
 	permit.Parent = req.Parent
@@ -97,6 +97,7 @@ func (s *PermitService) Create(ctx *gin.Context, req models.PermitCreateReq) (in
 	if err != nil {
 		return nil, err
 	}
+
 	return permit.Id, nil
 }
 
@@ -106,14 +107,20 @@ func (s *PermitService) Update(ctx *gin.Context, req models.PermitUpdateReq) (in
 		count  int64
 	)
 	db := s.dbClient.MysqlClient
-	res := db.Where("id=?", req.Id).Find(&permit)
+
+	res := db.Where("id=?", req.Id).First(&permit)
 	if res.Error != nil {
 		return nil, res.Error
 	}
-	db.Where("id != ? and name=?", req.Id, req.Name).Count(&count)
-	if count > 0 {
-		return nil, errors.New("记录已存在")
+	if permit.Id <= 0 {
+		return nil, errors.New("记录不存在")
 	}
+
+	db.Model(&permit).Where("id != ? and name=?", req.Id, req.Name).Count(&count)
+	if count > 0 {
+		return nil, errors.New("已存在有相同的名称记录")
+	}
+
 	permit.Name = req.Name
 	permit.Parent = req.Parent
 	permit.Modules = req.Modules
@@ -123,6 +130,7 @@ func (s *PermitService) Update(ctx *gin.Context, req models.PermitUpdateReq) (in
 	if err != nil {
 		return nil, err
 	}
+
 	return permit.Id, nil
 }
 
@@ -131,48 +139,59 @@ func (s *PermitService) Delete(ctx *gin.Context, req models.PermitDelReq) (inter
 		permit models.Permit
 		count  int64
 	)
+
 	db := s.dbClient.MysqlClient
+
 	db.Where("id=?", req.Id).Find(&permit)
 	if permit.Id <= 0 {
 		return nil, errors.New("不存在该记录")
 	}
-	db.Model(permit).Where("parent=?", req.Id).Count(&count)
+
+	db.Model(&permit).Where("parent=?", req.Id).Count(&count)
 	if count > 0 {
-		return nil, errors.New("该权限有子权限")
+		return nil, errors.New("该权限有子权限，不能删除")
 	}
-	err := s.dbClient.MysqlClient.Delete(&permit).Error
+
+	err := db.Delete(&permit).Error
 	if err != nil {
 		return nil, err
 	}
+
 	return permit.Id, nil
 }
 
 func (s *PermitService) GetParentList(ctx *gin.Context) (interface{}, error) {
 	var permitLists []models.PermitMine
 	var permits []models.PermitMine
+
 	db := s.dbClient.MysqlClient
-	err := db.Model(&models.Permit{}).Debug().Where("status = ?", constant.StatusTrue).
+
+	err := db.Model(&models.Permit{}).Where("status = ?", constant.StatusTrue).
 		Where("parent=?", constant.TopParent).
 		Select("id,parent,name").
 		Order("id DESC").Find(&permits).Error
 	if err != nil {
 		return nil, err
 	}
+
 	permitLists = append(permitLists, models.PermitMine{Id: 0, Name: "父级权限", Parent: 0})
 	for _, permit := range permits {
 		permitLists = append(permitLists, permit)
 	}
+
 	return permitLists, nil
 }
 
 func (s *PermitService) GetInfo(ctx *gin.Context, id string) (interface{}, error) {
 	var permit models.Permit
+
 	res := s.dbClient.MysqlClient.Where("id=?", id).Find(&permit)
 	if res.Error != nil {
 		return nil, res.Error
 	}
-	if permit.Id == 0 {
-		return nil, errors.New("permit error")
+	if permit.Id <= 0 {
+		return nil, errors.New("记录不存在")
 	}
+
 	return permit, nil
 }

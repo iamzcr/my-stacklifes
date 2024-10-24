@@ -72,5 +72,6 @@ func (s *ReadService) Create(ctx *gin.Context, req models.ReadCreateReq) (interf
 	if err != nil {
 		return nil, err
 	}
+
 	return read.Id, nil
 }
