@@ -87,13 +87,11 @@ func (s *AdminGroupService) GetInfo(ctx *gin.Context, id string) (interface{}, e
 }
 
 func (s *AdminGroupService) Create(ctx *gin.Context, req models.AdminGroupCreateReq) (interface{}, error) {
-	var (
-		adminGroup models.AdminGroup
-		count      int64
-	)
+	var adminGroup models.AdminGroup
+
 	db := s.dbClient.MysqlClient
-	db.Model(adminGroup).Where("name=?", req.Name).Count(&count)
-	if count > 0 {
+	db.Where("name=?", req.Name).First(&adminGroup)
+	if adminGroup.Id > 0 {
 		return nil, errors.New("记录已存在")
 	}
 	adminGroup.Name = req.Name
@@ -113,7 +111,7 @@ func (s *AdminGroupService) Update(ctx *gin.Context, req models.AdminGroupUpdate
 		count      int64
 	)
 	db := s.dbClient.MysqlClient
-	db.Where("id=?", req.Id).Find(&adminGroup)
+	db.Where("id=?", req.Id).First(&adminGroup)
 	if adminGroup.Id <= 0 {
 		return nil, errors.New("不存在该记录")
 	}

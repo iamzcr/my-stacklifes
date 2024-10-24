@@ -81,13 +81,10 @@ func (s *MenuService) GetList(ctx *gin.Context, req models.MenuListReq) (interfa
 }
 
 func (s *MenuService) Create(ctx *gin.Context, req models.MenuCreateReq) (interface{}, error) {
-	var (
-		menu  models.Menu
-		count int64
-	)
+	var menu models.Menu
 	db := s.dbClient.MysqlClient
-	db.Where("name=?", req.Name).Count(&count)
-	if count > 0 {
+	db.Where("name=?", req.Name).First(&menu)
+	if menu.Id > 0 {
 		return nil, errors.New("记录已存在")
 	}
 	menu.Name = req.Name
@@ -109,12 +106,12 @@ func (s *MenuService) Update(ctx *gin.Context, req models.MenuUpdateReq) (interf
 		count int64
 	)
 	db := s.dbClient.MysqlClient
-	db.Debug().Where("id=?", req.Id).First(&menu)
+	db.Where("id=?", req.Id).First(&menu)
 	fmt.Println(menu.Id)
 	if menu.Id <= 0 {
 		return nil, errors.New("不存在该记录")
 	}
-	db.Model(menu).Debug().Where("id != ? and name=?", req.Id, req.Name).Count(&count)
+	db.Model(menu).Where("id != ? and name=?", req.Id, req.Name).Count(&count)
 	if count > 0 {
 		return nil, errors.New("记录已存在")
 	}
