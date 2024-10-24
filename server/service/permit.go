@@ -133,7 +133,7 @@ func (s *PermitService) Delete(ctx *gin.Context, req models.PermitDelReq) (inter
 	if permit.Id <= 0 {
 		return nil, errors.New("不存在该记录")
 	}
-	db.Where("parent=?", req.Id).Find(&permit).Count(&count)
+	db.Where("parent=?", req.Id).Debug().Find(&permit).Count(&count)
 	if count > 0 {
 		return nil, errors.New("该权限有子权限")
 	}
