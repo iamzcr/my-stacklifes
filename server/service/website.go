@@ -63,15 +63,10 @@ func (s *WebsiteService) GetInfo(ctx *gin.Context, id string) (interface{}, erro
 }
 
 func (s *WebsiteService) Create(ctx *gin.Context, req models.WebsiteCreateReq) (interface{}, error) {
-	var (
-		website models.Website
-		count   int64
-	)
+	var website models.Website
 	db := s.dbClient.MysqlClient
-	db.Model(website).
-		Where("key=?", req.Key).
-		Count(&count)
-	if count > 0 {
+	db.Where("key=?", req.Key).First(&website)
+	if website.Id > 0 {
 		return nil, errors.New("记录已存在")
 	}
 	website.Name = req.Name
@@ -86,18 +81,16 @@ func (s *WebsiteService) Create(ctx *gin.Context, req models.WebsiteCreateReq) (
 }
 
 func (s *WebsiteService) Update(ctx *gin.Context, req models.WebsiteUpdateReq) (interface{}, error) {
-	var (
-		website models.Website
-		count   int64
-	)
+	var website models.Website
+
 	db := s.dbClient.MysqlClient
-	res := db.Where("id=?", req.Id).Find(&website)
-	if res.Error != nil {
-		return nil, res.Error
-	}
-	db.Model(website).Where("id != ? and key=?", req.Id, req.Key).Count(&count)
-	if count > 0 {
+	db.Where("id=?", req.Id).First(&website)
+	if website.Id > 0 {
 		return nil, errors.New("记录已存在")
+	}
+	db.Where("id != ? and key=?", req.Id, req.Key).First(&website)
+	if website.Id > 0 {
+		return nil, errors.New("记录名称已存在")
 	}
 	website.Name = req.Name
 	website.Key = req.Key
@@ -113,7 +106,7 @@ func (s *WebsiteService) Update(ctx *gin.Context, req models.WebsiteUpdateReq) (
 func (s *WebsiteService) Delete(ctx *gin.Context, req models.WebsiteDelReq) (interface{}, error) {
 	var website models.Website
 	db := s.dbClient.MysqlClient
-	db.Where("id=?", req.Id).Find(&website)
+	db.Where("id=?", req.Id).First(&website)
 	if website.Id <= 0 {
 		return nil, errors.New("不存在该记录")
 	}

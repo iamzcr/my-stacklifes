@@ -115,9 +115,9 @@ func (s *AdminGroupService) Update(ctx *gin.Context, req models.AdminGroupUpdate
 	if adminGroup.Id <= 0 {
 		return nil, errors.New("不存在该记录")
 	}
-	db.Model(adminGroup).Where("id != ? and name=?", req.Id, req.Name).Count(&count)
+	db.Model(&adminGroup).Where("id != ? and name=?", req.Id, req.Name).Count(&count)
 	if count > 0 {
-		return nil, errors.New("记录已存在")
+		return nil, errors.New("已存在有相同的名称")
 	}
 	adminGroup.Name = req.Name
 	adminGroup.Description = req.Description
@@ -132,18 +132,18 @@ func (s *AdminGroupService) Update(ctx *gin.Context, req models.AdminGroupUpdate
 func (s *AdminGroupService) Delete(ctx *gin.Context, req models.AdminGroupDelReq) (interface{}, error) {
 	var (
 		adminGroup models.AdminGroup
-		admin      []models.Admin
+		admin      models.Admin
 	)
 	db := s.dbClient.MysqlClient
-	db.Model(adminGroup).Where("id=?", req.Id).Find(&adminGroup)
+	db.Where("id=?", req.Id).First(&adminGroup)
 	if adminGroup.Id <= 0 {
 		return nil, errors.New("不存在该记录")
 	}
-	db.Model(admin).Where("group_id=?", req.Id).Find(&admin)
-	if len(admin) > 0 {
+	db.Where("group_id=?", req.Id).First(&admin)
+	if admin.Id > 0 {
 		return nil, errors.New("该用户组已被使用")
 	}
-	err := db.Model(adminGroup).Delete(&adminGroup).Error
+	err := db.Model(&adminGroup).Delete(&adminGroup).Error
 	if err != nil {
 		return nil, err
 	}
