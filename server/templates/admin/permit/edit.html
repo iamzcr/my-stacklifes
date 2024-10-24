@@ -32,7 +32,7 @@
                                     <div class="col-md-2">
                                         <select class="form-control" name="parent">
                                             {{range $index,$value := .data.PermitParents}}
-                                            <option value="{{$value.Id}}" {{if .data.PermitInfo && .data.PermitInfo.parent== $value.Id}} select="selected" {{end}}>{{$value.Name}}
+                                            <option value="{{$value.Id}}" {{if and .data.PermitInfo  .data.PermitInfo.parent.Eq $value.Id}} select="selected" {{end}}>{{$value.Name}}
                                             </option>
                                             {{end}}
                                         </select>
