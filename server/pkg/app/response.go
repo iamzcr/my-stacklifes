@@ -1,5 +1,6 @@
 package app
 
+import "C"
 import (
 	"fmt"
 	"github.com/gin-gonic/gin"
@@ -50,11 +51,13 @@ func (g *Gin) SuccessHtml(data interface{}, view string) {
 
 func (g *Gin) SuccessAdminHtml(data interface{}, view string) {
 	menuTree, _ := g.C.Get("menuTree")
-	fmt.Printf("%#v\n", data)
-	g.C.HTML(http.StatusOK, view, gin.H{
+	var h = gin.H{
 		"data":     data,
 		"menuTree": menuTree,
-	})
+	}
+	fmt.Printf("%#v\n", h)
+
+	g.C.HTML(http.StatusOK, view, h)
 }
 
 // Error setting gin.JSON
