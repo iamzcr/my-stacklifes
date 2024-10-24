@@ -27,7 +27,7 @@ func (h *WebsiteHandler) Edit(ctx *gin.Context) {
 
 func (h *WebsiteHandler) List(ctx *gin.Context) {
 	var appGin = app.Gin{C: ctx}
-	assignData := "assignData"
+	assignData := ""
 	appGin.SuccessAdminHtml(assignData, "website/list.html")
 }
 

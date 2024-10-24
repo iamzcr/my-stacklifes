@@ -52,24 +52,28 @@ func (s *WebsiteService) GetList(ctx *gin.Context, req models.WebsiteListReq) (i
 
 func (s *WebsiteService) GetInfo(ctx *gin.Context, id string) (interface{}, error) {
 	var websiteInfo models.Website
+
 	res := s.dbClient.MysqlClient.Where("id=?", id).Find(&websiteInfo)
 	if res.Error != nil {
 		return nil, res.Error
 	}
-
-	if websiteInfo.Id == 0 {
-		return nil, errors.New("website error")
+	if websiteInfo.Id <= 0 {
+		return nil, errors.New("记录不存在")
 	}
+
 	return websiteInfo, nil
 }
 
 func (s *WebsiteService) Create(ctx *gin.Context, req models.WebsiteCreateReq) (interface{}, error) {
 	var website models.Website
+
 	db := s.dbClient.MysqlClient
+
 	db.Where("key=?", req.Key).First(&website)
 	if website.Id > 0 {
-		return nil, errors.New("记录已存在")
+		return nil, errors.New("存在相同的key")
 	}
+
 	website.Name = req.Name
 	website.Key = req.Key
 	website.Value = req.Value
@@ -78,21 +82,27 @@ func (s *WebsiteService) Create(ctx *gin.Context, req models.WebsiteCreateReq) (
 	if err != nil {
 		return nil, err
 	}
+
 	return website.Id, nil
 }
 
 func (s *WebsiteService) Update(ctx *gin.Context, req models.WebsiteUpdateReq) (interface{}, error) {
-	var website models.Website
-
+	var (
+		website models.Website
+		count   int64
+	)
 	db := s.dbClient.MysqlClient
+
 	db.Where("id=?", req.Id).First(&website)
 	if website.Id <= 0 {
-		return nil, errors.New("记录已存在")
+		return nil, errors.New("记录不存在")
 	}
-	db.Where("id != ? and key=?", req.Id, req.Key).First(&website)
-	if website.Id > 0 {
-		return nil, errors.New("已存在有相同的名称记录")
+
+	db.Model(&website).Where("id != ? and key=?", req.Id, req.Key).Count(&count)
+	if count > 0 {
+		return nil, errors.New("已存在有相同的key记录")
 	}
+
 	website.Name = req.Name
 	website.Key = req.Key
 	website.Value = req.Value
@@ -101,25 +111,30 @@ func (s *WebsiteService) Update(ctx *gin.Context, req models.WebsiteUpdateReq) (
 	if err != nil {
 		return nil, err
 	}
+
 	return website.Id, nil
 }
 
 func (s *WebsiteService) Delete(ctx *gin.Context, req models.WebsiteDelReq) (interface{}, error) {
 	var website models.Website
 	db := s.dbClient.MysqlClient
+
 	db.Where("id=?", req.Id).First(&website)
 	if website.Id <= 0 {
 		return nil, errors.New("不存在该记录")
 	}
+
 	err := db.Delete(&website).Error
 	if err != nil {
 		return nil, err
 	}
+
 	return website.Id, nil
 }
 
 func (s *WebsiteService) FrontendList(ctx *gin.Context) (interface{}, error) {
 	var websiteList []models.WebsiteInfo
+
 	db := s.dbClient.MysqlClient
 	err := db.Model(&models.Website{}).
 		Order("id DESC").
@@ -128,6 +143,7 @@ func (s *WebsiteService) FrontendList(ctx *gin.Context) (interface{}, error) {
 	if err != nil {
 		return nil, err
 	}
+	
 	return models.WebsiteFrontendList{
 		List: websiteList,
 	}, nil
