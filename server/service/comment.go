@@ -21,29 +21,39 @@ func NewCommentService() *CommentService {
 
 func (s *CommentService) GetList(ctx *gin.Context, req models.CommentReq) (interface{}, error) {
 	var (
-		comment []models.Comment
-		total   int64
+		comments    []models.Comment
+		commentList []models.CommentInfo
+		total       int64
 	)
 	db := s.dbClient.MysqlClient
 	if len(req.Name) > 0 {
 		db = db.Where("name LIKE ?", "%"+req.Name+"%")
 	}
 	limit, offset := req.GetPageInfo()
-	err := db.Limit(limit).
-		Offset(offset).
-		Order("id DESC").
-		Find(&comment).
-		Count(&total).Error
+	err := db.Limit(limit).Offset(offset).Order("id DESC").Find(&comments).
+		Limit(-1).Offset(-1).Count(&total).Error
 	if err != nil {
 		return nil, err
 	}
-	err = db.Model(comment).Count(&total).Error
-	if err != nil {
-		return nil, err
+	srvArticle := NewArticleService()
+	for _, temp := range comments {
+		commentList = append(commentList, models.CommentInfo{
+			Id:           temp.Id,
+			Name:         temp.Name,
+			Aid:          temp.Aid,
+			Ip:           temp.Ip,
+			Email:        temp.Email,
+			Url:          temp.Url,
+			IsReply:      temp.IsReply,
+			Referer:      temp.Referer,
+			Content:      temp.Content,
+			ArticleTitle: srvArticle.GetArticleTitle(temp.Aid),
+			CreateTime:   tools.UnixToTime(temp.CreateTime),
+		})
 	}
 	return models.CommentListRes{
 		Total: total,
-		List:  comment,
+		List:  commentList,
 	}, nil
 }
 
@@ -72,11 +82,12 @@ func (s *CommentService) Create(ctx *gin.Context, req models.CommentCreateReq) (
 
 func (s *CommentService) Delete(ctx *gin.Context, req models.CommentDelReq) (interface{}, error) {
 	var comment models.Comment
-	s.dbClient.MysqlClient.Where("id=?", req.Id).Find(&comment)
+	db := s.dbClient.MysqlClient
+	db.Where("id=?", req.Id).Find(&comment)
 	if comment.Id <= 0 {
 		return nil, errors.New("不存在该记录")
 	}
-	err := s.dbClient.MysqlClient.Delete(&comment).Error
+	err := db.Delete(&comment).Error
 	if err != nil {
 		return nil, err
 	}

@@ -1,17 +1,29 @@
 package models
 
 type Comment struct {
-	Id      int    `json:"id"  form:"id"`
-	Aid     int    `json:"aid"  form:"aid"`
-	Referer string `json:"referer"  form:"referer" `
-	Name    string `json:"name" form:"name"`
-	Ip      string `json:"ip" form:"ip"`
-	Email   string `json:"email" form:"email"`
-	Url     string `json:"url" form:"url"`
-	IsReply int8   `json:"is_reply" form:"is_reply"`
-	Content string `json:"content" form:"content"`
-
+	Id      int    `json:"id" gorm:"column:id;type:int(11);primary_key;AUTO_INCREMENT"`
+	Aid     int    `json:"aid"`
+	Referer string `json:"referer"`
+	Name    string `json:"name"`
+	Ip      string `json:"ip"`
+	Email   string `json:"email"`
+	Url     string `json:"url"`
+	IsReply int8   `json:"is_reply"`
+	Content string `json:"content"`
 	CommonField
+}
+type CommentInfo struct {
+	Id           int    `json:"id"`
+	Aid          int    `json:"aid"`
+	ArticleTitle string `json:"article_title"`
+	Referer      string `json:"referer" `
+	Name         string `json:"name"`
+	Ip           string `json:"ip"`
+	Email        string `json:"email"`
+	Url          string `json:"url"`
+	IsReply      int8   `json:"is_reply"`
+	Content      string `json:"content"`
+	CreateTime   string `json:"create_time"`
 }
 
 func (c *Comment) TableName() string {
@@ -24,8 +36,8 @@ type CommentReq struct {
 }
 
 type CommentListRes struct {
-	Total int64     `json:"total"`
-	List  []Comment `json:"list"`
+	Total int64         `json:"total"`
+	List  []CommentInfo `json:"list"`
 }
 
 type CommentCreateReq struct {

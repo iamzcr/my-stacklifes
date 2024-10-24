@@ -1,13 +1,13 @@
 package models
 
 type Message struct {
-	Id      int    `json:"id" form:"id"`
-	Name    string `json:"name" form:"name"`
-	Ip      string `json:"ip" form:"ip"`
-	Email   string `json:"email" form:"email"`
-	Url     string `json:"url" form:"url"`
-	IsReply int8   `json:"is_reply" form:"is_reply"`
-	Content string `json:"content" form:"content"`
+	Id      int    `json:"id" gorm:"column:id;type:int(11);primary_key;AUTO_INCREMENT"`
+	Name    string `json:"name"`
+	Ip      string `json:"ip"`
+	Email   string `json:"email"`
+	Url     string `json:"url"`
+	IsReply int8   `json:"is_reply"`
+	Content string `json:"content"`
 	CommonField
 }
 
