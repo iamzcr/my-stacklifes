@@ -107,14 +107,14 @@ func (s *MenuService) Update(ctx *gin.Context, req models.MenuUpdateReq) (interf
 	)
 	db := s.dbClient.MysqlClient
 
-	db.Debug().First(&menu)
+	db.Where("id=?", req.Id).First(&menu)
 	fmt.Println(menu.Id)
 	if menu.Id <= 0 {
 		return nil, errors.New("不存在该记录")
 	}
 
-	db.Model(menu).Debug().Where("id != ? and name=?", req.Id, req.Name).Count(&count)
-	if menu.Id > 0 {
+	db.Model(menu).Where("id != ? and name=?", req.Id, req.Name).Count(&count)
+	if count > 0 {
 		return nil, errors.New("已存在有相同的名称记录")
 	}
 
