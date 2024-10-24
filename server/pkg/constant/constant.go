@@ -11,3 +11,6 @@ const MenuNavTypeName = "导航"
 
 const PermitDefaultType = 1
 const PermitDefaultTypeName = "默认"
+
+const TagsDefaultType = 1
+const TagsDefaultName = "默认"

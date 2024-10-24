@@ -19,8 +19,7 @@ func NewTagsHandler() *TagsHandler {
 }
 func (h *TagsHandler) List(ctx *gin.Context) {
 	var appGin = app.Gin{C: ctx}
-	assignData := ""
-	appGin.SuccessAdminHtml(assignData, "tags/list.html")
+	appGin.SuccessAdminHtml("", "tags/list.html")
 }
 func (h *TagsHandler) ListJson(ctx *gin.Context) {
 	var appGin = app.Gin{C: ctx}
@@ -36,6 +35,13 @@ func (h *TagsHandler) ListJson(ctx *gin.Context) {
 		return
 	}
 	appGin.Success(list)
+}
+
+func (h *TagsHandler) Edit(ctx *gin.Context) {
+	var appGin = app.Gin{C: ctx}
+	id := ctx.Param("id")
+	infoData, _ := h.srv.GetInfo(ctx, id)
+	appGin.SuccessAdminHtml(infoData, "menu/edit.html")
 }
 
 func (h *TagsHandler) Info(ctx *gin.Context) {

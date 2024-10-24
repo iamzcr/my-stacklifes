@@ -89,6 +89,15 @@ func AdminRoutersInit(r *gin.Engine) {
 		adminRouter.POST("/menu/update", menuHandler.Update)
 		adminRouter.POST("/menu/delete", menuHandler.Delete)
 
+		adminRouter.GET("/tags/list", tagsHandler.List)
+		adminRouter.GET("/tags/list_json", tagsHandler.ListJson)
+		adminRouter.GET("/tags/add", tagsHandler.Edit)
+		adminRouter.GET("/tags/edit/:id", tagsHandler.Edit)
+		adminRouter.GET("/tags/info/:id", tagsHandler.Info)
+		adminRouter.POST("/tags/create", tagsHandler.Create)
+		adminRouter.POST("/tags/update", tagsHandler.Update)
+		adminRouter.POST("/tags/delete", tagsHandler.Delete)
+
 		adminRouter.GET("/option/getFilter", optionHandler.GetFilter)
 		adminRouter.GET("/lang/list", langHandler.List)
 		adminRouter.GET("/lang/list_json", langHandler.ListJson)
@@ -124,14 +133,6 @@ func AdminRoutersInit(r *gin.Engine) {
 		adminRouter.POST("/admin/create", adminsHandler.Create)
 		adminRouter.POST("/admin/change_field", adminsHandler.ChangeField)
 		adminRouter.POST("/admin/delete", adminsHandler.Delete)
-
-		adminRouter.GET("/tags/list", tagsHandler.List)
-		adminRouter.GET("/tags/list_json", tagsHandler.ListJson)
-		adminRouter.GET("/tags/info/:id", tagsHandler.Info)
-		adminRouter.POST("/tags/create", tagsHandler.Create)
-		adminRouter.POST("/tags/update", tagsHandler.Update)
-		adminRouter.POST("/tags/delete", tagsHandler.Delete)
-		adminRouter.POST("/tags/change_field", tagsHandler.ChangeField)
 
 		adminRouter.GET("/article/list", articleHandler.List)
 		adminRouter.GET("/article/list_json", articleHandler.ListJson)

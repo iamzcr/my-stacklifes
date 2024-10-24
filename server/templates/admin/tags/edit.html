@@ -7,7 +7,6 @@
 <body class="nav-md">
 <div class="container body">
     <div class="main_container">
-
         {{template "public/left_nav" .}}
         {{template "public/nav" .}}
         <!-- page content -->
@@ -16,22 +15,24 @@
                 <div class="col-md-12 col-sm-12 ">
                     <div class="x_panel">
                         <div class="x_content">
-                            <form id="demo-form2" data-parsley-validate class="form-horizontal form-label-left">
+                            <form id="inputForm" data-parsley-validate class="form-horizontal form-label-left">
+                                <input type="hidden" name="id" value="{{if .data}}{{.data.Id}}{{end}}">
                                 <div class="item form-group">
                                     <label class="col-form-label col-md-1 label-align">标签名称</label>
                                     <div class="col-md-2">
-                                        <input type="text" name="name" required="required" class="form-control ">
+                                        <input type="text" name="name"  value="{{if .data}}{{.data.Name}}{{end}}"  required="required" class="form-control">
                                     </div>
                                 </div>
                                 <div class="item form-group">
                                     <label class="col-form-label col-md-1 label-align">排序</label>
                                     <div class="col-md-2">
-                                        <input type="text" name="weight" required="required" class="form-control">
+                                        <input type="text" name="weight"  value="{{if .data}}{{.data.Weight}}{{end}}"  required="required" class="form-control">
                                     </div>
                                 </div>
                                 <div class="item form-group">
                                     <div class="col-md-6 offset-md-1">
-                                        <button type="submit" class="btn btn-success">提交</button>
+                                        <button type="button" class="btn btn-success" onclick="submitForm()">提交
+                                        </button>
                                     </div>
                                 </div>
                             </form>
@@ -45,7 +46,29 @@
 </div>
 {{template "public/footer" .}}
 <script>
-
+    function submitForm() {
+        let url = "/admin/tags/create"
+        let id = $("#id").data("id");
+        if (id) {
+            url = "/admin/tags/update"
+        }
+        let formData = $("#inputForm").serialize();
+        $.ajax({
+            type: "POST",
+            url: url, // 提交表单数据的URL
+            data: formData,
+            success: function (response) {
+                if (response.code !== 200) {
+                    Swal.fire({icon: "error", text: response.message});
+                } else {
+                    window.location.replace("/admin/tags/list");
+                }
+            },
+            error: function (error) {
+                Swal.fire({icon: "error", text: 'error'});
+            }
+        });
+    }
 </script>
 </body>
 </html>
