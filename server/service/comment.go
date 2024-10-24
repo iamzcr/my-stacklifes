@@ -6,6 +6,7 @@ import (
 	"my-stacklifes/database/mysql"
 	"my-stacklifes/models"
 	"my-stacklifes/pkg/tools"
+	"time"
 )
 
 type CommentService struct {
@@ -46,7 +47,7 @@ func (s *CommentService) GetList(ctx *gin.Context, req models.CommentReq) (inter
 	}, nil
 }
 
-func (s *CommentService) Update(ctx *gin.Context, req models.CommentCreateReq) (interface{}, error) {
+func (s *CommentService) Create(ctx *gin.Context, req models.CommentCreateReq) (interface{}, error) {
 	var comment models.Comment
 	if req.Name == "" || req.Content == "" || req.Aid == 0 {
 		return nil, errors.New("params is null")
@@ -61,6 +62,7 @@ func (s *CommentService) Update(ctx *gin.Context, req models.CommentCreateReq) (
 	comment.Referer = ctx.Request.Referer()
 	comment.Email = req.Email
 	comment.Ip = ctx.ClientIP()
+	comment.CreateTime = time.Now().Unix()
 	err := s.dbClient.MysqlClient.Create(&comment).Error
 	if err != nil {
 		return nil, err

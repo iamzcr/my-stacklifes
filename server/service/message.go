@@ -40,7 +40,7 @@ func (s *MessageService) GetList(ctx *gin.Context, req models.MessageReq) (inter
 	}, nil
 }
 
-func (s *MessageService) Update(ctx *gin.Context, req models.MsgCreateReq) (interface{}, error) {
+func (s *MessageService) Create(ctx *gin.Context, req models.MsgCreateReq) (interface{}, error) {
 	var message models.Message
 	if len(req.Name) <= 0 || len(req.Content) <= 0 {
 		return nil, errors.New("params is null")

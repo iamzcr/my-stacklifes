@@ -18,11 +18,11 @@ func NewCommentHandler() *CommentHandler {
 	}
 }
 
-func (h *CommentHandler) Update(ctx *gin.Context) {
+func (h *CommentHandler) Create(ctx *gin.Context) {
 	var appGin = app.Gin{C: ctx}
 	commentCreateReq := models.CommentCreateReq{}
 	err := ctx.ShouldBind(&commentCreateReq)
-	res, err := h.srv.Update(ctx, commentCreateReq)
+	res, err := h.srv.Create(ctx, commentCreateReq)
 	if err != nil {
 		appGin.Error(exception.ERROR, err.Error(), nil)
 		return

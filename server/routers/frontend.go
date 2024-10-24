@@ -24,6 +24,6 @@ func FrontendRoutersInit(r *gin.Engine) {
 	r.GET("/category/:id", articleHandler.CategoryArticleList)
 	r.GET("/tag/id/:id", articleHandler.TagsArticleList)
 	r.GET("/article/detail/:cid/:id", articleHandler.ArticleDetail)
-	r.POST("/message", messageHandler.Update)
-	r.POST("/comment", commentHandler.Update)
+	r.POST("/message/create", messageHandler.Create)
+	r.POST("/comment/create", commentHandler.Create)
 }

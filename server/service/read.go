@@ -4,6 +4,7 @@ import (
 	"github.com/gin-gonic/gin"
 	"my-stacklifes/database/mysql"
 	"my-stacklifes/models"
+	"time"
 )
 
 type ReadService struct {
@@ -26,14 +27,8 @@ func (s *ReadService) GetList(ctx *gin.Context, req models.ReadReq) (interface{}
 		db = db.Where("ip LIKE ?", "%"+req.Ip+"%")
 	}
 	limit, offset := req.GetPageInfo()
-	err := db.Limit(limit).
-		Offset(offset).
-		Order("id DESC").
-		Find(&reads).Error
-	if err != nil {
-		return nil, err
-	}
-	db.Model(reads).Count(&total)
+	err := db.Limit(limit).Offset(offset).Order("id DESC").Find(&reads).
+		Limit(-1).Offset(-1).Count(&total).Error
 	if err != nil {
 		return nil, err
 	}
@@ -56,11 +51,10 @@ func (s *ReadService) Create(ctx *gin.Context, req models.ReadCreateReq) (interf
 		return nil, errors.New("记录已存在")
 	}
 	*/
-
 	read.Ip = req.Ip
 	read.Referer = req.Referer
 	read.Aid = req.Aid
-
+	read.CreateTime = time.Now().Unix()
 	err := s.dbClient.MysqlClient.Create(&read).Error
 	if err != nil {
 		return nil, err

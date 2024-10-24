@@ -18,11 +18,11 @@ func NewMessageHandler() *MessageHandler {
 	}
 }
 
-func (h *MessageHandler) Update(ctx *gin.Context) {
+func (h *MessageHandler) Create(ctx *gin.Context) {
 	var appGin = app.Gin{C: ctx}
 	msgCreateReq := models.MsgCreateReq{}
 	err := ctx.ShouldBind(&msgCreateReq)
-	res, err := h.srv.Update(ctx, msgCreateReq)
+	res, err := h.srv.Create(ctx, msgCreateReq)
 	if err != nil {
 		appGin.Error(exception.ERROR, err.Error(), nil)
 		return
