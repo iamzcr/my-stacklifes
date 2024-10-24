@@ -1,20 +1,23 @@
 package models
 
 type Website struct {
-	Id    int    `json:"id" form:"id" `
-	Name  string `json:"name" form:"name"`
-	Key   string `json:"key" form:"key"`
-	Value string `json:"value" form:"value" `
-	CommonField
-}
-type WebsiteMine struct {
-	Key   string `json:"key"`
+	Id    int    `json:"id"  gorm:"column:id;type:int(11);primary_key;AUTO_INCREMENT"`
 	Name  string `json:"name"`
+	Key   string `json:"key"`
 	Value string `json:"value"`
+	CommonField
 }
 
 func (c *Website) TableName() string {
 	return "sl_website"
+}
+
+type WebsiteInfo struct {
+	Id         int    `json:"id"`
+	Name       string `json:"name"`
+	Key        string `json:"key"`
+	Value      string `json:"value"`
+	CreateTime string `json:"create_time"`
 }
 
 type WebsiteListReq struct {
@@ -23,8 +26,8 @@ type WebsiteListReq struct {
 }
 
 type WebsiteListRes struct {
-	Total int64     `json:"total"`
-	List  []Website `json:"list"`
+	Total int64         `json:"total"`
+	List  []WebsiteInfo `json:"list"`
 }
 
 type WebsiteCreateReq struct {
@@ -45,5 +48,5 @@ type WebsiteDelReq struct {
 }
 
 type WebsiteFrontendList struct {
-	List []WebsiteMine `json:"list"`
+	List []WebsiteInfo `json:"list"`
 }
