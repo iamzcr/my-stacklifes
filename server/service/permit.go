@@ -155,7 +155,7 @@ func (s *PermitService) GetParentList(ctx *gin.Context) (interface{}, error) {
 	if err != nil {
 		return nil, err
 	}
-	permitLists = append(permitLists, models.PermitMine{Id: 0, Name: "顶级菜单", Parent: 0})
+	permitLists = append(permitLists, models.PermitMine{Id: 0, Name: "父级权限", Parent: 0})
 	for _, permit := range permits {
 		permitLists = append(permitLists, permit)
 	}
