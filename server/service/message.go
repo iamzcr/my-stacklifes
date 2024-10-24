@@ -6,6 +6,7 @@ import (
 	"my-stacklifes/database/mysql"
 	"my-stacklifes/models"
 	"my-stacklifes/pkg/tools"
+	"time"
 )
 
 type MessageService struct {
@@ -20,28 +21,22 @@ func NewMessageService() *MessageService {
 
 func (s *MessageService) GetList(ctx *gin.Context, req models.MessageReq) (interface{}, error) {
 	var (
-		message []models.Message
-		total   int64
+		messages []models.Message
+		total    int64
 	)
 	db := s.dbClient.MysqlClient
 	if len(req.Name) > 0 {
 		db = db.Where("name LIKE ?", "%"+req.Name+"%")
 	}
 	limit, offset := req.GetPageInfo()
-	err := db.Limit(limit).
-		Offset(offset).
-		Order("id DESC").
-		Find(&message).Error
-	if err != nil {
-		return nil, err
-	}
-	err = db.Model(message).Count(&total).Error
+	err := db.Limit(limit).Offset(offset).Order("id DESC").Find(&messages).
+		Limit(-1).Offset(-1).Count(&total).Error
 	if err != nil {
 		return nil, err
 	}
 	return models.MessageListRes{
 		Total: total,
-		List:  message,
+		List:  messages,
 	}, nil
 }
 
@@ -57,6 +52,7 @@ func (s *MessageService) Update(ctx *gin.Context, req models.MsgCreateReq) (inte
 	message.Url = req.Url
 	message.Email = req.Email
 	message.Content = req.Content
+	message.CreateTime = time.Now().Unix()
 	message.Ip = ctx.ClientIP()
 	err := s.dbClient.MysqlClient.Create(&message).Error
 	if err != nil {
@@ -67,11 +63,12 @@ func (s *MessageService) Update(ctx *gin.Context, req models.MsgCreateReq) (inte
 
 func (s *MessageService) Delete(ctx *gin.Context, req models.MessageDelReq) (interface{}, error) {
 	var message models.Message
-	s.dbClient.MysqlClient.Where("id=?", req.Id).Find(&message)
+	db := s.dbClient.MysqlClient
+	db.Where("id=?", req.Id).Find(&message)
 	if message.Id <= 0 {
 		return nil, errors.New("不存在该记录")
 	}
-	err := s.dbClient.MysqlClient.Delete(&message).Error
+	err := db.Delete(&message).Error
 	if err != nil {
 		return nil, err
 	}

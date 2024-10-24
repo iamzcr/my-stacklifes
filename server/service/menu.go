@@ -7,6 +7,7 @@ import (
 	"my-stacklifes/models"
 	"my-stacklifes/pkg/constant"
 	"my-stacklifes/pkg/tools"
+	"time"
 )
 
 type MenuService struct {
@@ -93,6 +94,7 @@ func (s *MenuService) Create(ctx *gin.Context, req models.MenuCreateReq) (interf
 	menu.Parent = req.Parent
 	menu.Url = req.Url
 	menu.Weight = req.Weight
+	menu.CreateTime = time.Now().Unix()
 	err := db.Create(&menu).Error
 	if err != nil {
 		return nil, err
@@ -118,6 +120,7 @@ func (s *MenuService) Update(ctx *gin.Context, req models.MenuUpdateReq) (interf
 	menu.Parent = req.Parent
 	menu.Url = req.Url
 	menu.Weight = req.Weight
+	menu.UpdatedTime = time.Now().Unix()
 	err := db.Save(&menu).Error
 	if err != nil {
 		return nil, err

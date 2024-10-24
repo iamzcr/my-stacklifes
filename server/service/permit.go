@@ -7,6 +7,7 @@ import (
 	"my-stacklifes/models"
 	"my-stacklifes/pkg/constant"
 	"my-stacklifes/pkg/tools"
+	"time"
 )
 
 type PermitService struct {
@@ -91,6 +92,7 @@ func (s *PermitService) Create(ctx *gin.Context, req models.PermitCreateReq) (in
 	permit.Parent = req.Parent
 	permit.Modules = req.Modules
 	permit.Weight = req.Weight
+	permit.CreateTime = time.Now().Unix()
 	err := db.Create(&permit).Error
 	if err != nil {
 		return nil, err
@@ -116,6 +118,7 @@ func (s *PermitService) Update(ctx *gin.Context, req models.PermitUpdateReq) (in
 	permit.Parent = req.Parent
 	permit.Modules = req.Modules
 	permit.Weight = req.Weight
+	permit.UpdatedTime = time.Now().Unix()
 	err := db.Save(&permit).Error
 	if err != nil {
 		return nil, err
