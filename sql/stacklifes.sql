@@ -10,7 +10,7 @@ Target Server Type    : MYSQL
 Target Server Version : 80039
 File Encoding         : 65001
 
-Date: 2024-10-23 18:06:12
+Date: 2024-10-24 22:32:32
 */
 
 SET FOREIGN_KEY_CHECKS=0;
@@ -60,14 +60,14 @@ CREATE TABLE `sl_admin_group` (
   `create_time` int DEFAULT '0' COMMENT '创建用户组时间戳',
   `update_time` int DEFAULT NULL COMMENT '更新操作时间',
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=153 DEFAULT CHARSET=utf8mb3 COMMENT='用户组';
+) ENGINE=InnoDB AUTO_INCREMENT=155 DEFAULT CHARSET=utf8mb3 COMMENT='用户组';
 
 -- ----------------------------
 -- Records of sl_admin_group
 -- ----------------------------
 INSERT INTO `sl_admin_group` VALUES ('1', 'super', '超级管理员', '拥有所有权限', '[\"347\",\"348\",\"349\",\"350\",\"351\",\"352\",\"353\",\"370\",\"381\",\"382\",\"383\",\"384\",\"385\",\"386\",\"387\",\"388\"]', '[\"menu\\/*\",\"permit\\/*\",\"usergroup\\/*\",\"log\\/*\",\"website\\/*\",\"user\\/index\",\"user\\/add\",\"user\\/updatedata\",\"user\\/changestatus\",\"user\\/password\",\"lang\\/*\",\"columns\\/*\",\"article\\/*\",\"tags\\/*\",\"attach\\/*\",\"upload\\/*\",\"read\\/*\",\"comment\\/*\",\"message\\/*\"]', null, '1', '1487580864', '1487580864');
-INSERT INTO `sl_admin_group` VALUES ('151', 'ceshi', '测试', '', '', '', '', '1', '0', '0');
-INSERT INTO `sl_admin_group` VALUES ('152', 'ceshi222', '测试222', '', '', '', '', '1', '0', '0');
+INSERT INTO `sl_admin_group` VALUES ('153', 'ceshi', '测试', '', '', '', '', '1', '1729780120', '0');
+INSERT INTO `sl_admin_group` VALUES ('154', 'ceshi1', '测试1', '', '', '', '', '1', '1729780129', '0');
 
 -- ----------------------------
 -- Table structure for sl_article
@@ -302,12 +302,19 @@ CREATE TABLE `sl_log` (
   PRIMARY KEY (`id`),
   KEY `username` (`username`),
   KEY `create_time` (`create_time`)
-) ENGINE=InnoDB AUTO_INCREMENT=90 DEFAULT CHARSET=utf8mb3 COMMENT='日志表';
+) ENGINE=InnoDB AUTO_INCREMENT=97 DEFAULT CHARSET=utf8mb3 COMMENT='日志表';
 
 -- ----------------------------
 -- Records of sl_log
 -- ----------------------------
 INSERT INTO `sl_log` VALUES ('89', 'nicholas', null, 'test', '0', null, null);
+INSERT INTO `sl_log` VALUES ('90', '', '172.16.50.35', 'del menu', '1729767665', '0', '0');
+INSERT INTO `sl_log` VALUES ('91', 'nicholas', '172.16.50.35', 'del menu', '1729767836', '0', '1');
+INSERT INTO `sl_log` VALUES ('92', 'nicholas', '172.16.50.35', 'del menu', '1729772158', '0', '1');
+INSERT INTO `sl_log` VALUES ('93', 'nicholas', '172.16.50.35', 'del menu', '1729772158', '0', '1');
+INSERT INTO `sl_log` VALUES ('94', 'nicholas', '172.16.50.35', 'del menu', '1729772159', '0', '1');
+INSERT INTO `sl_log` VALUES ('95', 'nicholas', '172.16.50.35', 'del menu', '1729780090', '0', '1');
+INSERT INTO `sl_log` VALUES ('96', 'nicholas', '172.16.50.35', 'del menu', '1729780091', '0', '1');
 
 -- ----------------------------
 -- Table structure for sl_menu
@@ -332,7 +339,7 @@ CREATE TABLE `sl_menu` (
   KEY `parent` (`parent`) USING BTREE,
   KEY `weight` (`weight`) USING BTREE,
   KEY `type_status` (`type`,`status`) USING BTREE
-) ENGINE=InnoDB AUTO_INCREMENT=384 DEFAULT CHARSET=utf8mb3 COMMENT='菜单';
+) ENGINE=InnoDB AUTO_INCREMENT=394 DEFAULT CHARSET=utf8mb3 COMMENT='菜单';
 
 -- ----------------------------
 -- Records of sl_menu
@@ -344,7 +351,7 @@ INSERT INTO `sl_menu` VALUES ('257', '1', 'menu', 'nicholas', '菜单设置', '/
 INSERT INTO `sl_menu` VALUES ('258', '1', 'user', 'nicholas', '管理员', '/admin/admin/list', '229', '', '0', '1', '1488445679', '1488445679');
 INSERT INTO `sl_menu` VALUES ('259', '1', 'opt_log', 'nicholas', '操作日志', '/admin/log/list', '229', '', '0', '1', '1493542152', '1493542152');
 INSERT INTO `sl_menu` VALUES ('266', '1', 'permit', 'nicholas', '权限管理', '/admin/permit/list', '229', 'fa-cogs', '5', '1', '1497860481', '1497860481');
-INSERT INTO `sl_menu` VALUES ('331', '1', 'base_setting', 'nicholas', '基本设置', '/admin/web_site/list', '229', '', '0', '1', '1497860481', null);
+INSERT INTO `sl_menu` VALUES ('331', '1', 'base_setting', 'nicholas', '基本设置', '/admin/website/list', '229', '', '0', '1', '1497860481', null);
 INSERT INTO `sl_menu` VALUES ('346', '1', 'lang', 'nicholas', '语言设置', '/admin/lang/list', '229', '', '0', '1', '1497860481', null);
 INSERT INTO `sl_menu` VALUES ('365', '1', 'article_manager', 'nicholas', '文章管理', '#', '0', 'fa-align-left', '2', '1', '1686320743', null);
 INSERT INTO `sl_menu` VALUES ('367', '1', 'article', 'nicholas', '文章列表', '/admin/article/list', '365', '', '7', '1', '1686320811', null);
@@ -371,7 +378,7 @@ CREATE TABLE `sl_message` (
   `create_time` int DEFAULT NULL,
   `update_time` int DEFAULT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=6 DEFAULT CHARSET=utf8mb3 COMMENT='留言表';
+) ENGINE=InnoDB AUTO_INCREMENT=7 DEFAULT CHARSET=utf8mb3 COMMENT='留言表';
 
 -- ----------------------------
 -- Records of sl_message
@@ -379,6 +386,7 @@ CREATE TABLE `sl_message` (
 INSERT INTO `sl_message` VALUES ('3', '172.16.50.35', 'zcr', '1076686352@qq.com', 'iamzcr.com', '0', '文章好好', '0', '0');
 INSERT INTO `sl_message` VALUES ('4', '172.16.50.35', '测试', '1076686352@qq.com', '测试', '0', '测试测试测试测试', '0', '0');
 INSERT INTO `sl_message` VALUES ('5', '172.16.50.35', '测试', '1076686352@qq.com', '测试', '0', '测试测试测试测试测试', '0', '0');
+INSERT INTO `sl_message` VALUES ('6', '172.16.50.35', '测试', '1076686352@qq.com', 'iamzcr.com', '0', '测试', '1729765086', '0');
 
 -- ----------------------------
 -- Table structure for sl_permit
@@ -398,7 +406,7 @@ CREATE TABLE `sl_permit` (
   `update_time` int DEFAULT NULL,
   PRIMARY KEY (`id`),
   UNIQUE KEY `name` (`name`) USING BTREE
-) ENGINE=InnoDB AUTO_INCREMENT=391 DEFAULT CHARSET=utf8mb3 COMMENT='权限表';
+) ENGINE=InnoDB AUTO_INCREMENT=404 DEFAULT CHARSET=utf8mb3 COMMENT='权限表';
 
 -- ----------------------------
 -- Records of sl_permit
@@ -577,7 +585,7 @@ CREATE TABLE `sl_website` (
   `create_time` int DEFAULT NULL,
   PRIMARY KEY (`id`),
   UNIQUE KEY `key` (`key`) USING BTREE
-) ENGINE=InnoDB AUTO_INCREMENT=6 DEFAULT CHARSET=utf8mb3;
+) ENGINE=InnoDB AUTO_INCREMENT=7 DEFAULT CHARSET=utf8mb3;
 
 -- ----------------------------
 -- Records of sl_website
