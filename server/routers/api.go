@@ -20,8 +20,8 @@ func ApiRoutersInit(r *gin.Engine) {
 		frontendApiRouter.GET("/article/detail/:id", articleHandler.ArticleDetail)
 		frontendApiRouter.GET("/nav", navHandler.GetNavList)
 		frontendApiRouter.GET("/website", websiteHandler.WebsiteFrontendList)
-		frontendApiRouter.POST("/message", messageHandler.Update)
-		frontendApiRouter.POST("/comment", commentHandler.Update)
+		frontendApiRouter.POST("/message/create", messageHandler.Create)
+		frontendApiRouter.POST("/comment/create", commentHandler.Create)
 	}
 
 	loginHandler := admin.NewLoginHandler()
