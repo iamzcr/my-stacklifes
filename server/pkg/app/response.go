@@ -50,10 +50,8 @@ func (g *Gin) SuccessHtml(data interface{}, view string) {
 }
 
 func (g *Gin) SuccessAdminHtml(data interface{}, view string) {
-	menuTree, _ := g.C.Get("menuTree")
 	var h = gin.H{
-		"data":     data,
-		"menuTree": menuTree,
+		"data": data,
 	}
 	fmt.Printf("%#v\n", h)
 
