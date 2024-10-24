@@ -114,7 +114,7 @@ func (s *MenuService) Update(ctx *gin.Context, req models.MenuUpdateReq) (interf
 	if menu.Id <= 0 {
 		return nil, errors.New("不存在该记录")
 	}
-	db.Debug().Where("id != ? and name=?", req.Id, req.Name).Count(&count)
+	db.Model(menu).Where("id != ? and name=?", req.Id, req.Name).Count(&count)
 	if count > 0 {
 		return nil, errors.New("记录已存在")
 	}
