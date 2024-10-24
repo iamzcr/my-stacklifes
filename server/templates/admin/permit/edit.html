@@ -33,7 +33,7 @@
                                         <select class="form-control" name="parent">
                                             {{range $index, $value := .data.PermitParents}}
                                             <option value="{{$value.Id}}"
-                                                    {{if and (not eq $.data.PermitInfo nil) (eq $value.Id $.data.PermitInfo.Parent)}}selected{{end}}>
+                                                    {{if and (not (eq $.data.PermitInfo nil)) (eq $value.Id $.data.PermitInfo.Parent)}}selected{{end}}>
                                                 {{$value.Name}}
                                             </option>
                                             {{end}}
