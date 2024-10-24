@@ -16,33 +16,41 @@
                     <div class="x_panel">
                         <div class="x_content">
                             <form id="inputForm" data-parsley-validate class="form-horizontal form-label-left">
-                                <input type="hidden" name="id" id="id" value="{{if .data}}{{.data.Id}}{{end}}"
-                                       data-id="{{if .data}}{{.data.Id}}{{end}}">
+                                <input type="hidden" name="id" id="id"
+                                       value="{{if .data.PermitInfo}}{{.data.PermitInfo.Id}}{{end}}"
+                                       data-id="{{if .data.PermitInfo}}{{.data.PermitInfo.Id}}{{end}}">
                                 <div class="item form-group">
                                     <label class="col-form-label col-md-1 label-align">名称</label>
                                     <div class="col-md-2">
-                                        <input type="text" name="name" value="{{if .data}}{{.data.Name}}{{end}}"
+                                        <input type="text" name="name"
+                                               value="{{if .data.PermitInfo}}{{.data.PermitInfo.Name}}{{end}}"
                                                required="required" class="form-control">
                                     </div>
                                 </div>
                                 <div class="item form-group">
                                     <label class="col-form-label col-md-1 label-align">父级</label>
                                     <div class="col-md-2">
-                                        <input type="text" name="value"
-                                               value="{{if .data}}{{.data.Parent}}{{end}}" required="required"
-                                               class="form-control">
+                                        <select class="form-control" name="parent">
+                                            {{range $index,$value := .data.PermitParents}}
+                                            <option value="{{$value.Id}}">{{$value.Name}}</option>
+                                            {{end}}
+                                        </select>
                                     </div>
                                 </div>
                                 <div class="item form-group">
                                     <label class="col-form-label col-md-1 label-align">modules</label>
                                     <div class="col-md-2">
-                                        <input type="text" name="modules" value="{{if .data}}{{.data.Modules}}{{end}}" required="required" class="form-control">
+                                        <input type="text" name="modules"
+                                               value="{{if .data.PermitInfo}}{{.data.PermitInfo.Modules}}{{end}}"
+                                               required="required" class="form-control">
                                     </div>
                                 </div>
                                 <div class="item form-group">
                                     <label class="col-form-label col-md-1 label-align">排序</label>
                                     <div class="col-md-2">
-                                        <input type="text" name="weight" value="{{if .data}}{{.data.Weight}}{{end}}" required="required" class="form-control">
+                                        <input type="text" name="weight"
+                                               value="{{if .data.PermitInfo}}{{.data.PermitInfo.Weight}}{{end}}"
+                                               required="required" class="form-control">
                                     </div>
                                 </div>
                                 <div class="item form-group">

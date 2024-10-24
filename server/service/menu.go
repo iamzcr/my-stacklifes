@@ -153,12 +153,12 @@ func (s *MenuService) GetInfo(ctx *gin.Context, id string) (interface{}, error) 
 		return nil, res.Error
 	}
 	if menu.Id == 0 {
-		return nil, errors.New("website error")
+		return nil, errors.New("permit error")
 	}
 	return menu, nil
 }
 
-func (s *MenuService) GetParentList() (interface{}, error) {
+func (s *MenuService) GetParentList(ctx *gin.Context) (interface{}, error) {
 	var menuLists []models.MenuMine
 	var menus []models.MenuMine
 	db := s.dbClient.MysqlClient

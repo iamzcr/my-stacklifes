@@ -44,7 +44,7 @@ func (h *MenuHandler) Edit(ctx *gin.Context) {
 	var appGin = app.Gin{C: ctx}
 	id := ctx.Param("id")
 	MenuInfo, _ := h.srv.GetInfo(ctx, id)
-	MenuParents, _ := h.srv.GetParentList()
+	MenuParents, _ := h.srv.GetParentList(ctx)
 	menuAssignList := models.MenuAssignList{
 		MenuInfo:    MenuInfo,
 		MenuParents: MenuParents,

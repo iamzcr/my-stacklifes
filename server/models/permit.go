@@ -23,7 +23,7 @@ type PermitUpdateReq struct {
 	Modules string `json:"modules" form:"modules"  binding:"required"`
 	Type    int    `json:"type" form:"type,default=1"`
 	Parent  int    `json:"parent" form:"parent,default=0"`
-	Weight  string `json:"weight" form:"weight"`
+	Weight  int    `json:"weight" form:"weight"`
 	Author  string `json:"author" form:"author,default=nicholas"`
 	Mark    string `json:"mark" form:"mark"`
 }

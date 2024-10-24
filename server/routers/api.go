@@ -103,7 +103,6 @@ func ApiRoutersInit(r *gin.Engine) {
 
 		adminRouter.GET("/permit/list", adminPermitHandler.List)
 		adminRouter.GET("/permit/info/:id", adminPermitHandler.Info)
-		adminRouter.GET("/permit/no_page_list", adminPermitHandler.NoPageList)
 		adminRouter.POST("/permit/update", adminPermitHandler.Update)
 		adminRouter.POST("/permit/create", adminPermitHandler.Create)
 		adminRouter.POST("/permit/delete", adminPermitHandler.Delete)

@@ -8,3 +8,6 @@ const StatusFalseName = "否"
 
 const MenuNavType = 1
 const MenuNavTypeName = "导航"
+
+const PermitDefaultType = 1
+const PermitDefaultTypeName = "默认"

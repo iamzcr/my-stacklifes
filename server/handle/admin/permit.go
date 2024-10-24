@@ -18,13 +18,6 @@ func NewPermitHandler() *PermitHandler {
 	}
 }
 
-func (h *PermitHandler) Edit(ctx *gin.Context) {
-	var appGin = app.Gin{C: ctx}
-	id := ctx.Param("id")
-	info, _ := h.srv.GetInfo(ctx, id)
-	appGin.SuccessAdminHtml(info, "menu/edit.html")
-}
-
 func (h *PermitHandler) List(ctx *gin.Context) {
 	var appGin = app.Gin{C: ctx}
 	assignData := "assignData"
@@ -47,22 +40,6 @@ func (h *PermitHandler) ListJson(ctx *gin.Context) {
 	appGin.Success(list)
 }
 
-func (h *PermitHandler) NoPageList(ctx *gin.Context) {
-	var appGin = app.Gin{C: ctx}
-	query := models.PermitNoPageReq{}
-	err := ctx.ShouldBindQuery(&query)
-	if err != nil {
-		appGin.Error(exception.ERROR, err.Error(), nil)
-		return
-	}
-	list, err := h.srv.PermitNoPageList(ctx, query)
-	if err != nil {
-		appGin.Error(exception.ERROR, err.Error(), nil)
-		return
-	}
-	appGin.Success(list)
-}
-
 func (h *PermitHandler) Info(ctx *gin.Context) {
 	var appGin = app.Gin{C: ctx}
 	id := ctx.Param("id")
@@ -72,6 +49,17 @@ func (h *PermitHandler) Info(ctx *gin.Context) {
 		return
 	}
 	appGin.Success(infoData)
+}
+func (h *PermitHandler) Edit(ctx *gin.Context) {
+	var appGin = app.Gin{C: ctx}
+	id := ctx.Param("id")
+	permitInfo, _ := h.srv.GetInfo(ctx, id)
+	permitParents, _ := h.srv.GetParentList(ctx)
+	permitAssignList := models.PermitAssignList{
+		PermitInfo:    permitInfo,
+		PermitParents: permitParents,
+	}
+	appGin.SuccessAdminHtml(permitAssignList, "permit/edit.html")
 }
 
 func (h *PermitHandler) Create(ctx *gin.Context) {

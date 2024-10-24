@@ -77,7 +77,6 @@ func AdminRoutersInit(r *gin.Engine) {
 		adminRouter.GET("/permit/add", permitHandler.Edit)
 		adminRouter.GET("/permit/edit/:id", permitHandler.Edit)
 		adminRouter.GET("/permit/info/:id", permitHandler.Info)
-		adminRouter.GET("/permit/no_page_list", permitHandler.NoPageList)
 		adminRouter.POST("/permit/update", permitHandler.Update)
 		adminRouter.POST("/permit/create", permitHandler.Create)
 		adminRouter.POST("/permit/delete", permitHandler.Delete)
