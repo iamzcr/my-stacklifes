@@ -101,19 +101,17 @@ func (s *MenuService) Create(ctx *gin.Context, req models.MenuCreateReq) (interf
 }
 
 func (s *MenuService) Update(ctx *gin.Context, req models.MenuUpdateReq) (interface{}, error) {
-	var (
-		menu  models.Menu
-		count int64
-	)
+	var menu models.Menu
 	db := s.dbClient.MysqlClient
 	db.Where("id=?", req.Id).First(&menu)
 	fmt.Println(menu.Id)
 	if menu.Id <= 0 {
 		return nil, errors.New("不存在该记录")
 	}
-	db.Model(menu).Where("id != ? and name=?", req.Id, req.Name).Count(&count)
-	if count > 0 {
-		return nil, errors.New("记录已存在")
+	db.Where("id != ? and name=?", req.Id, req.Name).First(&menu)
+	fmt.Println(menu.Id)
+	if menu.Id > 0 {
+		return nil, errors.New("已存在有相同的名称记录")
 	}
 	menu.Name = req.Name
 	menu.Parent = req.Parent

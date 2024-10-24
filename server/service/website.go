@@ -85,12 +85,12 @@ func (s *WebsiteService) Update(ctx *gin.Context, req models.WebsiteUpdateReq) (
 
 	db := s.dbClient.MysqlClient
 	db.Where("id=?", req.Id).First(&website)
-	if website.Id > 0 {
+	if website.Id <= 0 {
 		return nil, errors.New("记录已存在")
 	}
 	db.Where("id != ? and key=?", req.Id, req.Key).First(&website)
 	if website.Id > 0 {
-		return nil, errors.New("记录名称已存在")
+		return nil, errors.New("已存在有相同的名称记录")
 	}
 	website.Name = req.Name
 	website.Key = req.Key
