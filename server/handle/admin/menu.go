@@ -117,5 +117,6 @@ func (h *MenuHandler) Delete(ctx *gin.Context) {
 		appGin.Error(exception.ERROR, err.Error(), nil)
 		return
 	}
+
 	appGin.Success(res)
 }

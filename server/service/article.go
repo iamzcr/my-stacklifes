@@ -267,8 +267,7 @@ func (s *ArticleService) GetFrontDetail(ctx *gin.Context, id string) (interface{
 		}
 	}
 	//记录阅读人数,这里可以考虑用个异步
-	readService := NewReadService()
-	_, _ = readService.Create(ctx, models.ReadCreateReq{
+	_, _ = NewReadService().Create(ctx, models.ReadCreateReq{
 		Aid: article.Id,
 	})
 	content, _ := tools.ConvertMarkdownToHTML([]byte(article.Content))

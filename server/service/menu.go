@@ -146,6 +146,7 @@ func (s *MenuService) Delete(ctx *gin.Context, req models.MenuDelReq) (interface
 	if err != nil {
 		return nil, err
 	}
+	_, _ = NewLogService().Create(ctx, models.LogCreateReq{Content: "del menu"})
 	return menu.Id, nil
 }
 
