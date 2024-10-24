@@ -148,7 +148,7 @@ func (s *PermitService) GetParentList(ctx *gin.Context) (interface{}, error) {
 	var permitLists []models.PermitMine
 	var permits []models.PermitMine
 	db := s.dbClient.MysqlClient
-	err := db.Model(&models.Menu{}).Debug().Where("status = ?", constant.StatusTrue).
+	err := db.Model(&models.Permit{}).Debug().Where("status = ?", constant.StatusTrue).
 		Where("parent=?", constant.TopParent).
 		Select("id,parent,name").
 		Order("id DESC").Find(&permits).Error
