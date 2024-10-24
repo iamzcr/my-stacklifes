@@ -2,8 +2,8 @@ package models
 
 type Log struct {
 	Id       int    `json:"id" gorm:"column:id;type:int(11);primary_key;AUTO_INCREMENT"`
-	Username string `json:"username" `
-	Type     int    `json:"type"`
+	Username string `json:"username" gorm:"column:username;type:string;default:nicholas" `
+	Type     int    `json:"type" gorm:"column:type;type:int(11);default:1"`
 	Ip       string `json:"ip" `
 	Content  string `json:"content"`
 	CommonField
