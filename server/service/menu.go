@@ -2,7 +2,6 @@ package service
 
 import (
 	"errors"
-	"fmt"
 	"github.com/gin-gonic/gin"
 	"my-stacklifes/database/mysql"
 	"my-stacklifes/models"
@@ -107,13 +106,12 @@ func (s *MenuService) Update(ctx *gin.Context, req models.MenuUpdateReq) (interf
 	)
 	db := s.dbClient.MysqlClient
 
-	db.Debug().Where("id=?", req.Id).First(&menu)
-	fmt.Println(menu.Id)
+	db.Where("id=?", req.Id).First(&menu)
 	if menu.Id <= 0 {
 		return nil, errors.New("不存在该记录")
 	}
 
-	db.Model(&menu).Debug().Where("id != ? and name=?", req.Id, req.Name).Count(&count)
+	db.Model(&menu).Where("id != ? and name=?", req.Id, req.Name).Count(&count)
 	if count > 0 {
 		return nil, errors.New("已存在有相同的名称记录")
 	}

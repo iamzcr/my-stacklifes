@@ -65,7 +65,7 @@ func (s *AdminGroupService) GetAdminGroupList(ctx *gin.Context, req models.Admin
 	db := s.dbClient.MysqlClient
 	err := db.Model(&models.AdminGroup{}).
 		Where("status = ?", req.Status).
-		Select("id,mark,name").
+		Select("id,name").
 		Order("id DESC").Find(&adminGroups).Error
 
 	if err != nil {
@@ -76,13 +76,15 @@ func (s *AdminGroupService) GetAdminGroupList(ctx *gin.Context, req models.Admin
 
 func (s *AdminGroupService) GetInfo(ctx *gin.Context, id string) (interface{}, error) {
 	var adminGroupInfo models.AdminGroup
+
 	res := s.dbClient.MysqlClient.Where("id=?", id).Find(&adminGroupInfo)
 	if res.Error != nil {
 		return nil, res.Error
 	}
-	if adminGroupInfo.Id == 0 {
+	if adminGroupInfo.Id <= 0 {
 		return nil, errors.New("AdminGroup error")
 	}
+
 	return adminGroupInfo, nil
 }
 
@@ -90,10 +92,12 @@ func (s *AdminGroupService) Create(ctx *gin.Context, req models.AdminGroupCreate
 	var adminGroup models.AdminGroup
 
 	db := s.dbClient.MysqlClient
+
 	db.Where("name=?", req.Name).First(&adminGroup)
 	if adminGroup.Id > 0 {
 		return nil, errors.New("记录已存在")
 	}
+
 	adminGroup.Name = req.Name
 	adminGroup.Mark = tools.ConvertToPinyin(req.Name)
 	adminGroup.Description = req.Description
@@ -102,21 +106,28 @@ func (s *AdminGroupService) Create(ctx *gin.Context, req models.AdminGroupCreate
 	if err != nil {
 		return nil, err
 	}
+
 	return adminGroup.Id, nil
 }
 
 func (s *AdminGroupService) Update(ctx *gin.Context, req models.AdminGroupUpdateReq) (interface{}, error) {
-	var adminGroup models.AdminGroup
+	var (
+		adminGroup models.AdminGroup
+		count      int64
+	)
 
 	db := s.dbClient.MysqlClient
+
 	db.Where("id=?", req.Id).First(&adminGroup)
 	if adminGroup.Id <= 0 {
 		return nil, errors.New("不存在该记录")
 	}
-	db.Where("id != ? and name=?", req.Id, req.Name).First(&adminGroup)
-	if adminGroup.Id > 0 {
+
+	db.Model(&adminGroup).Where("id != ? and name=?", req.Id, req.Name).Count(&count)
+	if count > 0 {
 		return nil, errors.New("已存在有相同的名称记录")
 	}
+
 	adminGroup.Name = req.Name
 	adminGroup.Description = req.Description
 	adminGroup.UpdatedTime = time.Now().Unix()
@@ -124,6 +135,7 @@ func (s *AdminGroupService) Update(ctx *gin.Context, req models.AdminGroupUpdate
 	if err != nil {
 		return nil, err
 	}
+
 	return adminGroup.Id, nil
 }
 
@@ -133,17 +145,21 @@ func (s *AdminGroupService) Delete(ctx *gin.Context, req models.AdminGroupDelReq
 		admin      models.Admin
 	)
 	db := s.dbClient.MysqlClient
+
 	db.Where("id=?", req.Id).First(&adminGroup)
 	if adminGroup.Id <= 0 {
 		return nil, errors.New("不存在该记录")
 	}
+
 	db.Where("group_id=?", req.Id).First(&admin)
 	if admin.Id > 0 {
 		return nil, errors.New("该用户组已被使用")
 	}
+
 	err := db.Model(&adminGroup).Delete(&adminGroup).Error
 	if err != nil {
 		return nil, err
 	}
+
 	return adminGroup.Id, nil
 }

@@ -56,6 +56,7 @@ func (s *WebsiteService) GetInfo(ctx *gin.Context, id string) (interface{}, erro
 	if res.Error != nil {
 		return nil, res.Error
 	}
+
 	if websiteInfo.Id == 0 {
 		return nil, errors.New("website error")
 	}
