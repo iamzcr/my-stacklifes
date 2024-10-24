@@ -125,7 +125,7 @@
             success: function (response) {
                 console.log(response)
                 if (response.code !== 200) {
-                    Swal.fire({icon: "error", text: response.msg});
+                    Swal.fire({icon: "error", text: response.message});
                 }
                 listTable.draw()
             },
