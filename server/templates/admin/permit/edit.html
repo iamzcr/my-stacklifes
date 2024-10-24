@@ -31,12 +31,11 @@
                                     <label class="col-form-label col-md-1 label-align">父级</label>
                                     <div class="col-md-2">
                                         <select class="form-control" name="parent">
-                                            {{range $index,$value := .data.PermitParents}}
-                                            <option value="{{$value.Id}}" {{if  .data.PermitInfo }} {{.data.PermitInfo.parent}} {{end}} >
+                                            {{range $index, $value := .data.PermitParents}}
+                                            <option value="{{$value.Id}}" {{if eq $value.Id .data.PermitInfo.parent}}selected{{end}}>
                                                 {{$value.Name}}
                                             </option>
                                             {{end}}
-
                                         </select>
                                     </div>
                                 </div>
