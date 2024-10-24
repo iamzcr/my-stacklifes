@@ -5,7 +5,9 @@ import (
 	"github.com/gin-gonic/gin"
 	"my-stacklifes/database/mysql"
 	"my-stacklifes/models"
+	"my-stacklifes/pkg/constant"
 	"my-stacklifes/pkg/tools"
+	"time"
 )
 
 type AdminGroupService struct {
@@ -20,31 +22,46 @@ func NewAdminGroupService() *AdminGroupService {
 
 func (s *AdminGroupService) GetList(ctx *gin.Context, req models.AdminGroupListReq) (interface{}, error) {
 	var (
-		adminGroups []models.AdminGroup
-		total       int64
+		adminGroups    []models.AdminGroup
+		total          int64
+		adminGroupList []models.AdminGroupInfo
+		statusMap      = map[int]string{
+			constant.StatusTrue:  constant.StatusTrueName,
+			constant.StatusFalse: constant.StatusFalseName,
+		}
 	)
 	db := s.dbClient.MysqlClient
 	if len(req.Name) > 0 {
 		db = db.Where("name LIKE ?", "%"+req.Name+"%")
 	}
 	limit, offset := req.GetPageInfo()
-	err := db.Limit(limit).
-		Offset(offset).
-		Order("id DESC").
-		Find(&adminGroups).
-		Count(&total).Error
+	err := db.Limit(limit).Offset(offset).Order("id DESC").Find(&adminGroups).
+		Limit(-1).Offset(-1).Count(&total).Error
 	if err != nil {
 		return nil, err
 	}
+	for _, temp := range adminGroups {
+		adminGroupList = append(adminGroupList, models.AdminGroupInfo{
+			Id:          temp.Id,
+			Name:        temp.Name,
+			StatusName:  statusMap[temp.Status],
+			Mark:        temp.Mark,
+			Description: temp.Description,
+			MenuModules: temp.MenuModules,
+			MenuPermit:  temp.MenuPermit,
+			AllowIp:     temp.AllowIp,
+			CreateTime:  tools.UnixToTime(temp.CreateTime),
+		})
 
+	}
 	return models.AdminGroupListRes{
 		Total: total,
-		List:  adminGroups,
+		List:  adminGroupList,
 	}, nil
 }
 
-func (s *AdminGroupService) GetNoPageList(ctx *gin.Context, req models.AdminGroupNoPageReq) (interface{}, error) {
-	var adminGroups []models.AdminGroupMine
+func (s *AdminGroupService) GetAdminGroupList(ctx *gin.Context, req models.AdminGroupListReq) (interface{}, error) {
+	var adminGroups []models.AdminGroupInfo
 	db := s.dbClient.MysqlClient
 	err := db.Model(&models.AdminGroup{}).
 		Where("status = ?", req.Status).
@@ -54,9 +71,7 @@ func (s *AdminGroupService) GetNoPageList(ctx *gin.Context, req models.AdminGrou
 	if err != nil {
 		return nil, err
 	}
-	return models.AdminGroupNoPageListRes{
-		List: adminGroups,
-	}, nil
+	return adminGroups, nil
 }
 
 func (s *AdminGroupService) GetInfo(ctx *gin.Context, id string) (interface{}, error) {
@@ -76,14 +91,16 @@ func (s *AdminGroupService) Create(ctx *gin.Context, req models.AdminGroupCreate
 		adminGroup models.AdminGroup
 		count      int64
 	)
-	s.dbClient.MysqlClient.Model(adminGroup).Where("name=?", req.Name).Count(&count)
+	db := s.dbClient.MysqlClient
+	db.Model(adminGroup).Where("name=?", req.Name).Count(&count)
 	if count > 0 {
 		return nil, errors.New("记录已存在")
 	}
 	adminGroup.Name = req.Name
 	adminGroup.Mark = tools.ConvertToPinyin(req.Name)
 	adminGroup.Description = req.Description
-	err := s.dbClient.MysqlClient.Save(&adminGroup).Error
+	adminGroup.CreateTime = time.Now().Unix()
+	err := db.Save(&adminGroup).Error
 	if err != nil {
 		return nil, err
 	}
@@ -95,16 +112,18 @@ func (s *AdminGroupService) Update(ctx *gin.Context, req models.AdminGroupUpdate
 		adminGroup models.AdminGroup
 		count      int64
 	)
-	res := s.dbClient.MysqlClient.Where("id=?", req.Id).Find(&adminGroup)
-	if res.Error != nil {
-		return nil, res.Error
+	db := s.dbClient.MysqlClient
+	db.Where("id=?", req.Id).Find(&adminGroup)
+	if adminGroup.Id <= 0 {
+		return nil, errors.New("不存在该记录")
 	}
-	s.dbClient.MysqlClient.Model(adminGroup).Where("id != ? and name=?", req.Id, req.Name).Count(&count)
+	db.Model(adminGroup).Where("id != ? and name=?", req.Id, req.Name).Count(&count)
 	if count > 0 {
 		return nil, errors.New("记录已存在")
 	}
 	adminGroup.Name = req.Name
 	adminGroup.Description = req.Description
+	adminGroup.UpdatedTime = time.Now().Unix()
 	err := s.dbClient.MysqlClient.Save(&adminGroup).Error
 	if err != nil {
 		return nil, err
@@ -117,15 +136,16 @@ func (s *AdminGroupService) Delete(ctx *gin.Context, req models.AdminGroupDelReq
 		adminGroup models.AdminGroup
 		admin      []models.Admin
 	)
-	s.dbClient.MysqlClient.Where("id=?", req.Id).Find(&adminGroup)
+	db := s.dbClient.MysqlClient
+	db.Model(adminGroup).Where("id=?", req.Id).Find(&adminGroup)
 	if adminGroup.Id <= 0 {
 		return nil, errors.New("不存在该记录")
 	}
-	s.dbClient.MysqlClient.Where("group_id=?", req.Id).Find(&admin)
+	db.Model(admin).Where("group_id=?", req.Id).Find(&admin)
 	if len(admin) > 0 {
 		return nil, errors.New("该用户组已被使用")
 	}
-	err := s.dbClient.MysqlClient.Delete(&adminGroup).Error
+	err := db.Model(adminGroup).Delete(&adminGroup).Error
 	if err != nil {
 		return nil, err
 	}

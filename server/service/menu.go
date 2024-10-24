@@ -108,9 +108,9 @@ func (s *MenuService) Update(ctx *gin.Context, req models.MenuUpdateReq) (interf
 		count int64
 	)
 	db := s.dbClient.MysqlClient
-	res := db.Model(menu).Where("id=?", req.Id).Find(&menu)
-	if res.Error != nil {
-		return nil, res.Error
+	db.Where("id=?", req.Id).Find(&menu)
+	if menu.Id <= 0 {
+		return nil, errors.New("不存在该记录")
 	}
 	db.Where("id != ? and name=?", req.Id, req.Name).Count(&count)
 	if count > 0 {

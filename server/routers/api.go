@@ -77,7 +77,6 @@ func ApiRoutersInit(r *gin.Engine) {
 		adminRouter.POST("/directory/delete", adminDirectoryHandler.Delete)
 
 		adminRouter.GET("/admin_group/list", adminGroupHandler.List)
-		adminRouter.GET("/admin_group/no_page_list", adminGroupHandler.NoPageList)
 		adminRouter.GET("/admin_group/info/:id", adminGroupHandler.Info)
 		adminRouter.POST("/admin_group/update", adminGroupHandler.Update)
 		adminRouter.POST("/admin_group/create", adminGroupHandler.Create)

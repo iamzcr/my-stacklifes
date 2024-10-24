@@ -7,7 +7,7 @@ type Permit struct {
 	Parent  int    `json:"parent" gorm:"column:parent;type:int(11);default:0"`
 	Weight  int    `json:"weight" gorm:"column:weight;type:int(11);default:0"`
 	Type    int    `json:"type" gorm:"column:type;type:int(11);default:1"`
-	Status  int    `json:"status" gorm:"column:status;type:int(11);default:1" `
+	Status  int    `json:"status" gorm:"column:status;type:int(11);default:1"`
 	Author  string `json:"author" gorm:"column:author;type:string;default:nicholas"`
 	Mark    string `json:"mark" `
 	CommonField
