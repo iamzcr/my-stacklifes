@@ -109,7 +109,7 @@ func (s *MenuService) Update(ctx *gin.Context, req models.MenuUpdateReq) (interf
 		count int64
 	)
 	db := s.dbClient.MysqlClient
-	db.Debug().Where("id=?", req.Id).Find(&menu)
+	db.Debug().Where("id=?", req.Id).First(&menu)
 	fmt.Println(menu.Id)
 	if menu.Id <= 0 {
 		return nil, errors.New("不存在该记录")
