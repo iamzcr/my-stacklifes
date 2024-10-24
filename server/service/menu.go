@@ -108,7 +108,7 @@ func (s *MenuService) Update(ctx *gin.Context, req models.MenuUpdateReq) (interf
 	if menu.Id <= 0 {
 		return nil, errors.New("不存在该记录")
 	}
-	db.Debug().Where("id != ? and name=?", req.Id, req.Name).First(&menu)
+	db.Model(&menu).Debug().Where("id != ? and name=?", req.Id, req.Name).First(&menu)
 	fmt.Println(menu.Id)
 	if menu.Id > 0 {
 		return nil, errors.New("已存在有相同的名称记录")
