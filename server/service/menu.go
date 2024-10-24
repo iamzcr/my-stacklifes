@@ -83,7 +83,7 @@ func (s *MenuService) GetList(ctx *gin.Context, req models.MenuListReq) (interfa
 func (s *MenuService) Create(ctx *gin.Context, req models.MenuCreateReq) (interface{}, error) {
 	var menu models.Menu
 	db := s.dbClient.MysqlClient
-	db.Where("name=?", req.Name).First(&menu)
+	db.Debug().Where("name=?", req.Name).First(&menu)
 	if menu.Id > 0 {
 		return nil, errors.New("记录已存在")
 	}
