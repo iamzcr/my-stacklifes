@@ -4,6 +4,7 @@ import (
 	"github.com/gin-gonic/gin"
 	"my-stacklifes/database/mysql"
 	"my-stacklifes/models"
+	"my-stacklifes/pkg/tools"
 	"time"
 )
 
@@ -19,8 +20,9 @@ func NewReadService() *ReadService {
 
 func (s *ReadService) GetList(ctx *gin.Context, req models.ReadReq) (interface{}, error) {
 	var (
-		reads []models.Read
-		total int64
+		reads    []models.Read
+		total    int64
+		readList []models.ReadInfo
 	)
 	db := s.dbClient.MysqlClient
 	if len(req.Ip) > 0 {
@@ -32,9 +34,19 @@ func (s *ReadService) GetList(ctx *gin.Context, req models.ReadReq) (interface{}
 	if err != nil {
 		return nil, err
 	}
+	srvArticle := NewArticleService()
+	for _, readTemp := range reads {
+		readList = append(readList, models.ReadInfo{
+			Id:           readTemp.Id,
+			Referer:      readTemp.Referer,
+			Aid:          readTemp.Aid,
+			ArticleTitle: srvArticle.GetArticleTitle(readTemp.Aid),
+			CreateTime:   tools.UnixToTime(readTemp.CreateTime),
+		})
+	}
 	return models.ReadListRes{
 		Total: total,
-		List:  reads,
+		List:  readList,
 	}, nil
 }
 

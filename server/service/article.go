@@ -48,6 +48,64 @@ func (s *ArticleService) GetList(ctx *gin.Context, req models.ArticleReq) (inter
 	}, nil
 }
 
+func (s *ArticleService) Create(ctx *gin.Context, req models.ArticleCreateReq) (interface{}, error) {
+	var (
+		article models.Article
+	)
+	article.Title = req.Title
+	article.Cid = req.Cid
+	article.Did = req.Did
+	article.Author = req.Author
+	article.Desc = req.Desc
+	article.Keyword = req.Keyword
+	article.Thumb = req.Thumb
+	article.Summary = req.Summary
+	article.Content = req.Content
+	article.IsHot = req.IsHot
+	article.IsNew = req.IsNew
+	article.IsRecom = req.IsRecom
+	article.Weight = req.Weight
+	article.PublicTime = req.PublicTime
+	article.Month = req.Month
+	err := s.dbClient.MysqlClient.Model(article).Create(&article).Error
+	if err != nil {
+		return nil, err
+	}
+	return article.Id, nil
+}
+
+func (s *ArticleService) Update(ctx *gin.Context, req models.ArticleUpdateReq) (interface{}, error) {
+	var (
+		article models.Article
+		count   int64
+	)
+	db := s.dbClient.MysqlClient
+	err := db.Model(article).Where("id=?", req.Id).Find(&article).Count(&count).Error
+	if err != nil || count < 1 {
+		return nil, errors.New("更新出错")
+	}
+
+	article.Title = req.Title
+	article.Cid = req.Cid
+	article.Did = req.Did
+	article.Author = req.Author
+	article.Desc = req.Desc
+	article.Keyword = req.Keyword
+	article.Thumb = req.Thumb
+	article.Summary = req.Summary
+	article.Content = req.Content
+	article.IsHot = req.IsHot
+	article.IsNew = req.IsNew
+	article.IsRecom = req.IsRecom
+	article.Weight = req.Weight
+	article.PublicTime = req.PublicTime
+	article.Month = req.Month
+	err = db.Model(article).Save(&article).Error
+	if err != nil {
+		return nil, err
+	}
+	return article.Id, nil
+}
 func (s *ArticleService) GetInfo(ctx *gin.Context, id string) (interface{}, error) {
 	var article models.Article
 
@@ -59,6 +117,15 @@ func (s *ArticleService) GetInfo(ctx *gin.Context, id string) (interface{}, erro
 		return nil, errors.New("Article error")
 	}
 	return article, nil
+}
+
+func (s *ArticleService) GetArticleTitle(id int) string {
+	var article models.Article
+	res := s.dbClient.MysqlClient.Where("id=?", id).Select("id,title").First(&article)
+	if res.Error != nil {
+		return "-"
+	}
+	return article.Title
 }
 
 func (s *ArticleService) GetFrontList(ctx *gin.Context, req models.FrontArticleListReq) (interface{}, error) {
@@ -240,65 +307,6 @@ func (s *ArticleService) GetFrontDetail(ctx *gin.Context, id string) (interface{
 	} else {
 		return nil, errors.New("类型断言失败")
 	}
-}
-
-func (s *ArticleService) Create(ctx *gin.Context, req models.ArticleCreateReq) (interface{}, error) {
-	var (
-		article models.Article
-	)
-	article.Title = req.Title
-	article.Cid = req.Cid
-	article.Did = req.Did
-	article.Author = req.Author
-	article.Desc = req.Desc
-	article.Keyword = req.Keyword
-	article.Thumb = req.Thumb
-	article.Summary = req.Summary
-	article.Content = req.Content
-	article.IsHot = req.IsHot
-	article.IsNew = req.IsNew
-	article.IsRecom = req.IsRecom
-	article.Weight = req.Weight
-	article.PublicTime = req.PublicTime
-	article.Month = req.Month
-	err := s.dbClient.MysqlClient.Model(article).Create(&article).Error
-	if err != nil {
-		return nil, err
-	}
-	return article.Id, nil
-}
-
-func (s *ArticleService) Update(ctx *gin.Context, req models.ArticleUpdateReq) (interface{}, error) {
-	var (
-		article models.Article
-		count   int64
-	)
-	db := s.dbClient.MysqlClient
-	err := db.Model(article).Where("id=?", req.Id).Find(&article).Count(&count).Error
-	if err != nil || count < 1 {
-		return nil, errors.New("更新出错")
-	}
-
-	article.Title = req.Title
-	article.Cid = req.Cid
-	article.Did = req.Did
-	article.Author = req.Author
-	article.Desc = req.Desc
-	article.Keyword = req.Keyword
-	article.Thumb = req.Thumb
-	article.Summary = req.Summary
-	article.Content = req.Content
-	article.IsHot = req.IsHot
-	article.IsNew = req.IsNew
-	article.IsRecom = req.IsRecom
-	article.Weight = req.Weight
-	article.PublicTime = req.PublicTime
-	article.Month = req.Month
-	err = db.Model(article).Save(&article).Error
-	if err != nil {
-		return nil, err
-	}
-	return article.Id, nil
 }
 
 func (s *ArticleService) ChangeField(ctx *gin.Context, req models.ArticleFieldReq) (interface{}, error) {
