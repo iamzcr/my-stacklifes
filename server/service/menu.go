@@ -135,7 +135,7 @@ func (s *MenuService) Delete(ctx *gin.Context, req models.MenuDelReq) (interface
 	if menu.Id <= 0 {
 		return nil, errors.New("不存在该记录")
 	}
-	db.Where("parent=?", req.Id).Find(&menu).Count(&count)
+	db.Model(menu).Where("parent=?", req.Id).Count(&count)
 	if count > 0 {
 		return nil, errors.New("该菜单下有子菜单")
 	}
