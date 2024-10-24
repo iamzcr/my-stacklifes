@@ -1,18 +1,18 @@
 package models
 
 type Read struct {
-	Id      int    `json:"id" form:"id"`
-	Aid     int    `json:"aid" form:"aid"`
-	Ip      string `json:"ip" form:"ip"`
-	Referer string `json:"referer" form:"referer"`
+	Id      int    `json:"id"  gorm:"column:id;type:int(11);primary_key;AUTO_INCREMENT"`
+	Aid     int    `json:"aid"`
+	Ip      string `json:"ip" `
+	Referer string `json:"referer"`
 	CommonField
 }
 
 type ReadInfo struct {
-	Id           int    `json:"id" form:"id"`
-	Aid          int    `json:"aid" form:"aid"`
-	Ip           string `json:"ip" form:"ip"`
-	Referer      string `json:"referer" form:"referer"`
+	Id           int    `json:"id"`
+	Aid          int    `json:"aid"`
+	Ip           string `json:"ip"`
+	Referer      string `json:"referer"`
 	CreateTime   string `json:"create_time"`
 	ArticleTitle string `json:"article_title"`
 }
@@ -32,7 +32,7 @@ type ReadListRes struct {
 }
 
 type ReadCreateReq struct {
-	Aid     int    `json:"aid" form:"aid"`
+	Aid     int    `json:"aid" form:"aid" binding:"required"`
 	Ip      string `json:"ip" form:"ip"`
 	Referer string `json:"referer" form:"referer"`
 }

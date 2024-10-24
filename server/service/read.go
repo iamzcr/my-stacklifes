@@ -39,6 +39,7 @@ func (s *ReadService) GetList(ctx *gin.Context, req models.ReadReq) (interface{}
 		readList = append(readList, models.ReadInfo{
 			Id:           readTemp.Id,
 			Referer:      readTemp.Referer,
+			Ip:           readTemp.Ip,
 			Aid:          readTemp.Aid,
 			ArticleTitle: srvArticle.GetArticleTitle(readTemp.Aid),
 			CreateTime:   tools.UnixToTime(readTemp.CreateTime),
