@@ -21,8 +21,9 @@ func NewMessageService() *MessageService {
 
 func (s *MessageService) GetList(ctx *gin.Context, req models.MessageReq) (interface{}, error) {
 	var (
-		messages []models.Message
-		total    int64
+		messages    []models.Message
+		messageList []models.MessageInfo
+		total       int64
 	)
 	db := s.dbClient.MysqlClient
 	if len(req.Name) > 0 {
@@ -34,9 +35,21 @@ func (s *MessageService) GetList(ctx *gin.Context, req models.MessageReq) (inter
 	if err != nil {
 		return nil, err
 	}
+	for _, messageTemp := range messages {
+		messageList = append(messageList, models.MessageInfo{
+			Id:         messageTemp.Id,
+			Name:       messageTemp.Name,
+			Ip:         messageTemp.Ip,
+			Email:      messageTemp.Email,
+			Url:        messageTemp.Url,
+			IsReply:    messageTemp.IsReply,
+			Content:    messageTemp.Content,
+			CreateTime: tools.UnixToTime(messageTemp.CreateTime),
+		})
+	}
 	return models.MessageListRes{
 		Total: total,
-		List:  messages,
+		List:  messageList,
 	}, nil
 }
 

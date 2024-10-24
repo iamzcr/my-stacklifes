@@ -15,13 +15,24 @@ func (c *Message) TableName() string {
 	return "sl_message"
 }
 
+type MessageInfo struct {
+	Id         int    `json:"id"`
+	Name       string `json:"name"`
+	Ip         string `json:"ip"`
+	Email      string `json:"email"`
+	Url        string `json:"url"`
+	IsReply    int8   `json:"is_reply"`
+	Content    string `json:"content"`
+	CreateTime string `json:"create_time"`
+}
+
 type MessageReq struct {
 	PageInfo
 	Name string `json:"name" form:"name"`
 }
 type MessageListRes struct {
-	Total int64     `json:"total"`
-	List  []Message `json:"list"`
+	Total int64         `json:"total"`
+	List  []MessageInfo `json:"list"`
 }
 
 type MsgCreateReq struct {
