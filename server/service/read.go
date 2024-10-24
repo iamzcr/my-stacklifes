@@ -64,9 +64,9 @@ func (s *ReadService) Create(ctx *gin.Context, req models.ReadCreateReq) (interf
 		return nil, errors.New("记录已存在")
 	}
 	*/
-	read.Ip = req.Ip
-	read.Referer = req.Referer
 	read.Aid = req.Aid
+	read.Ip = ctx.ClientIP()
+	read.Referer = ctx.Request.Referer()
 	read.CreateTime = time.Now().Unix()
 	err := s.dbClient.MysqlClient.Create(&read).Error
 	if err != nil {

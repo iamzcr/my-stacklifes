@@ -5,6 +5,7 @@ import (
 	"my-stacklifes/database/mysql"
 	"my-stacklifes/models"
 	"my-stacklifes/pkg/tools"
+	"time"
 )
 
 type LogService struct {
@@ -46,4 +47,15 @@ func (s *LogService) GetList(ctx *gin.Context, req models.LogReq) (interface{}, 
 		Total: total,
 		List:  logList,
 	}, nil
+}
+func (s *LogService) Create(ctx *gin.Context, req models.LogCreateReq) (interface{}, error) {
+	var log models.Log
+	log.Ip = ctx.ClientIP()
+	log.Content = req.Content
+	log.CreateTime = time.Now().Unix()
+	err := s.dbClient.MysqlClient.Create(&log).Error
+	if err != nil {
+		return nil, err
+	}
+	return log.Id, nil
 }
