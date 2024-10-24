@@ -4,6 +4,7 @@ import (
 	"github.com/gin-gonic/gin"
 	"my-stacklifes/database/mysql"
 	"my-stacklifes/models"
+	"my-stacklifes/pkg/tools"
 )
 
 type LogService struct {
@@ -18,8 +19,9 @@ func NewLogService() *LogService {
 
 func (s *LogService) GetList(ctx *gin.Context, req models.LogReq) (interface{}, error) {
 	var (
-		logs  []models.Log
-		total int64
+		logs    []models.Log
+		logList []models.LogInfo
+		total   int64
 	)
 	db := s.dbClient.MysqlClient
 	if len(req.Content) > 0 {
@@ -31,8 +33,17 @@ func (s *LogService) GetList(ctx *gin.Context, req models.LogReq) (interface{}, 
 	if err != nil {
 		return nil, err
 	}
+	for _, log := range logs {
+		logList = append(logList, models.LogInfo{
+			Id:         log.Id,
+			Ip:         log.Ip,
+			Content:    log.Content,
+			CreateTime: tools.UnixToTime(log.CreateTime),
+			Username:   log.Username,
+		})
+	}
 	return models.LogListRes{
 		Total: total,
-		List:  logs,
+		List:  logList,
 	}, nil
 }
