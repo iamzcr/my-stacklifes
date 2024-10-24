@@ -2,6 +2,7 @@ package service
 
 import (
 	"errors"
+	"fmt"
 	"github.com/gin-gonic/gin"
 	"my-stacklifes/database/mysql"
 	"my-stacklifes/models"
@@ -108,11 +109,12 @@ func (s *MenuService) Update(ctx *gin.Context, req models.MenuUpdateReq) (interf
 		count int64
 	)
 	db := s.dbClient.MysqlClient
-	db.Where("id=?", req.Id).Find(&menu)
+	db.Debug().Where("id=?", req.Id).Find(&menu)
+	fmt.Println(menu.Id)
 	if menu.Id <= 0 {
 		return nil, errors.New("不存在该记录")
 	}
-	db.Where("id != ? and name=?", req.Id, req.Name).Count(&count)
+	db.Debug().Where("id != ? and name=?", req.Id, req.Name).Count(&count)
 	if count > 0 {
 		return nil, errors.New("记录已存在")
 	}
