@@ -5,6 +5,7 @@ import (
 	"github.com/gin-gonic/gin"
 	"my-stacklifes/database/mysql"
 	"my-stacklifes/models"
+	"my-stacklifes/pkg/constant"
 	"my-stacklifes/pkg/tools"
 )
 
@@ -20,26 +21,69 @@ func NewDirectoryService() *DirectoryService {
 
 func (s *DirectoryService) GetList(ctx *gin.Context, req models.DirectoryListReq) (interface{}, error) {
 	var (
-		directorys []models.Directory
-		total      int64
+		directorys       []models.Directory
+		parentDirectorys []models.DirectoryMine
+		directoryList    []models.DirectoryInfo
+		categoryList     []models.CategoryMine
+		parentMap        = make(map[int]string)
+		categoryMap      = make(map[int]string)
+		statusMap        = map[int]string{
+			constant.StatusTrue:  constant.StatusTrueName,
+			constant.StatusFalse: constant.StatusFalseName,
+		}
+		typeMap = map[int]string{
+			constant.MenuNavType: constant.MenuNavTypeName,
+		}
+		total int64
 	)
 	db := s.dbClient.MysqlClient
 	if len(req.Name) > 0 {
 		db = db.Where("name LIKE ?", "%"+req.Name+"%")
 	}
+
 	limit, offset := req.GetPageInfo()
-	err := db.Offset(offset).Limit(limit).Order("id DESC").Find(&directorys).Error
-	if err != nil {
-		return nil, err
-	}
-	err = db.Model(&directorys).Count(&total).Error
+	err := db.Debug().Limit(limit).Offset(offset).Order("id DESC").Find(&directorys).
+		Limit(-1).Offset(-1).Count(&total).Error
 	if err != nil {
 		return nil, err
 	}
 
+	db.Model(&models.Directory{}).Debug().Where("parent=?", constant.TopParent).
+		Select("id,name").Order("id DESC").Find(&parentDirectorys)
+	for _, parentDirectory := range parentDirectorys {
+		parentMap[parentDirectory.Id] = parentDirectory.Name
+	}
+	//分类map
+	db.Model(&models.Category{}).Debug().Where("parent=?", constant.TopParent).
+		Select("id,name").Order("id DESC").Find(&categoryList)
+	for _, category := range parentDirectorys {
+		categoryMap[category.Id] = category.Name
+	}
+
+	for _, temp := range directorys {
+		parentName := "顶级分类"
+		if _, ok := parentMap[temp.Parent]; ok {
+			parentName = parentMap[temp.Parent]
+		}
+		directoryList = append(directoryList, models.DirectoryInfo{
+			Id:           temp.Id,
+			Name:         temp.Name,
+			Author:       temp.Author,
+			Status:       temp.Status,
+			Weight:       temp.Weight,
+			Type:         temp.Type,
+			Mark:         temp.Mark,
+			StatusName:   statusMap[temp.Status],
+			CategoryName: categoryMap[temp.Cid],
+			TypeName:     typeMap[temp.Type],
+			ParentName:   parentName,
+			CreateTime:   tools.UnixToTime(temp.CreateTime),
+		})
+
+	}
 	return models.DirectoryListRes{
 		Total: total,
-		List:  directorys,
+		List:  directoryList,
 	}, nil
 }
 
@@ -135,18 +179,21 @@ func (s *DirectoryService) Delete(ctx *gin.Context, req models.DirectoryDelReq) 
 }
 
 func (s *DirectoryService) GetListByCid(cid string) ([]models.DirectoryMine, []int, error) {
+
+	var (
+		directorys   []models.DirectoryMine
+		directoryIds []int
+	)
 	db := s.dbClient.MysqlClient
-	var directorys []models.DirectoryMine
-	var directoryIds []int
 
 	err := db.Model(&models.Directory{}).Where("cid = ?", cid).
 		Order("weight DESC").Find(&directorys).Error
 	if err != nil {
 		return nil, nil, err
 	}
+
 	for _, directory := range directorys {
 		directoryIds = append(directoryIds, directory.Id)
 	}
-
 	return directorys, directoryIds, nil
 }
