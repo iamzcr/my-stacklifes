@@ -41,7 +41,7 @@ func (h *TagsHandler) Edit(ctx *gin.Context) {
 	var appGin = app.Gin{C: ctx}
 	id := ctx.Param("id")
 	infoData, _ := h.srv.GetInfo(ctx, id)
-	appGin.SuccessAdminHtml(infoData, "menu/edit.html")
+	appGin.SuccessAdminHtml(infoData, "tags/edit.html")
 }
 
 func (h *TagsHandler) Info(ctx *gin.Context) {
