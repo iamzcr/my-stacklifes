@@ -27,8 +27,7 @@ func (h *DirectoryHandler) Edit(ctx *gin.Context) {
 
 func (h *DirectoryHandler) List(ctx *gin.Context) {
 	var appGin = app.Gin{C: ctx}
-	assignData := ""
-	appGin.SuccessAdminHtml(assignData, "directory/list.html")
+	appGin.SuccessAdminHtml("", "directory/list.html")
 }
 
 func (h *DirectoryHandler) ListJson(ctx *gin.Context) {
@@ -40,22 +39,6 @@ func (h *DirectoryHandler) ListJson(ctx *gin.Context) {
 		return
 	}
 	list, err := h.srv.GetList(ctx, listReq)
-	if err != nil {
-		appGin.Error(exception.ERROR, err.Error(), nil)
-		return
-	}
-	appGin.Success(list)
-}
-
-func (h *DirectoryHandler) NoPageList(ctx *gin.Context) {
-	var appGin = app.Gin{C: ctx}
-	listReq := models.DirectoryNoPageReq{}
-	err := ctx.ShouldBindQuery(&listReq)
-	if err != nil {
-		appGin.Error(exception.ERROR, err.Error(), nil)
-		return
-	}
-	list, err := h.srv.GetNoPageList(listReq)
 	if err != nil {
 		appGin.Error(exception.ERROR, err.Error(), nil)
 		return

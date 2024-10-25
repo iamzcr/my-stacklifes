@@ -2,10 +2,10 @@ package service
 
 import (
 	"errors"
-	"fmt"
 	"github.com/gin-gonic/gin"
 	"my-stacklifes/database/mysql"
 	"my-stacklifes/models"
+	"my-stacklifes/pkg/tools"
 )
 
 type DirectoryService struct {
@@ -43,28 +43,102 @@ func (s *DirectoryService) GetList(ctx *gin.Context, req models.DirectoryListReq
 	}, nil
 }
 
-func (s *DirectoryService) GetNoPageList(req models.DirectoryNoPageReq) (interface{}, error) {
-	var directorys []models.DirectoryMine
-	db := s.dbClient.MysqlClient.Model(&models.Directory{})
-	fmt.Println(req.Cid)
-	fmt.Println(req.Status)
-	if req.Cid != 0 {
-		db.Where("cid = ?", req.Cid)
+func (s *DirectoryService) GetInfo(ctx *gin.Context, id string) (interface{}, error) {
+	var directory models.Directory
+
+	res := s.dbClient.MysqlClient.Where("id=?", id).First(&directory)
+	if res.Error != nil {
+		return nil, res.Error
 	}
-	err := db.Where("status = ?", req.Status).Select("id,mark,cid,name").
-		Order("id DESC").Find(&directorys).Error
+	if directory.Id == 0 {
+		return nil, errors.New("Directory error")
+	}
+
+	return directory, nil
+}
+
+func (s *DirectoryService) Create(ctx *gin.Context, req models.DirectoryCreateReq) (interface{}, error) {
+	var directory models.Directory
+
+	db := s.dbClient.MysqlClient
+	db.Where("name=?", req.Name).First(&directory)
+	if directory.Id > 0 {
+		return nil, errors.New("记录已存在")
+	}
+
+	directory.Name = req.Name
+	directory.Mark = tools.ConvertToPinyin(req.Name)
+	directory.Cid = req.Cid
+	directory.Weight = req.Weight
+	err := db.Create(&directory).Error
 	if err != nil {
 		return nil, err
 	}
-	return models.DirectoryNoPageListRes{
-		List: directorys,
-	}, nil
+
+	return directory.Id, nil
+}
+
+func (s *DirectoryService) Update(ctx *gin.Context, req models.DirectoryUpdateReq) (interface{}, error) {
+	var (
+		directory models.Directory
+		count     int64
+	)
+	db := s.dbClient.MysqlClient
+	res := db.Where("id=?", req.Id).Find(&directory)
+	if res.Error != nil {
+		return nil, res.Error
+	}
+	if directory.Id <= 0 {
+		return nil, errors.New("记录不存在")
+	}
+
+	db.Model(directory).Where("id != ? and name=?", req.Id, req.Name).Count(&count)
+	if count > 0 {
+		return nil, errors.New("已存在有相同的名称记录")
+	}
+
+	directory.Name = req.Name
+	directory.Cid = req.Cid
+	directory.Weight = req.Weight
+	err := db.Save(&directory).Error
+	if err != nil {
+		return nil, err
+	}
+
+	return directory.Id, nil
+}
+
+func (s *DirectoryService) Delete(ctx *gin.Context, req models.DirectoryDelReq) (interface{}, error) {
+	var (
+		directory    models.Directory
+		article      models.Article
+		articleCount int64
+	)
+	db := s.dbClient.MysqlClient
+
+	db.Where("id=?", req.Id).Find(&directory)
+	if directory.Id <= 0 {
+		return nil, errors.New("不存在该记录")
+	}
+
+	db.Model(&article).Where("did=?", req.Id).Count(&articleCount)
+	if articleCount > 0 {
+		return nil, errors.New("该分类目录下有文章，不能删除")
+	}
+
+	err := s.dbClient.MysqlClient.Delete(&directory).Error
+	if err != nil {
+		return nil, err
+	}
+
+	return directory.Id, nil
 }
 
 func (s *DirectoryService) GetListByCid(cid string) ([]models.DirectoryMine, []int, error) {
 	db := s.dbClient.MysqlClient
 	var directorys []models.DirectoryMine
 	var directoryIds []int
+
 	err := db.Model(&models.Directory{}).Where("cid = ?", cid).
 		Order("weight DESC").Find(&directorys).Error
 	if err != nil {
@@ -75,89 +149,4 @@ func (s *DirectoryService) GetListByCid(cid string) ([]models.DirectoryMine, []i
 	}
 
 	return directorys, directoryIds, nil
-}
-
-func (s *DirectoryService) GetInfo(ctx *gin.Context, id string) (interface{}, error) {
-	var DirectoryInfo models.Directory
-
-	res := s.dbClient.MysqlClient.Where("id=?", id).Find(&DirectoryInfo)
-	if res.Error != nil {
-		return nil, res.Error
-	}
-	if DirectoryInfo.Id == 0 {
-		return nil, errors.New("Directory error")
-	}
-	return DirectoryInfo, nil
-}
-
-func (s *DirectoryService) Create(ctx *gin.Context, req models.DirectoryCreateReq) (interface{}, error) {
-	var (
-		directory models.Directory
-		count     int64
-	)
-	s.dbClient.MysqlClient.Model(directory).
-		Where("name=?", req.Name).
-		Count(&count)
-	if count > 0 {
-		return nil, errors.New("记录已存在")
-	}
-	directory.Name = req.Name
-	directory.Mark = req.Mark
-	directory.Cid = req.Cid
-	directory.Type = req.Type
-	directory.Author = req.Author
-	directory.Weight = req.Weight
-	err := s.dbClient.MysqlClient.Create(&directory).Error
-	if err != nil {
-		return nil, err
-	}
-	return directory.Id, nil
-}
-
-func (s *DirectoryService) Update(ctx *gin.Context, req models.DirectoryUpdateReq) (interface{}, error) {
-	var (
-		directory models.Directory
-		count     int64
-	)
-	res := s.dbClient.MysqlClient.Where("id=?", req.Id).Find(&directory)
-	if res.Error != nil {
-		return nil, res.Error
-	}
-	s.dbClient.MysqlClient.Model(directory).
-		Where("id != ? and name=?", req.Id, req.Name).
-		Count(&count)
-	if count > 0 {
-		return nil, errors.New("记录已存在")
-	}
-	directory.Name = req.Name
-	directory.Mark = req.Mark
-	directory.Type = req.Type
-	directory.Cid = req.Cid
-	directory.Author = req.Author
-	directory.Weight = req.Weight
-	err := s.dbClient.MysqlClient.Save(&directory).Error
-	if err != nil {
-		return nil, err
-	}
-	return directory.Id, nil
-}
-
-func (s *DirectoryService) Delete(ctx *gin.Context, req models.DirectoryDelReq) (interface{}, error) {
-	var (
-		directory models.Directory
-		articles  []models.Article
-	)
-	s.dbClient.MysqlClient.Where("id=?", req.Id).Find(&directory)
-	if directory.Id <= 0 {
-		return nil, errors.New("不存在该记录")
-	}
-	s.dbClient.MysqlClient.Where("did=?", req.Id).Find(&articles)
-	if len(articles) > 0 {
-		return nil, errors.New("该分类已被使用")
-	}
-	err := s.dbClient.MysqlClient.Delete(&directory).Error
-	if err != nil {
-		return nil, err
-	}
-	return directory.Id, nil
 }

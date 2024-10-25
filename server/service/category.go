@@ -143,15 +143,22 @@ func (s *CategoryService) Update(ctx *gin.Context, req models.CategoryUpdateReq)
 
 func (s *CategoryService) Delete(ctx *gin.Context, req models.CategoryDelReq) (interface{}, error) {
 	var (
-		category     models.Category
-		article      models.Article
-		articleCount int64
+		directory      models.Directory
+		category       models.Category
+		article        models.Article
+		articleCount   int64
+		directoryCount int64
 	)
 	db := s.dbClient.MysqlClient
 
 	db.Where("id=?", req.Id).Find(&category)
 	if category.Id <= 0 {
 		return nil, errors.New("不存在该记录")
+	}
+
+	db.Model(&directory).Where("cid=?", req.Id).Count(&directoryCount)
+	if directoryCount > 0 {
+		return nil, errors.New("该分类下存在有分类目录，不能删除")
 	}
 
 	db.Model(&article).Where("cid=?", req.Id).Count(&articleCount)
@@ -165,6 +172,26 @@ func (s *CategoryService) Delete(ctx *gin.Context, req models.CategoryDelReq) (i
 	}
 
 	return category.Id, nil
+}
+func (s *CategoryService) GetCategoryList(ctx *gin.Context) (interface{}, error) {
+	var (
+		categoryList []models.CategoryMine
+		category     []models.Category
+	)
+
+	db := s.dbClient.MysqlClient
+
+	err := db.Model(&category).
+		Where("status = ?", constant.StatusTrue).
+		Select("id,mark,name").
+		Order("weight DESC").Find(&categoryList).Error
+	if err != nil {
+		return nil, err
+	}
+
+	return models.CategoryNavListRes{
+		List: categoryList,
+	}, nil
 }
 
 // frontend获取分类导航

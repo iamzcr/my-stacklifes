@@ -64,7 +64,7 @@ func (s *AdminGroupService) GetAdminGroupList(ctx *gin.Context, req models.Admin
 	var adminGroups []models.AdminGroupInfo
 	db := s.dbClient.MysqlClient
 	err := db.Model(&models.AdminGroup{}).
-		Where("status = ?", req.Status).
+		Where("status = ?", constant.StatusTrue).
 		Select("id,name").
 		Order("id DESC").Find(&adminGroups).Error
 
@@ -76,7 +76,6 @@ func (s *AdminGroupService) GetAdminGroupList(ctx *gin.Context, req models.Admin
 
 func (s *AdminGroupService) GetInfo(ctx *gin.Context, id string) (interface{}, error) {
 	var adminGroupInfo models.AdminGroup
-
 	res := s.dbClient.MysqlClient.Where("id=?", id).Find(&adminGroupInfo)
 	if res.Error != nil {
 		return nil, res.Error

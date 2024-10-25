@@ -121,7 +121,6 @@ func AdminRoutersInit(r *gin.Engine) {
 		adminRouter.GET("/directory/edit/:id", directoryHandler.Edit)
 		adminRouter.GET("/directory/add", directoryHandler.Edit)
 		adminRouter.GET("/directory/info/:id", directoryHandler.Info)
-		adminRouter.GET("/directory/no_page_list", directoryHandler.NoPageList)
 		adminRouter.POST("/directory/update", directoryHandler.Update)
 		adminRouter.POST("/directory/create", directoryHandler.Create)
 		adminRouter.POST("/directory/delete", directoryHandler.Delete)
