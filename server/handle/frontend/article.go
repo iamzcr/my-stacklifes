@@ -65,7 +65,7 @@ func (h *ArticleHandler) CategoryArticleList(ctx *gin.Context) {
 func (h *ArticleHandler) TagsArticleList(ctx *gin.Context) {
 	var appGin = app.Gin{C: ctx}
 	id := ctx.Param("id")
-	num, _ := strconv.ParseInt(id, 10, 64)
+	num, _ := strconv.Atoi(id)
 	list, err := h.srv.GetFrontTagsArticleList(num)
 	if err != nil {
 		appGin.Error(exception.ERROR, err.Error(), nil)

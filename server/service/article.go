@@ -3,11 +3,10 @@ package service
 import (
 	"errors"
 	"github.com/gin-gonic/gin"
-	"html/template"
 	"my-stacklifes/database/mysql"
 	"my-stacklifes/models"
+	"my-stacklifes/pkg/constant"
 	"my-stacklifes/pkg/tools"
-	"strconv"
 	"time"
 )
 
@@ -23,22 +22,67 @@ func NewArticleService() *ArticleService {
 
 func (s *ArticleService) GetList(ctx *gin.Context, req models.ArticleReq) (interface{}, error) {
 	var (
-		articles []models.ArticleMine
-		total    int64
+		directoryMap, categoryMap = make(map[int]string), make(map[int]string)
+		directoryList             []models.DirectoryMine
+		categoryList              []models.CategoryMine
+		articlesList              []models.ArticleInfo
+		articles                  []models.Article
+		statusMap                 = map[int]string{
+			constant.StatusTrue:  constant.StatusTrueName,
+			constant.StatusFalse: constant.StatusFalseName,
+		}
+		total int64
 	)
-	db := s.dbClient.MysqlClient.Model(&models.Article{})
+	db := s.dbClient.MysqlClient
 	if len(req.Title) > 0 {
 		db.Where("title LIKE ?", "%"+req.Title+"%")
 	}
 	limit, offset := req.GetPageInfo()
-	err := db.Limit(limit).Offset(offset).Order("id DESC").Find(&articles).Error
-	err = db.Model(&articles).Count(&total).Error
+	err := db.Debug().Limit(limit).Offset(offset).Order("id DESC").Find(&articles).
+		Limit(-1).Offset(-1).Count(&total).Error
 	if err != nil {
 		return nil, err
 	}
+
+	//分类map
+	db.Model(&models.Category{}).
+		Select("id,name").Order("id DESC").Find(&categoryList)
+	for _, category := range categoryList {
+		categoryMap[category.Id] = category.Name
+	}
+
+	//分类目录map
+	db.Model(&models.Directory{}).
+		Select("id,name").Order("id DESC").Find(&directoryList)
+	for _, directory := range directoryList {
+		directoryMap[directory.Id] = directory.Name
+	}
+
+	for _, temp := range articles {
+		directoryName := "-"
+		if _, ok := directoryMap[temp.Did]; ok {
+			directoryName = directoryMap[temp.Did]
+		}
+		articlesList = append(articlesList, models.ArticleInfo{
+			Id:            temp.Id,
+			Title:         temp.Title,
+			CategoryName:  categoryMap[temp.Cid],
+			DirectoryName: directoryName,
+			Author:        temp.Author,
+			Status:        temp.Status,
+			Weight:        temp.Weight,
+			StatusName:    statusMap[temp.Status],
+			HotName:       statusMap[temp.Status],
+			RecomName:     statusMap[temp.Status],
+			NewName:       statusMap[temp.Status],
+			PublicTime:    tools.UnixToTime(temp.PublicTime),
+			CreateTime:    tools.UnixToTime(temp.CreateTime),
+		})
+
+	}
 	return models.ArticleListRes{
 		Total: total,
-		List:  articles,
+		List:  articlesList,
 	}, nil
 }
 
@@ -103,7 +147,6 @@ func (s *ArticleService) Update(ctx *gin.Context, req models.ArticleUpdateReq) (
 
 func (s *ArticleService) GetInfo(ctx *gin.Context, id string) (interface{}, error) {
 	var article models.Article
-
 	res := s.dbClient.MysqlClient.Where("id=?", id).Find(&article)
 	if res.Error != nil {
 		return nil, res.Error
@@ -190,7 +233,7 @@ func (s *ArticleService) GetFrontCategoryArticleList(ctx *gin.Context, cid strin
 	}, nil
 }
 
-func (s *ArticleService) GetFrontTagsArticleList(tid int64) (interface{}, error) {
+func (s *ArticleService) GetFrontTagsArticleList(tid int) (interface{}, error) {
 	var (
 		articles []models.FrontArticleInfo
 		total    int64
@@ -208,92 +251,95 @@ func (s *ArticleService) GetFrontTagsArticleList(tid int64) (interface{}, error)
 }
 
 func (s *ArticleService) GetFrontDetail(ctx *gin.Context, id string) (interface{}, error) {
-	var (
-		article              models.Article
-		articleInfo          models.ArticleInfo
-		preFrontArticleInfo  models.ArticleInfo
-		nextFrontArticleInfo models.ArticleInfo
-		category             models.Category
-		articleTags          []models.ArticleTags
-		tags                 []models.Tags
-		tagIds               []int
-		tagNames             []string
-		tagMap               = make(map[int]string)
-	)
+	return nil, errors.New("类型断言失败")
+	/*
+		var (
+			article              models.Article
+			articleInfo          models.ArticleInfo
+			preFrontArticleInfo  models.ArticleInfo
+			nextFrontArticleInfo models.ArticleInfo
+			category             models.Category
+			articleTags          []models.ArticleTags
+			tags                 []models.Tags
+			tagIds               []int
+			tagNames             []string
+			tagMap               = make(map[int]string)
+		)
 
-	db := s.dbClient.MysqlClient
-	err := db.Where("id=?", id).Find(&article).Error
-	if err != nil {
-		return nil, err
-	}
-
-	if article.Id == 0 {
-		return nil, errors.New("文章不存在")
-	}
-	err = db.Where("aid=?", id).Find(&articleTags).Error
-	if err != nil {
-		return nil, err
-	}
-
-	_ = db.Where("id<?", id).Select("id,cid").Order("id DESC").Limit(1).Find(&preFrontArticleInfo).Error
-	_ = db.Where("id>?", id).Select("id,cid").Order("id DESC").Limit(1).Find(&nextFrontArticleInfo).Error
-	err = db.Where("id=?", article.Cid).Select("id,name").Find(&category).Error
-	if err != nil {
-		return nil, err
-	}
-
-	err = db.Find(&tags).Error
-	if err != nil {
-		return nil, err
-	}
-	for _, tag := range tags {
-		tagMap[tag.Id] = tag.Name
-	}
-
-	for _, articleTag := range articleTags {
-		tagIds = append(tagIds, articleTag.Tid)
-		if _, ok := tagMap[articleTag.Tid]; ok {
-			tagNames = append(tagNames, tagMap[articleTag.Tid])
+		db := s.dbClient.MysqlClient
+		err := db.Where("id=?", id).Find(&article).Error
+		if err != nil {
+			return nil, err
 		}
-	}
-	//记录阅读人数,这里可以考虑用个异步
-	_, _ = NewReadService().Create(ctx, models.ReadCreateReq{
-		Aid: article.Id,
-	})
-	content, _ := tools.ConvertMarkdownToHTML([]byte(article.Content))
-	contentHtml := template.HTML(content)
-	tempList, err := NewArticleService().GetFrontCategoryArticleList(ctx, strconv.Itoa(article.Cid))
-	// 使用类型断言将接口类型转换为 models.FrontDirectoryArticleListRes 类型 ,这里应该有更好的处理方式
-	if res, ok := tempList.(models.FrontDirectoryArticleListRes); ok {
-		return models.FrontArticle{
-			Article: models.Article{
-				Id:          article.Id,
-				Title:       article.Title,
-				Cid:         article.Cid,
-				Author:      article.Author,
-				Desc:        article.Desc,
-				Keyword:     article.Keyword,
-				Thumb:       article.Thumb,
-				Summary:     article.Summary,
-				Content:     article.Content,
-				ContentHtml: contentHtml,
-				IsHot:       article.IsHot,
-				IsNew:       article.IsNew,
-				IsRecom:     article.IsRecom,
-				Weight:      article.Weight,
-				PublicTime:  article.PublicTime,
-				Month:       article.Month,
-			},
-			TagIds:               tagIds,
-			TagNames:             tagNames,
-			Category:             category,
-			DirectoryArticleList: res.DirectoryArticleList,
-			PreArticle:           preFrontArticleInfo,
-			NextArticle:          nextFrontArticleInfo,
-		}, nil
-	} else {
-		return nil, errors.New("类型断言失败")
-	}
+
+		if article.Id == 0 {
+			return nil, errors.New("文章不存在")
+		}
+		err = db.Where("aid=?", id).Find(&articleTags).Error
+		if err != nil {
+			return nil, err
+		}
+
+		_ = db.Where("id<?", id).Select("id,cid").Order("id DESC").Limit(1).Find(&preFrontArticleInfo).Error
+		_ = db.Where("id>?", id).Select("id,cid").Order("id DESC").Limit(1).Find(&nextFrontArticleInfo).Error
+		err = db.Where("id=?", article.Cid).Select("id,name").Find(&category).Error
+		if err != nil {
+			return nil, err
+		}
+
+		err = db.Find(&tags).Error
+		if err != nil {
+			return nil, err
+		}
+		for _, tag := range tags {
+			tagMap[tag.Id] = tag.Name
+		}
+
+		for _, articleTag := range articleTags {
+			tagIds = append(tagIds, articleTag.Tid)
+			if _, ok := tagMap[articleTag.Tid]; ok {
+				tagNames = append(tagNames, tagMap[articleTag.Tid])
+			}
+		}
+		//记录阅读人数,这里可以考虑用个异步
+		_, _ = NewReadService().Create(ctx, models.ReadCreateReq{
+			Aid: article.Id,
+		})
+		content, _ := tools.ConvertMarkdownToHTML([]byte(article.Content))
+		contentHtml := template.HTML(content)
+		tempList, err := NewArticleService().GetFrontCategoryArticleList(ctx, strconv.Itoa(article.Cid))
+		// 使用类型断言将接口类型转换为 models.FrontDirectoryArticleListRes 类型 ,这里应该有更好的处理方式
+		if res, ok := tempList.(models.FrontDirectoryArticleListRes); ok {
+			return models.FrontArticle{
+				Article: models.Article{
+					Id:          article.Id,
+					Title:       article.Title,
+					Cid:         article.Cid,
+					Author:      article.Author,
+					Desc:        article.Desc,
+					Keyword:     article.Keyword,
+					Thumb:       article.Thumb,
+					Summary:     article.Summary,
+					Content:     article.Content,
+					ContentHtml: contentHtml,
+					IsHot:       article.IsHot,
+					IsNew:       article.IsNew,
+					IsRecom:     article.IsRecom,
+					Weight:      article.Weight,
+					PublicTime:  article.PublicTime,
+					Month:       article.Month,
+				},
+				TagIds:               tagIds,
+				TagNames:             tagNames,
+				Category:             category,
+				DirectoryArticleList: res.DirectoryArticleList,
+				PreArticle:           preFrontArticleInfo,
+				NextArticle:          nextFrontArticleInfo,
+			}, nil
+		} else {
+			return nil, errors.New("类型断言失败")
+		}
+	*/
 }
 
 func (s *ArticleService) ChangeField(ctx *gin.Context, req models.ArticleFieldReq) (interface{}, error) {

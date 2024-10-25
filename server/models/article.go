@@ -62,6 +62,7 @@ type ArticleUpdateReq struct {
 	Title      string `json:"title" form:"title"  binding:"required"`
 	Cid        int    `json:"cid" form:"cid"  binding:"required"`
 	Did        int    `json:"did" form:"did"`
+	Tid        []int  `json:"tid" form:"tid"`
 	Author     string `json:"author" form:"author"`
 	Desc       string `json:"desc" form:"desc"`
 	Keyword    string `json:"keyword" form:"keyword"`
@@ -81,6 +82,7 @@ type ArticleCreateReq struct {
 	Title      string `json:"title" form:"title"  binding:"required"`
 	Cid        int    `json:"cid" form:"cid"  binding:"required"`
 	Did        int    `json:"did" form:"did"`
+	Tid        []int  `json:"tid" form:"tid"`
 	Author     string `json:"author" form:"author"`
 	Desc       string `json:"desc" form:"desc"`
 	Keyword    string `json:"keyword" form:"keyword"`
@@ -113,7 +115,7 @@ type ArticleMine struct {
 
 type ArticleListRes struct {
 	Total int64         `json:"total"`
-	List  []ArticleMine `json:"list"`
+	List  []ArticleInfo `json:"list"`
 }
 type ArticleReq struct {
 	PageInfo
