@@ -6,6 +6,7 @@ import (
 	"my-stacklifes/pkg/app"
 	"my-stacklifes/pkg/exception"
 	"my-stacklifes/service"
+	"strconv"
 )
 
 type ArticleHandler struct {
@@ -64,8 +65,8 @@ func (h *ArticleHandler) CategoryArticleList(ctx *gin.Context) {
 func (h *ArticleHandler) TagsArticleList(ctx *gin.Context) {
 	var appGin = app.Gin{C: ctx}
 	id := ctx.Param("id")
-
-	list, err := h.srv.GetFrontTagsArticleList(id)
+	num, _ := strconv.ParseInt(id, 10, 64)
+	list, err := h.srv.GetFrontTagsArticleList(num)
 	if err != nil {
 		appGin.Error(exception.ERROR, err.Error(), nil)
 		return

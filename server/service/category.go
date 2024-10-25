@@ -175,9 +175,7 @@ func (s *CategoryService) Delete(ctx *gin.Context, req models.CategoryDelReq) (i
 }
 func (s *CategoryService) GetCategoryList(ctx *gin.Context) (interface{}, error) {
 	var categoryList []models.CategoryMine
-
 	db := s.dbClient.MysqlClient
-
 	err := db.Model(&models.Category{}).
 		Where("status = ?", constant.StatusTrue).
 		Select("id,mark,name").
@@ -185,7 +183,6 @@ func (s *CategoryService) GetCategoryList(ctx *gin.Context) (interface{}, error)
 	if err != nil {
 		return nil, err
 	}
-
 	return categoryList, nil
 }
 

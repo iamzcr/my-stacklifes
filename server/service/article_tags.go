@@ -15,7 +15,19 @@ func NewArticleTagsService() *ArticleTagsService {
 		dbClient: mysql.NewDbClient(),
 	}
 }
-func (s *ArticleTagsService) GetAid(id string) ([]int, error) {
+func (s *ArticleTagsService) GetAid(tid int64) []int {
+	var (
+		acticleTags []models.ArticleTags
+		aids        []int
+	)
+	s.dbClient.MysqlClient.Model(&models.ArticleTags{}).Where("tid=?", tid).Select("aid,tid").Find(&acticleTags)
+	for _, acticleTag := range acticleTags {
+		aids = append(aids, acticleTag.Aid)
+	}
+	return aids
+}
+
+func (s *ArticleTagsService) SetAid(tid []int64, aid int64) ([]int, error) {
 	var (
 		acticleTags []models.ArticleTagsMine
 		aids        []int

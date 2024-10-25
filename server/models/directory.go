@@ -21,7 +21,7 @@ type DirectoryInfo struct {
 	Id           int    `json:"id"`
 	Name         string `json:"name"`
 	Mark         string `json:"mark"`
-	Cid          string `json:"cid"`
+	Cid          int    `json:"cid"`
 	CategoryName string `json:"category_name"`
 	Type         int    `json:"type"`
 	Author       string `json:"author"`

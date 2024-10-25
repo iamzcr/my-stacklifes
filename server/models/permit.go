@@ -69,8 +69,8 @@ type PermitListRes struct {
 
 type PermitMine struct {
 	Id     int    `json:"id" form:"id"`
-	Name   string `json:"name" form:"name"`
 	Parent int    `json:"parent" form:"parent"`
+	Name   string `json:"name" form:"name"`
 }
 
 type PermitAssignList struct {

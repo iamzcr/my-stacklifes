@@ -2,13 +2,13 @@ package service
 
 import (
 	"errors"
-	"fmt"
 	"github.com/gin-gonic/gin"
 	"html/template"
 	"my-stacklifes/database/mysql"
 	"my-stacklifes/models"
 	"my-stacklifes/pkg/tools"
 	"strconv"
+	"time"
 )
 
 type ArticleService struct {
@@ -36,12 +36,6 @@ func (s *ArticleService) GetList(ctx *gin.Context, req models.ArticleReq) (inter
 	if err != nil {
 		return nil, err
 	}
-	for i := range articles {
-		articles[i].AddExtraField("status_name", tools.GetStatusDisplay(articles[i].Status))
-		articles[i].AddExtraField("new_name", tools.GetStatusDisplay(articles[i].IsNew))
-		articles[i].AddExtraField("hot_name", tools.GetStatusDisplay(articles[i].IsHot))
-		articles[i].AddExtraField("recom_name", tools.GetStatusDisplay(articles[i].IsRecom))
-	}
 	return models.ArticleListRes{
 		Total: total,
 		List:  articles,
@@ -49,13 +43,10 @@ func (s *ArticleService) GetList(ctx *gin.Context, req models.ArticleReq) (inter
 }
 
 func (s *ArticleService) Create(ctx *gin.Context, req models.ArticleCreateReq) (interface{}, error) {
-	var (
-		article models.Article
-	)
+	var article models.Article
 	article.Title = req.Title
 	article.Cid = req.Cid
 	article.Did = req.Did
-	article.Author = req.Author
 	article.Desc = req.Desc
 	article.Keyword = req.Keyword
 	article.Thumb = req.Thumb
@@ -66,8 +57,9 @@ func (s *ArticleService) Create(ctx *gin.Context, req models.ArticleCreateReq) (
 	article.IsRecom = req.IsRecom
 	article.Weight = req.Weight
 	article.PublicTime = req.PublicTime
+	article.CreateTime = time.Now().Unix()
 	article.Month = req.Month
-	err := s.dbClient.MysqlClient.Model(article).Create(&article).Error
+	err := s.dbClient.MysqlClient.Create(&article).Error
 	if err != nil {
 		return nil, err
 	}
@@ -80,15 +72,17 @@ func (s *ArticleService) Update(ctx *gin.Context, req models.ArticleUpdateReq) (
 		count   int64
 	)
 	db := s.dbClient.MysqlClient
-	err := db.Model(article).Where("id=?", req.Id).Find(&article).Count(&count).Error
-	if err != nil || count < 1 {
-		return nil, errors.New("更新出错")
+	err := db.Model(&article).Where("id=?", req.Id).Count(&count).Error
+	if err != nil {
+		return nil, err
+	}
+	if count < 1 {
+		return nil, errors.New("文章不存在了")
 	}
 
 	article.Title = req.Title
 	article.Cid = req.Cid
 	article.Did = req.Did
-	article.Author = req.Author
 	article.Desc = req.Desc
 	article.Keyword = req.Keyword
 	article.Thumb = req.Thumb
@@ -99,13 +93,14 @@ func (s *ArticleService) Update(ctx *gin.Context, req models.ArticleUpdateReq) (
 	article.IsRecom = req.IsRecom
 	article.Weight = req.Weight
 	article.PublicTime = req.PublicTime
-	article.Month = req.Month
-	err = db.Model(article).Save(&article).Error
+	article.UpdatedTime = time.Now().Unix()
+	err = db.Save(&article).Error
 	if err != nil {
 		return nil, err
 	}
 	return article.Id, nil
 }
+
 func (s *ArticleService) GetInfo(ctx *gin.Context, id string) (interface{}, error) {
 	var article models.Article
 
@@ -195,18 +190,14 @@ func (s *ArticleService) GetFrontCategoryArticleList(ctx *gin.Context, cid strin
 	}, nil
 }
 
-func (s *ArticleService) GetFrontTagsArticleList(id string) (interface{}, error) {
+func (s *ArticleService) GetFrontTagsArticleList(tid int64) (interface{}, error) {
 	var (
-		articleTags = NewArticleTagsService()
-		articles    []models.FrontArticleInfo
-		total       int64
+		articles []models.FrontArticleInfo
+		total    int64
 	)
-	aid, err := articleTags.GetAid(id)
-	if err != nil {
-		return nil, err
-	}
+	aid := NewArticleTagsService().GetAid(tid)
 	db := s.dbClient.MysqlClient
-	err = db.Model(&models.Article{}).Where("id IN (?)", aid).Find(&articles).Count(&total).Error
+	err := db.Model(&models.Article{}).Where("id IN (?)", aid).Find(&articles).Count(&total).Error
 	if err != nil {
 		return nil, err
 	}
@@ -219,8 +210,9 @@ func (s *ArticleService) GetFrontTagsArticleList(id string) (interface{}, error)
 func (s *ArticleService) GetFrontDetail(ctx *gin.Context, id string) (interface{}, error) {
 	var (
 		article              models.Article
-		preFrontArticleInfo  models.Article
-		nextFrontArticleInfo models.Article
+		articleInfo          models.ArticleInfo
+		preFrontArticleInfo  models.ArticleInfo
+		nextFrontArticleInfo models.ArticleInfo
 		category             models.Category
 		articleTags          []models.ArticleTags
 		tags                 []models.Tags
@@ -245,8 +237,6 @@ func (s *ArticleService) GetFrontDetail(ctx *gin.Context, id string) (interface{
 
 	_ = db.Where("id<?", id).Select("id,cid").Order("id DESC").Limit(1).Find(&preFrontArticleInfo).Error
 	_ = db.Where("id>?", id).Select("id,cid").Order("id DESC").Limit(1).Find(&nextFrontArticleInfo).Error
-	fmt.Println(nextFrontArticleInfo)
-	fmt.Println(preFrontArticleInfo)
 	err = db.Where("id=?", article.Cid).Select("id,name").Find(&category).Error
 	if err != nil {
 		return nil, err

@@ -19,29 +19,38 @@
                     <div class="x_panel">
                         <div class="x_content">
                             <form id="demo-form2" data-parsley-validate class="form-horizontal form-label-left">
-                                <input type="hidden" name="id" value="{{if .data}}{{.data.Id}}{{end}}">
+                                <input type="hidden" name="id" id="id"
+                                       value="{{if .data.Info}}{{.data.Info.Id}}{{end}}"
+                                       data-id="{{if .data.Info}}{{.data.Info.Id}}{{end}}">
                                 <div class="item form-group">
                                     <label class="col-form-label col-md-1 label-align">标题</label>
                                     <div class="col-md-2">
-                                        <input type="text" required="required" class="form-control ">
+                                        <input type="text" required="required" class="form-control"   value="{{if .data.Info}}{{.data.Info.Title}}{{end}}">
                                     </div>
                                 </div>
                                 <div class="item form-group">
-                                    <label class="col-form-label col-md-1 label-align">Last Name</label>
+                                    <label class="col-form-label col-md-1 label-align">seo关键词</label>
                                     <div class="col-md-2">
-                                        <input type="text" name="last-name" required="required" class="form-control">
+                                        <input type="text" name="last-name" required="required" class="form-control"  value="{{if .data.Info}}{{.data.Info.Key}}{{end}}" >
+                                    </div>
+                                </div>
+                                <div class="item form-group">
+                                    <label class="col-form-label col-md-1 label-align">seo描述</label>
+                                    <div class="col-md-2">
+                                        <input type="text" name="last-name" required="required" class="form-control"  value="{{if .data.Info}}{{.data.Info.Desc}}{{end}}" >
                                     </div>
                                 </div>
                                 <div class="item form-group">
                                     <label class="col-form-label col-md-1 label-align">内容</label>
                                     <div class="col-md-11">
-                                        <textarea id="hiddenTextarea" style="display: none;">{{if .data}}{{.data.Content}}{{end}}</textarea>
+                                        <textarea id="hiddenTextarea" style="display: none;">{{if .data.Info}}{{.data.Info.Content}}{{end}}</textarea>
                                         <div id="editor"></div>
                                     </div>
                                 </div>
                                 <div class="item form-group">
                                     <div class="col-md-6 offset-md-1">
-                                        <button type="submit" class="btn btn-success">Submit</button>
+                                        <button type="button" class="btn btn-success" onclick="submitForm()">提交
+                                        </button>
                                     </div>
                                 </div>
                             </form>
@@ -74,6 +83,31 @@
             }
         });
     });
+
+
+    function submitForm() {
+        let url = "/admin/category/create"
+        let id = $("#id").data("id");
+        if (id) {
+            url = "/admin/category/update"
+        }
+        let formData = $("#inputForm").serialize();
+        $.ajax({
+            type: "POST",
+            url: url, // 提交表单数据的URL
+            data: formData,
+            success: function (response) {
+                if (response.code !== 200) {
+                    Swal.fire({icon: "error", text: response.message});
+                } else {
+                    window.location.replace("/admin/category/list");
+                }
+            },
+            error: function (error) {
+                Swal.fire({icon: "error", text: 'error'});
+            }
+        });
+    }
 </script>
 </body>
 </html>
