@@ -80,3 +80,8 @@ type DirectoryMine struct {
 	Cid  string `json:"cid"`
 	Name string `json:"name"`
 }
+
+type DirectoryAssignList struct {
+	Info         interface{}
+	CategoryList interface{}
+}

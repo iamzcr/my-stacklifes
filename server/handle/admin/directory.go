@@ -22,7 +22,13 @@ func (h *DirectoryHandler) Edit(ctx *gin.Context) {
 	var appGin = app.Gin{C: ctx}
 	id := ctx.Param("id")
 	info, _ := h.srv.GetInfo(ctx, id)
-	appGin.SuccessAdminHtml(info, "directory/edit.html")
+	categoryList, _ := service.NewCategoryService().GetCategoryList(ctx)
+	assignList := models.DirectoryAssignList{
+		Info:         info,
+		CategoryList: categoryList,
+	}
+
+	appGin.SuccessAdminHtml(assignList, "directory/edit.html")
 }
 
 func (h *DirectoryHandler) List(ctx *gin.Context) {

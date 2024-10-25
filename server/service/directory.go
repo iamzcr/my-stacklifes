@@ -21,18 +21,17 @@ func NewDirectoryService() *DirectoryService {
 
 func (s *DirectoryService) GetList(ctx *gin.Context, req models.DirectoryListReq) (interface{}, error) {
 	var (
-		directorys       []models.Directory
-		parentDirectorys []models.DirectoryMine
-		directoryList    []models.DirectoryInfo
-		categoryList     []models.CategoryMine
-		parentMap        = make(map[int]string)
-		categoryMap      = make(map[int]string)
-		statusMap        = map[int]string{
+		parentMap, categoryMap = make(map[int]string), make(map[int]string)
+		directorys             []models.Directory
+		parentDirectorys       []models.DirectoryMine
+		directoryList          []models.DirectoryInfo
+		categoryList           []models.CategoryMine
+		statusMap              = map[int]string{
 			constant.StatusTrue:  constant.StatusTrueName,
 			constant.StatusFalse: constant.StatusFalseName,
 		}
 		typeMap = map[int]string{
-			constant.MenuNavType: constant.MenuNavTypeName,
+			constant.DirectoryDefaultType: constant.DirectoryDefaultTypeName,
 		}
 		total int64
 	)
@@ -61,7 +60,7 @@ func (s *DirectoryService) GetList(ctx *gin.Context, req models.DirectoryListReq
 	}
 
 	for _, temp := range directorys {
-		parentName := "顶级分类"
+		parentName := "顶级"
 		if _, ok := parentMap[temp.Parent]; ok {
 			parentName = parentMap[temp.Parent]
 		}
@@ -176,6 +175,22 @@ func (s *DirectoryService) Delete(ctx *gin.Context, req models.DirectoryDelReq) 
 	}
 
 	return directory.Id, nil
+}
+
+func (s *DirectoryService) GetDirectoryList(ctx *gin.Context) (interface{}, error) {
+	var directoryList []models.DirectoryMine
+
+	db := s.dbClient.MysqlClient
+
+	err := db.Model(&models.Category{}).
+		Where("status = ?", constant.StatusTrue).
+		Select("id,mark,name").
+		Order("weight DESC").Find(&directoryList).Error
+	if err != nil {
+		return nil, err
+	}
+
+	return directoryList, nil
 }
 
 func (s *DirectoryService) GetListByCid(cid string) ([]models.DirectoryMine, []int, error) {

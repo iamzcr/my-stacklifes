@@ -30,7 +30,7 @@ func (s *CategoryService) GetList(ctx *gin.Context, req models.CategoryListReq) 
 			constant.StatusFalse: constant.StatusFalseName,
 		}
 		typeMap = map[int]string{
-			constant.MenuNavType: constant.MenuNavTypeName,
+			constant.CategoryNavType: constant.CategorNavTypeName,
 		}
 		total int64
 	)
@@ -174,14 +174,11 @@ func (s *CategoryService) Delete(ctx *gin.Context, req models.CategoryDelReq) (i
 	return category.Id, nil
 }
 func (s *CategoryService) GetCategoryList(ctx *gin.Context) (interface{}, error) {
-	var (
-		categoryList []models.CategoryMine
-		category     []models.Category
-	)
+	var categoryList []models.CategoryMine
 
 	db := s.dbClient.MysqlClient
 
-	err := db.Model(&category).
+	err := db.Model(&models.Category{}).
 		Where("status = ?", constant.StatusTrue).
 		Select("id,mark,name").
 		Order("weight DESC").Find(&categoryList).Error
@@ -189,9 +186,7 @@ func (s *CategoryService) GetCategoryList(ctx *gin.Context) (interface{}, error)
 		return nil, err
 	}
 
-	return models.CategoryNavListRes{
-		List: categoryList,
-	}, nil
+	return categoryList, nil
 }
 
 // frontend获取分类导航

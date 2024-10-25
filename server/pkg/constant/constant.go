@@ -17,3 +17,6 @@ const TagsDefaultName = "默认"
 
 const CategoryNavType = 1
 const CategorNavTypeName = "导航分类"
+
+const DirectoryDefaultType = 1
+const DirectoryDefaultTypeName = "默认"
