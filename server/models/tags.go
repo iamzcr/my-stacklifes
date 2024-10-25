@@ -7,7 +7,7 @@ type Tags struct {
 	Weight int    `json:"weight" gorm:"column:weight;type:int(11);default:0"`
 	Type   int    `json:"type" gorm:"column:type;type:int(11);default:1"`
 	Status int    `json:"status" gorm:"column:status;type:int(11);default:1" `
-	Author string `json:"author"`
+	Author string `json:"author" gorm:"column:author;type:string;default:nicholas"`
 	CommonField
 }
 
