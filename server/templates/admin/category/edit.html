@@ -18,7 +18,7 @@
                             <form id="inputForm" data-parsley-validate class="form-horizontal form-label-left">
                                 <input type="hidden" name="id" value="{{if .data}}{{.data.Id}}{{end}}">
                                 <div class="item form-group">
-                                    <label class="col-form-label col-md-1 label-align">分类名称</label>
+                                    <label class="col-form-label col-md-1 label-align">标签名称</label>
                                     <div class="col-md-2">
                                         <input type="text" name="name"  value="{{if .data}}{{.data.Name}}{{end}}"  required="required" class="form-control">
                                     </div>
@@ -47,16 +47,25 @@
 {{template "public/footer" .}}
 <script>
     function submitForm() {
-        var formData = $("#inputForm").serialize();
+        let url = "/admin/category/create"
+        let id = $("#id").data("id");
+        if (id) {
+            url = "/admin/category/update"
+        }
+        let formData = $("#inputForm").serialize();
         $.ajax({
             type: "POST",
-            url: "/admin/category/create", // 提交表单数据的URL
+            url: url, // 提交表单数据的URL
             data: formData,
             success: function (response) {
-                console.log(response);
+                if (response.code !== 200) {
+                    Swal.fire({icon: "error", text: response.message});
+                } else {
+                    window.location.replace("/admin/category/list");
+                }
             },
             error: function (error) {
-                console.error(error);
+                Swal.fire({icon: "error", text: 'error'});
             }
         });
     }
