@@ -27,7 +27,6 @@ func (h *DirectoryHandler) Edit(ctx *gin.Context) {
 		Info:         info,
 		CategoryList: categoryList,
 	}
-
 	appGin.SuccessAdminHtml(assignList, "directory/edit.html")
 }
 
