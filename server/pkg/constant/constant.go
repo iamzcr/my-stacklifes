@@ -14,3 +14,6 @@ const PermitDefaultTypeName = "默认"
 
 const TagsDefaultType = 1
 const TagsDefaultName = "默认"
+
+const CategoryNavType = 1
+const CategorNavTypeName = "导航分类"

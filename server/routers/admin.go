@@ -98,6 +98,15 @@ func AdminRoutersInit(r *gin.Engine) {
 		adminRouter.POST("/tags/update", tagsHandler.Update)
 		adminRouter.POST("/tags/delete", tagsHandler.Delete)
 
+		adminRouter.GET("/category/list", categoryHandler.List)
+		adminRouter.GET("/category/list_json", categoryHandler.ListJson)
+		adminRouter.GET("/category/edit/:id", categoryHandler.Edit)
+		adminRouter.GET("/category/add", categoryHandler.Edit)
+		adminRouter.GET("/category/info/:id", categoryHandler.Info)
+		adminRouter.POST("/category/update", categoryHandler.Update)
+		adminRouter.POST("/category/create", categoryHandler.Create)
+		adminRouter.POST("/category/delete", categoryHandler.Delete)
+
 		adminRouter.GET("/option/getFilter", optionHandler.GetFilter)
 		adminRouter.GET("/lang/list", langHandler.List)
 		adminRouter.GET("/lang/list_json", langHandler.ListJson)
@@ -106,16 +115,6 @@ func AdminRoutersInit(r *gin.Engine) {
 		adminRouter.POST("/lang/create", langHandler.Create)
 		adminRouter.POST("/lang/delete", langHandler.Delete)
 		adminRouter.POST("/lang/change_field", langHandler.ChangeField)
-
-		adminRouter.GET("/category/list", categoryHandler.List)
-		adminRouter.GET("/category/list_json", categoryHandler.ListJson)
-		adminRouter.GET("/category/edit/:id", categoryHandler.Edit)
-		adminRouter.GET("/category/add", categoryHandler.Edit)
-		adminRouter.GET("/category/info/:id", categoryHandler.Info)
-		adminRouter.GET("/category/no_page_list", categoryHandler.NoPageList)
-		adminRouter.POST("/category/update", categoryHandler.Update)
-		adminRouter.POST("/category/create", categoryHandler.Create)
-		adminRouter.POST("/category/delete", categoryHandler.Delete)
 
 		adminRouter.GET("/directory/list", directoryHandler.List)
 		adminRouter.GET("/directory/list_json", directoryHandler.ListJson)

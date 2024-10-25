@@ -58,11 +58,6 @@ type AdminGroupListRes struct {
 	Total int64            `json:"total"`
 	List  []AdminGroupInfo `json:"list"`
 }
-type AdminGroupMine struct {
-	Id   int    `json:"id"`
-	Mark string `json:"mark"`
-	Name string `json:"name"`
-}
 
 type AdminGroupDelReq struct {
 	Id int `json:"id" form:"id" binding:"required"`

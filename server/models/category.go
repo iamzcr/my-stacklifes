@@ -1,14 +1,14 @@
 package models
 
 type Category struct {
-	Id     int    `json:"id"`
+	Id     int    `json:"id"  gorm:"column:id;type:int(11);primary_key;AUTO_INCREMENT"`
 	Name   string `json:"name"`
 	Mark   string `json:"mark"`
-	Type   int    `json:"type"`
-	Author string `json:"author"`
-	Parent int    `json:"parent"`
-	Weight int    `json:"weight"`
-	Status int    `json:"status"`
+	Type   int    `json:"type" gorm:"column:type;type:int(11);default:1"`
+	Author string `json:"author" gorm:"column:author;type:string;default:nicholas"`
+	Parent int    `json:"parent" gorm:"column:parent;type:int(11);default:0"`
+	Weight int    `json:"weight" gorm:"column:weight;type:int(11);default:0"`
+	Status int    `json:"status"  gorm:"column:status;type:int(11);default:1"`
 	CommonField
 }
 
@@ -16,47 +16,41 @@ func (c *Category) TableName() string {
 	return "sl_category"
 }
 
-type CategoryMine struct {
-	Id   int    `json:"id"`
-	Mark string `json:"mark"`
-	Name string `json:"name"`
+type CategoryInfo struct {
+	Id          int    `json:"id"`
+	Name        string `json:"name"`
+	Mark        string `json:"mark"`
+	Type        int    `json:"type"`
+	Author      string `json:"author"`
+	Weight      int    `json:"weight"`
+	Status      int    `json:"status"`
+	Parent      int    `json:"parent"`
+	ParentName  string `json:"parent_name"`
+	CreateTime  string `json:"create_time"`
+	UpdatedTime string `json:"updated_time"`
+	StatusName  string `json:"status_name"`
+	TypeName    string `json:"type_name"`
+}
+
+type CategoryListRes struct {
+	Total int64          `json:"total"`
+	List  []CategoryInfo `json:"list"`
 }
 
 type CategoryListReq struct {
 	PageInfo
 	Name   string `json:"name" form:"name"`
-	Parent int    `json:"parent" form:"parent"`
-}
-
-type CategoryListRes struct {
-	Total int64      `json:"total"`
-	List  []Category `json:"list"`
-}
-
-type CategoryNoPageReq struct {
-	Parent int `json:"parent" form:"parent,default=0"`
-	Status int `json:"status" form:"status,default=1" `
-}
-type CategoryNoPageListRes struct {
-	List []CategoryMine `json:"list"`
-}
-
-type CategoryNavListReq struct {
-	Parent int `json:"parent" form:"parent,default=0"`
-	Status int `json:"status" form:"status,default=1" `
-	Type   int `json:"type" form:"type,default=1" `
-}
-type CategoryNavListRes struct {
-	List []CategoryMine `json:"list"`
+	Parent int    `json:"parent" form:"parent,default=0"`
+	Status int    `json:"status" form:"status,default=1" `
 }
 
 type CategoryUpdateReq struct {
-	Id     int    `json:"id" form:"id"`
+	Id     int    `json:"id" form:"id" binding:"required"`
 	Name   string `json:"name" form:"name" binding:"required"`
 	Mark   string `json:"mark" form:"mark"`
 	Type   int    `json:"type" form:"type"`
 	Author string `json:"author" form:"author"`
-	Parent int    `json:"parent" form:"parent" binding:"omitempty"`
+	Parent int    `json:"parent" form:"parent"`
 	Weight int    `json:"weight" form:"weight" binding:"required"`
 	Status int    `json:"status" form:"status"`
 }
@@ -66,11 +60,27 @@ type CategoryCreateReq struct {
 	Mark   string `json:"mark" form:"mark"`
 	Type   int    `json:"type" form:"type"`
 	Author string `json:"author" form:"author"`
-	Parent int    `json:"parent" form:"parent" binding:"omitempty"`
+	Parent int    `json:"parent" form:"parent"`
 	Weight int    `json:"weight" form:"weight" binding:"required"`
 	Status int    `json:"status" form:"status"`
 }
 
 type CategoryDelReq struct {
 	Id int `json:"id" form:"id" binding:"required"`
+}
+
+type CategoryNavListReq struct {
+	Parent int `json:"parent" form:"parent,default=0"`
+	Status int `json:"status" form:"status,default=1" `
+	Type   int `json:"type" form:"type,default=1" `
+}
+
+type CategoryNavListRes struct {
+	List []CategoryMine `json:"list"`
+}
+
+type CategoryMine struct {
+	Id   int    `json:"id"`
+	Mark string `json:"mark"`
+	Name string `json:"name"`
 }

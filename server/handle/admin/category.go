@@ -46,22 +46,6 @@ func (h *CategoryHandler) ListJson(ctx *gin.Context) {
 	appGin.Success(list)
 }
 
-func (h *CategoryHandler) NoPageList(ctx *gin.Context) {
-	var appGin = app.Gin{C: ctx}
-	listReq := models.CategoryNoPageReq{}
-	err := ctx.ShouldBindQuery(&listReq)
-	if err != nil {
-		appGin.Error(exception.ERROR, err.Error(), nil)
-		return
-	}
-	list, err := h.srv.GetNoPageList(ctx, listReq)
-	if err != nil {
-		appGin.Error(exception.ERROR, err.Error(), nil)
-		return
-	}
-	appGin.Success(list)
-}
-
 func (h *CategoryHandler) Info(ctx *gin.Context) {
 	var appGin = app.Gin{C: ctx}
 	id := ctx.Param("id")
