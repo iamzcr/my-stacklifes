@@ -38,7 +38,7 @@ func (s *TagsService) GetList(ctx *gin.Context, req models.TagsListReq) (interfa
 	}
 
 	limit, offset := req.GetPageInfo()
-	err := db.Limit(limit).Offset(offset).Order("id DESC").Find(&tags).
+	err := db.Debug().Limit(limit).Offset(offset).Order("id DESC").Find(&tags).
 		Limit(-1).Offset(-1).Count(&total).Error
 	if err != nil {
 		return nil, err
