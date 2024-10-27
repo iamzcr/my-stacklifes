@@ -32,8 +32,10 @@
                                     <label class="col-form-label col-md-1 label-align">父级菜单</label>
                                     <div class="col-md-2">
                                         <select class="form-control" name="parent">
-                                            {{range $index,$value := .data.MenuParents}}
-                                            <option value="{{$value.Id}}">{{$value.Name}}</option>
+                                            {{range $index, $value := .data.MenuParents}}
+                                            <option value="{{$value.Id}}" {{if and (not (eq $.data.MenuInfo nil)) (eq $value.Id $.data.MenuInfo.Parent)}}selected{{end}}>
+                                                {{$value.Name}}
+                                            </option>
                                             {{end}}
                                         </select>
                                     </div>

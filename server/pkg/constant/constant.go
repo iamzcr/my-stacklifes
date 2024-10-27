@@ -20,3 +20,6 @@ const CategorNavTypeName = "导航分类"
 
 const DirectoryDefaultType = 1
 const DirectoryDefaultTypeName = "默认"
+
+const LangZh = "zh"
+const LangZhName = "简体"

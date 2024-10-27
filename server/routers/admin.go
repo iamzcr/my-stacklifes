@@ -116,6 +116,15 @@ func AdminRoutersInit(r *gin.Engine) {
 		adminRouter.POST("/directory/create", directoryHandler.Create)
 		adminRouter.POST("/directory/delete", directoryHandler.Delete)
 
+		adminRouter.GET("/lang/list", langHandler.List)
+		adminRouter.GET("/lang/list_json", langHandler.ListJson)
+		adminRouter.GET("/lang/edit/:id", langHandler.Edit)
+		adminRouter.GET("/lang/add", langHandler.Edit)
+		adminRouter.GET("/lang/info/:id", langHandler.Info)
+		adminRouter.POST("/lang/update", langHandler.Update)
+		adminRouter.POST("/lang/create", langHandler.Create)
+		adminRouter.POST("/lang/delete", langHandler.Delete)
+
 		adminRouter.GET("/article/list", articleHandler.List)
 		adminRouter.GET("/article/list_json", articleHandler.ListJson)
 		adminRouter.GET("/article/edit/:id", articleHandler.Edit)
@@ -126,13 +135,6 @@ func AdminRoutersInit(r *gin.Engine) {
 		adminRouter.POST("/article/change_field", articleHandler.ChangeField)
 
 		adminRouter.GET("/option/getFilter", optionHandler.GetFilter)
-		adminRouter.GET("/lang/list", langHandler.List)
-		adminRouter.GET("/lang/list_json", langHandler.ListJson)
-		adminRouter.GET("/lang/info/:id", langHandler.Info)
-		adminRouter.POST("/lang/update", langHandler.Update)
-		adminRouter.POST("/lang/create", langHandler.Create)
-		adminRouter.POST("/lang/delete", langHandler.Delete)
-		adminRouter.POST("/lang/change_field", langHandler.ChangeField)
 
 		adminRouter.GET("/admin/list", adminsHandler.List)
 		adminRouter.GET("/admin/list_json", adminsHandler.ListJson)

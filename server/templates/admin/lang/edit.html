@@ -1,10 +1,95 @@
+{{define "lang/edit.html"}}
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <title>Title</title>
+    {{template "public/header" .}}
 </head>
-<body>
-
+<body class="nav-md">
+<div class="container body">
+    <div class="main_container">
+        {{template "public/left_nav" .}}
+        {{template "public/nav" .}}
+        <!-- page content -->
+        <div class="right_col" role="main">
+            <div class="row">
+                <div class="col-md-12 col-sm-12 ">
+                    <div class="x_panel">
+                        <div class="x_content">
+                            <form id="inputForm" data-parsley-validate class="form-horizontal form-label-left">
+                                <input type="hidden" name="id" id="id"
+                                       value="{{if.data.Info}}{{.data.Info.Id}}{{end}}"
+                                       data-id="{{if .data.Info}}{{.data.Info.Id}}{{end}}">
+                                <div class="item form-group">
+                                    <label class="col-form-label col-md-1 label-align">名称</label>
+                                    <div class="col-md-2">
+                                        <input type="text" name="name"
+                                               value="{{if .data.Info}}{{.data.Info.Name}}{{end}}"
+                                               required="required"
+                                               class="form-control">
+                                    </div>
+                                </div>
+                                <div class="item form-group">
+                                    <label class="col-form-label col-md-1 label-align">标识</label>
+                                    <div class="col-md-2">
+                                        <select class="form-control" name="parent">
+                                            {{range $index, $value := .data.LangConfig}}
+                                            <option value="{{$value.Id}}" {{if and (not (eq $.data.Info nil)) (eq $value.Id $.data.Info.Parent)}}selected{{end}}>
+                                                {{$value.Name}}
+                                            </option>
+                                            {{end}}
+                                        </select>
+                                    </div>
+                                </div>
+                                <div class="item form-group">
+                                    <label class="col-form-label col-md-1 label-align">排序</label>
+                                    <div class="col-md-2">
+                                        <input type="text" name="weight"
+                                               value="{{if .data.Info}}{{.data.Info.Weight}}{{end}}"
+                                               required="required"
+                                               class="form-control">
+                                    </div>
+                                </div>
+                                <div class="item form-group">
+                                    <div class="col-md-6 offset-md-1">
+                                        <button type="button" class="btn btn-success" onclick="submitForm()">提交
+                                        </button>
+                                    </div>
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        {{template "public/footer_nav" .}}
+    </div>
+</div>
+{{template "public/footer" .}}
+<script>
+    function submitForm() {
+        let url = "/admin/lang/create"
+        let id = $("#id").data("id");
+        if (id) {
+            url = "/admin/lang/update"
+        }
+        let formData = $("#inputForm").serialize();
+        $.ajax({
+            type: "POST",
+            url: url, // 提交表单数据的URL
+            data: formData,
+            success: function (response) {
+                if (response.code !== 200) {
+                    Swal.fire({icon: "error", text: response.message});
+                } else {
+                    window.location.replace("/admin/lang/list");
+                }
+            },
+            error: function (error) {
+                Swal.fire({icon: "error", text: 'error'});
+            }
+        });
+    }
+</script>
 </body>
 </html>
+{{end}}

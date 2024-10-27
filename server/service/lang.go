@@ -2,10 +2,10 @@ package service
 
 import (
 	"errors"
-	"fmt"
 	"github.com/gin-gonic/gin"
 	"my-stacklifes/database/mysql"
 	"my-stacklifes/models"
+	"my-stacklifes/pkg/constant"
 )
 
 type LangService struct {
@@ -44,96 +44,86 @@ func (s *LangService) GetList(ctx *gin.Context, req models.LangListReq) (interfa
 }
 
 func (s *LangService) GetInfo(ctx *gin.Context, id string) (interface{}, error) {
-	var LangInfo models.Lang
+	var info models.Lang
 
-	res := s.dbClient.MysqlClient.Where("id=?", id).Find(&LangInfo)
+	res := s.dbClient.MysqlClient.Where("id=?", id).Find(&info)
 	if res.Error != nil {
 		return nil, res.Error
 	}
-	if LangInfo.Id < 0 {
+	if info.Id < 0 {
 		return nil, errors.New("Lang error")
 	}
-	return LangInfo, nil
+
+	return info, nil
 }
 func (s *LangService) Create(ctx *gin.Context, req models.LangCreateReq) (interface{}, error) {
-	var (
-		Lang  models.Lang
-		count int64
-	)
-
-	s.dbClient.MysqlClient.Model(Lang).
-		Where("lang = ?", req.Lang).
-		Count(&count)
-	fmt.Println(req)
-	if count > 0 {
+	var lang models.Lang
+	db := s.dbClient.MysqlClient
+	db.Where("lang = ?", req.Lang).First(&lang)
+	if lang.Id > 0 {
 		return nil, errors.New("记录已存在")
 	}
-	Lang.Name = req.Name
-	Lang.Lang = req.Lang
-	err := s.dbClient.MysqlClient.Save(&Lang).Error
+
+	lang.Name = req.Name
+	lang.Lang = req.Lang
+	err := db.Create(&lang).Error
 	if err != nil {
 		return nil, err
 	}
-	return Lang.Id, nil
+
+	return lang.Id, nil
 }
 
 func (s *LangService) Update(ctx *gin.Context, req models.LangUpdateReq) (interface{}, error) {
 	var (
-		Lang  models.Lang
+		lang  models.Lang
 		count int64
 	)
-	res := s.dbClient.MysqlClient.Where("id=?", req.Id).Find(&Lang)
+	db := s.dbClient.MysqlClient
+
+	res := db.Where("id=?", req.Id).First(&lang)
 	if res.Error != nil {
 		return nil, res.Error
 	}
-	s.dbClient.MysqlClient.Model(Lang).
-		Where("id != ? and lang=?", req.Id, req.Name).
-		Count(&count)
-	if count > 0 {
-		return nil, errors.New("记录已存在")
+	if lang.Id <= 0 {
+		return nil, errors.New("不存在该记录")
 	}
-	Lang.Name = req.Name
-	Lang.Lang = req.Lang
-	err := s.dbClient.MysqlClient.Create(&Lang).Error
+
+	db.Model(lang).Where("id != ? and lang=?", req.Id, req.Name).Count(&count)
+	if count > 0 {
+		return nil, errors.New("已存在有相同的名称记录")
+	}
+
+	lang.Name = req.Name
+	lang.Lang = req.Lang
+	err := db.Save(&lang).Error
 	if err != nil {
 		return nil, err
 	}
-	return Lang.Id, nil
+
+	return lang.Id, nil
 }
 
 func (s *LangService) Delete(ctx *gin.Context, req models.LangDelReq) (interface{}, error) {
 	var lang models.Lang
-	s.dbClient.MysqlClient.Where("id=?", req.Id).Find(&lang)
+	db := s.dbClient.MysqlClient
+
+	db.Where("id=?", req.Id).First(&lang)
 	if lang.Id <= 0 {
 		return nil, errors.New("不存在该记录")
 	}
-	err := s.dbClient.MysqlClient.Delete(&lang).Error
+
+	err := db.Delete(&lang).Error
 	if err != nil {
 		return nil, err
 	}
+
 	return lang.Id, nil
 }
 
-func (s *LangService) ChangeField(ctx *gin.Context, req models.LangChangeFieldReq) (interface{}, error) {
-	var (
-		lang models.Lang
-	)
-	db := s.dbClient.MysqlClient
-	db.Where("id=?", req.Id).Find(&lang)
-	if lang.Id <= 0 {
-		return nil, errors.New("不存在该记录")
+func (s *LangService) LangConfig(ctx *gin.Context) interface{} {
+	statusMap := map[string]string{
+		constant.LangZh: constant.LangZhName,
 	}
-	updateData := make(map[string]interface{})
-
-	if req.Status != nil {
-		updateData["status"] = *req.Status
-	}
-	if req.Default != nil {
-		updateData["default"] = *req.Default
-	}
-	err := db.Model(&lang).Where("id=?", req.Id).Updates(&updateData).Error
-	if err != nil {
-		return nil, err
-	}
-	return lang.Id, nil
+	return statusMap
 }

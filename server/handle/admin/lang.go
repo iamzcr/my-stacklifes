@@ -39,6 +39,18 @@ func (h *LangHandler) ListJson(ctx *gin.Context) {
 	appGin.Success(list)
 }
 
+func (h *LangHandler) Edit(ctx *gin.Context) {
+	var appGin = app.Gin{C: ctx}
+	id := ctx.Param("id")
+	info, _ := h.srv.GetInfo(ctx, id)
+	langConfig := h.srv.LangConfig(ctx)
+	langAssignList := models.LangAssignList{
+		Info:       info,
+		LangConfig: langConfig,
+	}
+	appGin.SuccessAdminHtml(langAssignList, "menu/edit.html")
+}
+
 func (h *LangHandler) Info(ctx *gin.Context) {
 	var appGin = app.Gin{C: ctx}
 	id := ctx.Param("id")
@@ -100,24 +112,6 @@ func (h *LangHandler) Delete(ctx *gin.Context) {
 		return
 	}
 	res, err := h.srv.Delete(ctx, reqDel)
-	if err != nil {
-		appGin.Error(exception.ERROR, err.Error(), nil)
-		return
-	}
-	appGin.Success(res)
-}
-
-func (h *LangHandler) ChangeField(ctx *gin.Context) {
-	var (
-		appGin   = app.Gin{C: ctx}
-		reqField models.LangChangeFieldReq
-	)
-	err := ctx.ShouldBind(&reqField)
-	if err != nil {
-		appGin.Error(exception.ERROR, err.Error(), nil)
-		return
-	}
-	res, err := h.srv.ChangeField(ctx, reqField)
 	if err != nil {
 		appGin.Error(exception.ERROR, err.Error(), nil)
 		return

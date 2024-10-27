@@ -5,9 +5,9 @@ type Menu struct {
 	Name   string `json:"name" `
 	Url    string `json:"url"  `
 	Parent int    `json:"parent" gorm:"column:parent;type:int(11);default:0"`
-	Weight int    `json:"weight" gorm:"column:weight;type:int(11);default:0"`
 	Type   int    `json:"type" gorm:"column:type;type:int(11);default:1"`
 	Status int    `json:"status" gorm:"column:status;type:int(11);default:1" `
+	Weight int    `json:"weight" gorm:"column:weight;type:int(11);default:0"`
 	Author string `json:"author" gorm:"column:author;type:string;default:nicholas"`
 	Icon   string `json:"icon"`
 	Mark   string `json:"mark" `
@@ -23,9 +23,9 @@ type MenuUpdateReq struct {
 	Name   string `json:"name" form:"name"  binding:"required"`
 	Url    string `json:"url"  form:"url" binding:"required"`
 	Parent int    `json:"parent"  form:"parent,default=0"`
-	Weight int    `json:"weight" form:"weight,default=0"`
 	Type   int    `json:"type" form:"type,default=1"`
 	Status int    `json:"status" form:"status,default=1"`
+	Weight int    `json:"weight" form:"weight,default=0"`
 	Author string `json:"author" form:"author,default=nicholas"`
 	Icon   string `json:"icon" form:"icon"`
 	Mark   string `json:"mark" form:"mark" `
@@ -62,9 +62,9 @@ type MenuInfo struct {
 	Mark        string `json:"mark"`
 	Parent      int    `json:"parent"`
 	Author      string `json:"author"`
+	Weight      int    `json:"weight"`
 	Url         string `json:"url"`
 	Icon        string `json:"icon"`
-	Weight      int    `json:"weight"`
 	Status      int    `json:"status"`
 	CreateTime  string `json:"create_time"`
 	UpdatedTime string `json:"updated_time"`
