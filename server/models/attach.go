@@ -7,14 +7,20 @@ type Attach struct {
 	Path   string `json:"path" form:"path"`
 	Type   string `json:"type" form:"type"`
 	Status string `json:"status" form:"status"`
-}
-type AttachInfo struct {
-	Attach
 	CommonField
 }
 
 func (c *Attach) TableName() string {
 	return "sl_attach"
+}
+
+type AttachInfo struct {
+	Id     int    `json:"id"`
+	Name   string `json:"name"`
+	Link   string `json:"link" `
+	Path   string `json:"path"`
+	Type   string `json:"type"`
+	Status string `json:"status"`
 }
 
 type AttachReq struct {
