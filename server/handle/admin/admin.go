@@ -38,6 +38,18 @@ func (h *AdminHandler) ListJson(ctx *gin.Context) {
 	appGin.Success(list)
 }
 
+func (h *AdminHandler) Edit(ctx *gin.Context) {
+	var appGin = app.Gin{C: ctx}
+	id := ctx.Param("id")
+	info, _ := h.srv.GetInfo(ctx, id)
+	adminGroups, _ := service.NewAdminGroupService().GetAdminGroupList(ctx)
+	adminAssignList := models.AdminAssignList{
+		Info:        info,
+		AdminGroups: adminGroups,
+	}
+	appGin.SuccessAdminHtml(adminAssignList, "admin/edit.html")
+}
+
 func (h *AdminHandler) Info(ctx *gin.Context) {
 	var appGin = app.Gin{C: ctx}
 	id := ctx.Param("id")
@@ -80,24 +92,6 @@ func (h *AdminHandler) Delete(ctx *gin.Context) {
 		return
 	}
 	res, err := h.srv.Delete(ctx, reqDel)
-	if err != nil {
-		appGin.Error(exception.ERROR, err.Error(), nil)
-		return
-	}
-	appGin.Success(res)
-}
-
-func (h *AdminHandler) ChangeField(ctx *gin.Context) {
-	var (
-		appGin   = app.Gin{C: ctx}
-		reqField models.AdminFieldReq
-	)
-	err := ctx.ShouldBind(&reqField)
-	if err != nil {
-		appGin.Error(exception.ERROR, err.Error(), nil)
-		return
-	}
-	res, err := h.srv.ChangeField(ctx, reqField)
 	if err != nil {
 		appGin.Error(exception.ERROR, err.Error(), nil)
 		return

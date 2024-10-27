@@ -54,3 +54,8 @@ type LoginReq struct {
 	Username string `json:"username"  form:"username" `
 	Password string `json:"password" form:"password"`
 }
+
+type AdminAssignList struct {
+	Info        interface{}
+	AdminGroups interface{}
+}

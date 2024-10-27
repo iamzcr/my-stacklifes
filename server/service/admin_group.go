@@ -60,7 +60,7 @@ func (s *AdminGroupService) GetList(ctx *gin.Context, req models.AdminGroupListR
 	}, nil
 }
 
-func (s *AdminGroupService) GetAdminGroupList(ctx *gin.Context, req models.AdminGroupListReq) (interface{}, error) {
+func (s *AdminGroupService) GetAdminGroupList(ctx *gin.Context) (interface{}, error) {
 	var adminGroups []models.AdminGroupInfo
 	db := s.dbClient.MysqlClient
 	err := db.Model(&models.AdminGroup{}).

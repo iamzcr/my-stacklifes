@@ -125,6 +125,14 @@ func AdminRoutersInit(r *gin.Engine) {
 		adminRouter.POST("/lang/create", langHandler.Create)
 		adminRouter.POST("/lang/delete", langHandler.Delete)
 
+		adminRouter.GET("/admin/list", adminsHandler.List)
+		adminRouter.GET("/admin/list_json", adminsHandler.ListJson)
+		adminRouter.GET("/lang/edit/:id", adminsHandler.Edit)
+		adminRouter.GET("/lang/add", adminsHandler.Edit)
+		adminRouter.GET("/admin/info/:id", adminsHandler.Info)
+		adminRouter.POST("/admin/create", adminsHandler.Create)
+		adminRouter.POST("/admin/delete", adminsHandler.Delete)
+
 		adminRouter.GET("/article/list", articleHandler.List)
 		adminRouter.GET("/article/list_json", articleHandler.ListJson)
 		adminRouter.GET("/article/edit/:id", articleHandler.Edit)
@@ -135,13 +143,6 @@ func AdminRoutersInit(r *gin.Engine) {
 		adminRouter.POST("/article/change_field", articleHandler.ChangeField)
 
 		adminRouter.GET("/option/getFilter", optionHandler.GetFilter)
-
-		adminRouter.GET("/admin/list", adminsHandler.List)
-		adminRouter.GET("/admin/list_json", adminsHandler.ListJson)
-		adminRouter.GET("/admin/info/:id", adminsHandler.Info)
-		adminRouter.POST("/admin/create", adminsHandler.Create)
-		adminRouter.POST("/admin/change_field", adminsHandler.ChangeField)
-		adminRouter.POST("/admin/delete", adminsHandler.Delete)
 
 		adminRouter.GET("/attach/list", attachHandler.List)
 		adminRouter.GET("/attach/list_json", attachHandler.ListJson)

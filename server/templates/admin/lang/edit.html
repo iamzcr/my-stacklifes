@@ -33,7 +33,7 @@
                                     <div class="col-md-2">
                                         <select class="form-control" name="parent">
                                             {{range $index, $value := .data.LangConfig}}
-                                            <option value="{{$value.Id}}" {{if and (not (eq $.data.Info nil)) (eq $value.Id $.data.Info.Parent)}}selected{{end}}>
+                                            <option value="{{$index}}" {{if and (not (eq $.data.Info nil)) (eq $index $.data.Info.Lang)}}selected{{end}}>
                                                 {{$value.Name}}
                                             </option>
                                             {{end}}

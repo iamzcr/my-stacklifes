@@ -98,20 +98,3 @@ func (s *AdminService) Delete(ctx *gin.Context, req models.AdminDelReq) (interfa
 	}
 	return admin.Id, nil
 }
-
-func (s *AdminService) ChangeField(ctx *gin.Context, req models.AdminFieldReq) (interface{}, error) {
-	var (
-		admin models.Admin
-	)
-	s.dbClient.MysqlClient.Where("id=?", req.Id).Find(&admin)
-	if admin.Id <= 0 {
-		return nil, errors.New("不存在该记录")
-	}
-
-	admin.Status = req.Status
-	err := s.dbClient.MysqlClient.Save(&admin).Error
-	if err != nil {
-		return nil, err
-	}
-	return admin.Id, nil
-}
