@@ -56,20 +56,20 @@ func (s *PermitService) GetList(ctx *gin.Context, req models.PermitListReq) (int
 			parentName = parentMap[permitTemp.Parent]
 		}
 		permitList = append(permitList, models.PermitInfo{
-			Id:          permitTemp.Id,
-			Name:        permitTemp.Name,
-			Author:      permitTemp.Author,
-			Status:      permitTemp.Status,
-			Weight:      permitTemp.Weight,
-			ParentName:  parentName,
-			StatusName:  statusMap[permitTemp.Status],
-			TypeName:    typeMap[permitTemp.Type],
-			Parent:      permitTemp.Parent,
-			Type:        permitTemp.Type,
-			Mark:        permitTemp.Mark,
-			Modules:     permitTemp.Modules,
-			CreateTime:  tools.UnixToTime(permitTemp.CreateTime),
-			UpdatedTime: tools.UnixToTime(permitTemp.UpdatedTime),
+			Id:         permitTemp.Id,
+			Name:       permitTemp.Name,
+			Author:     permitTemp.Author,
+			Status:     permitTemp.Status,
+			Weight:     permitTemp.Weight,
+			ParentName: parentName,
+			StatusName: statusMap[permitTemp.Status],
+			TypeName:   typeMap[permitTemp.Type],
+			Parent:     permitTemp.Parent,
+			Type:       permitTemp.Type,
+			Mark:       permitTemp.Mark,
+			Modules:    permitTemp.Modules,
+			CreateTime: tools.UnixToTime(permitTemp.CreateTime),
+			UpdateTime: tools.UnixToTime(permitTemp.UpdateTime),
 		})
 	}
 	return models.PermitListRes{
@@ -125,7 +125,7 @@ func (s *PermitService) Update(ctx *gin.Context, req models.PermitUpdateReq) (in
 	permit.Parent = req.Parent
 	permit.Modules = req.Modules
 	permit.Weight = req.Weight
-	permit.UpdatedTime = time.Now().Unix()
+	permit.UpdateTime = time.Now().Unix()
 	err := db.Save(&permit).Error
 	if err != nil {
 		return nil, err

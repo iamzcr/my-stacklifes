@@ -137,7 +137,7 @@ func (s *ArticleService) Update(ctx *gin.Context, req models.ArticleUpdateReq) (
 	article.IsRecom = req.IsRecom
 	article.Weight = req.Weight
 	article.PublicTime = req.PublicTime
-	article.UpdatedTime = time.Now().Unix()
+	article.UpdateTime = time.Now().Unix()
 	err = db.Save(&article).Error
 	if err != nil {
 		return nil, err

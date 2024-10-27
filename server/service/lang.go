@@ -6,6 +6,7 @@ import (
 	"my-stacklifes/database/mysql"
 	"my-stacklifes/models"
 	"my-stacklifes/pkg/constant"
+	"my-stacklifes/pkg/tools"
 )
 
 type LangService struct {
@@ -20,7 +21,15 @@ func NewLangService() *LangService {
 
 func (s *LangService) GetList(ctx *gin.Context, req models.LangListReq) (interface{}, error) {
 	var (
-		langs []models.Lang
+		langs     []models.Lang
+		langList  []models.LangInfo
+		statusMap = map[int]string{
+			constant.StatusTrue:  constant.StatusTrueName,
+			constant.StatusFalse: constant.StatusFalseName,
+		}
+		langMap = map[string]string{
+			constant.LangZh: constant.LangZhName,
+		}
 		total int64
 	)
 	db := s.dbClient.MysqlClient
@@ -28,18 +37,29 @@ func (s *LangService) GetList(ctx *gin.Context, req models.LangListReq) (interfa
 		db = db.Where("name LIKE ?", "%"+req.Name+"%")
 	}
 	limit, offset := req.GetPageInfo()
-	err := db.Limit(limit).
-		Offset(offset).
-		Order("id DESC").
-		Find(&langs).
-		Count(&total).Error
+	err := db.Limit(limit).Offset(offset).Order("id DESC").Find(&langs).
+		Limit(-1).Offset(-1).Count(&total).Error
 	if err != nil {
 		return nil, err
 	}
+	for _, temp := range langs {
+		langList = append(langList, models.LangInfo{
+			Id:          temp.Id,
+			Name:        temp.Name,
+			Author:      temp.Author,
+			Status:      temp.Status,
+			Weight:      temp.Weight,
+			StatusName:  statusMap[temp.Status],
+			DefaultName: statusMap[temp.Default],
+			LangName:    langMap[temp.Lang],
+			CreateTime:  tools.UnixToTime(temp.CreateTime),
+			UpdateTime:  tools.UnixToTime(temp.UpdateTime),
+		})
 
+	}
 	return models.LangListRes{
 		Total: total,
-		List:  langs,
+		List:  langList,
 	}, nil
 }
 

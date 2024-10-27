@@ -129,7 +129,7 @@ func (s *AdminGroupService) Update(ctx *gin.Context, req models.AdminGroupUpdate
 
 	adminGroup.Name = req.Name
 	adminGroup.Description = req.Description
-	adminGroup.UpdatedTime = time.Now().Unix()
+	adminGroup.UpdateTime = time.Now().Unix()
 	err := s.dbClient.MysqlClient.Save(&adminGroup).Error
 	if err != nil {
 		return nil, err

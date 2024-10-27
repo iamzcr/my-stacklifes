@@ -62,3 +62,8 @@ type AdminGroupListRes struct {
 type AdminGroupDelReq struct {
 	Id int `json:"id" form:"id" binding:"required"`
 }
+
+type AdminGroupMine struct {
+	Id   int    `json:"id"`
+	Name string `json:"name"`
+}

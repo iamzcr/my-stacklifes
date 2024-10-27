@@ -23,9 +23,10 @@ type LangInfo struct {
 	Status      int    `json:"status"`
 	Author      string `json:"author"`
 	CreateTime  string `json:"create_time"`
-	UpdatedTime string `json:"updated_time"`
+	UpdateTime  string `json:"update_time"`
 	StatusName  string `json:"status_name"`
 	DefaultName string `json:"default_name"`
+	LangName    string `json:"lang_name"`
 }
 
 type LangListReq struct {
@@ -33,8 +34,8 @@ type LangListReq struct {
 	Name string `json:"name" form:"name"`
 }
 type LangListRes struct {
-	Total int64  `json:"total"`
-	List  []Lang `json:"list"`
+	Total int64      `json:"total"`
+	List  []LangInfo `json:"list"`
 }
 
 type LangUpdateReq struct {

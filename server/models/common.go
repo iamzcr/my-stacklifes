@@ -1,8 +1,8 @@
 package models
 
 type CommonField struct {
-	CreateTime  int64 `gorm:"column:create_time;type:timestamp" json:"create_time"`
-	UpdatedTime int64 `gorm:"column:update_time;type:timestamp" json:"updated_time"`
+	CreateTime int64 `gorm:"column:create_time;type:timestamp" json:"create_time"`
+	UpdateTime int64 `gorm:"column:update_time;type:timestamp" json:"update_time"`
 }
 
 type PageInfo struct {

@@ -55,21 +55,21 @@ func (s *MenuService) GetList(ctx *gin.Context, req models.MenuListReq) (interfa
 			parentName = parentMap[menuTemp.Parent]
 		}
 		menuList = append(menuList, models.MenuInfo{
-			Id:          menuTemp.Id,
-			Name:        menuTemp.Name,
-			Author:      menuTemp.Author,
-			Status:      menuTemp.Status,
-			Weight:      menuTemp.Weight,
-			ParentName:  parentName,
-			StatusName:  statusMap[menuTemp.Status],
-			TypeName:    typeMap[menuTemp.Type],
-			Parent:      menuTemp.Parent,
-			Type:        menuTemp.Type,
-			Mark:        menuTemp.Mark,
-			Url:         menuTemp.Url,
-			Icon:        menuTemp.Icon,
-			CreateTime:  tools.UnixToTime(menuTemp.CreateTime),
-			UpdatedTime: tools.UnixToTime(menuTemp.UpdatedTime),
+			Id:         menuTemp.Id,
+			Name:       menuTemp.Name,
+			Author:     menuTemp.Author,
+			Status:     menuTemp.Status,
+			Weight:     menuTemp.Weight,
+			ParentName: parentName,
+			StatusName: statusMap[menuTemp.Status],
+			TypeName:   typeMap[menuTemp.Type],
+			Parent:     menuTemp.Parent,
+			Type:       menuTemp.Type,
+			Mark:       menuTemp.Mark,
+			Url:        menuTemp.Url,
+			Icon:       menuTemp.Icon,
+			CreateTime: tools.UnixToTime(menuTemp.CreateTime),
+			UpdateTime: tools.UnixToTime(menuTemp.UpdateTime),
 		})
 
 	}
@@ -123,7 +123,7 @@ func (s *MenuService) Update(ctx *gin.Context, req models.MenuUpdateReq) (interf
 	menu.Parent = req.Parent
 	menu.Url = req.Url
 	menu.Weight = req.Weight
-	menu.UpdatedTime = time.Now().Unix()
+	menu.UpdateTime = time.Now().Unix()
 	err := db.Save(&menu).Error
 	if err != nil {
 		return nil, err

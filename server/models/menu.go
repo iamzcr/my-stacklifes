@@ -56,21 +56,21 @@ type MenuListRes struct {
 }
 
 type MenuInfo struct {
-	Id          int    `json:"id"`
-	Name        string `json:"name"`
-	Type        int    `json:"type"`
-	Mark        string `json:"mark"`
-	Parent      int    `json:"parent"`
-	Author      string `json:"author"`
-	Weight      int    `json:"weight"`
-	Url         string `json:"url"`
-	Icon        string `json:"icon"`
-	Status      int    `json:"status"`
-	CreateTime  string `json:"create_time"`
-	UpdatedTime string `json:"updated_time"`
-	ParentName  string `json:"parent_name"`
-	StatusName  string `json:"status_name"`
-	TypeName    string `json:"type_name"`
+	Id         int    `json:"id"`
+	Name       string `json:"name"`
+	Type       int    `json:"type"`
+	Mark       string `json:"mark"`
+	Parent     int    `json:"parent"`
+	Author     string `json:"author"`
+	Weight     int    `json:"weight"`
+	Url        string `json:"url"`
+	Icon       string `json:"icon"`
+	Status     int    `json:"status"`
+	CreateTime string `json:"create_time"`
+	UpdateTime string `json:"update_time"`
+	ParentName string `json:"parent_name"`
+	StatusName string `json:"status_name"`
+	TypeName   string `json:"type_name"`
 }
 
 type MenuMine struct {

@@ -106,7 +106,7 @@ func (s *WebsiteService) Update(ctx *gin.Context, req models.WebsiteUpdateReq) (
 	website.Name = req.Name
 	website.Key = req.Key
 	website.Value = req.Value
-	website.UpdatedTime = time.Now().Unix()
+	website.UpdateTime = time.Now().Unix()
 	err := s.dbClient.MysqlClient.Save(&website).Error
 	if err != nil {
 		return nil, err

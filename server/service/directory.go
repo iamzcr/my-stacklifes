@@ -53,7 +53,7 @@ func (s *DirectoryService) GetList(ctx *gin.Context, req models.DirectoryListReq
 		parentMap[parentDirectory.Id] = parentDirectory.Name
 	}
 	//分类map
-	db.Model(&models.Category{}).Debug().
+	db.Model(&models.Category{}).
 		Select("id,name").Order("id DESC").Find(&categoryList)
 	for _, category := range categoryList {
 		categoryMap[category.Id] = category.Name
