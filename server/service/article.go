@@ -2,6 +2,7 @@ package service
 
 import (
 	"errors"
+	"fmt"
 	"github.com/gin-gonic/gin"
 	"html/template"
 	"my-stacklifes/database/mysql"
@@ -72,6 +73,7 @@ func (s *ArticleService) GetList(ctx *gin.Context, req models.ArticleReq) (inter
 }
 
 func (s *ArticleService) Create(ctx *gin.Context, req models.ArticleCreateReq) (interface{}, error) {
+	fmt.Println(req)
 	var article models.Article
 	article.Title = req.Title
 	article.Cid = req.Cid
