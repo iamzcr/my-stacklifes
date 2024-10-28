@@ -30,6 +30,7 @@ func (s *LangService) GetList(ctx *gin.Context, req models.LangListReq) (interfa
 		}
 		langMap = map[string]string{
 			constant.LangZh: constant.LangZhName,
+			constant.LangEn: constant.LangEnName,
 		}
 		total int64
 	)
