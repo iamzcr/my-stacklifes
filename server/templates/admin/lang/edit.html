@@ -34,7 +34,7 @@
                                         <select class="form-control" name="lang">
                                             {{range $index, $value := .data.LangConfig}}
                                             <option value="{{$index}}" {{if and (not (eq $.data.Info nil)) (eq $index $.data.Info.Lang)}}selected{{end}}>
-                                                {{$value.Name}}
+                                                {{$value}}
                                             </option>
                                             {{end}}
                                         </select>
