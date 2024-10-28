@@ -8,7 +8,11 @@
             {{range $index,$value := .data.ArticleList}}
             <div class="jumbotron">
                 <a href="/article/detail/{{$value.Cid}}/{{$value.Id}}"><h5>{{$value.Title}}</h5></a>
-                <p>作者:{{$value.Author}} 发布时间:{{$value.PublicTime}}</p>
+                <p>
+                    作者-<strong>{{$value.Author}}</strong>;
+                    分类-<a href="/category/{{$value.Cid}}"><strong>{{$value.CategoryName}}</strong></a>;
+                    时间-<strong>{{$value.PublicTime}}</strong>
+                </p>
                 <p><a class="btn btn-sm btn-primary" href="/article/detail/{{$value.Cid}}/{{$value.Id}}" role="button">继续阅读</a>
                 </p>
             </div>
