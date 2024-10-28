@@ -164,8 +164,13 @@ func (s *TagsService) GetTagsList(ctx *gin.Context) (interface{}, error) {
 		tagsList []models.TagsInfo
 		tags     models.Tags
 	)
+	tidList, err := NewArticleTagsService().GetTidList()
+	if err != nil {
+		return nil, err
+	}
 	db := s.dbClient.MysqlClient
-	err := db.Model(&tags).Where("status = ?", constant.StatusTrue).Select("id,mark,name").
+	err = db.Model(&tags).Where("id IN (?)", tidList).Where("status = ?", constant.StatusTrue).
+		Select("id,mark,name").
 		Order("id DESC").Find(&tagsList).Error
 	if err != nil {
 		return nil, err

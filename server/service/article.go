@@ -185,18 +185,18 @@ func (s *ArticleService) GetFrontTagsArticleList(ctx *gin.Context, tid int) (int
 		articles []models.Article
 		total    int64
 	)
-	aid, err := NewArticleTagsService().GetAid(tid)
+	aidList, err := NewArticleTagsService().GetAidList(tid)
 	if err != nil {
 		return nil, err
 	}
 
 	db := s.dbClient.MysqlClient
-	err = db.Debug().Where("id IN (?)", aid).
+	err = db.Debug().Where("id IN (?)", aidList).
 		Select("id,cid,did,title,public_time,author").Find(&articles).Count(&total).Error
 	if err != nil {
 		return nil, err
 	}
-	
+
 	articleList := s.handleArticleList(ctx, articles)
 	return models.FrontArticleListRes{
 		Total: total,
