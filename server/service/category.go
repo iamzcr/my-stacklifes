@@ -7,6 +7,7 @@ import (
 	"my-stacklifes/models"
 	"my-stacklifes/pkg/constant"
 	"my-stacklifes/pkg/tools"
+	"time"
 )
 
 type CategoryService struct {
@@ -103,6 +104,7 @@ func (s *CategoryService) Create(ctx *gin.Context, req models.CategoryCreateReq)
 	category.Name = req.Name
 	category.Mark = tools.ConvertToPinyin(req.Name)
 	category.Weight = req.Weight
+	category.CreateTime = time.Now().Unix()
 	err := db.Create(&category).Error
 	if err != nil {
 		return nil, err
@@ -133,6 +135,7 @@ func (s *CategoryService) Update(ctx *gin.Context, req models.CategoryUpdateReq)
 
 	category.Name = req.Name
 	category.Weight = req.Weight
+	category.UpdateTime = time.Now().Unix()
 	err := db.Save(&category).Error
 	if err != nil {
 		return nil, err

@@ -7,6 +7,7 @@ import (
 	"my-stacklifes/models"
 	"my-stacklifes/pkg/constant"
 	"my-stacklifes/pkg/tools"
+	"time"
 )
 
 type LangService struct {
@@ -86,6 +87,7 @@ func (s *LangService) Create(ctx *gin.Context, req models.LangCreateReq) (interf
 
 	lang.Name = req.Name
 	lang.Lang = req.Lang
+	lang.CreateTime = time.Now().Unix()
 	err := db.Create(&lang).Error
 	if err != nil {
 		return nil, err
@@ -116,6 +118,7 @@ func (s *LangService) Update(ctx *gin.Context, req models.LangUpdateReq) (interf
 
 	lang.Name = req.Name
 	lang.Lang = req.Lang
+	lang.CreateTime = time.Now().Unix()
 	err := db.Save(&lang).Error
 	if err != nil {
 		return nil, err

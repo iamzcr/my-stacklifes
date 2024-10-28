@@ -8,6 +8,7 @@ import (
 	"my-stacklifes/models"
 	"my-stacklifes/pkg/constant"
 	"my-stacklifes/pkg/tools"
+	"time"
 )
 
 type AdminService struct {
@@ -110,6 +111,7 @@ func (s *AdminService) Create(ctx *gin.Context, req models.AdminCreateReq) (inte
 	admin.ExpirationTime = req.ExpirationTime
 	admin.Salt = tools.CreateSalt()
 	admin.Password = tools.GenPassword(admin.Salt, req.Password)
+	admin.CreateTime = time.Now().Unix()
 	err := db.Create(&admin).Error
 	if err != nil {
 		return nil, err
