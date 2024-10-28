@@ -31,15 +31,17 @@
                                     <label class="col-form-label label-align">热门</label>
                                     <select name="is_hot">
                                         {{range $index, $value := .data.StatusMap}}
-                                        <option value="{{$index}}" {{if and (not (eq $.data.Info nil)) (eq $index $.data.Info.IsHot)}}selected{{end}}>
+                                        <option value="{{$index}}" {{if and (not (eq $.data.Info nil)) (eq $index
+                                                $.data.Info.IsHot)}}selected{{end}}>
                                             {{$value}}
                                         </option>
                                         {{end}}
                                     </select>
                                     <label>推荐</label>
-                                    <select  name="is_recom">
+                                    <select name="is_recom">
                                         {{range $index, $value := .data.StatusMap}}
-                                        <option value="{{$index}}" {{if and (not (eq $.data.Info nil)) (eq $index $.data.Info.IsRecom)}}selected{{end}}>
+                                        <option value="{{$index}}" {{if and (not (eq $.data.Info nil)) (eq $index
+                                                $.data.Info.IsRecom)}}selected{{end}}>
                                             {{$value}}
                                         </option>
                                         {{end}}
@@ -110,33 +112,35 @@
 {{template "public/footer" .}}
 <script src="/static/vendors/toastui/toastui.js"></script>
 <script>
-    document.addEventListener('DOMContentLoaded', function () {
-        var hiddenTextarea = document.querySelector('#hiddenTextarea');
-        var editor = new toastui.Editor({
-            el: document.querySelector('#editor'),
-            height: '600px',
-            initialEditType: 'markdown',
-            previewStyle: 'vertical',
-            usageStatistics: false,
-            exts: ['scrollSync', 'colorSyntax', 'uml', 'chart', 'mark', 'table'],
-            codeBlockLanguages: ['javascript', 'html', 'css', 'php', 'golang', 'shell', 'bash', 'sql', 'python'],
-            initialValue: hiddenTextarea.value,
-            events: {
-                change: function () {
-                    hiddenTextarea.value = editor.getMarkdown();
-                }
+    var hiddenTextarea = document.querySelector('#hiddenTextarea');
+    var editor = new toastui.Editor({
+        el: document.querySelector('#editor'),
+        height: '600px',
+        initialEditType: 'markdown',
+        previewStyle: 'vertical',
+        usageStatistics: false,
+        exts: ['scrollSync', 'colorSyntax', 'uml', 'chart', 'mark', 'table'],
+        codeBlockLanguages: ['javascript', 'html', 'css', 'php', 'golang', 'shell', 'bash', 'sql', 'python'],
+        initialValue: hiddenTextarea.value,
+        events: {
+            change: function () {
+                hiddenTextarea.value = editor.getMarkdown();
             }
-        });
+        }
     });
 
-
     function submitForm() {
+        // 获取编辑器中的 Markdown 内容
+        var markdownContent = editor.getMarkdown();
+        // 打印获取到的 Markdown 内容
+        console.log(markdownContent);
+
         let url = "/admin/article/create"
         let id = $("#id").data("id");
         if (id) {
             url = "/admin/article/update"
         }
-        let formData = $("#inputForm").serialize()+"&content"+$("#editor").html();
+        let formData = $("#inputForm").serialize() + "&content=" + markdownContent;
         $.ajax({
             type: "POST",
             url: url, // 提交表单数据的URL
