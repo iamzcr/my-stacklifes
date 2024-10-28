@@ -25,8 +25,11 @@
                                     <label class="col-form-label col-md-1 label-align">标题</label>
                                     <input type="text" name="title" required="required"
                                            value="{{if .data.Info}}{{.data.Info.Title}}{{end}}">
+                                    <label class="col-form-label label-align">排序</label>
+                                    <input type="text" name="weight" required="required"
+                                           value="{{if .data.Info}}{{.data.Info.Weight}}{{end}}">
                                     <label class="col-form-label label-align">热门</label>
-                                    <select name="cid">
+                                    <select name="is_hot">
                                         {{range $index, $value := .data.StatusMap}}
                                         <option value="{{$index}}" {{if and (not (eq $.data.Info nil)) (eq $index $.data.Info.IsHot)}}selected{{end}}>
                                             {{$value}}
@@ -34,7 +37,7 @@
                                         {{end}}
                                     </select>
                                     <label>推荐</label>
-                                    <select  name="cid">
+                                    <select  name="is_recom">
                                         {{range $index, $value := .data.StatusMap}}
                                         <option value="{{$index}}" {{if and (not (eq $.data.Info nil)) (eq $index $.data.Info.IsRecom)}}selected{{end}}>
                                             {{$value}}
@@ -128,10 +131,10 @@
 
 
     function submitForm() {
-        let url = "/admin/category/create"
+        let url = "/admin/article/create"
         let id = $("#id").data("id");
         if (id) {
-            url = "/admin/category/update"
+            url = "/admin/article/update"
         }
         let formData = $("#inputForm").serialize();
         $.ajax({
@@ -142,7 +145,7 @@
                 if (response.code !== 200) {
                     Swal.fire({icon: "error", text: response.message});
                 } else {
-                    window.location.replace("/admin/category/list");
+                    window.location.replace("/admin/article/list");
                 }
             },
             error: function (error) {
