@@ -140,11 +140,10 @@
         if (id) {
             url = "/admin/article/update"
         }
-        let formData = $("#inputForm").serialize() + "&content=" + markdownContent;
         $.ajax({
             type: "POST",
             url: url, // 提交表单数据的URL
-            data: formData,
+            data: $("#inputForm").serialize() + "&content=" + markdownContent,
             success: function (response) {
                 if (response.code !== 200) {
                     Swal.fire({icon: "error", text: response.message});
