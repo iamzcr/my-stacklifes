@@ -71,8 +71,8 @@
             {"data": "id"},
             {"data": "name"},
             {"data": "username"},
-            {"data": "admin_group_name"},
-            {"data": "status"},
+            {"data": "group_name"},
+            {"data": "status_name"},
             {"data": "expiration_time"},
             {"data": "create_time"},
             {
@@ -94,6 +94,7 @@
     }).on('mouseout', 'tbody tr', function () {
         $(this).removeClass('info');
     });
+
     function submitDelForm(url, id) {
         if (typeof id === 'undefined' || typeof url === 'undefined') {
             Swal.fire({icon: "error"});
