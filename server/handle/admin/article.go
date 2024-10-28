@@ -1,6 +1,7 @@
 package admin
 
 import (
+	"fmt"
 	"github.com/gin-gonic/gin"
 	"my-stacklifes/models"
 	"my-stacklifes/pkg/app"
@@ -49,12 +50,15 @@ func (h *ArticleHandler) Edit(ctx *gin.Context) {
 	categoryList, _ := service.NewCategoryService().GetCategoryList(ctx)
 	directoryList, _ := service.NewDirectoryService().GetDirectoryList(ctx)
 	tagsList, _ := service.NewTagsService().GetTagsList(ctx)
+	statusMap := service.NewCommonService().GetStatusMap(ctx)
 	assignList := models.ArticleAssignList{
 		Info:          info,
 		CategoryList:  categoryList,
 		DirectoryList: directoryList,
 		TagsList:      tagsList,
+		StatusMap:     statusMap,
 	}
+	fmt.Sprint("%#v", assignList)
 	appGin.SuccessAdminHtml(assignList, "article/edit.html")
 }
 

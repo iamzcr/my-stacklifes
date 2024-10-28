@@ -41,7 +41,7 @@ func (s *ArticleService) GetList(ctx *gin.Context, req models.ArticleReq) (inter
 	categoryMap := NewCategoryService().GetCategoryMap(ctx)
 	//分类目录map
 	directoryMap := NewDirectoryService().GetDirectoryMap(ctx)
-	statusMap := NewCommonService().GetStatusMap()
+	statusMap := NewCommonService().GetStatusMap(ctx)
 	for _, temp := range articles {
 		directoryName := "-"
 		if _, ok := directoryMap[temp.Did]; ok {
@@ -131,6 +131,7 @@ func (s *ArticleService) Update(ctx *gin.Context, req models.ArticleUpdateReq) (
 
 func (s *ArticleService) GetInfo(ctx *gin.Context, id string) (interface{}, error) {
 	var article models.Article
+
 	res := s.dbClient.MysqlClient.Where("id=?", id).Find(&article)
 	if res.Error != nil {
 		return nil, res.Error
@@ -138,6 +139,7 @@ func (s *ArticleService) GetInfo(ctx *gin.Context, id string) (interface{}, erro
 	if article.Id == 0 {
 		return nil, errors.New("Article error")
 	}
+
 	return article, nil
 }
 

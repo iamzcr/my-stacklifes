@@ -112,6 +112,7 @@ type ArticleAssignList struct {
 	CategoryList  interface{}
 	DirectoryList interface{}
 	TagsList      interface{}
+	StatusMap     interface{}
 }
 
 type ArticleFieldReq struct {

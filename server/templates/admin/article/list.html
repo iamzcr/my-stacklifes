@@ -40,7 +40,6 @@
                                                 <th>作者</th>
                                                 <th>排序</th>
                                                 <th>发布时间</th>
-                                                <th>创建时间</th>
                                                 <th>更新时间</th>
                                                 <th>操作</th>
                                             </tr>
@@ -91,11 +90,11 @@
             {"data": "author"},
             {"data": "weight"},
             {"data": "public_time"},
-            {"data": "create_time"},
+            {"data": "update_time"},
             {
                 "data": null,
                 render: function (data, type, row) {
-                    return '<a class=" btn btn-sm btn-primary" href="/admin/article/edit/' + row.id + '">Edit</a>';
+                    return '<a class=" btn btn-sm btn-primary" href="/admin/article/edit/' + row.id + '">编辑</a>';
                 }
             }
         ]
