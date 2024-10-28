@@ -144,6 +144,7 @@ func (s *LangService) Delete(ctx *gin.Context, req models.LangDelReq) (interface
 func (s *LangService) LangConfig(ctx *gin.Context) interface{} {
 	statusMap := map[string]string{
 		constant.LangZh: constant.LangZhName,
+		constant.LangEn: constant.LangEnName,
 	}
 	return statusMap
 }

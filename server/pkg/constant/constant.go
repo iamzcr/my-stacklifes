@@ -24,4 +24,7 @@ const DirectoryDefaultTypeName = "默认"
 const LangZh = "zh"
 const LangZhName = "简体"
 
+const LangEn = "en"
+const LangEnName = "英文"
+
 const Password = "123456"
