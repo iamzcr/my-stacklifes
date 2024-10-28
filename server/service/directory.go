@@ -182,7 +182,7 @@ func (s *DirectoryService) GetDirectoryList(ctx *gin.Context) (interface{}, erro
 
 	db := s.dbClient.MysqlClient
 
-	err := db.Model(&models.Category{}).
+	err := db.Model(&models.Directory{}).
 		Where("status = ?", constant.StatusTrue).
 		Select("id,mark,name").
 		Order("weight DESC").Find(&directoryList).Error
