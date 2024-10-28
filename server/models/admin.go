@@ -66,7 +66,7 @@ type AdminDelReq struct {
 type AdminAssignList struct {
 	Info        interface{}
 	AdminGroups interface{}
-	langList    interface{}
+	LangList    interface{}
 }
 
 type TokenInfo struct {
