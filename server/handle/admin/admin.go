@@ -47,7 +47,7 @@ func (h *AdminHandler) Edit(ctx *gin.Context) {
 		Info:        info,
 		AdminGroups: adminGroups,
 	}
-	appGin.SuccessAdminHtml(adminAssignList, "admin/edit.html")
+	appGin.SuccessAdminHtml(adminAssignList, "lang/edit.html")
 }
 
 func (h *AdminHandler) Info(ctx *gin.Context) {
