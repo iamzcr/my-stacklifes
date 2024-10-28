@@ -40,7 +40,7 @@ func (s *ArticleTagsService) GetTidList() ([]int, error) {
 	)
 
 	// 查询并按年龄进行分组
-	s.dbClient.MysqlClient.Debug().Select("tid, count(*) as total").
+	s.dbClient.MysqlClient.Select("tid, count(*) as total").
 		Group("tid").Find(&acticleTags).Count(&count)
 
 	if count <= 0 {

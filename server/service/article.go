@@ -31,7 +31,7 @@ func (s *ArticleService) GetList(ctx *gin.Context, req models.ArticleReq) (inter
 		db.Where("title LIKE ?", "%"+req.Title+"%")
 	}
 	limit, offset := req.GetPageInfo()
-	err := db.Debug().Limit(limit).Offset(offset).Order("id DESC").Find(&articles).
+	err := db.Limit(limit).Offset(offset).Order("id DESC").Find(&articles).
 		Limit(-1).Offset(-1).Count(&total).Error
 	if err != nil {
 		return nil, err
@@ -166,7 +166,7 @@ func (s *ArticleService) GetFrontList(ctx *gin.Context, req models.FrontArticleL
 		db = db.Where("is_hot = ?", req.Cid)
 	}
 	limit, offset := req.GetPageInfo()
-	err := db.Debug().Limit(limit).Offset(offset).Order("id DESC").
+	err := db.Limit(limit).Offset(offset).Order("id DESC").
 		Select("id,cid,did,title,public_time,author").Find(&articles).Count(&total).Error
 	if err != nil {
 		return nil, err
@@ -191,7 +191,7 @@ func (s *ArticleService) GetFrontTagsArticleList(ctx *gin.Context, tid int) (int
 	}
 
 	db := s.dbClient.MysqlClient
-	err = db.Debug().Where("id IN (?)", aidList).
+	err = db.Where("id IN (?)", aidList).
 		Select("id,cid,did,title,public_time,author").Find(&articles).Count(&total).Error
 	if err != nil {
 		return nil, err
@@ -214,7 +214,7 @@ func (s *ArticleService) GetFrontCategoryArticleList(ctx *gin.Context, cid int) 
 		return nil, err
 	}
 	db := s.dbClient.MysqlClient
-	err = db.Model(&models.Article{}).Debug().Select("id,title,cid,did,author,public_time").
+	err = db.Model(&models.Article{}).Select("id,title,cid,did,author,public_time").
 		Where("cid = ?", cid).Order("weight DESC").Limit(5).Find(&articles).Error
 	if err != nil {
 		return nil, err
@@ -240,7 +240,7 @@ func (s *ArticleService) GetDirectoryArticleList(ctx *gin.Context, cid int) ([]m
 	if err != nil {
 		return nil, err
 	}
-	err = db.Model(&models.Article{}).Debug().Select("id,title,cid,did").
+	err = db.Model(&models.Article{}).Select("id,title,cid,did").
 		Where("did IN (?)", directoryIds).Find(&articleList).Error
 	if err != nil {
 		return nil, err
@@ -292,8 +292,8 @@ func (s *ArticleService) GetFrontDetail(ctx *gin.Context, id string) (interface{
 		return nil, err
 	}
 
-	_ = db.Model(&article).Debug().Where("id<?", id).Select("id,cid").Order("id DESC").First(&preArticle).Error
-	_ = db.Model(&article).Debug().Where("id>?", id).Select("id,cid").Order("id DESC").First(&nextArticle).Error
+	_ = db.Model(&article).Where("id<?", id).Select("id,cid").Order("id DESC").First(&preArticle).Error
+	_ = db.Model(&article).Where("id>?", id).Select("id,cid").Order("id DESC").First(&nextArticle).Error
 	if err != nil {
 		return nil, err
 	}
