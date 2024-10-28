@@ -143,7 +143,7 @@
         $.ajax({
             type: "POST",
             url: url, // 提交表单数据的URL
-            data: $("#inputForm").serialize() + "&content=" + markdownContent,
+            data: $("#inputForm").serialize() ,
             success: function (response) {
                 if (response.code !== 200) {
                     Swal.fire({icon: "error", text: response.message});

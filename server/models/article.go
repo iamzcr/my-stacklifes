@@ -88,7 +88,7 @@ type ArticleCreateReq struct {
 	Keyword    string `json:"keyword" form:"keyword"`
 	Thumb      string `json:"thumb" form:"thumb"`
 	Summary    string `json:"summary" form:"summary"`
-	Content    string `json:"content" form:"content"  binding:"required"`
+	Content    string `json:"content" form:"content" `
 	IsHot      int    `json:"is_hot"   form:"is_hot,default=0"`
 	IsNew      int    `json:"is_new"   form:"is_new,default=0"`
 	IsRecom    int    `json:"is_recom" form:"is_recom,default=0"`
