@@ -21,9 +21,9 @@
                                 <input type="hidden" name="id" id="id" value="{{if .data.Info}}{{.data.Info.Id}}{{end}}"
                                        data-id="{{if .data.Info}}{{.data.Info.Id}}{{end}}">
                                 <div class="item form-group form-inline">
-                                    <label class="sr-only" for="title">标题</label>
+                                    <label class="col-form-label col-md-1 label-align" for="title">标题</label>
                                     <input type="text" class="form-control mb-2 mr-sm-2" id="title" name="title" required="required" value="{{if .data.Info}}{{.data.Info.Title}}{{end}}">
-                                    <label class="sr-only" for="weight">排序</label>
+                                    <label class="" for="weight">排序</label>
                                     <input type="text" name="weight"  id="weight" required="required" value="{{if .data.Info}}{{.data.Info.Weight}}{{end}}">
                                     <label class="col-form-label label-align">热门</label>
                                 </div>
