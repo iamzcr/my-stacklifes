@@ -48,7 +48,7 @@ func (h *LangHandler) Edit(ctx *gin.Context) {
 		Info:       info,
 		LangConfig: langConfig,
 	}
-	appGin.SuccessAdminHtml(langAssignList, "menu/edit.html")
+	appGin.SuccessAdminHtml(langAssignList, "lang/edit.html")
 }
 
 func (h *LangHandler) Info(ctx *gin.Context) {
