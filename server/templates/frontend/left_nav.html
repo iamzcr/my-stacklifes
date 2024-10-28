@@ -30,13 +30,13 @@
             {{end}}
         </ul>
     </div><!-- /.left-nav -->
-    {{ if not (eq .tags.List nil) }}
+    {{ if .tags }}
     <div class="left-nav">
         <div class="left-nav-search">
             标签
         </div>
         <div class="left-nav-tag">
-            {{range $index,$value := .tags.List}}
+            {{range $index,$value := .tags}}
             <span class="left-nav-tag-a">
                         <a href="/tag/id/{{$value.Id}}" class="btn btn-primary">{{$value.Name}}</a>
                     </span>

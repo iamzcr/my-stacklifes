@@ -204,14 +204,11 @@ func (s *CategoryService) GetCategoryMap(ctx *gin.Context) map[int]string {
 
 // frontend获取分类导航
 func (s *CategoryService) GetNavList(ctx *gin.Context) (interface{}, error) {
-	var (
-		categoryList []models.CategoryMine
-		category     []models.Category
-	)
+	var categoryList []models.CategoryMine
 
 	db := s.dbClient.MysqlClient
 
-	err := db.Model(&category).
+	err := db.Model(&models.Category{}).
 		Where("status = ?", constant.StatusTrue).
 		Where("type = ?", constant.CategoryNavType).
 		Select("id,mark,name").
@@ -220,7 +217,5 @@ func (s *CategoryService) GetNavList(ctx *gin.Context) (interface{}, error) {
 		return nil, err
 	}
 
-	return models.CategoryNavListRes{
-		List: categoryList,
-	}, nil
+	return categoryList, nil
 }

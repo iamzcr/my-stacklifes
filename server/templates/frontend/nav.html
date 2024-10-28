@@ -5,11 +5,13 @@
             <button type="button" class="navbar-toggler" data-toggle="collapse"
                     data-target="#navbar-collapse-01"></button>
             <div class="collapse navbar-collapse" id="navbar-collapse-01">
+                {{ if .navs }}
                 <ul class="nav navbar-nav mr-auto">
-                    {{range $index,$value := .navs.List}}
+                    {{range $index,$value := .navs}}
                     <li><a href="/category/{{$value.Id}}">{{$value.Name}}</a></li>
                     {{end}}
                 </ul>
+                {{end}}
                 <form class="navbar-form form-inline my-2 my-lg-0" action="#" role="search">
                     <div class="form-group">
                         <div class="input-group">
