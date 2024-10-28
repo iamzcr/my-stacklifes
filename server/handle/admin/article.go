@@ -77,18 +77,15 @@ func (h *ArticleHandler) Create(ctx *gin.Context) {
 		appGin    = app.Gin{C: ctx}
 		reqCreate models.ArticleCreateReq
 	)
-	err := ctx.ShouldBind(&reqCreate)
 
-	if err = ctx.ShouldBind(&reqCreate); err != nil {
-		appGin.Error(500, err.Error(), "")
+	if err := ctx.ShouldBind(&reqCreate); err != nil {
+		appGin.Error(exception.ERROR, err.Error(), nil)
+		return
 	}
 	// 在这里处理 Markdown 内容的逻辑
 	markdownContent := ctx.PostForm("content")
 	reqCreate.Content = markdownContent
-	if err != nil {
-		appGin.Error(exception.ERROR, err.Error(), nil)
-		return
-	}
+
 	res, err := h.srv.Create(ctx, reqCreate)
 	if err != nil {
 		appGin.Error(exception.ERROR, err.Error(), nil)
@@ -103,11 +100,14 @@ func (h *ArticleHandler) Update(ctx *gin.Context) {
 		appGin    = app.Gin{C: ctx}
 		reqUpdate models.ArticleUpdateReq
 	)
-	err := ctx.ShouldBind(&reqUpdate)
-	if err != nil {
+	if err := ctx.ShouldBind(&reqUpdate); err != nil {
 		appGin.Error(exception.ERROR, err.Error(), nil)
 		return
 	}
+	// 在这里处理 Markdown 内容的逻辑
+	markdownContent := ctx.PostForm("content")
+	reqUpdate.Content = markdownContent
+
 	res, err := h.srv.Update(ctx, reqUpdate)
 	if err != nil {
 		appGin.Error(exception.ERROR, err.Error(), nil)

@@ -103,11 +103,11 @@ func (s *ArticleService) Update(ctx *gin.Context, req models.ArticleUpdateReq) (
 		count   int64
 	)
 	db := s.dbClient.MysqlClient
-	err := db.Model(&article).Where("id=?", req.Id).Count(&count).Error
+	err := db.Where("id=?", req.Id).First(&article).Count(&count).Error
 	if err != nil {
 		return nil, err
 	}
-	if count < 1 {
+	if count <= 0 {
 		return nil, errors.New("文章不存在了")
 	}
 
