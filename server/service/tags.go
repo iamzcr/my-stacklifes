@@ -22,7 +22,6 @@ func NewTagsService() *TagsService {
 func (s *TagsService) GetList(ctx *gin.Context, req models.TagsListReq) (interface{}, error) {
 	var (
 		tags      []models.Tags
-		tagsList  []models.TagsInfo
 		total     int64
 		statusMap = map[int]string{
 			constant.StatusTrue:  constant.StatusTrueName,
@@ -32,6 +31,7 @@ func (s *TagsService) GetList(ctx *gin.Context, req models.TagsListReq) (interfa
 			constant.TagsDefaultType: constant.TagsDefaultName,
 		}
 	)
+	tagsList := make([]models.TagsInfo, 0)
 	db := s.dbClient.MysqlClient
 	if len(req.Name) > 0 {
 		db = db.Where("name LIKE ?", "%"+req.Name+"%")
