@@ -21,15 +21,13 @@
                                 <input type="hidden" name="id" id="id" value="{{if .data.Info}}{{.data.Info.Id}}{{end}}"
                                        data-id="{{if .data.Info}}{{.data.Info.Id}}{{end}}">
                                 <div class="item form-group">
-                                    <label class="col-form-label col-md-1 label-align">标题</label>
+                                    <label class="col-form-label label-align">标题</label>
                                     <div class="col-md-2">
-                                        <input type="text" name="title" required="required" class="form-control"
-                                               value="{{if .data.Info}}{{.data.Info.Title}}{{end}}">
+                                        <input type="text" name="title" required="required" value="{{if .data.Info}}{{.data.Info.Title}}{{end}}">
                                     </div>
-                                    <label class="col-form-label col-md-1  label-align">排序</label>
+                                    <label class="col-form-label label-align">排序</label>
                                     <div class="col-md-2">
-                                        <input type="text" name="weight" required="required" class="form-control"
-                                               value="{{if .data.Info}}{{.data.Info.Weight}}{{end}}">
+                                        <input type="text" name="weight" required="required" value="{{if .data.Info}}{{.data.Info.Weight}}{{end}}">
                                     </div>
                                     <label class="col-form-label label-align">热门</label>
                                     <select name="is_hot">
