@@ -101,11 +101,13 @@ func (s *AdminService) Create(ctx *gin.Context, req models.AdminCreateReq) (inte
 	if len(req.Password) <= 0 {
 		req.Password = fmt.Sprintf("%s%s", req.Username, constant.Password)
 	}
-
+	if req.ExpirationTime == 0 {
+		req.ExpirationTime = tools.SetExpiration()
+	}
 	admin.Password = req.Password
 	admin.Name = req.Name
 	admin.GroupId = req.GroupId
-	admin.ExpirationTime = tools.SetExpiration()
+	admin.ExpirationTime = req.ExpirationTime
 	admin.Salt = tools.CreateSalt()
 	admin.Password = tools.GenPassword(admin.Salt, req.Password)
 	err := db.Create(&admin).Error

@@ -53,10 +53,10 @@ type AdminCreateReq struct {
 	Username       string `json:"username" form:"username" binding:"required"`
 	Password       string `json:"password" form:"password" `
 	Name           string `json:"name" form:"name" `
-	ExpirationTime string `json:"expiration_time" form:"expiration_time" binding:"required" `
 	Status         int    `json:"status" form:"status,default=1"`
 	Lang           string `json:"lang"  form:"author,default=zh" `
 	GroupId        int    `json:"group_id" form:"group_id" binding:"required"`
+	ExpirationTime int64  `json:"expiration_time" form:"expiration_time"`
 }
 
 type AdminDelReq struct {
