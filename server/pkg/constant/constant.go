@@ -22,3 +22,6 @@ const DirectoryDefaultType = 1
 const DirectoryDefaultTypeName = "默认"
 
 const Password = "123456"
+
+const ImageType = 1
+const ImageTypeName = "图片"

@@ -1,7 +1,6 @@
 package admin
 
 import (
-	"fmt"
 	"github.com/gin-gonic/gin"
 	"my-stacklifes/models"
 	"my-stacklifes/pkg/app"
@@ -21,13 +20,12 @@ func NewAttachHandler() *AttachHandler {
 
 func (h *AttachHandler) List(ctx *gin.Context) {
 	var appGin = app.Gin{C: ctx}
-	assignData := "assignData"
-	appGin.SuccessAdminHtml(assignData, "attach/list.html")
+	appGin.SuccessAdminHtml("", "attach/list.html")
 }
 
 func (h *AttachHandler) ListJson(ctx *gin.Context) {
 	var appGin = app.Gin{C: ctx}
-	query := models.AttachReq{}
+	query := models.AttachListReq{}
 	err := ctx.ShouldBindQuery(&query)
 	if err != nil {
 		appGin.Error(exception.ERROR, err.Error(), nil)
@@ -53,18 +51,22 @@ func (h *AttachHandler) Info(ctx *gin.Context) {
 }
 
 func (h *AttachHandler) Edit(ctx *gin.Context) {
+	var appGin = app.Gin{C: ctx}
+	appGin.SuccessAdminHtml("", "attach/edit.html")
+}
+
+func (h *AttachHandler) Create(ctx *gin.Context) {
 
 	var (
 		appGin = app.Gin{C: ctx}
-		req    models.Attach
+		req    models.AttachCreateReq
 	)
 	err := ctx.ShouldBind(&req)
 	if err != nil {
 		appGin.Error(exception.ERROR, err.Error(), nil)
 		return
 	}
-	fmt.Println(req)
-	res, err := h.srv.Update(ctx, req)
+	res, err := h.srv.Create(ctx, req)
 	if err != nil {
 		appGin.Error(exception.ERROR, err.Error(), nil)
 		return

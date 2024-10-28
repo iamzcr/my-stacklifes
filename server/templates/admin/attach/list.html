@@ -1,0 +1,129 @@
+{{define "attach/list.html"}}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    {{template "public/header" .}}
+</head>
+<body class="nav-md">
+<div class="container body">
+    <div class="main_container">
+        {{template "public/left_nav" .}}
+        {{template "public/nav" .}}
+        <!-- page content -->
+        <div class="right_col" role="main">
+            <div class="row">
+                <div class="col">
+                    <form class="form-inline">
+                        <div class="form-group mx-sm-1 mb-2">
+                            <input type="text" name="name" id="name-input" class="form-control  form-control-sm"
+                                   placeholder="name">
+                        </div>
+                        <button class="btn btn-sm btn-primary mb-2" id="search">搜索</button>
+                        <a href="/admin/attach/add" class="btn btn-sm btn-success mb-2">新增</a>
+                    </form>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-md-12 col-sm-12 ">
+                    <div class="x_panel">
+                        <div class="x_content">
+                            <div class="row">
+                                <div class="col-sm-12">
+                                    <div class="card-box table-responsive">
+                                        <table id="list-table" class="table table-striped table-bordered"
+                                               style="width:100%">
+                                            <thead>
+                                            <tr>
+                                                <th>ID</th>
+                                                <th>类型</th>
+                                                <th>下载地址</th>
+                                                <th>绝对路径</th>
+                                                <th>状态</th>
+                                                <th>时间</th>
+                                                <th>操作</th>
+                                            </tr>
+                                            </thead>
+                                            <tbody>
+                                            </tbody>
+                                        </table>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        {{template "public/footer_nav" .}}
+    </div>
+</div>
+{{template "public/footer" .}}
+<script type="text/javascript">
+    var listTable = $('#list-table').DataTable({
+        "language": {
+            "url": "/static/vendors/datatables.net/lang/zh.json"
+        },
+        "processing": true,
+        "serverSide": true,
+        "ajax": {
+            "url": "/admin/attach/list_json",
+            "type": "GET",
+            "data": function (data) {
+                return dataFunction(data);
+            },
+            "dataFilter": function (data) {
+                return dataFilterFunction(data);
+            }
+        },
+        "columns": [
+            {"data": "id"},
+            {"data": "name"},
+            {"data": "link"},
+            {"data": "path"},
+            {"data": "type_name"},
+            {"data": "status_name"},
+            {"data": "create_time"},
+            {
+                "data": null,
+                render: function (data, type, row) {
+                    return '<button class="btn btn-sm btn-danger" onclick="submitDelForm(' + '\'/admin/attach/delete\',' + row.id + ')">删除</button>'
+                }
+            }
+        ]
+
+    });
+
+    $("#search").click(function () {
+        listTable.ajax.reload();
+    });
+
+    $('#list-table').on('mouseover', 'tbody tr', function () {
+        $(this).addClass('info');
+    }).on('mouseout', 'tbody tr', function () {
+        $(this).removeClass('info');
+    });
+
+    function submitDelForm(url, id) {
+        if (typeof id === 'undefined' || typeof url === 'undefined') {
+            Swal.fire({icon: "error"});
+        }
+        $.ajax({
+            type: "POST",
+            url: url, // 提交表单数据的URL
+            data: {id: id},
+            success: function (response) {
+                console.log(response)
+                if (response.code !== 200) {
+                    Swal.fire({icon: "error", text: response.message});
+                }
+                listTable.draw()
+            },
+            error: function (error) {
+                Swal.fire({icon: "error", text: 'error'});
+            }
+        });
+    }
+</script>
+</body>
+</html>
+{{end}}

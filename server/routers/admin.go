@@ -24,8 +24,6 @@ func AdminRoutersInit(r *gin.Engine) {
 	//用户组
 	adminGroupHandler := admin.NewAdminGroupHandler()
 	adminsHandler := admin.NewAdminHandler()
-	//用户组
-	optionHandler := admin.NewOptionHandler()
 	//权限
 	permitHandler := admin.NewPermitHandler()
 	menuHandler := admin.NewMenuHandler()
@@ -141,12 +139,11 @@ func AdminRoutersInit(r *gin.Engine) {
 		adminRouter.POST("/article/update", articleHandler.Update)
 		adminRouter.POST("/article/change_field", articleHandler.ChangeField)
 
-		adminRouter.GET("/option/getFilter", optionHandler.GetFilter)
-
 		adminRouter.GET("/attach/list", attachHandler.List)
 		adminRouter.GET("/attach/list_json", attachHandler.ListJson)
-		adminRouter.GET("/attach/info", attachHandler.List)
-		adminRouter.GET("/attach/edit", attachHandler.List)
+		adminRouter.GET("/attach/info", attachHandler.Info)
+		adminRouter.GET("/attach/add", attachHandler.Edit)
+		adminRouter.POST("/attach/create", attachHandler.Create)
 
 	}
 }
