@@ -78,6 +78,13 @@ func (h *ArticleHandler) Create(ctx *gin.Context) {
 		reqCreate models.ArticleCreateReq
 	)
 	err := ctx.ShouldBind(&reqCreate)
+
+	if err = ctx.ShouldBind(&reqCreate); err != nil {
+		appGin.Error(500, err.Error(), "")
+	}
+	// 在这里处理 Markdown 内容的逻辑
+	markdownContent := ctx.PostForm("content")
+	reqCreate.Content = markdownContent
 	if err != nil {
 		appGin.Error(exception.ERROR, err.Error(), nil)
 		return
