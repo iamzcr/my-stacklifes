@@ -23,7 +23,7 @@
                                 <div class="item form-group">
                                     <label class="col-form-label col-md-1 label-align">登录账号</label>
                                     <div class="col-md-2">
-                                        <input type="text" name="name" required="required"
+                                        <input type="text" name="username" required="required"
                                                value="{{if .data.Info}}{{.data.Info.Username}}{{end}}"
                                                class="form-control ">
                                     </div>
@@ -39,7 +39,7 @@
                                 <div class="item form-group">
                                     <label class="col-form-label col-md-1 label-align">密码</label>
                                     <div class="col-md-2">
-                                        <input type="text" name="name" required="required"
+                                        <input type="text" name="password" required="required"
                                                value="{{if .data.Info}}{{.data.Info.Password}}{{end}}"
                                                class="form-control ">
                                         <span class="text-danger">不填默认用户名+123456</span>
@@ -48,7 +48,7 @@
                                 <div class="item form-group">
                                     <label class="col-form-label col-md-1 label-align">用户组</label>
                                     <div class="col-md-2">
-                                        <select class="form-control" name="cid">
+                                        <select class="form-control" name="group_id">
                                             {{range $index, $value := .data.AdminGroups}}
                                             <option value="{{$value.Id}}" {{if and (not (eq $.data.Info nil)) (eq $value.Id $.data.Info.GroupId)}}selected{{end}}>
                                                 {{$value.Name}}
