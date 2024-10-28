@@ -47,7 +47,7 @@ type ArticleInfo struct {
 	PublicTime    string        `json:"public_time"`
 	Month         string        `json:"month"`
 	CreateTime    string        `json:"create_time"`
-	UpdatedTime   string        `json:"updated_time"`
+	UpdateTime    string        `json:"update_time"`
 	StatusName    string        `json:"status_name"`
 	HotName       string        `json:"hot_name"`
 	NewName       string        `json:"new_name"`

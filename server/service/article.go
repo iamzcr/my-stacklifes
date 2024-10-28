@@ -61,6 +61,7 @@ func (s *ArticleService) GetList(ctx *gin.Context, req models.ArticleReq) (inter
 			NewName:       statusMap[temp.Status],
 			PublicTime:    tools.UnixToTime(temp.PublicTime),
 			CreateTime:    tools.UnixToTime(temp.CreateTime),
+			UpdateTime:    tools.UnixToTime(temp.UpdateTime),
 		})
 
 	}

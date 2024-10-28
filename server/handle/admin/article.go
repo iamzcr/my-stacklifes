@@ -1,7 +1,6 @@
 package admin
 
 import (
-	"fmt"
 	"github.com/gin-gonic/gin"
 	"my-stacklifes/models"
 	"my-stacklifes/pkg/app"
@@ -58,7 +57,6 @@ func (h *ArticleHandler) Edit(ctx *gin.Context) {
 		TagsList:      tagsList,
 		StatusMap:     statusMap,
 	}
-	fmt.Sprint("%#v", assignList)
 	appGin.SuccessAdminHtml(assignList, "article/edit.html")
 }
 
