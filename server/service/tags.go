@@ -159,7 +159,7 @@ func (s *TagsService) GetInfo(ctx *gin.Context, id string) (interface{}, error) 
 	return tag, nil
 }
 
-func (s *TagsService) GetTagsList(ctx *gin.Context, req models.TagsListReq) (interface{}, error) {
+func (s *TagsService) GetTagsList(ctx *gin.Context) (interface{}, error) {
 	var (
 		tagsList []models.TagsInfo
 		tags     models.Tags
@@ -171,9 +171,7 @@ func (s *TagsService) GetTagsList(ctx *gin.Context, req models.TagsListReq) (int
 		return nil, err
 	}
 
-	return models.TagsListRes{
-		List: tagsList,
-	}, nil
+	return tagsList, nil
 }
 
 func (s *TagsService) ChangeField(ctx *gin.Context, req models.TagsFieldReq) (interface{}, error) {

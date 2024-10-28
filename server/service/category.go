@@ -189,6 +189,19 @@ func (s *CategoryService) GetCategoryList(ctx *gin.Context) (interface{}, error)
 	return categoryList, nil
 }
 
+func (s *CategoryService) GetCategoryMap(ctx *gin.Context) map[int]string {
+	var categoryMap = make(map[int]string)
+	//分类map
+	var categoryList []models.CategoryMine
+	db := s.dbClient.MysqlClient
+	db.Model(&models.Category{}).
+		Select("id,name").Order("id DESC").Find(&categoryList)
+	for _, category := range categoryList {
+		categoryMap[category.Id] = category.Name
+	}
+	return categoryMap
+}
+
 // frontend获取分类导航
 func (s *CategoryService) GetNavList(ctx *gin.Context) (interface{}, error) {
 	var (

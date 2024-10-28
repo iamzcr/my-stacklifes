@@ -19,8 +19,13 @@ func NewArticleHandler() *ArticleHandler {
 }
 func (h *ArticleHandler) List(ctx *gin.Context) {
 	var appGin = app.Gin{C: ctx}
-	appGin.SuccessAdminHtml("", "article/list.html")
+	categoryList, _ := service.NewCategoryService().GetCategoryList(ctx)
+	assignList := models.ArticleAssignList{
+		CategoryList: categoryList,
+	}
+	appGin.SuccessAdminHtml(assignList, "article/list.html")
 }
+
 func (h *ArticleHandler) ListJson(ctx *gin.Context) {
 	var appGin = app.Gin{C: ctx}
 	query := models.ArticleReq{}
@@ -41,7 +46,16 @@ func (h *ArticleHandler) Edit(ctx *gin.Context) {
 	var appGin = app.Gin{C: ctx}
 	id := ctx.Param("id")
 	info, _ := h.srv.GetInfo(ctx, id)
-	appGin.SuccessAdminHtml(info, "article/edit.html")
+	categoryList, _ := service.NewCategoryService().GetCategoryList(ctx)
+	directoryList, _ := service.NewDirectoryService().GetDirectoryList(ctx)
+	tagsList, _ := service.NewTagsService().GetTagsList(ctx)
+	assignList := models.ArticleAssignList{
+		Info:          info,
+		CategoryList:  categoryList,
+		DirectoryList: directoryList,
+		TagsList:      tagsList,
+	}
+	appGin.SuccessAdminHtml(assignList, "article/edit.html")
 }
 
 func (h *ArticleHandler) Info(ctx *gin.Context) {

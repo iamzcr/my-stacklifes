@@ -193,6 +193,19 @@ func (s *DirectoryService) GetDirectoryList(ctx *gin.Context) (interface{}, erro
 	return directoryList, nil
 }
 
+func (s *DirectoryService) GetDirectoryMap(ctx *gin.Context) map[int]string {
+	var directoryMap = make(map[int]string)
+	//分类map
+	var directoryList []models.DirectoryMine
+	db := s.dbClient.MysqlClient
+	db.Model(&models.Directory{}).
+		Select("id,name").Order("id DESC").Find(&directoryList)
+	for _, directory := range directoryList {
+		directoryMap[directory.Id] = directory.Name
+	}
+	return directoryMap
+}
+
 func (s *DirectoryService) GetListByCid(cid string) ([]models.DirectoryMine, []int, error) {
 
 	var (

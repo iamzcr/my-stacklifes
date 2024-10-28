@@ -43,9 +43,9 @@ type ArticleInfo struct {
 	IsNew         int           `json:"is_new"`
 	IsRecom       int           `json:"is_recom" `
 	Weight        int           `json:"weight"`
+	Status        int           `json:"status"`
 	PublicTime    string        `json:"public_time"`
 	Month         string        `json:"month"`
-	Status        int           `json:"status"`
 	CreateTime    string        `json:"create_time"`
 	UpdatedTime   string        `json:"updated_time"`
 	StatusName    string        `json:"status_name"`
@@ -98,21 +98,6 @@ type ArticleCreateReq struct {
 	Status     int    `json:"status"   form:"status,default=0"`
 }
 
-type ArticleMine struct {
-	Id          int                    `json:"id" `
-	Title       string                 `json:"title"`
-	Cid         int                    `json:"cid" `
-	Did         int                    `json:"did" `
-	Author      string                 `json:"author"`
-	IsHot       int                    `json:"is_hot"`
-	IsNew       int                    `json:"is_new"`
-	IsRecom     int                    `json:"is_recom" `
-	Weight      int                    `json:"weight"`
-	PublicTime  int64                  `json:"public_time"`
-	Status      int                    `json:"status"`
-	ExtraFields map[string]interface{} `json:"extra_fields" gorm:"-"` //存放回显中文
-}
-
 type ArticleListRes struct {
 	Total int64         `json:"total"`
 	List  []ArticleInfo `json:"list"`
@@ -120,6 +105,13 @@ type ArticleListRes struct {
 type ArticleReq struct {
 	PageInfo
 	Title string `json:"title" form:"title"`
+}
+
+type ArticleAssignList struct {
+	Info          interface{}
+	CategoryList  interface{}
+	DirectoryList interface{}
+	TagsList      interface{}
 }
 
 type ArticleFieldReq struct {
@@ -130,46 +122,30 @@ type ArticleFieldReq struct {
 	IsRecom *int `json:"is_recom" form:"is_recom" binding:"omitempty"`
 }
 
-type FrontArticleInfo struct {
-	Id         int    `json:"id" `
-	Title      string `json:"title"`
-	Cid        int    `json:"cid"`
-	Did        int    `json:"did"`
-	Author     string `json:"author"`
-	PublicTime int64  `json:"public_time" `
+type FrontArticleDetail struct {
+	ArticleInfo
+	PreArticle  ArticleInfo //上一篇
+	NextArticle ArticleInfo //下一篇
 }
-type FrontArticle struct {
-	Article
-	TagIds               []int
-	TagNames             []string
-	Category             Category
-	DirectoryArticleList []DirectoryArticle //分类目录里面的文章
-	PreArticle           Article            //上一篇
-	NextArticle          Article            //下一篇
+
+type FrontArticleListRes struct {
+	Total int64         `json:"total"`
+	List  []ArticleInfo `json:"list"`
 }
 
 type FrontArticleListReq struct {
-	PageInfo
 	Title string `json:"title" form:"title"`
 	Cid   int    `json:"cid" form:"cid"`
 	Tid   int    `json:"tid" form:"tid"`
 	IsHot int    `json:"is_hot"   form:"is_hot,default=0"`
-}
-
-type FrontArticleListRes struct {
-	Total int64              `json:"total"`
-	List  []FrontArticleInfo `json:"list"`
-}
-
-type FrontCategoryArticleListReq struct {
-	Cid int `json:"cid" form:"cid"  binding:"required"`
+	PageInfo
 }
 
 type FrontDirectoryArticleListRes struct {
 	DirectoryArticleList []DirectoryArticle `json:"list"`
 }
 type DirectoryArticle struct {
-	DirectoryID   int                `json:"d_id"`
-	DirectoryName string             `json:"d_name"`
-	Articles      []FrontArticleInfo `json:"d_articles"`
+	DirectoryID   int           `json:"d_id"`
+	DirectoryName string        `json:"d_name"`
+	Articles      []ArticleInfo `json:"d_articles"`
 }
