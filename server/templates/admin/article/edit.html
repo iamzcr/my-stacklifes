@@ -23,16 +23,32 @@
                                        data-id="{{if .data.Info}}{{.data.Info.Id}}{{end}}">
                                 <div class="item form-group">
                                     <label class="col-form-label col-md-1 label-align">标题</label>
-                                    <div class="col-md-2">
-                                        <input type="text" name="title" required="required" class="form-control"   value="{{if .data.Info}}{{.data.Info.Title}}{{end}}">
-                                    </div>
+                                    <input type="text" name="title" required="required"
+                                           value="{{if .data.Info}}{{.data.Info.Title}}{{end}}">
+                                    <label>热门</label>
+                                    <select name="cid">
+                                        {{range $index, $value := .data.StatusMap}}
+                                        <option value="{{$index}}" {{if and (not (eq $.data.Info nil)) (eq $index $.data.Info.IsHot)}}selected{{end}}>
+                                            {{$value}}
+                                        </option>
+                                        {{end}}
+                                    </select>
+                                    <label>推荐</label>
+                                    <select  name="cid">
+                                        {{range $index, $value := .data.StatusMap}}
+                                        <option value="{{$index}}" {{if and (not (eq $.data.Info nil)) (eq $index $.data.Info.IsRecom)}}selected{{end}}>
+                                            {{$value}}
+                                        </option>
+                                        {{end}}
+                                    </select>
                                 </div>
                                 <div class="item form-group">
                                     <label class="col-form-label col-md-1 label-align">分类</label>
                                     <div class="col-md-2">
                                         <select class="form-control" name="cid">
                                             {{range $index, $value := .data.CategoryList}}
-                                            <option value="{{$value.Id}}" {{if and (not (eq $.data.Info nil)) (eq $value.Id $.data.Info.Cid)}}selected{{end}}>
+                                            <option value="{{$value.Id}}" {{if and (not (eq $.data.Info nil)) (eq
+                                                    $value.Id $.data.Info.Cid)}}selected{{end}}>
                                                 {{$value.Name}}
                                             </option>
                                             {{end}}
@@ -44,7 +60,8 @@
                                     <div class="col-md-2">
                                         <select class="form-control" name="did">
                                             {{range $index, $value := .data.DirectoryList}}
-                                            <option value="{{$value.Id}}" {{if and (not (eq $.data.Info nil)) (eq $value.Id $.data.Info.Did)}}selected{{end}}>
+                                            <option value="{{$value.Id}}" {{if and (not (eq $.data.Info nil)) (eq
+                                                    $value.Id $.data.Info.Did)}}selected{{end}}>
                                                 {{$value.Name}}
                                             </option>
                                             {{end}}
@@ -54,13 +71,15 @@
                                 <div class="item form-group">
                                     <label class="col-form-label col-md-1 label-align">seo关键词</label>
                                     <div class="col-md-2">
-                                        <input type="text"  name="keyword"  class="form-control"  value="{{if .data.Info}}{{.data.Info.Keyword}}{{end}}" >
+                                        <input type="text" name="keyword" class="form-control"
+                                               value="{{if .data.Info}}{{.data.Info.Keyword}}{{end}}">
                                     </div>
                                 </div>
                                 <div class="item form-group">
                                     <label class="col-form-label col-md-1 label-align">seo描述</label>
                                     <div class="col-md-2">
-                                        <input type="text" name="desc" class="form-control"  value="{{if .data.Info}}{{.data.Info.Desc}}{{end}}" >
+                                        <input type="text" name="desc" class="form-control"
+                                               value="{{if .data.Info}}{{.data.Info.Desc}}{{end}}">
                                     </div>
                                 </div>
                                 <div class="item form-group">
@@ -100,7 +119,7 @@
             codeBlockLanguages: ['javascript', 'html', 'css', 'php', 'golang', 'shell', 'bash', 'sql', 'python'],
             initialValue: hiddenTextarea.value,
             events: {
-                change: function() {
+                change: function () {
                     hiddenTextarea.value = editor.getMarkdown();
                 }
             }
