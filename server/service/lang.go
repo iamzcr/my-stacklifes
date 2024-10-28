@@ -143,7 +143,7 @@ func (s *LangService) Delete(ctx *gin.Context, req models.LangDelReq) (interface
 func (s *LangService) GetLangList(ctx *gin.Context) (interface{}, error) {
 	var langList []models.LangMine
 	db := s.dbClient.MysqlClient
-	err := db.Model(&models.Category{}).
+	err := db.Model(&models.Lang{}).
 		Where("status = ?", constant.StatusTrue).
 		Select("id,lang,name").
 		Order("weight DESC").Find(&langList).Error

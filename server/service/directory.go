@@ -41,13 +41,13 @@ func (s *DirectoryService) GetList(ctx *gin.Context, req models.DirectoryListReq
 	}
 
 	limit, offset := req.GetPageInfo()
-	err := db.Debug().Limit(limit).Offset(offset).Order("id DESC").Find(&directorys).
+	err := db.Limit(limit).Offset(offset).Order("id DESC").Find(&directorys).
 		Limit(-1).Offset(-1).Count(&total).Error
 	if err != nil {
 		return nil, err
 	}
 
-	db.Model(&models.Directory{}).Debug().Where("parent=?", constant.TopParent).
+	db.Model(&models.Directory{}).Where("parent=?", constant.TopParent).
 		Select("id,name").Order("id DESC").Find(&parentDirectorys)
 	for _, parentDirectory := range parentDirectorys {
 		parentMap[parentDirectory.Id] = parentDirectory.Name

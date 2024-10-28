@@ -60,7 +60,7 @@
                                 <div class="item form-group">
                                     <label class="col-form-label col-md-1 label-align">语言</label>
                                     <div class="col-md-2">
-                                        <select class="form-control" name="group_id">
+                                        <select class="form-control" name="lang">
                                             {{range $index, $value := .data.LangList}}
                                             <option value="{{$value.Lang}}" {{if and (not (eq $.data.Info nil)) (eq $value.Lang $.data.Info.lang)}}selected{{end}}>
                                                 {{$value.Name}}
