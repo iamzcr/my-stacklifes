@@ -30,7 +30,7 @@
             {{end}}
         </ul>
     </div><!-- /.left-nav -->
-
+    {{ if .tags.List }}
     <div class="left-nav">
         <div class="left-nav-search">
             标签
@@ -43,6 +43,7 @@
             {{end}}
         </div>
     </div><!-- /.left-nav -->
+    {{end}}
     <div class="left-nav">
         <div class="left-nav-search">
             留言
@@ -63,7 +64,7 @@
                 </div>
                 <div class="form-group">
                     <label for="content">内容</label>
-                    <textarea class="form-control" rows="3"  name="content" id="content"></textarea>
+                    <textarea class="form-control" rows="3" name="content" id="content"></textarea>
                 </div>
                 <button type="submit" class="btn btn-primary" onclick="submitForm()">提交</button>
             </form>
@@ -78,12 +79,12 @@
             type: "POST",
             url: "/message/create", // 提交表单数据的URL
             data: formData,
-            success: function(response) {
+            success: function (response) {
                 // 处理成功响应
                 console.log(response);
                 alert('Form submitted successfully!');
             },
-            error: function(error) {
+            error: function (error) {
                 // 处理错误响应
                 console.error(error);
                 alert('Error submitting form!');
