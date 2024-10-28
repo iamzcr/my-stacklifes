@@ -119,6 +119,7 @@
         initialEditType: 'markdown',
         previewStyle: 'vertical',
         usageStatistics: false,
+        language: 'shell',
         exts: ['scrollSync', 'colorSyntax', 'uml', 'chart', 'mark', 'table'],
         codeBlockLanguages: ['javascript', 'html', 'css', 'php', 'golang', 'shell', 'bash', 'sql', 'python'],
         initialValue: hiddenTextarea.value,
@@ -132,8 +133,6 @@
     function submitForm() {
         // 获取编辑器中的 Markdown 内容
         var markdownContent = editor.getMarkdown();
-        // 打印获取到的 Markdown 内容
-        console.log(markdownContent);
 
         let url = "/admin/article/create"
         let id = $("#id").data("id");
