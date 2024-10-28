@@ -32,6 +32,10 @@ func (s *AttachService) GetList(ctx *gin.Context, req models.AttachListReq) (int
 			constant.ImageType: constant.ImageTypeName,
 		}
 	)
+
+	//初始化
+	attachList = make([]models.AttachInfo, 0)
+
 	db := s.dbClient.MysqlClient
 	if len(req.Name) > 0 {
 		db = db.Where("name LIKE ?", "%"+req.Name+"%")
