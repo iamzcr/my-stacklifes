@@ -43,12 +43,7 @@ func (h *LangHandler) Edit(ctx *gin.Context) {
 	var appGin = app.Gin{C: ctx}
 	id := ctx.Param("id")
 	info, _ := h.srv.GetInfo(ctx, id)
-	langConfig := h.srv.LangConfig(ctx)
-	langAssignList := models.LangAssignList{
-		Info:       info,
-		LangConfig: langConfig,
-	}
-	appGin.SuccessAdminHtml(langAssignList, "lang/edit.html")
+	appGin.SuccessAdminHtml(info, "lang/edit.html")
 }
 
 func (h *LangHandler) Info(ctx *gin.Context) {

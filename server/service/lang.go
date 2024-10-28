@@ -28,10 +28,6 @@ func (s *LangService) GetList(ctx *gin.Context, req models.LangListReq) (interfa
 			constant.StatusTrue:  constant.StatusTrueName,
 			constant.StatusFalse: constant.StatusFalseName,
 		}
-		langMap = map[string]string{
-			constant.LangZh: constant.LangZhName,
-			constant.LangEn: constant.LangEnName,
-		}
 		total int64
 	)
 	db := s.dbClient.MysqlClient
@@ -53,7 +49,6 @@ func (s *LangService) GetList(ctx *gin.Context, req models.LangListReq) (interfa
 			Weight:      temp.Weight,
 			StatusName:  statusMap[temp.Status],
 			DefaultName: statusMap[temp.Default],
-			LangName:    langMap[temp.Lang],
 			CreateTime:  tools.UnixToTime(temp.CreateTime),
 			UpdateTime:  tools.UnixToTime(temp.UpdateTime),
 		})
@@ -145,10 +140,15 @@ func (s *LangService) Delete(ctx *gin.Context, req models.LangDelReq) (interface
 	return lang.Id, nil
 }
 
-func (s *LangService) LangConfig(ctx *gin.Context) interface{} {
-	statusMap := map[string]string{
-		constant.LangZh: constant.LangZhName,
-		constant.LangEn: constant.LangEnName,
+func (s *LangService) GetLangList(ctx *gin.Context) (interface{}, error) {
+	var langList []models.LangMine
+	db := s.dbClient.MysqlClient
+	err := db.Model(&models.Category{}).
+		Where("status = ?", constant.StatusTrue).
+		Select("id,lang,name").
+		Order("weight DESC").Find(&langList).Error
+	if err != nil {
+		return nil, err
 	}
-	return statusMap
+	return langList, nil
 }

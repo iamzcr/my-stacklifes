@@ -31,13 +31,10 @@
                                 <div class="item form-group">
                                     <label class="col-form-label col-md-1 label-align">标识</label>
                                     <div class="col-md-2">
-                                        <select class="form-control" name="lang">
-                                            {{range $index, $value := .data.LangConfig}}
-                                            <option value="{{$index}}" {{if and (not (eq $.data.Info nil)) (eq $index $.data.Info.Lang)}}selected{{end}}>
-                                                {{$value}}
-                                            </option>
-                                            {{end}}
-                                        </select>
+                                        <input type="text" name="name"
+                                               value="{{if .data.Info}}{{.data.Info.Lang}}{{end}}"
+                                               required="required"
+                                               class="form-control">
                                     </div>
                                 </div>
                                 <div class="item form-group">

@@ -58,6 +58,18 @@
                                     </div>
                                 </div>
                                 <div class="item form-group">
+                                    <label class="col-form-label col-md-1 label-align">语言</label>
+                                    <div class="col-md-2">
+                                        <select class="form-control" name="group_id">
+                                            {{range $index, $value := .data.LangList}}
+                                            <option value="{{$value.Lang}}" {{if and (not (eq $.data.Info nil)) (eq $value.Lang $.data.Info.lang)}}selected{{end}}>
+                                                {{$value.Name}}
+                                            </option>
+                                            {{end}}
+                                        </select>
+                                    </div>
+                                </div>
+                                <div class="item form-group">
                                     <div class="col-md-6 offset-md-1">
                                         <button type="button" class="btn btn-success" onclick="submitForm()">提交
                                         </button>

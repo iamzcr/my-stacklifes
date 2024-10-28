@@ -43,9 +43,11 @@ func (h *AdminHandler) Edit(ctx *gin.Context) {
 	id := ctx.Param("id")
 	info, _ := h.srv.GetInfo(ctx, id)
 	adminGroups, _ := service.NewAdminGroupService().GetAdminGroupList(ctx)
+	langList, _ := service.NewLangService().GetLangList(ctx)
 	adminAssignList := models.AdminAssignList{
 		Info:        info,
 		AdminGroups: adminGroups,
+		LangList:    langList,
 	}
 	appGin.SuccessAdminHtml(adminAssignList, "admin/edit.html")
 }

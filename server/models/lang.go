@@ -26,7 +26,6 @@ type LangInfo struct {
 	UpdateTime  string `json:"update_time"`
 	StatusName  string `json:"status_name"`
 	DefaultName string `json:"default_name"`
-	LangName    string `json:"lang_name"`
 }
 
 type LangListReq struct {
@@ -61,7 +60,8 @@ type LangDelReq struct {
 	Id int `json:"id" form:"id" binding:"required"`
 }
 
-type LangAssignList struct {
-	Info       interface{}
-	LangConfig interface{}
+type LangMine struct {
+	Id   int    `json:"id"`
+	Lang string `json:"lang"`
+	Name string `json:"name"`
 }
