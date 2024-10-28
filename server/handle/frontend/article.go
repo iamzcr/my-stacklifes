@@ -38,21 +38,21 @@ func (h *ArticleHandler) ArticleList(ctx *gin.Context) {
 func (h *ArticleHandler) ArticleDetail(ctx *gin.Context) {
 	var appGin = app.Gin{C: ctx}
 	id := ctx.Param("id")
-	detailData, err := h.srv.GetFrontDetail(ctx, id)
+	info, err := h.srv.GetFrontDetail(ctx, id)
 	if err != nil {
 		appGin.Error(exception.ERROR, err.Error(), nil)
 		return
 	}
 	//appGin.Success(detailData)
-	appGin.SuccessHtml(detailData, "article.html")
+	appGin.SuccessHtml(info, "article.html")
 }
 
 // 分类获取文章目录列表
 func (h *ArticleHandler) CategoryArticleList(ctx *gin.Context) {
 	var appGin = app.Gin{C: ctx}
 	id := ctx.Param("id")
-
-	list, err := h.srv.GetFrontCategoryArticleList(ctx, id)
+	cid, _ := strconv.Atoi(id)
+	list, err := h.srv.GetFrontCategoryArticleList(ctx, cid)
 	if err != nil {
 		appGin.Error(exception.ERROR, err.Error(), nil)
 		return
@@ -65,8 +65,8 @@ func (h *ArticleHandler) CategoryArticleList(ctx *gin.Context) {
 func (h *ArticleHandler) TagsArticleList(ctx *gin.Context) {
 	var appGin = app.Gin{C: ctx}
 	id := ctx.Param("id")
-	num, _ := strconv.Atoi(id)
-	list, err := h.srv.GetFrontTagsArticleList(num)
+	tid, _ := strconv.Atoi(id)
+	list, err := h.srv.GetFrontTagsArticleList(ctx, tid)
 	if err != nil {
 		appGin.Error(exception.ERROR, err.Error(), nil)
 		return

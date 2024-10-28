@@ -174,6 +174,18 @@ func (s *TagsService) GetTagsList(ctx *gin.Context) (interface{}, error) {
 	return tagsList, nil
 }
 
+func (s *TagsService) GetTagsMap(ctx *gin.Context) map[int]string {
+	var tagsMap = make(map[int]string)
+	var tagsList []models.TagsMine
+	db := s.dbClient.MysqlClient
+	db.Model(&models.Tags{}).
+		Select("id,name").Order("id DESC").Find(&tagsList)
+	for _, tags := range tagsList {
+		tagsMap[tags.Id] = tags.Name
+	}
+	return tagsMap
+}
+
 func (s *TagsService) ChangeField(ctx *gin.Context, req models.TagsFieldReq) (interface{}, error) {
 	var tags models.Tags
 

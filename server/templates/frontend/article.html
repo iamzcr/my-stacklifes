@@ -5,16 +5,16 @@
         <div class="col-sm-10">
             <!-- Main component for a primary marketing message or call to action -->
             <div class="jumbotron">
-                <h4 class="article-title">{{.data.Article.Title}}</h4>
+                <h4 class="article-title">{{.data.Info.Title}}</h4>
                 <div class="article-tag ">
                     <span>
-                        作者-<strong>{{.data.Article.Author}}</strong>;
-                        分类-<a href="/category/{{.data.Category.Id}}"><strong>{{.data.Category.Name}}</strong></a>;
-                        时间-<strong>{{UnixToTime .data.Article.PublicTime}}</strong>
+                        作者-<strong>{{.data.Info.Author}}</strong>;
+                        分类-<a href="/category/{{.data.Info.Cid}}"><strong>{{.data.Info.CategoryName}}</strong></a>;
+                        时间-<strong>{{.data.Info.PublicTime}}</strong>
                     </span>
                 </div>
                 <div class="article-content">
-                    {{.data.Article.ContentHtml}}
+                    {{.data.Info.ContentHtml}}
                 </div>
                 <div class="text-center">
                     <div class="pagination pagination-inverse">

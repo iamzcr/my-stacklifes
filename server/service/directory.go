@@ -206,7 +206,7 @@ func (s *DirectoryService) GetDirectoryMap(ctx *gin.Context) map[int]string {
 	return directoryMap
 }
 
-func (s *DirectoryService) GetListByCid(cid string) ([]models.DirectoryMine, []int, error) {
+func (s *DirectoryService) GetListByCid(cid int) ([]models.DirectoryMine, []int, error) {
 
 	var (
 		directorys   []models.DirectoryMine

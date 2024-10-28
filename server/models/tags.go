@@ -28,7 +28,11 @@ type TagsInfo struct {
 	StatusName  string `json:"status_name"`
 	TypeName    string `json:"type_name"`
 }
-
+type TagsMine struct {
+	Id   int    `json:"id"`
+	Name string `json:"name"`
+	Mark string `json:"mark"`
+}
 type TagsListRes struct {
 	Total int64      `json:"total"`
 	List  []TagsInfo `json:"list"`

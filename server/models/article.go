@@ -122,12 +122,6 @@ type ArticleFieldReq struct {
 	IsRecom *int `json:"is_recom" form:"is_recom" binding:"omitempty"`
 }
 
-type FrontArticleDetail struct {
-	ArticleInfo
-	PreArticle  ArticleInfo //上一篇
-	NextArticle ArticleInfo //下一篇
-}
-
 type FrontArticleListRes struct {
 	Total int64         `json:"total"`
 	List  []ArticleInfo `json:"list"`
@@ -141,11 +135,20 @@ type FrontArticleListReq struct {
 	PageInfo
 }
 
-type FrontDirectoryArticleListRes struct {
-	DirectoryArticleList []DirectoryArticle `json:"list"`
+type DirectoryArticleListRes struct {
+	ArticleList          []ArticleInfo      `json:"article_list"`
+	DirectoryArticleList []DirectoryArticle `json:"directory_article_list"`
 }
+
 type DirectoryArticle struct {
-	DirectoryID   int           `json:"d_id"`
-	DirectoryName string        `json:"d_name"`
-	Articles      []ArticleInfo `json:"d_articles"`
+	DirectoryID   int           `json:"directory_id"`
+	DirectoryName string        `json:"directory_name"`
+	ArticleList   []ArticleInfo `json:"article_list"`
+}
+
+type ArticleDetail struct {
+	Info                 ArticleInfo        `json:"info"`
+	DirectoryArticleList []DirectoryArticle `json:"directory_article_list"`
+	PreArticle           ArticleInfo        `json:"pre_article"`  //上一篇
+	NextArticle          ArticleInfo        `json:"next_article"` //下一篇
 }
