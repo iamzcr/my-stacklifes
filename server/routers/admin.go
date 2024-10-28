@@ -127,8 +127,8 @@ func AdminRoutersInit(r *gin.Engine) {
 
 		adminRouter.GET("/admin/list", adminsHandler.List)
 		adminRouter.GET("/admin/list_json", adminsHandler.ListJson)
-		adminRouter.GET("/lang/edit/:id", adminsHandler.Edit)
-		adminRouter.GET("/lang/add", adminsHandler.Edit)
+		adminRouter.GET("/admin/edit/:id", adminsHandler.Edit)
+		adminRouter.GET("/admin/add", adminsHandler.Edit)
 		adminRouter.GET("/admin/info/:id", adminsHandler.Info)
 		adminRouter.POST("/admin/create", adminsHandler.Create)
 		adminRouter.POST("/admin/delete", adminsHandler.Delete)
