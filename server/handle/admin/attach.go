@@ -20,7 +20,7 @@ func NewAttachHandler() *AttachHandler {
 
 func (h *AttachHandler) List(ctx *gin.Context) {
 	var appGin = app.Gin{C: ctx}
-	
+
 	appGin.SuccessAdminHtml("", "attach/list.html")
 }
 

@@ -42,10 +42,6 @@
 <script>
     function submitForm() {
         let url = "/admin/attach/create"
-        let id = $("#id").data("id");
-        if (id) {
-            url = "/admin/attach/update"
-        }
         let formData = $("#inputForm").serialize();
         $.ajax({
             type: "POST",
