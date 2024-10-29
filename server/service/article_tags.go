@@ -36,10 +36,9 @@ func (s *ArticleTagsService) GetTidsByAid(aid int) ([]int, error) {
 	var (
 		acticleTags []models.ArticleTags
 		tids        []int
-		count       int64
 	)
-	s.dbClient.MysqlClient.Where("aid=?", aid).Debug().Select("tid").Find(&acticleTags).Count(&count)
-	if count > 0 {
+	s.dbClient.MysqlClient.Where("aid=?", aid).Debug().Select("tid").Find(&acticleTags)
+	if len(acticleTags) > 0 {
 		for _, acticleTag := range acticleTags {
 			tids = append(tids, acticleTag.Tid)
 		}
