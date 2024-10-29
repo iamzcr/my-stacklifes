@@ -119,7 +119,7 @@
 {{template "public/footer" .}}
 <script src="/static/vendors/toastui/toastui.js"></script>
 <script>
-    $('#public_time').datetimepicker({format: 'YYYY-MM-DD hh:mm:ss'});
+    $('#public_time').datetimepicker({ pickDate: false});
     var hiddenTextarea = document.querySelector('#hiddenTextarea');
     var editor = new toastui.Editor({
         el: document.querySelector('#editor'),
