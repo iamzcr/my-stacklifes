@@ -32,18 +32,19 @@ func (s *ArticleTagsService) GetAidList(tid int) ([]int, error) {
 	return aids, nil
 }
 
-func (s *ArticleTagsService) GetTidsByAid(aid int) ([]int, error) {
+func (s *ArticleTagsService) GetTidByAid(aid int) ([]int, error) {
 	var (
-		acticleTags []models.ArticleTags
-		tids        []int
+		articleTagsInfo []models.ArticleTagsInfo
+		tid             []int
 	)
-	s.dbClient.MysqlClient.Where("aid=?", aid).Debug().Select("tid").Find(&acticleTags)
-	if len(acticleTags) > 0 {
-		for _, acticleTag := range acticleTags {
-			tids = append(tids, acticleTag.Tid)
+	s.dbClient.MysqlClient.Model(&models.ArticleTags{}).Where("aid=?", aid).
+		Debug().Select("tid").Find(&articleTagsInfo)
+	if len(articleTagsInfo) > 0 {
+		for _, articleTag := range articleTagsInfo {
+			tid = append(tid, articleTag.Tid)
 		}
 	}
-	return tids, nil
+	return tid, nil
 
 }
 

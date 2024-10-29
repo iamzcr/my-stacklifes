@@ -2,7 +2,6 @@ package service
 
 import (
 	"errors"
-	"fmt"
 	"github.com/gin-gonic/gin"
 	"html/template"
 	"my-stacklifes/database/mysql"
@@ -183,7 +182,7 @@ func (s *ArticleService) GetInfo(ctx *gin.Context, id string) (interface{}, erro
 	if article.Id <= 0 {
 		return nil, errors.New("Article error")
 	}
-	tid, _ := NewArticleTagsService().GetTidsByAid(article.Id)
+	tid, _ := NewArticleTagsService().GetTidByAid(article.Id)
 
 	articleInfo.Id = article.Id
 	articleInfo.IsHot = article.IsHot
@@ -198,7 +197,6 @@ func (s *ArticleService) GetInfo(ctx *gin.Context, id string) (interface{}, erro
 	articleInfo.Content = article.Content
 	articleInfo.PublicTime = tools.UnixToTime(article.PublicTime)
 	articleInfo.PublicTime = tools.UnixToTime(article.PublicTime)
-	fmt.Println(articleInfo.Tid)
 	return articleInfo, nil
 }
 

@@ -10,3 +10,9 @@ type ArticleTags struct {
 func (ug *ArticleTags) TableName() string {
 	return "sl_article_tags"
 }
+
+type ArticleTagsInfo struct {
+	Id  int `json:"id" form:"id"`
+	Aid int `json:"aid" form:"aid"`
+	Tid int `json:"tid" form:"tid"`
+}
