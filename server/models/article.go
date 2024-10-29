@@ -80,11 +80,10 @@ type ArticleUpdateReq struct {
 }
 
 type ArticleCreateReq struct {
-	Tid   []int  `json:"tid" form:"tid"`
-	Title string `json:"title" form:"title"  binding:"required"`
-	Cid   int    `json:"cid" form:"cid"  binding:"required"`
-	Did   int    `json:"did" form:"did"`
-
+	Title      string `json:"title" form:"title"  binding:"required"`
+	Cid        int    `json:"cid" form:"cid"  binding:"required"`
+	Did        int    `json:"did" form:"did"`
+	Tid        []int  `json:"tid" form:"tid"`
 	Author     string `json:"author" form:"author"`
 	Desc       string `json:"desc" form:"desc"`
 	Keyword    string `json:"keyword" form:"keyword"`
