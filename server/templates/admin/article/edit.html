@@ -20,54 +20,7 @@
                             <form id="inputForm" data-parsley-validate class="form-horizontal form-label-left">
                                 <input type="hidden" name="id" id="id" value="{{if .data.Info}}{{.data.Info.Id}}{{end}}"
                                        data-id="{{if .data.Info}}{{.data.Info.Id}}{{end}}">
-                                <div class="form-inline">
-
-                                    <div class="form-group">
-                                        <label for="ex3" class="col-form-label">Email address</label>
-                                        <input type="text" id="ex3" class="form-control" placeholder=" ">
-                                    </div>
-                                    <div class="form-group">
-                                        <label for="ex4" class="col-form-label">Email address</label>
-                                        <input type="email" id="ex4" class="form-control" placeholder=" ">
-                                    </div>
-                                    <div class="form-check">
-                                        <label>
-                                            <input type="checkbox"> Remember me
-                                        </label>
-                                    </div>
-                                </div>
-                                <div class="form-inline">
-
-                                    <div class="form-group">
-                                        <label for="ex3" class="col-form-label">Email address</label>
-                                        <input type="text" id="ex3" class="form-control" placeholder=" ">
-                                    </div>
-                                    <div class="form-group">
-                                        <label for="ex4" class="col-form-label">Email address</label>
-                                        <input type="email" id="ex4" class="form-control" placeholder=" ">
-                                    </div>
-                                    <div class="form-check">
-                                        <label>
-                                            <input type="checkbox"> Remember me
-                                        </label>
-                                    </div>
-                                </div>
-                                <div class="form-inline">
-
-                                    <div class="form-group">
-                                        <label for="ex3" class="col-form-label">Email address</label>
-                                        <input type="text" id="ex3" class="form-control" placeholder=" ">
-                                    </div>
-                                    <div class="form-group">
-                                        <label for="ex4" class="col-form-label">Email address</label>
-                                        <input type="email" id="ex4" class="form-control" placeholder=" ">
-                                    </div>
-                                    <div class="form-check">
-                                        <label>
-                                            <input type="checkbox"> Remember me
-                                        </label>
-                                    </div>
-                                </div>
+                                <div class="form-group">
                                 <div class="form-inline">
                                     <div class="form-group">
                                     <label for="title" class="mr-2">标题</label>
@@ -98,6 +51,8 @@
                                         </select>
                                     </div>
                                 </div>
+                                </div>
+                                <div class="form-group">
                                 <div class="form-inline">
                                     <div class="form-group">
                                         <label class="col-form-label col-md-1 label-align">seo关键词</label>
@@ -106,11 +61,14 @@
                                         </div>
                                     </div>
                                 </div>
+                                </div>
+                                <div class="form-group">
                                 <div class="form-inline">
                                     <label class="col-form-label col-md-1 label-align">seo描述</label>
                                     <div class="col-md-2">
                                         <textarea type="text" name="desc" class="form-control" >{{if .data.Info}}{{.data.Info.Desc}}{{end}}</textarea>
                                     </div>
+                                </div>
                                 </div>
                                 <div class="item form-group">
                                     <label class="col-form-label col-md-1 label-align">标签</label>
