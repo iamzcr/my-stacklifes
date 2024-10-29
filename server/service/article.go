@@ -8,7 +8,6 @@ import (
 	"my-stacklifes/database/mysql"
 	"my-stacklifes/models"
 	"my-stacklifes/pkg/tools"
-	"my-stacklifes/pkg/tools/time_parse"
 	"time"
 )
 
@@ -78,7 +77,7 @@ func (s *ArticleService) GetList(ctx *gin.Context, req models.ArticleReq) (inter
 
 func (s *ArticleService) Create(ctx *gin.Context, req models.ArticleCreateReq) (interface{}, error) {
 	var article models.Article
-	publicTime, _ := time_parse.CSTLayoutStringToUnix(req.PublicTime)
+	publicTime, _ := tools.TimeToUnix(req.PublicTime)
 	article.Title = req.Title
 	article.Cid = req.Cid
 	article.Did = req.Did
@@ -95,7 +94,6 @@ func (s *ArticleService) Create(ctx *gin.Context, req models.ArticleCreateReq) (
 	article.CreateTime = time.Now().Unix()
 	article.UpdateTime = time.Now().Unix()
 	article.Month = req.Month
-	fmt.Println(article)
 	//开启事务
 	tx := s.dbClient.MysqlClient.Begin()
 	err := tx.Create(&article).Error
@@ -105,11 +103,14 @@ func (s *ArticleService) Create(ctx *gin.Context, req models.ArticleCreateReq) (
 	}
 	//绑定标签
 	if len(req.Tid) > 0 {
+		fmt.Println(req.Tid)
 		for _, tagId := range req.Tid {
-			var articleTag models.ArticleTags
-			articleTag.Tid = tagId
-			articleTag.Aid = article.Id
-			err = tx.Create(&articleTag).Error
+			fmt.Println(tagId)
+			fmt.Println(article.Id)
+			var articleTags models.ArticleTags
+			articleTags.Tid = tagId
+			articleTags.Aid = article.Id
+			err = tx.Create(&articleTags).Error
 			if err != nil {
 				tx.Rollback()
 				return nil, err
