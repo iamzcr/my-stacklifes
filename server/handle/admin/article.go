@@ -1,6 +1,7 @@
 package admin
 
 import (
+	"fmt"
 	"github.com/gin-gonic/gin"
 	"my-stacklifes/models"
 	"my-stacklifes/pkg/app"
@@ -84,7 +85,9 @@ func (h *ArticleHandler) Create(ctx *gin.Context) {
 		appGin.Error(exception.ERROR, err.Error(), nil)
 		return
 	}
+
 	tidStr := ctx.PostForm("tid")
+	fmt.Println(tidStr)
 	if tidStr != "" {
 		tidParts := strings.Split(tidStr, ",")
 		for _, part := range tidParts {
