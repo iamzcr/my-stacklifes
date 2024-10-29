@@ -21,54 +21,38 @@
                                 <input type="hidden" name="id" id="id" value="{{if .data.Info}}{{.data.Info.Id}}{{end}}"
                                        data-id="{{if .data.Info}}{{.data.Info.Id}}{{end}}">
                                 <div class="form-group">
-                                <div class="form-inline">
-                                    <div class="form-group">
-                                    <label for="title" class="mr-2">标题</label>
-                                    <input type="text" class="form-control mr-2"  id="title" name="title" required="required" value="{{if .data.Info}}{{.data.Info.Title}}{{end}}">
-                                    </div>
-                                    <div class="form-group">
-                                    <label for="weight" class="mr-2">排序</label>
-                                    <input type="email" class="form-control mr-2" name="weight"  id="weight" required="required" value="{{if .data.Info}}{{.data.Info.Weight}}{{end}}">
-                                    </div>
-                                    <div class="form-group">
-                                    <label for="cid" class="mr-2">分类</label>
-                                    <select class="form-control mr-2" name="cid" id="cid">
+                                    <label class="col-sm-1 control-label" for="title">标题</label>
+                                    <input type="text"  id="title" name="title" required="required" value="{{if .data.Info}}{{.data.Info.Title}}{{end}}">
+                                    <label for="weight" class="control-label">排序</label>
+                                    <input type="email"  name="weight"  id="weight" required="required" value="{{if .data.Info}}{{.data.Info.Weight}}{{end}}">
+                                    <label for="cid" class="control-label">分类</label>
+                                    <select  name="cid" id="cid">
                                         {{range $index, $value := .data.CategoryList}}
                                         <option value="{{$value.Id}}" {{if and (not (eq $.data.Info nil)) (eq $value.Id $.data.Info.Cid)}}selected{{end}}>
                                             {{$value.Name}}
                                         </option>
                                         {{end}}
                                     </select>
-                                    </div>
-                                    <div class="form-group">
-                                        <label for="did" class="mr-2">分类目录</label>
-                                        <select class="form-control mr-2" name="did" id="did">
-                                            {{range $index, $value := .data.DirectoryList}}
-                                            <option value="{{$value.Id}}" {{if and (not (eq $.data.Info nil)) (eq $value.Id $.data.Info.Did)}}selected{{end}}>
-                                                {{$value.Name}}
-                                            </option>
-                                            {{end}}
-                                        </select>
-                                    </div>
+                                    <label for="did" class="control-label">分类目录</label>
+                                    <select  name="did" id="did">
+                                        {{range $index, $value := .data.DirectoryList}}
+                                        <option value="{{$value.Id}}" {{if and (not (eq $.data.Info nil)) (eq $value.Id $.data.Info.Did)}}selected{{end}}>
+                                            {{$value.Name}}
+                                        </option>
+                                        {{end}}
+                                    </select>
                                 </div>
-                                </div>
-                                <div class="form-group">
                                 <div class="form-inline">
-                                    <div class="form-group">
-                                        <label class="col-form-label col-md-1 label-align">seo关键词</label>
-                                        <div class="col-md-2">
-                                            <input type="text" name="keyword" class="form-control" value="{{if .data.Info}}{{.data.Info.Keyword}}{{end}}">
-                                        </div>
+                                    <label class="col-form-label col-md-1 label-align">seo关键词</label>
+                                    <div class="col-md-2">
+                                        <input type="text" name="keyword" class="form-control" value="{{if .data.Info}}{{.data.Info.Keyword}}{{end}}">
                                     </div>
                                 </div>
-                                </div>
-                                <div class="form-group">
                                 <div class="form-inline">
                                     <label class="col-form-label col-md-1 label-align">seo描述</label>
                                     <div class="col-md-2">
                                         <textarea type="text" name="desc" class="form-control" >{{if .data.Info}}{{.data.Info.Desc}}{{end}}</textarea>
                                     </div>
-                                </div>
                                 </div>
                                 <div class="item form-group">
                                     <label class="col-form-label col-md-1 label-align">标签</label>
