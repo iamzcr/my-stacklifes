@@ -41,6 +41,36 @@
                                         </option>
                                         {{end}}
                                     </select>
+                                    <label for="is_new" class="control-label">最新</label>
+                                    <select  name="is_new" id="is_new">
+                                        {{range $index, $value := .data.StatusMap}}
+                                        <option value="{{$index}}" {{if and (not (eq $.data.Info nil)) (eq $index $.data.Info.IsNew)}}selected{{end}}>
+                                            {{$value}}
+                                        </option>
+                                        {{end}}
+                                    </select>
+                                    <label for="is_hot" class="control-label">热门</label>
+                                    <select  name="is_hot" id="is_hot">
+                                        {{range $index, $value := .data.StatusMap}}
+                                        <option value="{{$index}}" {{if and (not (eq $.data.Info nil)) (eq $index $.data.Info.IsHot)}}selected{{end}}>
+                                            {{$value}}
+                                        </option>
+                                        {{end}}
+                                    </select>
+                                    <label for="is_recom" class="control-label">推荐</label>
+                                    <select  name="is_recom" id="is_recom">
+                                        {{range $index, $value := .data.StatusMap}}
+                                        <option value="{{$index}}" {{if and (not (eq $.data.Info nil)) (eq $index $.data.Info.IsRecom)}}selected{{end}}>
+                                            {{$value}}
+                                        </option>
+                                        {{end}}
+                                    </select>
+                                </div>
+                                <div class="item form-group">
+                                    <label class="col-form-label col-md-1 label-align">发布时间</label>
+                                    <div class="col-md-2">
+                                        <input type="text" name="public_time"  id="public_time" class="form-control " value="{{if .data.Info}}{{.data.Info.PublicTime}}{{end}}">
+                                    </div>
                                 </div>
                                 <div class="item form-group">
                                 <label class="col-form-label col-md-1 label-align">seo关键词</label>
@@ -60,7 +90,6 @@
                                         <div class="form-check form-check-inline">
                                             <input class="form-check-input" type="checkbox" id="inlineCheckbox1"
                                                    value="option1">
-                                            
                                             <label class="form-check-label" for="inlineCheckbox1">1</label>
                                         </div>
                                     </div>
@@ -90,6 +119,7 @@
 {{template "public/footer" .}}
 <script src="/static/vendors/toastui/toastui.js"></script>
 <script>
+    $('#public_time').datetimepicker({format: 'YYYY-MM-DD hh:mm:ss'});
     var hiddenTextarea = document.querySelector('#hiddenTextarea');
     var editor = new toastui.Editor({
         el: document.querySelector('#editor'),

@@ -14,8 +14,8 @@ func NewCommonService() *CommonService {
 
 func (s *CommonService) GetStatusMap(ctx *gin.Context) (statusMap map[int]string) {
 	statusMap = map[int]string{
-		constant.StatusTrue:  constant.StatusTrueName,
 		constant.StatusFalse: constant.StatusFalseName,
+		constant.StatusTrue:  constant.StatusTrueName,
 	}
 	return
 }
