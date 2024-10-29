@@ -25,7 +25,6 @@
                                     <input type="text" class="form-control mr-2"  id="title" name="title" required="required" value="{{if .data.Info}}{{.data.Info.Title}}{{end}}">
                                     <label for="weight" class="mr-2">排序</label>
                                     <input type="email" class="form-control mr-2" name="weight"  id="weight" required="required" value="{{if .data.Info}}{{.data.Info.Weight}}{{end}}">
-
                                     <label for="cid" class="mr-2">分类</label>
                                     <select class="form-control mr-2" name="cid" id="cid">
                                         {{range $index, $value := .data.CategoryList}}
@@ -43,6 +42,18 @@
                                         {{end}}
                                     </select>
                                 </div>
+                                <div class="form-inline">
+                                    <label class="col-form-label col-md-1 label-align">seo关键词</label>
+                                    <div class="col-md-2">
+                                        <input type="text" name="keyword" class="form-control" value="{{if .data.Info}}{{.data.Info.Keyword}}{{end}}">
+                                    </div>
+                                </div>
+                                <div class="form-inline">
+                                    <label class="col-form-label col-md-1 label-align">seo描述</label>
+                                    <div class="col-md-2">
+                                        <textarea type="text" name="desc" class="form-control" >{{if .data.Info}}{{.data.Info.Desc}}{{end}}</textarea>
+                                    </div>
+                                </div>
                                 <div class="item form-group">
                                     <label class="col-form-label col-md-1 label-align">标签</label>
                                     <div class="col-md-2">
@@ -51,18 +62,6 @@
                                                    value="option1">
                                             <label class="form-check-label" for="inlineCheckbox1">1</label>
                                         </div>
-                                    </div>
-                                </div>
-                                <div class="item form-group">
-                                    <label class="col-form-label col-md-1 label-align">seo关键词</label>
-                                    <div class="col-md-2">
-                                        <input type="text" name="keyword" class="form-control" value="{{if .data.Info}}{{.data.Info.Keyword}}{{end}}">
-                                    </div>
-                                </div>
-                                <div class="item form-group">
-                                    <label class="col-form-label col-md-1 label-align">seo描述</label>
-                                    <div class="col-md-2">
-                                        <textarea type="text" name="desc" class="form-control" >{{if .data.Info}}{{.data.Info.Desc}}{{end}}</textarea>
                                     </div>
                                 </div>
                                 <div class="item form-group">
