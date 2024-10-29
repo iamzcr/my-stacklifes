@@ -105,19 +105,17 @@ func (s *ArticleService) Create(ctx *gin.Context, req models.ArticleCreateReq) (
 }
 
 func (s *ArticleService) Update(ctx *gin.Context, req models.ArticleUpdateReq) (interface{}, error) {
-	var (
-		article models.Article
-		count   int64
-	)
+	var article models.Article
 	db := s.dbClient.MysqlClient
-	err := db.Where("id=?", req.Id).First(&article).Count(&count).Error
+	err := db.Where("id=?", req.Id).First(&article).Error
 	if err != nil {
 		return nil, err
 	}
-	if count <= 0 {
+	if article.Id <= 0 {
 		return nil, errors.New("文章不存在了")
 	}
 	publicTime, _ := time_parse.CSTLayoutStringToUnix(req.PublicTime)
+
 	article.Title = req.Title
 	article.Cid = req.Cid
 	article.Did = req.Did
