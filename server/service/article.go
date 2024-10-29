@@ -143,7 +143,7 @@ func (s *ArticleService) GetInfo(ctx *gin.Context, id string) (interface{}, erro
 	var article models.Article
 	var articleInfo models.ArticleInfo
 
-	res := s.dbClient.MysqlClient.Where("id=?", id).First(&article)
+	res := s.dbClient.MysqlClient.Debug().Where("id=?", id).First(&article)
 	if res.Error != nil {
 		return nil, res.Error
 	}

@@ -1,6 +1,7 @@
 package admin
 
 import (
+	"fmt"
 	"github.com/gin-gonic/gin"
 	"my-stacklifes/models"
 	"my-stacklifes/pkg/app"
@@ -46,6 +47,7 @@ func (h *ArticleHandler) Edit(ctx *gin.Context) {
 	var appGin = app.Gin{C: ctx}
 	id := ctx.Param("id")
 	info, _ := h.srv.GetInfo(ctx, id)
+	fmt.Println()
 	categoryList, _ := service.NewCategoryService().GetCategoryList(ctx)
 	directoryList, _ := service.NewDirectoryService().GetDirectoryList(ctx)
 	tagsList, _ := service.NewTagsService().GetAllTagsList(ctx)

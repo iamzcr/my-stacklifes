@@ -27,8 +27,7 @@
                                     <label for="cid" class="control-label">分类</label>
                                     <select name="cid" id="cid">
                                         {{range $index, $value := .data.CategoryList}}
-                                        <option value="{{$value.Id}}" {{if and (not (eq $.data.Info nil)) (eq $value.Id
-                                                $.data.Info.Cid)}}selected{{end}}>
+                                        <option value="{{$value.Id}}" {{if and (not (eq $.data.Info nil)) (eq $value.Id $.data.Info.Cid)}}selected{{end}}>
                                             {{$value.Name}}
                                         </option>
                                         {{end}}

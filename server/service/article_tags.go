@@ -38,7 +38,7 @@ func (s *ArticleTagsService) GetTidsByAid(aid int) ([]int, error) {
 		tids        []int
 		count       int64
 	)
-	s.dbClient.MysqlClient.Where("aid=?", aid).Select("tid").Find(&acticleTags).Count(&count)
+	s.dbClient.MysqlClient.Where("aid=?", aid).Debug().Select("tid").Find(&acticleTags).Count(&count)
 	if count <= 0 {
 		return nil, errors.New("没有文章绑定该标签")
 	}
