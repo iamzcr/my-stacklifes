@@ -1,14 +1,11 @@
 package admin
 
 import (
-	"fmt"
 	"github.com/gin-gonic/gin"
 	"my-stacklifes/models"
 	"my-stacklifes/pkg/app"
 	"my-stacklifes/pkg/exception"
 	"my-stacklifes/service"
-	"strconv"
-	"strings"
 )
 
 type ArticleHandler struct {
@@ -84,20 +81,6 @@ func (h *ArticleHandler) Create(ctx *gin.Context) {
 	if err := ctx.Bind(&reqCreate); err != nil {
 		appGin.Error(exception.ERROR, err.Error(), nil)
 		return
-	}
-
-	tidStr := ctx.PostForm("tid")
-	fmt.Println(tidStr)
-	if tidStr != "" {
-		tidParts := strings.Split(tidStr, ",")
-		for _, part := range tidParts {
-			tid, err := strconv.Atoi(strings.TrimSpace(part))
-			if err != nil {
-				appGin.Error(exception.ERROR, err.Error(), nil)
-				return
-			}
-			reqCreate.Tid = append(reqCreate.Tid, tid)
-		}
 	}
 	// 在这里处理 Markdown 内容的逻辑
 	markdownContent := ctx.PostForm("content")

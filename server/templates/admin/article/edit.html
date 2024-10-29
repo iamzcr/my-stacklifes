@@ -153,12 +153,6 @@
     function submitForm() {
         // 阻止表单默认提交行为
         event.preventDefault();
-        // 获取选中的复选框的值
-        let tidValues = [];
-        $("input[name='tid[]']:checked").each(function () {
-            tidValues.push($(this).val());
-        });
-
         // 获取编辑器中的 Markdown 内容
         var markdownContent = editor.getMarkdown();
         let url = "/admin/article/create"
@@ -169,7 +163,7 @@
         $.ajax({
             type: "POST",
             url: url, // 提交表单数据的URL
-            data: $("#inputForm").serialize() + "&content=" + markdownContent + "&tid=" + tidValues.join(','),
+            data: $("#inputForm").serialize() + "&content=" + markdownContent,
             success: function (response) {
                 if (response.code !== 200) {
                     Swal.fire({icon: "error", text: response.message});

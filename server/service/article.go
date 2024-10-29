@@ -2,6 +2,7 @@ package service
 
 import (
 	"errors"
+	"fmt"
 	"github.com/gin-gonic/gin"
 	"html/template"
 	"my-stacklifes/database/mysql"
@@ -101,6 +102,7 @@ func (s *ArticleService) Create(ctx *gin.Context, req models.ArticleCreateReq) (
 		return nil, err
 	}
 	//绑定标签
+	fmt.Println(req.Tid)
 	if len(req.Tid) > 0 {
 		for _, tagId := range req.Tid {
 			var articleTags models.ArticleTags
