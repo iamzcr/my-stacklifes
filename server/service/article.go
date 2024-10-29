@@ -115,6 +115,7 @@ func (s *ArticleService) Update(ctx *gin.Context, req models.ArticleUpdateReq) (
 		return nil, errors.New("文章不存在了")
 	}
 	publicTime, _ := time_parse.CSTLayoutStringToUnix(req.PublicTime)
+	fmt.Println(publicTime)
 
 	article.Title = req.Title
 	article.Cid = req.Cid
@@ -130,6 +131,7 @@ func (s *ArticleService) Update(ctx *gin.Context, req models.ArticleUpdateReq) (
 	article.Weight = req.Weight
 	article.PublicTime = publicTime
 	article.UpdateTime = time.Now().Unix()
+	fmt.Println(article)
 	err = db.Save(&article).Error
 	if err != nil {
 		return nil, err
@@ -141,7 +143,7 @@ func (s *ArticleService) GetInfo(ctx *gin.Context, id string) (interface{}, erro
 	var article models.Article
 	var articleInfo models.ArticleInfo
 
-	res := s.dbClient.MysqlClient.Debug().Where("id=?", id).First(&article)
+	res := s.dbClient.MysqlClient.Where("id=?", id).First(&article)
 	if res.Error != nil {
 		return nil, res.Error
 	}
@@ -149,7 +151,6 @@ func (s *ArticleService) GetInfo(ctx *gin.Context, id string) (interface{}, erro
 		return nil, errors.New("Article error")
 	}
 	tid, _ := NewArticleTagsService().GetTidsByAid(article.Id)
-	fmt.Println(tid)
 
 	articleInfo.Id = article.Id
 	articleInfo.IsHot = article.IsHot
