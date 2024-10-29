@@ -23,7 +23,6 @@ type TagsInfo struct {
 	Author      string `json:"author"`
 	Weight      int    `json:"weight"`
 	Status      int    `json:"status"`
-	CheckBox    string `json:"check_box"`
 	CreateTime  string `json:"create_time"`
 	UpdatedTime string `json:"updated_time"`
 	StatusName  string `json:"status_name"`
