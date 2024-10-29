@@ -2,7 +2,6 @@ package service
 
 import (
 	"errors"
-	"fmt"
 	"github.com/gin-gonic/gin"
 	"html/template"
 	"my-stacklifes/database/mysql"
@@ -77,10 +76,8 @@ func (s *ArticleService) GetList(ctx *gin.Context, req models.ArticleReq) (inter
 }
 
 func (s *ArticleService) Create(ctx *gin.Context, req models.ArticleCreateReq) (interface{}, error) {
-	fmt.Println(req)
 	var article models.Article
 	publicTime, _ := time_parse.CSTLayoutStringToUnix(req.PublicTime)
-
 	article.Title = req.Title
 	article.Cid = req.Cid
 	article.Did = req.Did
@@ -97,25 +94,39 @@ func (s *ArticleService) Create(ctx *gin.Context, req models.ArticleCreateReq) (
 	article.CreateTime = time.Now().Unix()
 	article.UpdateTime = time.Now().Unix()
 	article.Month = req.Month
-	err := s.dbClient.MysqlClient.Create(&article).Error
+	//开启事务
+	tx := s.dbClient.MysqlClient.Begin()
+	err := tx.Create(&article).Error
 	if err != nil {
+		tx.Rollback()
 		return nil, err
 	}
+	//绑定标签
+	for _, tagId := range req.Tid {
+		var articleTag models.ArticleTags
+		articleTag.Tid = tagId
+		articleTag.Aid = article.Id
+		err = tx.Create(&articleTag).Error
+		if err != nil {
+			tx.Rollback()
+			return nil, err
+		}
+	}
+	tx.Commit()
 	return article.Id, nil
 }
 
 func (s *ArticleService) Update(ctx *gin.Context, req models.ArticleUpdateReq) (interface{}, error) {
 	var article models.Article
-	db := s.dbClient.MysqlClient
-	err := db.Where("id=?", req.Id).First(&article).Error
+	err := s.dbClient.MysqlClient.Where("id=?", req.Id).First(&article).Error
 	if err != nil {
 		return nil, err
 	}
 	if article.Id <= 0 {
 		return nil, errors.New("文章不存在了")
 	}
+	tx := s.dbClient.MysqlClient.Begin()
 	publicTime, _ := tools.TimeToUnix(req.PublicTime)
-	fmt.Println(publicTime)
 
 	article.Title = req.Title
 	article.Cid = req.Cid
@@ -131,10 +142,11 @@ func (s *ArticleService) Update(ctx *gin.Context, req models.ArticleUpdateReq) (
 	article.Weight = req.Weight
 	article.PublicTime = publicTime
 	article.UpdateTime = time.Now().Unix()
-	err = db.Save(&article).Error
+	err = tx.Save(&article).Error
 	if err != nil {
 		return nil, err
 	}
+
 	return article.Id, nil
 }
 
