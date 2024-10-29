@@ -79,6 +79,15 @@ func UnixToTime(timestamp int64) string {
 	t := time.Unix(timestamp, 0)
 	return t.Format("2006-01-02 15:04:05")
 }
+func TimeToUnix(timeStr string) (int64, error) {
+	t, err := time.Parse(time.RFC3339, timeStr)
+	if err != nil {
+		return 0, err
+	}
+	// 转换为Unix时间戳
+	timestamp := t.Unix()
+	return timestamp, nil
+}
 
 // 中文转拼音
 func ConvertToPinyin(text string) string {
