@@ -1,6 +1,7 @@
 package admin
 
 import (
+	"fmt"
 	"github.com/gin-gonic/gin"
 	"my-stacklifes/models"
 	"my-stacklifes/pkg/app"
@@ -58,6 +59,9 @@ func (h *ArticleHandler) Edit(ctx *gin.Context) {
 		TagsList:      tagsList,
 		StatusMap:     statusMap,
 	}
+	// 打印接口的类型和数据
+	fmt.Printf("Type: %T\n", assignList.Info)
+	fmt.Printf("Value: %+v\n", assignList.Info)
 	appGin.SuccessAdminHtml(assignList, "article/edit.html")
 }
 
