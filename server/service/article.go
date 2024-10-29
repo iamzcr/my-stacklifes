@@ -115,7 +115,7 @@ func (s *ArticleService) Update(ctx *gin.Context, req models.ArticleUpdateReq) (
 		return nil, errors.New("文章不存在了")
 	}
 	publicTime, _ := tools.TimeToUnix(req.PublicTime)
-	fmt.Println(req.publicTime)
+	fmt.Println(publicTime)
 
 	article.Title = req.Title
 	article.Cid = req.Cid
