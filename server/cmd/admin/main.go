@@ -4,10 +4,12 @@ import (
 	"fmt"
 	"github.com/gin-gonic/gin"
 	"github.com/spf13/pflag"
+	"html/template"
 	"my-stacklifes/conf"
 	"my-stacklifes/database/mysql"
 	"my-stacklifes/database/redis"
 	"my-stacklifes/loggers"
+	"my-stacklifes/pkg/tools"
 	"my-stacklifes/routers"
 )
 
@@ -37,6 +39,11 @@ func main() {
 	loggers.Info("http server startup")
 
 	r := gin.Default()
+
+	r.SetFuncMap(template.FuncMap{
+		"Contains": tools.CheckOutSlice,
+	})
+
 	r.LoadHTMLGlob("../../templates/admin/**/*")
 	r.Static("/static", "../../templates/assets/admin")
 	//路由分组抽离成文件，注册路由

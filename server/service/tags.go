@@ -179,7 +179,7 @@ func (s *TagsService) GetTagsList(ctx *gin.Context) (interface{}, error) {
 	return tagsList, nil
 }
 
-func (s *TagsService) GetAllTagsList(ctx *gin.Context) (interface{}, error) {
+func (s *TagsService) GetAllTagsList(ctx *gin.Context) ([]models.TagsInfo, error) {
 	var (
 		tagsList []models.TagsInfo
 		tags     models.Tags

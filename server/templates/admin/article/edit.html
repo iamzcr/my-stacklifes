@@ -31,8 +31,7 @@
                                     <label for="cid" class="control-label">分类</label>
                                     <select name="cid" id="cid">
                                         {{range $index, $value := .data.CategoryList}}
-                                        <option value="{{$value.Id}}" {{if and (not (eq $.data.Info nil)) (eq $value.Id
-                                                $.data.Info.Cid)}}selected{{end}}>
+                                        <option value="{{$value.Id}}" {{if and (not (eq $.data.Info nil)) (eq $value.Id $.data.Info.Cid)}}selected{{end}}>
                                             {{$value.Name}}
                                         </option>
                                         {{end}}
@@ -40,8 +39,7 @@
                                     <label for="did" class="control-label">分类目录</label>
                                     <select name="did" id="did">
                                         {{range $index, $value := .data.DirectoryList}}
-                                        <option value="{{$value.Id}}" {{if and (not (eq $.data.Info nil)) (eq $value.Id
-                                                $.data.Info.Did)}}selected{{end}}>
+                                        <option value="{{$value.Id}}" {{if and (not (eq $.data.Info nil)) (eq $value.Id $.data.Info.Did)}}selected{{end}}>
                                             {{$value.Name}}
                                         </option>
                                         {{end}}
@@ -49,8 +47,7 @@
                                     <label for="is_new" class="control-label">最新</label>
                                     <select name="is_new" id="is_new">
                                         {{range $index, $value := .data.StatusMap}}
-                                        <option value="{{$index}}" {{if and (not (eq $.data.Info nil)) (eq $index
-                                                $.data.Info.IsNew)}}selected{{end}}>
+                                        <option value="{{$index}}" {{if and (not (eq $.data.Info nil)) (eq $index $.data.Info.IsNew)}}selected{{end}}>
                                             {{$value}}
                                         </option>
                                         {{end}}
@@ -58,8 +55,7 @@
                                     <label for="is_hot" class="control-label">热门</label>
                                     <select name="is_hot" id="is_hot">
                                         {{range $index, $value := .data.StatusMap}}
-                                        <option value="{{$index}}" {{if and (not (eq $.data.Info nil)) (eq $index
-                                                $.data.Info.IsHot)}}selected{{end}}>
+                                        <option value="{{$index}}" {{if and (not (eq $.data.Info nil)) (eq $index $.data.Info.IsHot)}}selected{{end}}>
                                             {{$value}}
                                         </option>
                                         {{end}}
@@ -67,8 +63,7 @@
                                     <label for="is_recom" class="control-label">推荐</label>
                                     <select name="is_recom" id="is_recom">
                                         {{range $index, $value := .data.StatusMap}}
-                                        <option value="{{$index}}" {{if and (not (eq $.data.Info nil)) (eq $index
-                                                $.data.Info.IsRecom)}}selected{{end}}>
+                                        <option value="{{$index}}" {{if and (not (eq $.data.Info nil)) (eq $index $.data.Info.IsRecom)}}selected{{end}}>
                                             {{$value}}
                                         </option>
                                         {{end}}
@@ -77,15 +72,13 @@
                                 <div class="item form-group">
                                     <label class="col-form-label col-md-1 label-align">发布时间</label>
                                     <div class="col-md-2">
-                                        <input type="text" name="public_time" id="public_time" class="form-control "
-                                               value="{{if .data.Info}}{{.data.Info.PublicTime}}{{end}}">
+                                        <input type="text" name="public_time" id="public_time" class="form-control " value="{{if .data.Info}}{{.data.Info.PublicTime}}{{end}}">
                                     </div>
                                 </div>
                                 <div class="item form-group">
                                     <label class="col-form-label col-md-1 label-align">seo关键词</label>
                                     <div class="col-md-2">
-                                        <input type="text" name="keyword" class="form-control"
-                                               value="{{if .data.Info}}{{.data.Info.Keyword}}{{end}}">
+                                        <input type="text" name="keyword" class="form-control" value="{{if .data.Info}}{{.data.Info.Keyword}}{{end}}">
                                     </div>
                                 </div>
                                 <div class="item form-group">
@@ -99,8 +92,7 @@
                                     <div class="col-md-2" style="padding-top: 8px">
                                         {{range $index, $value := .data.TagsList}}
                                         <div class="form-check form-check-inline">
-                                            <input class="form-check-input" type="checkbox" name="tid[]"
-                                                   value="{{$value.Id}}">
+                                            <input class="form-check-input" type="checkbox" name="tid[]" value="{{$value.Id}}" {{ if Contains .data.Info.Tid $value.Id }} checked {{end}}>
                                             <label class="form-check-label">{{$value.Name}}</label>
                                         </div>
                                         {{end}}

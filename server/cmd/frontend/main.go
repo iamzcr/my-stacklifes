@@ -37,7 +37,6 @@ func main() {
 	r.SetFuncMap(template.FuncMap{
 		"UnixToTime": tools.UnixToTime,
 	})
-
 	r.LoadHTMLGlob("../../templates/frontend/*")
 
 	r.Static("/static", "../../templates/assets/frontend")
