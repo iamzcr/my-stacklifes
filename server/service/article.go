@@ -8,6 +8,7 @@ import (
 	"my-stacklifes/database/mysql"
 	"my-stacklifes/models"
 	"my-stacklifes/pkg/tools"
+	"my-stacklifes/pkg/tools/time_parse"
 	"time"
 )
 
@@ -78,6 +79,8 @@ func (s *ArticleService) GetList(ctx *gin.Context, req models.ArticleReq) (inter
 func (s *ArticleService) Create(ctx *gin.Context, req models.ArticleCreateReq) (interface{}, error) {
 	fmt.Println(req)
 	var article models.Article
+	publicTime, _ := time_parse.CSTLayoutStringToUnix(req.PublicTime)
+
 	article.Title = req.Title
 	article.Cid = req.Cid
 	article.Did = req.Did
@@ -90,8 +93,9 @@ func (s *ArticleService) Create(ctx *gin.Context, req models.ArticleCreateReq) (
 	article.IsNew = req.IsNew
 	article.IsRecom = req.IsRecom
 	article.Weight = req.Weight
-	article.PublicTime = req.PublicTime
+	article.PublicTime = publicTime
 	article.CreateTime = time.Now().Unix()
+	article.UpdateTime = time.Now().Unix()
 	article.Month = req.Month
 	err := s.dbClient.MysqlClient.Create(&article).Error
 	if err != nil {
@@ -113,7 +117,7 @@ func (s *ArticleService) Update(ctx *gin.Context, req models.ArticleUpdateReq) (
 	if count <= 0 {
 		return nil, errors.New("文章不存在了")
 	}
-
+	publicTime, _ := time_parse.CSTLayoutStringToUnix(req.PublicTime)
 	article.Title = req.Title
 	article.Cid = req.Cid
 	article.Did = req.Did
@@ -126,7 +130,7 @@ func (s *ArticleService) Update(ctx *gin.Context, req models.ArticleUpdateReq) (
 	article.IsNew = req.IsNew
 	article.IsRecom = req.IsRecom
 	article.Weight = req.Weight
-	article.PublicTime = req.PublicTime
+	article.PublicTime = publicTime
 	article.UpdateTime = time.Now().Unix()
 	err = db.Save(&article).Error
 	if err != nil {
@@ -146,12 +150,17 @@ func (s *ArticleService) GetInfo(ctx *gin.Context, id string) (interface{}, erro
 	if article.Id == 0 {
 		return nil, errors.New("Article error")
 	}
+	tid, err := NewArticleTagsService().GetTidsByAid(article.Id)
+	if err != nil {
+		return nil, err
+	}
 	articleInfo.Id = article.Id
 	articleInfo.IsHot = article.IsHot
 	articleInfo.IsNew = article.IsNew
 	articleInfo.IsRecom = article.IsRecom
 	articleInfo.Cid = article.Cid
 	articleInfo.Did = article.Did
+	articleInfo.Tid = tid
 	articleInfo.Title = article.Title
 	articleInfo.Weight = article.Weight
 	articleInfo.Author = article.Author

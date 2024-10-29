@@ -17,9 +17,9 @@ type Article struct {
 	IsNew      int    `json:"is_new" gorm:"column:is_new;type:int(11);default:0"`
 	IsRecom    int    `json:"is_recom" gorm:"column:is_recom;type:int(11);default:0"`
 	Weight     int    `json:"weight" gorm:"column:weight;type:int(11);default:0"`
+	Status     int    `json:"status" gorm:"column:status;type:int(11);default:1"`
 	PublicTime int64  `json:"public_time"`
 	Month      string `json:"month"`
-	Status     int    `json:"status" gorm:"column:status;type:int(11);default:1"`
 	CommonField
 }
 
@@ -32,6 +32,7 @@ type ArticleInfo struct {
 	Title         string        `json:"title"`
 	Cid           int           `json:"cid" `
 	Did           int           `json:"did" `
+	Tid           []int         `json:"tid" `
 	Author        string        `json:"author"`
 	Desc          string        `json:"desc"`
 	Keyword       string        `json:"keyword" `
@@ -73,9 +74,9 @@ type ArticleUpdateReq struct {
 	IsNew      int    `json:"is_new"   form:"is_new,default=0"`
 	IsRecom    int    `json:"is_recom" form:"is_recom,default=0"`
 	Weight     int    `json:"weight"  form:"is_recom,default=0"`
-	PublicTime int64  `json:"public_time" form:"public_time"`
-	Month      string `json:"month" form:"month"`
 	Status     int    `json:"status"   form:"status,default=0"`
+	PublicTime string `json:"public_time" form:"public_time"  binding:"required"`
+	Month      string `json:"month" form:"month"`
 }
 
 type ArticleCreateReq struct {
@@ -93,9 +94,9 @@ type ArticleCreateReq struct {
 	IsNew      int    `json:"is_new"   form:"is_new,default=0"`
 	IsRecom    int    `json:"is_recom" form:"is_recom,default=0"`
 	Weight     int    `json:"weight"  form:"is_recom,default=0"`
-	PublicTime int64  `json:"public_time" form:"public_time"`
-	Month      string `json:"month" form:"month"`
 	Status     int    `json:"status"   form:"status,default=0"`
+	PublicTime string `json:"public_time" form:"public_time"  binding:"required"`
+	Month      string `json:"month" form:"month"`
 }
 
 type ArticleListRes struct {

@@ -18,16 +18,12 @@
                     <div class="x_panel">
                         <div class="x_content">
                             <form id="inputForm" data-parsley-validate class="form-horizontal form-label-left">
-                                <input type="hidden" name="id" id="id" value="{{if .data.Info}}{{.data.Info.Id}}{{end}}"
-                                       data-id="{{if .data.Info}}{{.data.Info.Id}}{{end}}">
+                                <input type="hidden" name="id" id="id" value="{{if .data.Info}}{{.data.Info.Id}}{{end}}" data-id="{{if .data.Info}}{{.data.Info.Id}}{{end}}">
                                 <div class="form-group">
-                                    <label class="control-label col-form-label col-md-1 label-align"
-                                           for="title">标题</label>
-                                    <input type="text" id="title" name="title" required="required"
-                                           value="{{if .data.Info}}{{.data.Info.Title}}{{end}}">
+                                    <label class="control-label col-form-label col-md-1 label-align" for="title">标题</label>
+                                    <input type="text" id="title" name="title" required="required" value="{{if .data.Info}}{{.data.Info.Title}}{{end}}">
                                     <label for="weight" class="control-label">排序</label>
-                                    <input type="email" name="weight" id="weight" required="required"
-                                           value="{{if .data.Info}}{{.data.Info.Weight}}{{end}}">
+                                    <input type="email" name="weight" id="weight" required="required" value="{{if .data.Info}}{{.data.Info.Weight}}{{end}}">
                                     <label for="cid" class="control-label">分类</label>
                                     <select name="cid" id="cid">
                                         {{range $index, $value := .data.CategoryList}}
@@ -73,15 +69,13 @@
                                 <div class="item form-group">
                                     <label class="col-form-label col-md-1 label-align">发布时间</label>
                                     <div class="col-md-2">
-                                        <input type="text" name="public_time" id="public_time" class="form-control "
-                                               value="{{if .data.Info}}{{.data.Info.PublicTime}}{{end}}">
+                                        <input type="text" name="public_time" id="public_time" class="form-control " value="{{if .data.Info}}{{.data.Info.PublicTime}}{{end}}">
                                     </div>
                                 </div>
                                 <div class="item form-group">
                                     <label class="col-form-label col-md-1 label-align">seo关键词</label>
                                     <div class="col-md-2">
-                                        <input type="text" name="keyword" class="form-control"
-                                               value="{{if .data.Info}}{{.data.Info.Keyword}}{{end}}">
+                                        <input type="text" name="keyword" class="form-control" value="{{if .data.Info}}{{.data.Info.Keyword}}{{end}}">
                                     </div>
                                 </div>
                                 <div class="item form-group">
@@ -126,7 +120,7 @@
 {{template "public/footer" .}}
 <script src="/static/vendors/toastui/toastui.js"></script>
 <script>
-    $('#public_time').datetimepicker({ format: 'YYYY-MM-DD hh:mm:ss'});
+    $('#public_time').datetimepicker({ format: 'YYYY-MM-DD'});
     var hiddenTextarea = document.querySelector('#hiddenTextarea');
     var editor = new toastui.Editor({
         el: document.querySelector('#editor'),
