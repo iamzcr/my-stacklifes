@@ -81,7 +81,7 @@ func (h *ArticleHandler) Create(ctx *gin.Context) {
 		reqCreate models.ArticleCreateReq
 	)
 
-	if err := ctx.ShouldBindJSON(&reqCreate); err != nil {
+	if err := ctx.Bind(&reqCreate); err != nil {
 		appGin.Error(exception.ERROR, err.Error(), nil)
 		return
 	}
