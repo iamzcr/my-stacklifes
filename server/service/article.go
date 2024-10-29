@@ -150,10 +150,8 @@ func (s *ArticleService) GetInfo(ctx *gin.Context, id string) (interface{}, erro
 	if article.Id == 0 {
 		return nil, errors.New("Article error")
 	}
-	tid, err := NewArticleTagsService().GetTidsByAid(article.Id)
-	if err != nil {
-		return nil, err
-	}
+	tid, _ := NewArticleTagsService().GetTidsByAid(article.Id)
+
 	articleInfo.Id = article.Id
 	articleInfo.IsHot = article.IsHot
 	articleInfo.IsNew = article.IsNew

@@ -39,13 +39,13 @@ func (s *ArticleTagsService) GetTidsByAid(aid int) ([]int, error) {
 		count       int64
 	)
 	s.dbClient.MysqlClient.Where("aid=?", aid).Debug().Select("tid").Find(&acticleTags).Count(&count)
-	if count <= 0 {
-		return nil, errors.New("没有文章绑定该标签")
-	}
-	for _, acticleTag := range acticleTags {
-		tids = append(tids, acticleTag.Tid)
+	if count > 0 {
+		for _, acticleTag := range acticleTags {
+			tids = append(tids, acticleTag.Tid)
+		}
 	}
 	return tids, nil
+
 }
 
 func (s *ArticleTagsService) GetTidList() ([]int, error) {
