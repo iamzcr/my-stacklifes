@@ -2,7 +2,6 @@ package service
 
 import (
 	"errors"
-	"fmt"
 	"github.com/gin-gonic/gin"
 	"html/template"
 	"my-stacklifes/database/mysql"
@@ -102,7 +101,6 @@ func (s *ArticleService) Create(ctx *gin.Context, req models.ArticleCreateReq) (
 		return nil, err
 	}
 	//绑定标签
-	fmt.Println(req.Tid)
 	if len(req.Tid) > 0 {
 		for _, tagId := range req.Tid {
 			var articleTags models.ArticleTags
@@ -147,9 +145,29 @@ func (s *ArticleService) Update(ctx *gin.Context, req models.ArticleUpdateReq) (
 	article.UpdateTime = time.Now().Unix()
 	err = tx.Save(&article).Error
 	if err != nil {
+		tx.Rollback()
 		return nil, err
 	}
-
+	// 保存标签关联表，先删除后增加
+	var articleTags []models.ArticleTags
+	err = tx.Where("aid=?", article.Id).Delete(&articleTags).Error
+	if err != nil {
+		tx.Rollback()
+		return nil, err
+	}
+	if len(req.Tid) > 0 {
+		for _, tagId := range req.Tid {
+			var articleTag models.ArticleTags
+			articleTag.Tid = tagId
+			articleTag.Aid = article.Id
+			err = tx.Create(&articleTag).Error
+			if err != nil {
+				tx.Rollback()
+				return nil, err
+			}
+		}
+	}
+	tx.Commit()
 	return article.Id, nil
 }
 
