@@ -179,6 +179,21 @@ func (s *TagsService) GetTagsList(ctx *gin.Context) (interface{}, error) {
 	return tagsList, nil
 }
 
+func (s *TagsService) GetAllTagsList(ctx *gin.Context) (interface{}, error) {
+	var (
+		tagsList []models.TagsInfo
+		tags     models.Tags
+	)
+	db := s.dbClient.MysqlClient
+	err := db.Model(&tags).Where("status = ?", constant.StatusTrue).
+		Select("id,mark,name").
+		Order("id DESC").Find(&tagsList).Error
+	if err != nil {
+		return nil, err
+	}
+	return tagsList, nil
+}
+
 func (s *TagsService) GetTagsMap(ctx *gin.Context) map[int]string {
 	var tagsMap = make(map[int]string)
 	var tagsList []models.TagsMine
