@@ -2,7 +2,7 @@ package tools
 
 import "time"
 
-func CheckOutSlice(slice []string, item string) bool {
+func CheckOutSlice(slice []int, item int) bool {
 	for _, s := range slice {
 		if s == item {
 			return true
