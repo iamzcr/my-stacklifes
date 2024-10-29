@@ -102,14 +102,16 @@ func (s *ArticleService) Create(ctx *gin.Context, req models.ArticleCreateReq) (
 		return nil, err
 	}
 	//绑定标签
-	for _, tagId := range req.Tid {
-		var articleTag models.ArticleTags
-		articleTag.Tid = tagId
-		articleTag.Aid = article.Id
-		err = tx.Create(&articleTag).Error
-		if err != nil {
-			tx.Rollback()
-			return nil, err
+	if len(req.Tid) > 0 {
+		for _, tagId := range req.Tid {
+			var articleTag models.ArticleTags
+			articleTag.Tid = tagId
+			articleTag.Aid = article.Id
+			err = tx.Create(&articleTag).Error
+			if err != nil {
+				tx.Rollback()
+				return nil, err
+			}
 		}
 	}
 	tx.Commit()
