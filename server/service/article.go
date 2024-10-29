@@ -114,8 +114,8 @@ func (s *ArticleService) Update(ctx *gin.Context, req models.ArticleUpdateReq) (
 	if article.Id <= 0 {
 		return nil, errors.New("文章不存在了")
 	}
-	fmt.Println(req.PublicTime)
 	publicTime, _ := tools.TimeToUnix(req.PublicTime)
+	fmt.Println(req.publicTime)
 
 	article.Title = req.Title
 	article.Cid = req.Cid
@@ -131,7 +131,6 @@ func (s *ArticleService) Update(ctx *gin.Context, req models.ArticleUpdateReq) (
 	article.Weight = req.Weight
 	article.PublicTime = publicTime
 	article.UpdateTime = time.Now().Unix()
-	fmt.Println(article)
 	err = db.Save(&article).Error
 	if err != nil {
 		return nil, err

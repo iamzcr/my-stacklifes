@@ -80,7 +80,8 @@ func UnixToTime(timestamp int64) string {
 	return t.Format("2006-01-02 15:04:05")
 }
 func TimeToUnix(timeStr string) (int64, error) {
-	t, err := time.Parse(time.RFC3339, timeStr)
+	layout := "2006-01-02"
+	t, err := time.Parse(layout, timeStr)
 	if err != nil {
 		return 0, err
 	}
