@@ -2,6 +2,7 @@ package service
 
 import (
 	"errors"
+	"fmt"
 	"github.com/gin-gonic/gin"
 	"html/template"
 	"my-stacklifes/database/mysql"
@@ -94,6 +95,7 @@ func (s *ArticleService) Create(ctx *gin.Context, req models.ArticleCreateReq) (
 	article.CreateTime = time.Now().Unix()
 	article.UpdateTime = time.Now().Unix()
 	article.Month = req.Month
+	fmt.Println(article)
 	//开启事务
 	tx := s.dbClient.MysqlClient.Begin()
 	err := tx.Create(&article).Error
