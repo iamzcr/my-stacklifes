@@ -22,7 +22,7 @@ func (s *ArticleTagsService) GetAidList(tid int) ([]int, error) {
 		aids        []int
 		count       int64
 	)
-	s.dbClient.MysqlClient.Where("tid=?", tid).Select("aid,tid").Find(&acticleTags).Count(&count)
+	s.dbClient.MysqlClient.Where("tid=?", tid).Select("aid").Find(&acticleTags).Count(&count)
 	if count <= 0 {
 		return nil, errors.New("没有文章绑定该标签")
 	}
@@ -30,6 +30,22 @@ func (s *ArticleTagsService) GetAidList(tid int) ([]int, error) {
 		aids = append(aids, acticleTag.Aid)
 	}
 	return aids, nil
+}
+
+func (s *ArticleTagsService) GetTidsByAid(aid int) ([]int, error) {
+	var (
+		acticleTags []models.ArticleTags
+		tids        []int
+		count       int64
+	)
+	s.dbClient.MysqlClient.Where("aid=?", aid).Select("tid").Find(&acticleTags).Count(&count)
+	if count <= 0 {
+		return nil, errors.New("没有文章绑定该标签")
+	}
+	for _, acticleTag := range acticleTags {
+		tids = append(tids, acticleTag.Tid)
+	}
+	return tids, nil
 }
 
 func (s *ArticleTagsService) GetTidList() ([]int, error) {

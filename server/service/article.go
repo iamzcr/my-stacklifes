@@ -137,16 +137,27 @@ func (s *ArticleService) Update(ctx *gin.Context, req models.ArticleUpdateReq) (
 
 func (s *ArticleService) GetInfo(ctx *gin.Context, id string) (interface{}, error) {
 	var article models.Article
+	var articleInfo models.ArticleInfo
 
-	res := s.dbClient.MysqlClient.Where("id=?", id).Find(&article)
+	res := s.dbClient.MysqlClient.Where("id=?", id).First(&article)
 	if res.Error != nil {
 		return nil, res.Error
 	}
 	if article.Id == 0 {
 		return nil, errors.New("Article error")
 	}
-
-	return article, nil
+	articleInfo.Id = article.Id
+	articleInfo.IsHot = article.IsHot
+	articleInfo.IsNew = article.IsNew
+	articleInfo.IsRecom = article.IsRecom
+	articleInfo.Cid = article.Cid
+	articleInfo.Did = article.Did
+	articleInfo.Title = article.Title
+	articleInfo.Weight = article.Weight
+	articleInfo.Author = article.Author
+	articleInfo.PublicTime = tools.UnixToTime(article.PublicTime)
+	articleInfo.PublicTime = tools.UnixToTime(article.PublicTime)
+	return articleInfo, nil
 }
 
 func (s *ArticleService) GetArticleTitle(id int) string {
@@ -214,9 +225,7 @@ func (s *ArticleService) GetFrontTagsArticleList(ctx *gin.Context, tid int) (int
 
 // 分类下的文章列表
 func (s *ArticleService) GetFrontCategoryArticleList(ctx *gin.Context, cid int) (interface{}, error) {
-	var (
-		articles []models.Article
-	)
+	var articles []models.Article
 	list, err := s.GetDirectoryArticleList(ctx, cid)
 	if err != nil {
 		return nil, err
