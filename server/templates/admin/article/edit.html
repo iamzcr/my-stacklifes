@@ -21,12 +21,10 @@
                                 <input type="hidden" name="id" id="id" value="{{if .data.Info}}{{.data.Info.Id}}{{end}}"
                                        data-id="{{if .data.Info}}{{.data.Info.Id}}{{end}}">
                                 <div class="form-group">
-                                    <label class="control-label" for="title">标题</label>
+                                    <label class="control-label col-form-label col-md-1 label-align" for="title">标题</label>
                                     <input type="text"  id="title" name="title" required="required" value="{{if .data.Info}}{{.data.Info.Title}}{{end}}">
-
                                     <label for="weight" class="control-label">排序</label>
                                     <input type="email"  name="weight"  id="weight" required="required" value="{{if .data.Info}}{{.data.Info.Weight}}{{end}}">
-
                                     <label for="cid" class="control-label">分类</label>
                                     <select  name="cid" id="cid">
                                         {{range $index, $value := .data.CategoryList}}
@@ -35,7 +33,6 @@
                                         </option>
                                         {{end}}
                                     </select>
-
                                     <label for="did" class="control-label">分类目录</label>
                                     <select  name="did" id="did">
                                         {{range $index, $value := .data.DirectoryList}}
@@ -46,19 +43,25 @@
                                     </select>
                                 </div>
                                 <div class="form-group">
-                                    <label class="control-label">seo关键词</label>
-                                    <input type="text" name="keyword" class="form-control" value="{{if .data.Info}}{{.data.Info.Keyword}}{{end}}">
+                                <label class="col-form-label col-md-1 label-align">seo关键词</label>
+                                    <div class="col-md-2">
+                                        <input type="text" name="keyword" class="form-control" value="{{if .data.Info}}{{.data.Info.Keyword}}{{end}}">
+                                    </div>
                                 </div>
-                                <div class="form-group">
-                                    <label class="control-label">seo描述</label>
-                                    <textarea type="text" name="desc" class="form-control" >{{if .data.Info}}{{.data.Info.Desc}}{{end}}</textarea>
+                                <div class="form-inline">
+                                    <label class="col-form-label col-md-1 label-align">seo描述</label>
+                                    <div class="col-md-2">
+                                        <textarea type="text" name="desc" class="form-control" >{{if .data.Info}}{{.data.Info.Desc}}{{end}}</textarea>
+                                    </div>
                                 </div>
-                                <div class="form-group">
-                                    <label class="control-label">标签</label>
-                                    <div class="form-check form-check-inline">
-                                        <input class="form-check-input" type="checkbox" id="inlineCheckbox1"
-                                               value="option1">
-                                        <label class="form-check-label" for="inlineCheckbox1">1</label>
+                                <div class="item form-group">
+                                    <label class="col-form-label col-md-1 label-align">标签</label>
+                                    <div class="col-md-2">
+                                        <div class="form-check form-check-inline">
+                                            <input class="form-check-input" type="checkbox" id="inlineCheckbox1"
+                                                   value="option1">
+                                            <label class="form-check-label" for="inlineCheckbox1">1</label>
+                                        </div>
                                     </div>
                                 </div>
                                 <div class="item form-group">
