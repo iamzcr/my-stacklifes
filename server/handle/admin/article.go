@@ -1,6 +1,7 @@
 package admin
 
 import (
+	"fmt"
 	"github.com/gin-gonic/gin"
 	"my-stacklifes/models"
 	"my-stacklifes/pkg/app"
@@ -82,6 +83,7 @@ func (h *ArticleHandler) Create(ctx *gin.Context) {
 		appGin.Error(exception.ERROR, err.Error(), nil)
 		return
 	}
+	fmt.Println(reqCreate.Tid)
 	// 在这里处理 Markdown 内容的逻辑
 	markdownContent := ctx.PostForm("content")
 	reqCreate.Content = markdownContent
