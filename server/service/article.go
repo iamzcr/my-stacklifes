@@ -102,6 +102,8 @@ func (s *ArticleService) Create(ctx *gin.Context, req models.ArticleCreateReq) (
 		return nil, err
 	}
 	//绑定标签
+	fmt.Println(req.Tid)
+	fmt.Println(len(req.Tid))
 	if len(req.Tid) > 0 {
 		fmt.Println(req.Tid)
 		for _, tagId := range req.Tid {
