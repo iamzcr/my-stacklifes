@@ -91,7 +91,7 @@ func (h *ArticleHandler) Create(ctx *gin.Context) {
 	if tidStr != "" {
 		tidParts := strings.Split(tidStr, ",")
 		for _, part := range tidParts {
-			tid, err := strconv.Atoi(part)
+			tid, err := strconv.Atoi(strings.TrimSpace(part))
 			if err != nil {
 				appGin.Error(exception.ERROR, err.Error(), nil)
 				return
