@@ -163,6 +163,7 @@ func (s *ArticleService) GetInfo(ctx *gin.Context, id string) (interface{}, erro
 	articleInfo.Title = article.Title
 	articleInfo.Weight = article.Weight
 	articleInfo.Author = article.Author
+	articleInfo.Content = article.Content
 	articleInfo.PublicTime = tools.UnixToTime(article.PublicTime)
 	articleInfo.PublicTime = tools.UnixToTime(article.PublicTime)
 	return articleInfo, nil
