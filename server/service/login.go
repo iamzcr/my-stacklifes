@@ -34,6 +34,7 @@ func (s *LoginService) LoginCheck(ctx *gin.Context, req models.LoginReq) (interf
 	if err != nil {
 		return nil, errors.New("admin error")
 	}
+
 	return models.TokenInfo{
 		Authentication: Authentication,
 		Username:       admin.Username,

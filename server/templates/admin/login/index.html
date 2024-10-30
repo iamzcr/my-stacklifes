@@ -25,16 +25,17 @@
     <div class="login_wrapper">
         <div class="animate form login_form">
             <section class="login_content">
-                <form>
+                <form id="inputForm">
                     <h1>Login Form</h1>
                     <div>
-                        <input type="text" class="form-control" placeholder="Username" required=""/>
+                        <input type="text" name="username" class="form-control" placeholder="Username" required=""/>
                     </div>
                     <div>
-                        <input type="password" class="form-control" placeholder="Password" required=""/>
+                        <input type="password" name="password" class="form-control" placeholder="Password" required=""/>
                     </div>
                     <div>
-                        <a class="btn btn-primary submit" href="../index/index.html">登 录</a>
+                        <button type="button" class="btn btn-primary" onclick="submitForm()">登 录
+                        </button>
                     </div>
                     <div class="clearfix"></div>
                 </form>
@@ -42,6 +43,70 @@
         </div>
     </div>
 </div>
+<!-- jQuery -->
+<script src="/static/vendors/jquery/dist/jquery.min.js"></script>
+<!-- Bootstrap -->
+<script src="/static/vendors/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
+<!-- FastClick -->
+<script src="/static/vendors/fastclick/lib/fastclick.js"></script>
+<!-- NProgress -->
+<script src="/static/vendors/nprogress/nprogress.js"></script>
+<!-- Chart.js -->
+<script src="/static/vendors/Chart.js/dist/Chart.min.js"></script>
+<!-- gauge.js -->
+<script src="/static/vendors/gauge.js/dist/gauge.min.js"></script>
+<!-- bootstrap-progressbar -->
+<script src="/static/vendors/bootstrap-progressbar/bootstrap-progressbar.min.js"></script>
+<!-- iCheck -->
+<script src="/static/vendors/iCheck/icheck.min.js"></script>
+<!-- Skycons -->
+<script src="/static/vendors/skycons/skycons.js"></script>
+<!-- Flot -->
+<script src="/static/vendors/Flot/jquery.flot.js"></script>
+<script src="/static/vendors/Flot/jquery.flot.pie.js"></script>
+<script src="/static/vendors/Flot/jquery.flot.time.js"></script>
+<script src="/static/vendors/Flot/jquery.flot.stack.js"></script>
+<script src="/static/vendors/Flot/jquery.flot.resize.js"></script>
+<!-- Flot plugins -->
+<script src="/static/vendors/flot.orderbars/js/jquery.flot.orderBars.js"></script>
+<script src="/static/vendors/flot-spline/js/jquery.flot.spline.min.js"></script>
+<script src="/static/vendors/flot.curvedlines/curvedLines.js"></script>
+<!-- DateJS -->
+<script src="/static/vendors/DateJS/build/date.js"></script>
+<!-- JQVMap -->
+<script src="/static/vendors/jqvmap/dist/jquery.vmap.js"></script>
+<script src="/static/vendors/jqvmap/dist/maps/jquery.vmap.world.js"></script>
+<script src="/static/vendors/jqvmap/examples/js/jquery.vmap.sampledata.js"></script>
+<!-- bootstrap-daterangepicker -->
+<script src="/static/vendors/moment/min/moment.min.js"></script>
+<script src="/static/vendors/jszip/dist/jszip.min.js"></script>
+<script src="/static/vendors/pdfmake/build/pdfmake.min.js"></script>
+<script src="/static/vendors/pdfmake/build/vfs_fonts.js"></script>
+<script src="/static/vendors/sweetalert/sweetalert2.js"></script>
+<!-- Custom Theme Scripts -->
+<script src="/static/build/js/custom.min.js"></script>
+<script src="/static/js/common.js"></script>
+<script>
+    function submitForm() {
+        let url = "/admin/auth"
+        let formData = $("#inputForm").serialize();
+        $.ajax({
+            type: "POST",
+            url: url, // 提交表单数据的URL
+            data: formData,
+            success: function (response) {
+                if (response.code !== 200) {
+                    Swal.fire({icon: "error", text: response.message});
+                } else {
+                    window.location.replace("/admin/admin/list");
+                }
+            },
+            error: function (error) {
+                Swal.fire({icon: "error", text: 'error'});
+            }
+        });
+    }
+</script>
 </body>
 </html>
 {{end}}
