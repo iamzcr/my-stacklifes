@@ -74,6 +74,7 @@ type TokenInfo struct {
 	Authentication string `json:"authentication"`
 	Username       string `json:"username"`
 }
+
 type LoginReq struct {
 	Username string `json:"username"  form:"username" `
 	Password string `json:"password" form:"password"`

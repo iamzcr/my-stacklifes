@@ -13,16 +13,19 @@ func CreateToken(username string) (string, error) {
 	// 设置令牌的声明（payload）
 	claims := token.Claims.(jwt.MapClaims)
 	claims["username"] = username
+
 	// 使用密钥对令牌进行签名
 	authentication, err := token.SignedString([]byte(conf.AppConfig.Common.LoginJwtSecret))
 	if err != nil {
 		return "", err
 	}
+
 	// 将令牌存储到 Redis 中，并设置过期时间
 	err = redis.RedisClient.Set("login:"+username, authentication, conf.AppConfig.Common.LoginJwtExpiration).Err()
 	if err != nil {
 		return "", err
 	}
+
 	return authentication, nil
 }
 
