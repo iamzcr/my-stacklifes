@@ -90,7 +90,7 @@
                 "data": "status",
                 "render": function (data, type, row) {
                     console.log(row.status)
-                    var checked = row.status === 1 ? '' : 'checked';
+                    var checked = row.status === 1 ? 'checked' : '';
                     return '<input type="checkbox" class="status-switch" data-id="' + row.id + '" ' + checked + '>';
                 }
             },
