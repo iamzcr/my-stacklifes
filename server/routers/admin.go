@@ -34,6 +34,7 @@ func AdminRoutersInit(r *gin.Engine) {
 	adminRouter := r.Group("admin") //可以加载这个后面
 	adminRouter.GET("/login", loginHandler.Login)
 	adminRouter.POST("/auth", loginHandler.Auth)
+	adminRouter.POST("/authSession", loginHandler.Auth)
 	adminRouter.Use(func(c *gin.Context) {
 		c.Set("menuTree", middleware.GetMenuTree(c))
 		c.Next()

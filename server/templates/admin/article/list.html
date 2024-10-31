@@ -86,7 +86,12 @@
             {"data": "hot_name"},
             {"data": "new_name"},
             {"data": "recom_name"},
-            {"data": "status_name"},
+            {
+                "data": "status_name",
+                "render": function(data, type, row) {
+                    return '<input type="checkbox" class="status-switch" data-id="' + row.id + '">';
+                }
+            },
             {"data": "author"},
             {"data": "weight"},
             {"data": "public_time"},

@@ -42,3 +42,21 @@ func (h *LoginHandler) Auth(ctx *gin.Context) {
 	}
 	appGin.Success(res)
 }
+
+func (h *LoginHandler) AuthSession(ctx *gin.Context) {
+	var (
+		appGin   = app.Gin{C: ctx}
+		reqLogin models.LoginReq
+	)
+	err := ctx.ShouldBind(&reqLogin)
+	if err != nil {
+		appGin.Error(exception.ERROR, err.Error(), nil)
+		return
+	}
+	res, err := h.srv.LoginCheck(ctx, reqLogin)
+	if err != nil {
+		appGin.Error(exception.ERROR, err.Error(), nil)
+		return
+	}
+	appGin.Success(res)
+}
