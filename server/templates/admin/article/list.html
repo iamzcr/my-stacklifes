@@ -89,7 +89,7 @@
             {
                 "data": "status",
                 "render": function (data, type, row) {
-                    console.log(data)
+                    console.log(row.status)
                     var checked = row.status === 1 ? 'checked' : '';
                     return '<input type="checkbox" class="status-switch" data-id="' + row.id + '" ' + checked + '>';
                 }
@@ -124,7 +124,6 @@
     $('#list-table').on('switchChange.bootstrapSwitch', '.status-switch', function (event, state) {
         var row = listTable.row($(this).closest('tr')).data();
         var status = state ? 1 : 0;
-        console.log(status)
         row.status = status;
 
         // You can make an AJAX call here to update the status on the server
