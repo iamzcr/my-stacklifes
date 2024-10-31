@@ -87,9 +87,11 @@
             {"data": "new_name"},
             {"data": "recom_name"},
             {
-                "data": "status_name",
-                "render": function(data, type, row) {
-                    return '<input type="checkbox" class="status-switch" data-id="' + row.id + '">';
+                "data": "status",
+                "render": function (data, type, row) {
+                    console.log(data)
+                    var checked = data === 1 ? 'checked' : '';
+                    return '<input type="checkbox" class="status-switch" data-id="' + row.id + '" ' + checked + '>';
                 }
             },
             {"data": "author"},
@@ -115,13 +117,14 @@
         $(this).removeClass('info');
     });
 
-    $('#list-table').on('draw.dt', function() {
+    $('#list-table').on('draw.dt', function () {
         $('.status-switch').bootstrapSwitch();
     });
 
-    $('#list-table').on('switchChange.bootstrapSwitch', '.status-switch', function(event, state) {
+    $('#list-table').on('switchChange.bootstrapSwitch', '.status-switch', function (event, state) {
         var row = table.row($(this).closest('tr')).data();
-        var status = state ? 'Active' : 'Inactive';
+        var status = state ? 1 : 0;
+        console.log(status)
         row.status = status;
 
         // You can make an AJAX call here to update the status on the server
