@@ -122,7 +122,7 @@
     });
 
     $('#list-table').on('switchChange.bootstrapSwitch', '.status-switch', function (event, state) {
-        var row = table.row($(this).closest('tr')).data();
+        var row = listTable.row($(this).closest('tr')).data();
         var status = state ? 1 : 0;
         console.log(status)
         row.status = status;
