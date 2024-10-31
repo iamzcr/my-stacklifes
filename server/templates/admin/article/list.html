@@ -89,7 +89,7 @@
             {
                 "data": "status",
                 "render": function (data, type, row) {
-                    console.log(row.status)
+                    console.log(row)
                     var checked = row.status === 1 ? 'checked' : '';
                     return '<input type="checkbox" class="status-switch" data-id="' + row.id + '" ' + checked + '>';
                 }
