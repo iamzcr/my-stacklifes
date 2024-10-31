@@ -114,6 +114,27 @@
     }).on('mouseout', 'tbody tr', function () {
         $(this).removeClass('info');
     });
+
+    $('#list-table').on('draw.dt', function() {
+        $('.status-switch').bootstrapSwitch();
+    });
+
+    $('#list-table').on('switchChange.bootstrapSwitch', '.status-switch', function(event, state) {
+        var row = table.row($(this).closest('tr')).data();
+        var status = state ? 'Active' : 'Inactive';
+        row.status = status;
+
+        // You can make an AJAX call here to update the status on the server
+        // Example AJAX call:
+        // $.ajax({
+        //     url: 'update_status.php',
+        //     method: 'POST',
+        //     data: { id: row.id, status: status },
+        //     success: function(response) {
+        //         // Handle the response from the server
+        //     }
+        // });
+    });
 </script>
 </body>
 </html>
