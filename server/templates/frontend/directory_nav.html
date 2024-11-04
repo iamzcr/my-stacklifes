@@ -16,7 +16,7 @@
                         <div class="card-body">
                             <ul>
                             {{range $a_index,$a_value := $value.ArticleList}}
-                                <a href="/article/detail/{{$a_value.Cid}}/{{$a_value.Id}}"><li>{{$a_value.Title}}</li></a>
+                                <li><a href="/article/detail/{{$a_value.Cid}}/{{$a_value.Id}}">{{$a_value.Title}}</a></li>
                             {{end}}
                             </ul>
                         </div>
