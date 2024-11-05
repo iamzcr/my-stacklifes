@@ -11,8 +11,8 @@ func main() {
 	r := gin.Default()
 	r.LoadHTMLGlob("../../templates/admin/**/*")
 	r.Static("/static", "../../templates/assets/admin")
-	r.GET("/index", func(c *gin.Context) {
-		c.HTML(http.StatusOK, "index", gin.H{
+	r.GET("/admin", func(c *gin.Context) {
+		c.HTML(http.StatusOK, "index/index", gin.H{
 			"message": "test",
 		})
 	})
