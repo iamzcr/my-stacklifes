@@ -25,7 +25,7 @@ func main() {
 		})
 	})
 	//启动web服务
-	err := r.Run(":8080")
+	err := r.Run(":8089")
 	if err != nil {
 		fmt.Println("frontend run err:", err)
 		return
