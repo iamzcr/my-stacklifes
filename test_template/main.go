@@ -13,7 +13,7 @@ func visit(path string, info os.FileInfo, err error) error {
 	}
 
 	// Skip printing the .idea directory
-	if info.IsDir() && (info.Name() == "." || info.Name() == ".idea") {
+	if info.IsDir() && info.Name() == ".idea" {
 		return filepath.SkipDir
 	}
 	depth := strings.Count(path, string(os.PathSeparator)) - strings.Count(".", string(os.PathSeparator))
