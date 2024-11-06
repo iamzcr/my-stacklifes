@@ -6,8 +6,14 @@ import (
 	"html/template"
 	"net/http"
 	"test_template/tools"
-	"time"
 )
+
+type Test struct {
+	Name string
+	Age  int8
+}
+
+var AssignTest []Test
 
 func main() {
 
@@ -18,10 +24,11 @@ func main() {
 	})
 	r.LoadHTMLGlob("../../templates/frontend/*")
 	r.Static("/static", "../../templates/assets/frontend")
+
+	assignTest := append(AssignTest, Test{Name: "test", Age: 10}, Test{Name: "test1", Age: 20})
 	r.GET("/", func(c *gin.Context) {
 		c.HTML(http.StatusOK, "index.html", gin.H{
-			"message": "test",
-			"time":    time.Now().Unix(), //分配时间戳到模板
+			"assignTest": assignTest,
 		})
 	})
 	//启动web服务

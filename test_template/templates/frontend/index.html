@@ -8,5 +8,9 @@
 <body>
 <div>frontend</div>
 <div>时间 ：{{UnixToTime .time}}</div>
+{{range $index,$value := .assignTest}}
+<div>名字 ：{{$value.Name}}，年龄：{{$value.Age}}</div>
+{{end}}
+
 </body>
 </html>
