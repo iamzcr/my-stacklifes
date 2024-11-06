@@ -3,8 +3,10 @@
 <head>
     <meta charset="UTF-8">
     <title>Title</title>
+    {{template "header.html" .}}
 </head>
 <body>
-
+<div>frontend</div>
+<div>时间 ：{{UnixToTime .time}}</div>
 </body>
 </html>

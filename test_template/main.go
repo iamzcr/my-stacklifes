@@ -1,34 +1,69 @@
+/*
+一个将当前路径下文件树打印的程序, 忽略 . 开头文件
+*/
+
 package main
 
 import (
 	"fmt"
+	"io/ioutil"
 	"os"
 	"path/filepath"
-	"strings"
 )
 
-func visit(path string, info os.FileInfo, err error) error {
+func getPath(path string, indent string) {
+	files, err := ioutil.ReadDir(path)
 	if err != nil {
-		return err
+		fmt.Println("read file path error", err)
+		return
+	}
+	// 忽略以 . 开头的文件
+	for i := 0; i < len(files); i++ {
+		if files[i].Name()[0] == '.' {
+			files = append(files[:i], files[i+1:]...)
+		}
+	}
+	dirs := make([]string, 0)
+
+	// 先打印文件
+	for _, fi := range files {
+		if !fi.IsDir() {
+			dirs = append(dirs, fi.Name())
+		}
 	}
 
-	// Skip printing the .idea directory
-	if info.IsDir() && info.Name() == ".idea" {
-		return filepath.SkipDir
+	lenFile := len(dirs)
+
+	// 再打印文件夹
+	for _, fi := range files {
+		if fi.IsDir() {
+			dirs = append(dirs, fi.Name())
+		}
 	}
-	depth := strings.Count(path, string(os.PathSeparator)) - strings.Count(".", string(os.PathSeparator))
-	indent := strings.Repeat("  ", depth)
-	if depth > 0 {
-		indent += "--"
+
+	// 最后一个文件的分支用 └── 表示, 更美观
+	for i := 0; i < len(dirs); i++ {
+		if i == len(dirs)-1 {
+			fmt.Println(indent + "└── " + dirs[i])
+			if i >= lenFile {
+				getPath(path+"\\"+dirs[i], indent+"   ")
+			}
+		} else {
+			fmt.Println(indent + "├── " + dirs[i])
+			if i >= lenFile {
+				getPath(path+"\\"+dirs[i], indent+"│  ")
+			}
+		}
+
 	}
-	fmt.Printf("%s %s\n", indent, path)
-	return nil
 }
 
 func main() {
-	root := "."
-	err := filepath.Walk(root, visit)
+	exPath, err := os.Getwd() // 获取程序执行的当前路径
 	if err != nil {
-		fmt.Println(err)
+		fmt.Println("路径错误")
 	}
+	dirName := filepath.Base(exPath)
+	fmt.Println(dirName)
+	getPath(exPath, "")
 }
